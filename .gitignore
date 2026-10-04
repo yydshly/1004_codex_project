@@ -1,0 +1,58 @@
+# Operating systems
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Editors and local tooling
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.history/
+
+# Secrets and machine-specific settings
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local
+
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+*.egg-info/
+.coverage
+.coverage.*
+htmlcov/
+
+# JavaScript dependencies and caches
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/install-state.gz
+.next/
+.nuxt/
+.parcel-cache/
+.turbo/
+*.tsbuildinfo
+
+# Build output, coverage and logs
+dist/
+build/
+coverage/
+.cache/
+*.log
+
+# Project-specific generated site files are tracked under site/.
