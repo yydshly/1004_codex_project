@@ -134,6 +134,7 @@ def render(root, projects):
     for project in projects:
         identifier = project_id(project)
         project_path = f"projects/{identifier}"
+        repository_name = urlsplit(project["repository"]).path.strip("/")
         static_files = demo_files(root, project)
         for name, content in static_files.items():
             outputs[f"site/demos/{identifier}/{name}"] = content
@@ -144,21 +145,21 @@ def render(root, projects):
         readme_demo_href = url(readme_demo) if project["demo_url"] else relative_url(readme_demo)
         demo_link = f"[{demo_label}]({readme_demo_href})" if readme_demo else "—"
         tags = "、".join(project["tags"]) or "—"
-        rows.append(f"| {project['number']:03d} | [{markdown(project['name'])}]({project_path}/README.md) | {markdown(project['summary'])} | {markdown(project['status'])} | {markdown(tags)} | [GitHub]({url(project['repository'])}) | {demo_link} |")
-        gallery.append(f"### {project['number']:03d} · {markdown(project['name'])}\n\n{markdown(project['summary'])}\n\n[研究记录]({project_path}/README.md) · [原仓库]({url(project['repository'])})")
+        rows.append(f"| {project['number']:03d} | [{markdown(project['name'])}]({project_path}/README.md) | {markdown(project['summary'])} | {markdown(project['status'])} | {markdown(tags)} | [{markdown(repository_name)}]({url(project['repository'])}) | {demo_link} |")
+        gallery.append(f"### **{project['number']:03d} · {markdown(project['name'])}**\n\n**项目摘要**\n\n{markdown(project['summary'])}\n\n[研究记录]({project_path}/README.md) · [{markdown(repository_name)}]({url(project['repository'])})")
         cover_html = "<div class=\"cover empty\">截图待补充</div>"
         if project["cover"]:
             cover = project["cover"]
-            gallery[-1] += f"\n\n![{markdown(project['name'])} 项目截图]({relative_url(project_path + '/' + cover)})"
+            gallery[-1] += f"\n\n![{markdown(project['name'])} 研究引导图]({relative_url(project_path + '/' + cover)})"
             destination = f"covers/{identifier}/{Path(cover).name}"
             outputs[f"site/{destination}"] = inside(inside(root, project_path), cover).read_bytes()
-            cover_html = f'<img class="cover" src="{html.escape(relative_url(destination), quote=True)}" alt="{html.escape(project["name"], quote=True)} 项目截图" loading="lazy">'
+            cover_html = f'<img class="cover" src="{html.escape(relative_url(destination), quote=True)}" alt="{html.escape(project["name"], quote=True)} 研究引导图" loading="lazy">'
         else:
             gallery[-1] += "\n\n截图：待补充。"
         research_url = f"https://github.com/yydshly/1004_codex_project/blob/main/{project_path}/README.md"
         demo_href = url(demo) if project["demo_url"] else relative_url(demo)
         demo_html = f'<a href="{html.escape(demo_href, quote=True)}">打开 Demo ↗</a>' if demo else '<span class="muted">Demo 待补充</span>'
-        cards.append(f'<article>{cover_html}<div class="content"><div class="meta">{project["number"]:03d} · {html.escape(project["status"])}</div><h2>{html.escape(project["name"])}</h2><p>{html.escape(project["summary"])}</p><p class="tags">{html.escape(tags)}</p><nav><a href="{research_url}">研究记录</a><a href="{html.escape(url(project["repository"]), quote=True)}">原仓库 ↗</a>{demo_html}</nav></div></article>')
+        cards.append(f'<article>{cover_html}<div class="content"><div class="meta">{project["number"]:03d} · {html.escape(project["status"])}</div><h2><strong>{html.escape(project["name"])}</strong></h2><p class="summary-label">项目摘要</p><p>{html.escape(project["summary"])}</p><p class="tags">{html.escape(tags)}</p><nav><a href="{research_url}">研究记录</a><a href="{html.escape(url(project["repository"]), quote=True)}">{html.escape(repository_name)} ↗</a>{demo_html}</nav></div></article>')
     index = ("| 编号 | 子项目 | 摘要 | 状态 | 标签 | 原仓库 | Demo |\n"
              "| --- | --- | --- | --- | --- | --- | --- |\n" + "\n".join(rows)) if rows else "目前尚未录入研究项目。首个项目将从 **001** 开始，按编号升序展示。"
     gallery_text = "\n\n".join(gallery) if gallery else "录入子项目并添加真实截图后，这里会按编号展示项目摘要与图片。"
@@ -176,7 +177,7 @@ def render(root, projects):
 <html lang="zh-CN">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="优秀 GitHub 项目的研究记录、复现过程与 Web Demo 索引"><title>GitHub 项目研究目录</title>
 <style>
-:root{{color-scheme:light;--ink:#172a3a;--muted:#607080;--line:#dce4eb;--accent:#075c65}}*{{box-sizing:border-box}}body{{margin:0;background:#f4f7fa;color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}}main{{max-width:1120px;margin:auto;padding:64px 24px}}a{{color:var(--accent);text-underline-offset:4px}}a:focus-visible{{outline:3px solid #de8c34;outline-offset:4px}}header{{margin-bottom:36px}}.eyebrow,.meta{{font-size:13px;letter-spacing:.08em;color:var(--accent)}}h1{{font-size:clamp(30px,5vw,46px);line-height:1.2;margin:16px 0}}header p{{max-width:680px;color:var(--muted)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px}}article{{border:1px solid var(--line);border-radius:16px;background:white;overflow:hidden}}.cover{{display:block;width:100%;height:190px;object-fit:contain;background:#e8eef3}}.empty{{display:grid;place-items:center;color:var(--muted);font-size:14px}}.content{{padding:24px}}h2{{font-size:22px;margin:8px 0}}.content p{{margin:12px 0}}.tags,.muted{{color:var(--muted);font-size:13px}}nav{{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;margin-top:24px}}.empty-state{{padding:48px 28px;background:white;border:1px dashed var(--line);border-radius:16px}}.empty-state p,footer{{color:var(--muted)}}footer{{margin-top:40px;font-size:13px}}@media(max-width:600px){{main{{padding:36px 18px}}}}
+:root{{color-scheme:light;--ink:#172a3a;--muted:#607080;--line:#dce4eb;--accent:#075c65}}*{{box-sizing:border-box}}body{{margin:0;background:#f4f7fa;color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}}main{{max-width:1120px;margin:auto;padding:64px 24px}}a{{color:var(--accent);text-underline-offset:4px}}a:focus-visible{{outline:3px solid #de8c34;outline-offset:4px}}header{{margin-bottom:36px}}.eyebrow,.meta{{font-size:13px;letter-spacing:.08em;color:var(--accent)}}h1{{font-size:clamp(30px,5vw,46px);line-height:1.2;margin:16px 0}}header p{{max-width:680px;color:var(--muted)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px}}article{{border:1px solid var(--line);border-radius:16px;background:white;overflow:hidden}}.cover{{display:block;width:100%;height:190px;object-fit:contain;background:#e8eef3}}.empty{{display:grid;place-items:center;color:var(--muted);font-size:14px}}.content{{padding:24px}}h2{{font-size:22px;margin:8px 0}}.content p{{margin:12px 0}}.summary-label{{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:0}}.tags,.muted{{color:var(--muted);font-size:13px}}nav{{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;margin-top:24px}}.empty-state{{padding:48px 28px;background:white;border:1px dashed var(--line);border-radius:16px}}.empty-state p,footer{{color:var(--muted)}}footer{{margin-top:40px;font-size:13px}}@media(max-width:600px){{main{{padding:36px 18px}}}}
 </style></head>
 <body><main><header><div class="eyebrow">GITHUB RESEARCH / 有序记录 · 持续复现</div><h1>优秀项目，逐个研究。</h1><p>记录值得学习的 GitHub 项目，从源码阅读到本地复现，沉淀截图、结论与可体验的 Web Demo。</p><a href="https://github.com/yydshly/1004_codex_project">查看研究总仓库 ↗</a></header><section class="grid" aria-label="按编号升序排列的研究项目">{body}</section><footer>共 {len(projects)} 个研究项目 · 编号固定，按升序展示。</footer></main></body></html>
 '''

@@ -1,4 +1,20 @@
 {
   "version": 1,
-  "projects": []
+  "projects": [
+    {
+      "number": 1,
+      "slug": "taskview-community",
+      "name": "TaskView Community",
+      "summary": "可自托管的项目与任务管理平台，提供看板、子任务、依赖图、权限与工时报表。底层采用 Vue、Express 和 PostgreSQL，通过 API、MCP、Webhook 连接人和外部 Agent；可复用为任务入口与进度管理层，自动执行和验收需另行构建。",
+      "repository": "https://github.com/Gimanh/taskview-community",
+      "status": "已完成",
+      "tags": [
+        "任务管理",
+        "MCP",
+        "Agent 接入"
+      ],
+      "cover": "assets/taskview-overview.png",
+      "demo_url": "https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/"
+    }
+  ]
 }

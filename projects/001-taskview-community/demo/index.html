@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gimanh/taskview-community 是可自托管的项目与任务管理平台。本文整理任务、看板、依赖图、权限与工时报表，Vue / Express / PostgreSQL 原理，API / MCP / Webhook 输入输出及外部 Agent 扩展价值。">
+  <title>TaskView · 能力、架构与 Agent 接入研究</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="topbar">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">T</span><span>项目研究集 <b>/ 001</b></span></a>
+    <nav aria-label="研究章节"><a href="#summary">摘要</a><a href="#architecture">总览图</a><a href="#capabilities">能力</a><a href="#io">入口与出口</a><a href="#connection">接入</a><a href="#value">价值</a></nav>
+    <a class="source-link" href="https://github.com/Gimanh/taskview-community" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community ↗</a>
+  </header>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-main">
+        <p class="eyebrow">TASKVIEW COMMUNITY / 源码研究</p>
+        <h1 id="hero-title"><strong>TaskView Community</strong><br><span>任务管理平台与 Agent 接入</span></h1>
+        <p class="hero-intro">TaskView 提供带界面的任务管理平台，包含后端 API、权限、数据库与事件处理。它可独立用于人工协作，也可作为外部 Agent 的任务入口和进度面板。</p>
+        <div class="hero-actions"><a class="button primary" href="#architecture">查看一图概览 <span aria-hidden="true">↓</span></a><a class="button quiet" href="#connection">了解接入方式</a></div>
+        <p class="research-meta">研究日期 2026.10.04 <span>·</span> 主分支 <code>46b3d1e6d4a0</code> <span>·</span> 源码与文档分析</p>
+      </div>
+      <aside class="position-card" aria-label="我们的核心理解">
+        <p class="eyebrow">我们的核心理解</p>
+        <h2>管理层已具备，<br>执行层由我们接入。</h2>
+        <div class="scope-row"><span class="dot native"></span><div><strong>TaskView 原生提供</strong><p>任务数据 · 视图 · 权限 · API · 事件</p></div></div>
+        <div class="scope-row"><span class="dot extension"></span><div><strong>外部 Agent 负责</strong><p>理解工作 · 调用工具 · 执行 · 提交结果</p></div></div>
+        <p class="scope-note">“创建任务”会产生工作记录。实际工作由成员或外部 Agent 完成。</p>
+      </aside>
+    </section>
+
+    <section class="summary-section" id="summary" aria-labelledby="summary-title">
+      <p class="eyebrow">研究摘要 / 先读这六点</p>
+      <h2 id="summary-title">这个库能做什么，能为我们带来什么？</h2>
+      <p class="summary-intro"><a href="https://github.com/Gimanh/taskview-community" target="_blank" rel="noopener noreferrer"><strong>Gimanh/taskview-community</strong></a> 是可自托管的项目与任务管理产品。前端提供工作视图，后端提供业务逻辑与数据管理。普通团队由成员完成工作；接入外部 Agent 后，平台可承载任务分配、上下文和进度回写。</p>
+      <dl class="summary-list">
+        <div><dt>能力</dt><dd>项目、任务与子任务、看板、依赖图、Sprint、重复任务、成员权限、历史、工时统计，以及开发工具和消息集成。</dd></div>
+        <div><dt>底层原理</dt><dd>Vue 界面通过 Express HTTP API 访问业务层；权限检查后，由 Drizzle 操作 PostgreSQL。任务变更产生事件，驱动通知、Webhook 和周期业务。</dd></div>
+        <div><dt>使用场景</dt><dd>内部研发和迭代管理、个人项目、内部客户交付记录，以及人和 Agent 共用的工作清单与状态面板。</dd></div>
+        <div><dt>入口</dt><dd>Web / 移动端人工操作、HTTP API、TypeScript 客户端、MCP 工具调用，以及 Git 仓库或消息平台事件。</dd></div>
+        <div><dt>出口</dt><dd>任务数据与状态、可视化视图、历史和工时报表、通知、签名 Webhook，以及已关联 Issue 的完成状态回写。执行产物由成员或外部 Agent 提供。</dd></div>
+        <div><dt>对我的价值</dt><dd>可借鉴或复用任务入口、权限、数据模型和进度展示，减少管理层建设；自主规划、任务领取、工具执行、失败恢复和验收仍需补充。</dd></div>
+      </dl>
+      <p class="summary-boundary"><strong>关键判断</strong><br>它是带业务后台的任务管理平台。MCP 提供外部 AI 的操作接口；是否执行任务、如何执行以及如何确认完成，由成员或外部执行系统决定。</p>
+    </section>
+
+    <section class="understanding" aria-label="理解的演进">
+      <p class="eyebrow">从讨论到结论</p>
+      <div class="understanding-grid"><div><span>01</span><h3>完整的管理产品</h3><p>前端呈现任务，后端保存数据、控制权限并处理业务事件。</p></div><div><span>02</span><h3>人工协作可独立运行</h3><p>成员执行工作，再更新负责人、状态与完成标记。</p></div><div><span>03</span><h3>自动执行需要外部接入</h3><p>MCP 提供操作入口，Agent 与执行调度需要另外实现。</p></div></div>
+    </section>
+
+    <section class="section" id="architecture" aria-labelledby="architecture-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / 引导图与底层架构</p><h2 id="architecture-title">能力、架构、接入与扩展</h2></div><div class="figure-actions"><a class="button quiet small" href="./assets/taskview-overview.png" download>下载 PNG</a><a class="button quiet small" href="./assets/taskview-overview.svg" download>下载 SVG</a></div></div>
+      <figure class="overview-figure"><a href="./assets/taskview-overview.svg" target="_blank" rel="noopener noreferrer" aria-label="打开完整架构概览图"><img src="./assets/taskview-overview.svg" width="1940" height="1600" alt="TaskView 能力与架构总览：原生任务管理后端、HTTP API、权限和数据库；本地及后台 Agent 经 MCP 或 API 接入；外部执行桥接与验收等扩展方向。" loading="lazy"></a><figcaption><span><i class="legend-dot native" aria-hidden="true"></i>实线 / 青绿色：现有管理能力</span><span><i class="legend-dot extension" aria-hidden="true"></i>虚线 / 琥珀色：外部执行与建议扩展</span><span>点击图片可查看原尺寸。</span></figcaption></figure>
+      <div class="architecture-notes"><article><h3>同一份任务，多种视图</h3><p><code>parentId</code> 表示子任务；<code>statusId</code> 对应看板状态；<code>complete</code> 保存完成标记。依赖关系存为边，由 Vue Flow 与 Dagre 绘制和布局。</p></article><article><h3>每次操作都经过后端</h3><p>Vue 界面或 API 客户端发出请求，经 Express 路由、鉴权与权限检查进入业务层，再通过 Drizzle ORM 写入 PostgreSQL。</p></article><article><h3>事件触发管理动作</h3><p>任务变化触发 EventBus；pg-boss 处理异步或定时业务。Centrifugo 可提供实时推送，完成周期任务可生成下一实例。</p></article></div>
+      <p class="evidence-line">依据：<a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/taskview-packages/taskview-db-schemas/src/schemas/tasks.schema.ts" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · 任务模型</a> · <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/api/src/tv-modules/tasks/TasksManager.ts" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · 业务逻辑</a> · <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/api/src/core/JobQueue.ts" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · 后台队列</a></p>
+    </section>
+
+    <section class="section" id="capabilities" aria-labelledby="capabilities-title">
+      <div class="section-heading"><div><p class="eyebrow">02 / 原生能力</p><h2 id="capabilities-title">它已经能管理哪些工作？</h2></div><p>以下是主分支与官方文档描述的能力。<br>本次未部署验证每项功能。</p></div>
+      <div class="capability-grid">
+        <article class="capability"><span class="cap-number">01</span><h3>项目与任务</h3><p>项目、列表、任务、嵌套子任务；负责人、优先级、标签、日期、搜索和历史记录。</p><p class="use-case">适合：需求拆分、缺陷记录、交付清单。</p></article>
+        <article class="capability"><span class="cap-number">02</span><h3>视图与工作流</h3><p>列表与自定义看板、状态、任务依赖图、Sprint 和重复任务。</p><p class="use-case">适合：迭代安排、进度跟踪、依赖梳理。</p></article>
+        <article class="capability"><span class="cap-number">03</span><h3>协作与权限</h3><p>组织、项目成员、角色与细粒度权限；API Token 的操作与项目范围；SSO 相关能力。</p><p class="use-case">适合：团队分工、访问控制、服务账号接入。</p></article>
+        <article class="capability"><span class="cap-number">04</span><h3>工时与统计</h3><p>时间记录、计费与非计费工时、工作量统计，以及项目收入和支出相关报表。</p><p class="use-case">适合：内部交付管理、工时与项目成本记录。</p></article>
+        <article class="capability"><span class="cap-number">05</span><h3>开发与消息集成</h3><p>GitHub、GitLab、Gitea 的 Issue 同步；Slack 与 Telegram 的通知和任务交互。</p><p class="use-case">Issue 变化同步到任务；完成状态可回写。</p></article>
+        <article class="capability"><span class="cap-number">06</span><h3>开放接口与多端</h3><p>HTTP API、TypeScript 客户端、MCP、签名 Webhook；Web 与 Capacitor 移动端。</p><p class="use-case">适合：脚本、外部 AI 和业务系统接入。</p></article>
+      </div>
+      <p class="evidence-line">依据：<a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/README.md" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · README</a> · <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/docs/3.integrations/1.setup.md" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · 仓库集成</a> · <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/docs/3.integrations/3.messaging.md" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · 消息集成</a></p>
+    </section>
+
+    <section class="section" id="scenarios" aria-labelledby="scenarios-title">
+      <div class="section-heading"><div><p class="eyebrow">03 / 使用场景</p><h2 id="scenarios-title">把平台放在具体工作中理解</h2></div><p>不同场景共用任务管理能力，<br>实际工作的执行者不同。</p></div>
+      <div class="scenario-grid">
+        <article><h3>内部研发与迭代</h3><p><strong>输入</strong><br>需求、缺陷、Issue、成员与迭代安排。</p><p><strong>过程</strong><br>拆成任务和子任务，设置依赖、负责人、状态、日期和工时。</p><p><strong>输出</strong><br>项目进度、任务历史、工时统计与消息通知；代码由开发人员编写。</p></article>
+        <article><h3>个人与内部交付管理</h3><p><strong>输入</strong><br>个人计划或客户工作的内部记录。</p><p><strong>过程</strong><br>整理工作清单，记录时间、金额和完成情况。</p><p><strong>输出</strong><br>可追踪的交付记录与统计。向客户开放实例需另核实商业许可。</p></article>
+        <article><h3>人和 Agent 共用任务面板</h3><p><strong>输入</strong><br>人提出任务，Agent 经 MCP 或 API 获取任务上下文。</p><p><strong>过程</strong><br>由外部 Agent 使用自己的工具执行；调度和验收策略另外实现。</p><p><strong>输出</strong><br>状态、备注、产物链接和执行记录回写；形成可视化跟踪。</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="io" aria-labelledby="io-title">
+      <div class="section-heading"><div><p class="eyebrow">04 / 入口与出口</p><h2 id="io-title">入口接收操作，出口提供状态与事件</h2></div><p>区分任务记录、管理自动化和实际执行产物，<br>便于设计后续系统接口。</p></div>
+      <div class="io-grid">
+        <article class="io-panel"><span class="status native-label">入口 / 现有接口</span><h3>什么可以进入 TaskView？</h3><dl>
+          <dt>人工操作</dt><dd>Web 或移动端创建项目、任务和成员，更新状态、日期、备注与工时。</dd>
+          <dt>程序请求</dt><dd>脚本或服务通过 HTTP API / TypeScript 客户端读取与修改任务，后端统一校验身份和权限。</dd>
+          <dt>AI 工具调用</dt><dd>本地 stdio MCP 或共享 HTTP MCP 将结构化工具调用转为 API 请求；授权范围与用户权限共同限制操作。</dd>
+          <dt>外部平台事件</dt><dd>GitHub / GitLab / Gitea 的 Issue 事件触发同步；已配置并绑定身份的 Slack / Telegram 可触发任务操作。</dd>
+        </dl></article>
+        <article class="io-panel"><span class="status native-label">出口 / 现有管理结果</span><h3>TaskView 可以输出什么？</h3><dl>
+          <dt>任务数据与视图</dt><dd>HTTP / MCP 返回可访问的项目与任务上下文；界面展示列表、看板、关系图、状态、历史及统计。</dd>
+          <dt>通知与业务事件</dt><dd>持久化通知、邮件或消息平台通知；可选 Centrifugo 实时推送；签名 Webhook 将事件交给外部系统。</dd>
+          <dt>关联 Issue 状态</dt><dd>TaskView 中完成或重开已映射任务，可回写对应 Issue 的关闭或打开状态。</dd>
+          <dt>外部执行产物回流</dt><dd>成员或 Agent 产生代码、文件、测试报告等，再通过任务备注、外部链接和状态回写供管理层展示。完整产物归档与验收是建议扩展。</dd>
+        </dl></article>
+      </div>
+      <p class="boundary-note"><strong>管理自动化和执行自动化要分别设计</strong><br>平台能依据任务事件通知其他系统、生成周期任务。自动编写代码、操作浏览器、运行测试和验收交付，需要外部 Agent 的工具与执行机制。</p>
+      <p class="evidence-line">依据：<a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/taskview-packages/taskview-api/src/api/tasks.ts" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · TypeScript API 客户端</a> · <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/docs/3.integrations/2.mcp.md" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · MCP</a></p>
+    </section>
+
+    <section class="section connection-section" id="connection" aria-labelledby="connection-title">
+      <div class="section-heading"><div><p class="eyebrow">05 / 本地与后台 Agent 接入</p><h2 id="connection-title">谁来执行任务？</h2></div><p>切换场景，查看职责、接入路径与所需补充。</p></div>
+      <div class="mode-tabs" role="tablist" aria-label="任务执行场景"><button id="tab-human" role="tab" aria-selected="true" aria-controls="panel-human" type="button" data-mode="human">普通团队项目</button><button id="tab-local" role="tab" aria-selected="false" aria-controls="panel-local" type="button" data-mode="local" tabindex="-1">本地 Agent</button><button id="tab-backend" role="tab" aria-selected="false" aria-controls="panel-backend" type="button" data-mode="backend" tabindex="-1">后台 Agent</button></div>
+      <div id="panel-human" class="mode-panel" role="tabpanel" aria-labelledby="tab-human">
+        <div class="mode-copy"><span class="status native-label">原生使用方式</span><h3>成员执行，平台协调。</h3><p>以“开发一个网站”为例：平台承载任务和进度，成员在设计、开发和测试工具中完成实际工作。</p><ol class="flow-list"><li><span>1</span><div><strong>建立项目并拆分任务</strong><p>首页设计、登录开发、支付测试。</p></div></li><li><span>2</span><div><strong>分配负责人和时间</strong><p>设置优先级、依赖关系与迭代。</p></div></li><li><span>3</span><div><strong>成员执行并更新状态</strong><p>进行中 → 待评审 → 标记完成。</p></div></li><li><span>4</span><div><strong>后台保存与通知</strong><p>数据库记录变更，事件模块处理后续动作。</p></div></li></ol></div>
+        <aside class="mode-aside"><p class="eyebrow">平台的工作</p><h4>把协作过程记录清楚</h4><dl><dt>谁做什么</dt><dd>负责人、项目角色与访问权限。</dd><dt>做到哪里</dt><dd>状态、子任务、历史和工时。</dd><dt>何时完成</dt><dd>日期、依赖与成员确认的完成标记。</dd></dl><p class="aside-note">普通项目管理可独立运行，无需 Agent。</p></aside>
+      </div>
+      <div id="panel-local" class="mode-panel" role="tabpanel" aria-labelledby="tab-local" hidden>
+        <div class="mode-copy"><span class="status native-label">现有 MCP 接入</span><h3>本地 Agent 通过 stdio 操作任务。</h3><p>兼容 MCP 的本地 AI 客户端启动 <code>taskview-mcp</code>，再转发请求到云端或自托管的 TaskView API。stdio 服务需要 Node.js 24 或以上。</p><ol class="flow-list"><li><span>1</span><div><strong>准备 TaskView API 地址与 Token</strong><p>Token 的项目和操作范围与用户权限共同限制访问。</p></div></li><li><span>2</span><div><strong>本地启动 MCP 服务</strong><p><code>npx -y taskview-mcp</code>，配置 URL 与 Token。</p></div></li><li><span>3</span><div><strong>Agent 读取、执行与回写</strong><p>Agent 自己提供文件、终端等执行工具；MCP 负责任务操作。</p></div></li></ol></div>
+        <aside class="mode-aside"><p class="eyebrow">通用 MCP 配置示例</p><pre><code>{
+  "mcpServers": {
+    "taskview": {
+      "command": "npx",
+      "args": ["-y", "taskview-mcp"],
+      "env": {
+        "TASKVIEW_URL": "https://api.example.com",
+        "TASKVIEW_TOKEN": "tvk_your_token"
+      }
+    }
+  }
+}</code></pre><p class="aside-note">替换为自己的服务地址和 Token。凭据保存在客户端或服务配置中。</p></aside>
+      </div>
+      <div id="panel-backend" class="mode-panel" role="tabpanel" aria-labelledby="tab-backend" hidden>
+        <div class="mode-copy"><span class="status extension-label">现有接口 + 建议执行桥接</span><h3>后台 Agent 可持续接入，调度需补充。</h3><p>已有共享 HTTP MCP 和直接 HTTP API 两条入口。若希望任务创建后自动执行，可增加 Webhook 接收器与外部 Worker。</p><ol class="flow-list"><li><span>1</span><div><strong>选用共享 HTTP MCP 或 API</strong><p>MCP 的 <code>/mcp</code> 接收调用者 Bearer Token；兼容客户端也可走 OAuth。</p></div></li><li><span>2</span><div><strong>外部服务发现待执行工作</strong><p>可轮询任务，或接收 TaskView 的签名 Webhook。</p></div></li><li><span>3</span><div><strong>由我们控制任务领取与执行</strong><p>实现去重、并发、超时、失败恢复及工具环境。</p></div></li><li><span>4</span><div><strong>验收后回写结果</strong><p>保存产物链接、日志与状态，按需要由人确认。</p></div></li></ol></div>
+        <aside class="mode-aside"><p class="eyebrow">接入契约</p><dl><dt>服务入口</dt><dd><code>https://mcp.example.com/mcp</code><br>或自己的 TaskView HTTP API。</dd><dt>身份与范围</dt><dd>每个调用者使用自己的 Token；操作范围受用户权限限制。</dd><dt>云客户端 OAuth</dt><dd>若客户端依赖动态注册，需在 API 配置 <code>OAUTH_DYNAMIC_REGISTRATION=true</code>；默认关闭。</dd><dt>事件触发</dt><dd>Webhook 触发接收器。TaskView 的事件投递重试与 Agent 执行重试分别处理。</dd><dt>能力边界</dt><dd>接口可用不等于已有任务自动领取与执行调度。</dd></dl></aside>
+      </div>
+      <p class="connection-detail" aria-live="polite">当前场景：成员执行实际工作，TaskView 记录与协调任务。</p>
+      <p class="evidence-line">依据：<a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/docs/3.integrations/2.mcp.md" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · MCP 接入与 OAuth</a> · <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/api/src/tv-modules/webhooks/WebhooksDispatcher.ts" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · Webhook 事件投递</a></p>
+    </section>
+
+    <section class="section" id="extensions" aria-labelledby="extensions-title">
+      <div class="section-heading"><div><p class="eyebrow">06 / 建议扩展</p><h2 id="extensions-title">要形成自动执行闭环，还需要什么？</h2></div><p>下表的扩展项是我们的设计方向，<br>尚未在本次研究中实现。</p></div>
+      <div class="table-wrap"><table><thead><tr><th scope="col">扩展方向</th><th scope="col">TaskView 可提供的基础</th><th scope="col">需要我们实现的部分</th></tr></thead><tbody><tr><th scope="row">任务领取与调度</th><td>任务、状态、负责人、API 与事件。</td><td>执行记录、原子领取或外部租约、并发限制、事件去重。</td></tr><tr><th scope="row">执行环境与工具</th><td>任务描述与上下文读取。</td><td>本地或服务器 Runner、隔离工作区、工具权限、资源与时间限制。</td></tr><tr><th scope="row">执行失败与恢复</th><td>历史、状态更新、Webhook 投递记录。</td><td>Agent 的超时、重试、断点恢复和人工接管。</td></tr><tr><th scope="row">结果与验收</th><td>任务备注、状态与外部链接承载能力。</td><td>代码或文件产物归档、测试与验收规则、审核后确认完成。</td></tr><tr><th scope="row">多 Agent 协作</th><td>子任务、依赖图、项目角色。</td><td>Agent 能力路由、交接、依赖约束执行和结果汇总。</td></tr></tbody></table></div>
+      <p class="boundary-note"><strong>两个边界需要保留：</strong>依赖图表达任务关系；执行顺序约束需由调度层实现。Git 集成目前主要围绕 Issue，同步范围应按源码确认，不能预设 PR、提交和 CI 状态已全面关联。</p>
+    </section>
+
+    <section class="section" id="value" aria-labelledby="value-title">
+      <div class="section-heading"><div><p class="eyebrow">07 / 对我的价值</p><h2 id="value-title">复用管理层，把精力投入执行层</h2></div><p>这是结合我们关注的 Agent 系统作出的判断，<br>以实际接入测试决定是否采用。</p></div>
+      <div class="value-grid"><article class="value-card useful"><span class="status native-label">可参考</span><h3>少从零搭一套任务管理</h3><p>界面、任务模型、权限、API 与事件接口可为执行系统提供管理入口。适合研究任务如何结构化、如何受控地交给外部程序。</p></article><article class="value-card limited"><span class="status extension-label">研究价值有限的方向</span><h3>自主执行机制要看其他实现</h3><p>当前未看到内置的自主规划、Agent 自动领取任务、工具执行与结果验收闭环。研究这些机制时，本项目可作为外围管理层参考。</p></article></div>
+      <div class="decision-list"><article><h3>研究层面的价值</h3><p>观察任务模型、角色权限、MCP 授权与事件处理如何组合。适合学习一个完整管理产品怎样向人和外部程序提供一致入口。</p></article><article><h3>工程层面的价值</h3><p>若与现有技术栈、部署条件和许可范围匹配，可减少管理界面和基础业务的重复建设；仍需验证版本兼容、权限、并发与升级维护。</p></article><article><h3>当前取舍</h3><p>保留为 Agent 管理层候选和接口参考。先验证一个 Agent 读取并完成一条测试任务，再决定是否投入后台桥接和多 Agent 调度。</p></article></div>
+      <div class="roadmap"><p class="eyebrow">建议的接入顺序 / 尚未实施</p><ol><li><span>01</span><strong>只读接入</strong><p>连接测试项目，验证读取与权限范围。</p></li><li><span>02</span><strong>受控回写</strong><p>让一个本地 Agent 修改测试任务并记录结果。</p></li><li><span>03</span><strong>后台触发</strong><p>补充 Webhook 接收器、去重与任务领取机制。</p></li><li><span>04</span><strong>执行与验收</strong><p>增加工具环境、产物、测试和人工确认。</p></li></ol></div>
+      <aside class="license-note"><span class="license-label">许可影响使用范围</span><p>当前是 <strong>Source-Available</strong> 许可。个人、家庭与组织内部使用及自托管被允许；组织的员工及代表组织工作的承包商属于许可用户。向外部客户或第三方开放实例，即使免费，也需要另行商业许可。托管 SaaS 和竞争产品同样受限制。</p><a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/LICENSE.md" target="_blank" rel="noopener noreferrer">Gimanh/taskview-community · 查看许可证原文 ↗</a></aside>
+    </section>
+
+    <section class="section sources-section" id="sources" aria-labelledby="sources-title"><div class="section-heading"><div><p class="eyebrow">08 / 可追溯证据</p><h2 id="sources-title">结论对应到源码与文档。</h2></div><p>链接固定到本次研究提交，<br>便于后续复查。</p></div><div class="source-grid">
+      <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/README.md" target="_blank" rel="noopener noreferrer"><span>产品范围</span><strong>README 与原生功能 ↗</strong></a>
+      <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/taskview-packages/taskview-db-schemas/src/schemas/tasks.schema.ts" target="_blank" rel="noopener noreferrer"><span>任务结构</span><strong>数据库 Schema ↗</strong></a>
+      <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/api/src/tv-modules/tasks/TasksManager.ts" target="_blank" rel="noopener noreferrer"><span>业务变更</span><strong>TasksManager ↗</strong></a>
+      <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/docs/3.integrations/2.mcp.md" target="_blank" rel="noopener noreferrer"><span>Agent 接入</span><strong>MCP 文档 ↗</strong></a>
+      <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/api/src/core/EventBus.ts" target="_blank" rel="noopener noreferrer"><span>事件驱动</span><strong>EventBus ↗</strong></a>
+      <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/api/src/core/JobQueue.ts" target="_blank" rel="noopener noreferrer"><span>后台处理</span><strong>pg-boss 队列 ↗</strong></a>
+      <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/docs/3.integrations/1.setup.md" target="_blank" rel="noopener noreferrer"><span>Issue 同步</span><strong>开发工具集成 ↗</strong></a>
+      <a href="https://github.com/Gimanh/taskview-community/blob/46b3d1e6d4a0672e577d84e49906c1c78f22a74f/LICENSE.md" target="_blank" rel="noopener noreferrer"><span>使用范围</span><strong>Source-Available 许可 ↗</strong></a>
+    </div></section>
+  </main>
+  <footer class="footer"><p>001 · TaskView Community 研究记录</p><p>2026.10.04 · 基于源码与官方文档；未部署、未压测、未实现 Agent 执行扩展。</p><a id="catalog-link" href="../../index.html">返回研究索引 ↑</a></footer>
+</body>
+</html>

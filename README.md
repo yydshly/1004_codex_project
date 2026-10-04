@@ -10,7 +10,9 @@
 
 <!-- PROJECT_INDEX:START -->
 
-目前尚未录入研究项目。首个项目将从 **001** 开始，按编号升序展示。
+| 编号 | 子项目 | 摘要 | 状态 | 标签 | 原仓库 | Demo |
+| --- | --- | --- | --- | --- | --- | --- |
+| 001 | [TaskView Community](projects/001-taskview-community/README.md) | 可自托管的项目与任务管理平台，提供看板、子任务、依赖图、权限与工时报表。底层采用 Vue、Express 和 PostgreSQL，通过 API、MCP、Webhook 连接人和外部 Agent；可复用为任务入口与进度管理层，自动执行和验收需另行构建。 | 已完成 | 任务管理、MCP、Agent 接入 | [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community) | [Demo](https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/) |
 
 <!-- PROJECT_INDEX:END -->
 
@@ -20,7 +22,15 @@
 
 <!-- PROJECT_GALLERY:START -->
 
-录入子项目并添加真实截图后，这里会按编号展示项目摘要与图片。
+### **001 · TaskView Community**
+
+**项目摘要**
+
+可自托管的项目与任务管理平台，提供看板、子任务、依赖图、权限与工时报表。底层采用 Vue、Express 和 PostgreSQL，通过 API、MCP、Webhook 连接人和外部 Agent；可复用为任务入口与进度管理层，自动执行和验收需另行构建。
+
+[研究记录](projects/001-taskview-community/README.md) · [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community)
+
+![TaskView Community 研究引导图](projects/001-taskview-community/assets/taskview-overview.png)
 
 <!-- PROJECT_GALLERY:END -->
 
@@ -60,7 +70,7 @@ python scripts/catalog.py check
 
 每个子项目可在自己的 `demo/` 目录中放置静态页面。同步时，这些页面会汇总到 `site/demos/NNN-slug/`，通过一个 GitHub Pages 站点访问多个演示。
 
-仓库已准备手动发布工作流。启用方式和路径约定见 [部署说明](docs/deployment.md)。当前初始化阶段尚未收录研究项目或发布站点。
+仓库已准备手动发布工作流。启用方式和路径约定见 [部署说明](docs/deployment.md)。各项目研究网页汇总到同一个 GitHub Pages 站点，使用手动工作流发布与更新。
 
 ## 研究约定
 

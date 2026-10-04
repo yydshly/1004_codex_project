@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1940" height="1600" viewBox="0 0 1940 1600" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">TaskView Community：原生任务管理能力、架构、Agent 接入与后续研究方向</title>
+  <desc id="diagram-desc">TaskView 是包含界面、API、权限、数据与后台业务的自托管任务管理平台。原生平台包括项目任务、看板、依赖图、团队权限、工时和集成。Vue 和 Capacitor 界面经 HTTP API、鉴权和 RBAC 进入任务业务层，再访问 PostgreSQL 和 Drizzle，或触发 EventBus、pg-boss 与 Webhook。外部本地 Agent 可经 stdio MCP 接入，后台 Agent 可经 HTTP MCP 或直接 API 接入。自动领取、调度、工具执行、重试、验收与产物回写的执行闭环需要外部实现。实线青绿色表示原生能力，虚线琥珀色表示外部组件或待建设方案。</desc>
+  <defs>
+    <style>
+      text{font-family:"Microsoft YaHei","Segoe UI","Noto Sans CJK SC",sans-serif;fill:#193733}
+      .eyebrow{font-size:22px;font-weight:600;letter-spacing:2px;fill:#14766c}
+      .title{font-size:44px;font-weight:700}
+      .subtitle{font-size:24px;fill:#54716a}
+      .section{font-size:29px;font-weight:700}
+      .heading{font-size:26px;font-weight:700}
+      .body{font-size:22px}
+      .small{font-size:21px;fill:#54716a}
+      .native{fill:#fcfdfb;stroke:#14766c;stroke-width:2}
+      .native-soft{fill:#e8f2ee;stroke:#14766c;stroke-width:2}
+      .external{fill:#fff7ea;stroke:#a5671c;stroke-width:2;stroke-dasharray:9 6}
+      .amber{fill:#a5671c}
+      .teal{fill:#14766c}
+      .native-line{fill:none;stroke:#14766c;stroke-width:2.5;marker-end:url(#teal-arrow)}
+      .external-line{fill:none;stroke:#a5671c;stroke-width:2.5;stroke-dasharray:7 5;marker-end:url(#amber-arrow)}
+    </style>
+    <marker id="teal-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 L9 5 L1 9 Z" fill="#14766c"/></marker>
+    <marker id="amber-arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 L9 5 L1 9 Z" fill="#a5671c"/></marker>
+  </defs>
+
+  <rect width="1940" height="1600" fill="#f5f4ef"/>
+  <text x="50" y="63" class="eyebrow">001 / TASKVIEW COMMUNITY · REPOSITORY STUDY</text>
+  <text x="50" y="126" class="title">TaskView：任务管理层与 Agent 接入</text>
+  <text x="50" y="165" class="subtitle">既有可视化界面，也有业务后台；可作为人和 Agent 共用的任务入口与进度面板。</text>
+
+  <rect x="50" y="194" width="1840" height="65" rx="15" fill="#e8f2ee"/>
+  <text x="75" y="237" font-size="29" font-weight="600">管理任务与协作流程；实际工作由人或外部 Agent 完成。</text>
+  <rect x="1290" y="216" width="36" height="20" rx="5" fill="#fcfdfb" stroke="#14766c" stroke-width="2"/>
+  <text x="1337" y="234" font-size="21">实线：原生能力</text>
+  <rect x="1572" y="216" width="36" height="20" rx="5" fill="#fff7ea" stroke="#a5671c" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="1619" y="234" font-size="21">虚线：外接 / 待建设</text>
+
+  <text x="50" y="301" class="section">原生能力</text>
+  <g>
+    <rect x="50" y="322" width="290" height="125" rx="15" class="native"/>
+    <text x="72" y="360" class="heading">任务结构</text>
+    <text x="72" y="395" class="body">项目 · 列表 · 子任务</text>
+    <text x="72" y="426" class="body">负责人 · 标签 · 优先级</text>
+    <rect x="360" y="322" width="290" height="125" rx="15" class="native"/>
+    <text x="382" y="360" class="heading">工作流程</text>
+    <text x="382" y="395" class="body">看板 · Sprint · 搜索</text>
+    <text x="382" y="426" class="body">状态 · 日期 · 重复任务</text>
+    <rect x="670" y="322" width="290" height="125" rx="15" class="native"/>
+    <text x="692" y="360" class="heading">关系可视化</text>
+    <text x="692" y="395" class="body">任务依赖图</text>
+    <text x="692" y="426" class="body">Vue Flow + Dagre</text>
+    <rect x="980" y="322" width="290" height="125" rx="15" class="native"/>
+    <text x="1002" y="360" class="heading">团队与权限</text>
+    <text x="1002" y="395" class="body">多组织 · 成员 · 角色</text>
+    <text x="1002" y="426" class="body">后端权限检查</text>
+    <rect x="1290" y="322" width="290" height="125" rx="15" class="native"/>
+    <text x="1312" y="360" class="heading">工时与报表</text>
+    <text x="1312" y="395" class="body">计费 / 非计费工时</text>
+    <text x="1312" y="426" class="body">工作量与项目统计</text>
+    <rect x="1600" y="322" width="290" height="125" rx="15" class="native"/>
+    <text x="1622" y="360" class="heading">外部集成</text>
+    <text x="1622" y="395" class="body">仓库 Issue · 消息通知</text>
+    <text x="1622" y="426" class="body">API · MCP · Webhook</text>
+  </g>
+
+  <rect x="50" y="480" width="1120" height="650" rx="22" fill="#edf3ef"/>
+  <text x="85" y="518" class="section">TaskView 原生平台</text>
+  <text x="1230" y="518" class="section">Agent 接入与执行扩展</text>
+
+  <g>
+    <rect x="85" y="542" width="1050" height="116" rx="15" class="native"/>
+    <text x="110" y="581" class="heading">管理界面 · 人工工作流</text>
+    <text x="110" y="615" class="body">Vue / Pinia Web · Capacitor 移动端</text>
+    <text x="110" y="646" class="body">成员创建、分配、更新任务；列表、看板、依赖图共用任务数据。</text>
+
+    <path d="M610 658 V690" class="native-line"/>
+    <text x="629" y="681" font-size="20" fill="#14766c">HTTP 请求</text>
+    <rect x="85" y="694" width="1050" height="86" rx="15" class="native"/>
+    <text x="110" y="729" class="heading">HTTP API + 鉴权 / RBAC</text>
+    <text x="110" y="762" class="body">检查登录、项目权限、字段权限与授权范围，再处理请求。</text>
+
+    <path d="M610 780 V815" class="native-line"/>
+    <rect x="85" y="819" width="1050" height="86" rx="15" class="native"/>
+    <text x="110" y="854" class="heading">任务业务层 · Manager / Repository</text>
+    <text x="110" y="887" class="body">任务状态变更、关系维护、集成同步与业务事件。</text>
+
+    <path d="M610 905 V929 H337 V955" class="native-line"/>
+    <path d="M610 929 H877 V955" class="native-line"/>
+    <rect x="85" y="959" width="505" height="136" rx="15" class="native"/>
+    <text x="110" y="998" class="heading">PostgreSQL + Drizzle</text>
+    <text x="110" y="1034" class="body">任务 / 项目 / 成员 / 状态 / 关系</text>
+    <text x="110" y="1068" class="body">存储业务数据，支撑各类管理视图</text>
+    <rect x="620" y="959" width="515" height="136" rx="15" class="native"/>
+    <text x="645" y="998" class="heading">事件与后台任务</text>
+    <text x="645" y="1034" class="body">EventBus · pg-boss · 通知 / 重复任务</text>
+    <text x="645" y="1068" class="body">签名 Webhook · 可选实时推送</text>
+  </g>
+
+  <g>
+    <rect x="1230" y="542" width="310" height="116" rx="15" class="external"/>
+    <text x="1252" y="577" class="heading amber">本地 Agent</text>
+    <text x="1252" y="612" class="body">运行在个人电脑</text>
+    <text x="1252" y="643" class="body">stdio MCP → API</text>
+    <rect x="1570" y="542" width="320" height="116" rx="15" class="external"/>
+    <text x="1592" y="577" class="heading amber">后台 Agent</text>
+    <text x="1592" y="612" class="body">运行在服务器 / 容器</text>
+    <text x="1592" y="643" class="body">HTTP MCP 或直接 API</text>
+    <path d="M1385 658 V690" class="external-line"/>
+    <path d="M1730 658 V690" class="external-line"/>
+    <text x="1748" y="683" font-size="20" fill="#a5671c">HTTP MCP</text>
+
+    <rect x="1230" y="694" width="660" height="86" rx="15" class="native-soft"/>
+    <text x="1255" y="729" class="heading">MCP 适配层 · 原生提供</text>
+    <text x="1255" y="762" class="body">工具调用转成 API 请求；按授权范围访问。</text>
+    <path d="M1230 738 H1140" class="native-line"/>
+    <text x="1182" y="718" text-anchor="middle" font-size="20" fill="#14766c">API 调用</text>
+    <path d="M1890 600 H1915 V796 H1185 V752 H1140" class="external-line"/>
+    <rect x="1510" y="783" width="252" height="26" rx="5" fill="#f5f4ef"/>
+    <text x="1520" y="803" font-size="20" fill="#a5671c">直接 API · 绕过 MCP</text>
+
+    <rect x="1230" y="819" width="660" height="276" rx="18" class="external"/>
+    <text x="1255" y="854" class="heading amber">执行闭环 · 需要外部实现</text>
+    <rect x="1255" y="880" width="184" height="45" rx="10" class="external"/>
+    <text x="1347" y="909" text-anchor="middle" class="body">领取 / 排队</text>
+    <path d="M1444 902 H1461" class="external-line"/>
+    <rect x="1466" y="880" width="184" height="45" rx="10" class="external"/>
+    <text x="1558" y="909" text-anchor="middle" class="body">工具执行</text>
+    <path d="M1655 902 H1672" class="external-line"/>
+    <rect x="1677" y="880" width="184" height="45" rx="10" class="external"/>
+    <text x="1769" y="909" text-anchor="middle" class="body">结果 / 验收</text>
+    <text x="1255" y="964" class="body">调度、并发、重试、幂等与验收策略</text>
+    <text x="1255" y="999" class="body">代码 / 浏览器 / 测试 / 文件等工具</text>
+    <text x="1255" y="1034" class="body">结果与产物通过 API 回写任务</text>
+    <text x="1255" y="1070" class="small">任务锁 / 租约等领取协议需自建</text>
+    <path d="M1135 1032 H1225" class="external-line"/>
+    <text x="1181" y="1014" text-anchor="middle" font-size="20" fill="#a5671c">签名事件</text>
+  </g>
+
+  <text x="1230" y="1130" class="small">可用 Webhook 或轮询触发；接入接口本身不承担自主执行。</text>
+
+  <text x="50" y="1190" class="section">对后期的意义：复用管理层，补齐执行层</text>
+  <g>
+    <rect x="50" y="1216" width="590" height="235" rx="18" fill="#e8f2ee"/>
+    <text x="75" y="1260" class="heading teal">可复用 · 任务入口与控制面</text>
+    <text x="75" y="1303" class="body">统一人和 Agent 的待办、状态与结果记录</text>
+    <text x="75" y="1341" class="body">参考任务模型、权限、事件与集成设计</text>
+    <text x="75" y="1379" class="body">减少管理界面和基础业务的建设成本</text>
+    <text x="75" y="1420" class="small">意义：为执行系统提供可视化管理基础</text>
+
+    <rect x="675" y="1216" width="590" height="235" rx="18" fill="#fff2de" stroke="#a5671c" stroke-width="2" stroke-dasharray="9 6"/>
+    <text x="700" y="1260" class="heading amber">可扩展 · Agent 工作闭环</text>
+    <text x="700" y="1303" class="body">领取与调度 → 执行日志 → 结果验收</text>
+    <text x="700" y="1341" class="body">补充产物链接、失败恢复和人工审批</text>
+    <text x="700" y="1379" class="body">后续再探索多 Agent 分工与依赖调度</text>
+    <text x="700" y="1420" class="small">第一步：验证一个 Agent 完成一条任务</text>
+
+    <rect x="1300" y="1216" width="590" height="235" rx="18" fill="#eaece5"/>
+    <text x="1325" y="1260" class="heading">研究边界 · 明确价值判断</text>
+    <text x="1325" y="1303" class="body">适合研究：管理后台、数据模型、接口</text>
+    <text x="1325" y="1341" class="body">自主规划和执行编排的直接参考有限</text>
+    <text x="1325" y="1379" class="body">依赖图是关系展示，不是执行 DAG 引擎</text>
+    <text x="1325" y="1420" class="small">外部执行层是扩展方案，尚未验证实现</text>
+  </g>
+
+  <line x1="50" y1="1482" x2="1890" y2="1482" stroke="#d1dad2" stroke-width="1.5"/>
+  <text x="50" y="1520" class="small">许可证：Source-Available；允许内部使用，向外部客户开放或提供托管 SaaS 需商业许可。</text>
+  <text x="50" y="1555" class="small">依据：GitHub 源码与官方文档（2026-10-04）；未做实际部署或端到端运行验证。Agent 执行闭环为建议扩展。</text>
+</svg>

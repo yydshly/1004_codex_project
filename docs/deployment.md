@@ -1,6 +1,13 @@
 # Web 演示与部署
 
-本仓库把多个静态演示汇集到同一个 GitHub Pages 站点。网站入口是项目索引，每个演示使用独立子路径。初始化只准备目录与手动工作流，不会自动发布网站。
+本仓库把多个研究网页汇集到同一个 GitHub Pages 站点。网站入口是项目索引，每个项目使用独立子路径。仓库采用 GitHub Actions 手动发布，提交推送后需要触发部署工作流。
+
+## **研究网页入口**
+
+- [项目研究总索引](https://yydshly.github.io/1004_codex_project/)
+- [001 · TaskView Community 研究网页](https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/)，整理 [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community) 的能力、原理、场景、输入输出与 Agent 扩展价值。
+
+这里部署的是原创研究网页及总览图。上游 TaskView 及其数据库、MCP 和 Agent 执行环境需要另行部署。
 
 ## 静态演示
 
