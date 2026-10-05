@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Claude Code Best Practice 中文研究：以完整模块总图梳理 47 项功能主题、8 组 63 个条目，说明技术机制、使用入口、代码审查与开发场景，以及项目知识沉淀和工作流复用的价值。">
+  <meta name="theme-color" content="#f5f4ee">
+  <title>Claude Code Best Practice · 能力、原理与价值</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23252d28'/%3E%3Cpath d='M9 10h14M9 16h9M9 22h14' stroke='%23e4a385' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./supplement.css">
+  <script src="./app.js" defer></script>
+  <script src="./supplement.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <aside class="sidebar">
+    <a class="brand" href="#overview"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>开源项目研究集<small>RESEARCH NOTE / 006</small></span></a>
+    <div class="sidebar-title">Claude Code<br>Best Practice<span>能力 · 原理 · 价值</span></div>
+    <nav class="section-nav" aria-label="研究章节">
+      <a class="active" href="#overview" aria-current="location"><span>01</span>整体理解</a>
+      <a href="#capabilities"><span>02</span>能力地图</a>
+      <a href="#mechanism"><span>03</span>工作原理</a>
+      <a href="#workflow"><span>04</span>真实工作流</a>
+      <a href="#value"><span>05</span>场景与价值</a>
+      <a href="#start"><span>06</span>如何借鉴</a>
+      <a href="#practice"><span>07</span>选用与实践</a>
+      <a href="#sources"><span>08</span>证据与来源</a>
+    </nav>
+    <div class="sidebar-bottom"><span class="status-dot"></span>源码与官方文档研究<p>核查于 2026.10.05<br>交互内容用于解释流程</p><a class="catalog-link" href="../../index.html">返回研究集 <span aria-hidden="true">↗</span></a></div>
+  </aside>
+  <main id="main">
+    <header class="topbar"><span>工具与工程 / AI 开发流程</span><div class="topbar-links"><a class="catalog-link mobile-catalog" href="../../index.html">研究集 <span aria-hidden="true">↗</span></a><a href="https://github.com/shanraisshan/claude-code-best-practice" target="_blank" rel="noopener noreferrer">查看原仓库 <span aria-hidden="true">↗</span></a></div></header>
+    <section class="intro section" id="overview" aria-labelledby="page-title">
+      <p class="eyebrow"><span class="tiny-square"></span> CLAUDE-CODE-BEST-PRACTICE</p>
+      <div class="intro-grid"><div><h1 id="page-title">把 Claude Code 的用法，<br>整理成<span>可复用的流程。</span></h1><p class="intro-copy">社区学习资料、配置模板与工作流参考实现。用项目记忆、技能、任务分工与工具连接组织开发，把有效做法保存下来。</p><div class="intro-tags"><span>学习资料</span><span>配置模板</span><span>工作流示例</span></div></div><div class="intro-note"><span class="note-kicker">先建立这个理解</span><p>仓库提供<span>方法与模板</span>，<br>Claude Code 负责<span>执行</span>。</p><a data-source="CLAUDE.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/CLAUDE.md" target="_blank" rel="noopener noreferrer">作者对仓库的定位 ↗</a></div></div>
+      <figure class="module-map-guide" aria-labelledby="module-guide-title">
+        <a class="module-map-banner" href="./module-map.html"><div class="module-guide-heading"><div><span class="small-label">完整模块总图 / 技术机制 / 使用入口</span><h2 id="module-guide-title">一眼看清所有模块，再按需放大。</h2><p>47 项功能主题 · 8 组 63 个条目 · 每项附机制、用法与来源</p></div><strong>打开可缩放总图 →</strong></div><img src="./assets/module-map.png" width="4400" height="3800" fetchpriority="high" alt="Claude Code Best Practice 完整模块总图：知识与上下文、执行与协作、配置权限与扩展、会话体验、审查与持续工作、外部系统、本库参考实现、资料与生态导航"></a>
+        <figcaption>总图覆盖固定版本 README 的全部功能主题，并加入本库示例和资料目录。点击进入查看器，可按八组定位、缩放、下载 PNG / SVG，或打开各模块来源。</figcaption>
+      </figure>
+      <div class="project-summary" aria-label="能力、模块、使用场景与意义">
+        <article><span class="small-label">能力是什么</span><h3>把做法变成可复用流程</h3><p>保存项目知识、封装重复任务、分配子任务、连接工具，并明确输出与验证步骤。</p></article>
+        <article><span class="small-label">模块有哪些</span><h3>八组模块，一张总图</h3><p>知识与上下文、执行与协作、配置权限与扩展、会话体验、审查与持续工作、外部系统、本库示例、资料导航。</p></article>
+        <article><span class="small-label">使用场景是什么</span><h3>重复任务与多步骤开发</h3><p>代码研究与审查、复杂功能实施、团队交接、资料维护，以及浏览器、API 与协作平台接入。</p></article>
+        <article><span class="small-label">意义是什么</span><h3>少重复说明，更容易交接</h3><p>沉淀知识与有效步骤，减少遗漏，让结果可核对；结合适配、维护和执行成本判断实际收益。</p></article>
+      </div>
+      <figure class="overview-map" id="overview-map" aria-labelledby="map-caption">
+        <div class="map-heading"><span>能力从哪里来？</span><span class="map-subtitle">三个层次，共同完成一次任务</span></div>
+        <div class="map-layer layer-repo"><div class="layer-label"><span>01 / 本仓库</span><strong>资料与模板</strong></div><div class="layer-body"><div class="map-pills"><span>实践指南</span><span>项目规则</span><span>Commands</span><span>Skills</span><span>Agent 定义</span><span>Hooks 脚本</span></div><p>说明怎么做，提供可加载的指令、配置与示例。</p></div></div>
+        <div class="map-connector"><span>加载指令与配置</span><i aria-hidden="true">↓</i></div>
+        <div class="map-layer layer-runtime"><div class="layer-label"><span>02 / CLAUDE CODE</span><strong>组织与执行</strong></div><div class="layer-body"><div class="runtime-loop"><span>理解与收集上下文</span><b aria-hidden="true">→</b><span>模型选择工具</span><b aria-hidden="true">→</b><span>执行与验证</span><b aria-hidden="true">↺</b></div><p>管理上下文、启动子任务、调用工具、处理权限和事件。</p></div></div>
+        <div class="map-connector"><span>调用工具，接收结果</span><i aria-hidden="true">↓</i></div>
+        <div class="map-layer layer-tools"><div class="layer-label"><span>03 / 实际工具</span><strong>操作与证据</strong></div><div class="layer-body"><div class="map-pills"><span>文件 / 终端</span><span>测试 / 构建</span><span>浏览器</span><span>API / MCP 服务</span></div><p>实际读取、修改、运行和查询；结果反馈给模型。</p></div></div>
+        <div class="map-outcome"><span>组织这些能力带来的价值</span><strong>重复步骤可复用 <i>·</i> 任务交接更清楚 <i>·</i> 结果有验证依据</strong></div>
+        <figcaption id="map-caption">原创理解图。仓库列出的 Claude Code 特性和外部项目，需要分别判断是否已配置、可使用。<a href="#sources">查看研究依据 ↓</a></figcaption>
+      </figure>
+      <div class="overview-facts"><div><span>主要交付</span><strong>Markdown + 配置 + 脚本</strong></div><div><span>运行依赖</span><strong>Claude Code 与所调用的工具</strong></div><div><span>适合借鉴</span><strong>重复任务与多步骤开发</strong></div></div>
+    </section>
+
+    <section class="section" id="capabilities" aria-labelledby="capability-title">
+      <div class="section-heading"><div><p class="eyebrow">02 / 能力地图</p><h2 id="capability-title">六种机制，各自解决一个问题。</h2></div><span class="section-aside">选择一项，查看输入、机制与产出</span></div>
+      <div class="capability-layout"><div class="capability-tabs" role="tablist" aria-label="Claude Code 扩展机制" aria-orientation="vertical">
+        <button type="button" id="tab-memory" role="tab" aria-selected="true" aria-controls="capability-panel" data-capability="memory"><span class="tab-icon" aria-hidden="true">01</span><span><strong>项目规则与记忆</strong><small>减少反复解释项目</small></span><b aria-hidden="true">↗</b></button>
+        <button type="button" id="tab-command" role="tab" aria-selected="false" aria-controls="capability-panel" tabindex="-1" data-capability="command"><span class="tab-icon" aria-hidden="true">02</span><span><strong>Commands · 任务入口</strong><small>重复流程，一次调用</small></span><b aria-hidden="true">↗</b></button>
+        <button type="button" id="tab-skill" role="tab" aria-selected="false" aria-controls="capability-panel" tabindex="-1" data-capability="skill"><span class="tab-icon" aria-hidden="true">03</span><span><strong>Skills · 可复用做法</strong><small>需要时，再提供细节</small></span><b aria-hidden="true">↗</b></button>
+        <button type="button" id="tab-agent" role="tab" aria-selected="false" aria-controls="capability-panel" tabindex="-1" data-capability="agent"><span class="tab-icon" aria-hidden="true">04</span><span><strong>Subagents · 任务分工</strong><small>独立上下文，交回结果</small></span><b aria-hidden="true">↗</b></button>
+        <button type="button" id="tab-hook" role="tab" aria-selected="false" aria-controls="capability-panel" tabindex="-1" data-capability="hook"><span class="tab-icon" aria-hidden="true">05</span><span><strong>Hooks · 事件脚本</strong><small>事件发生时触发操作</small></span><b aria-hidden="true">↗</b></button>
+        <button type="button" id="tab-mcp" role="tab" aria-selected="false" aria-controls="capability-panel" tabindex="-1" data-capability="mcp"><span class="tab-icon" aria-hidden="true">06</span><span><strong>MCP · 外部工具连接</strong><small>接入真实工具与数据</small></span><b aria-hidden="true">↗</b></button>
+      </div><article class="capability-panel" id="capability-panel" role="tabpanel" aria-labelledby="tab-memory" tabindex="0">
+        <div class="panel-top"><span class="pill">仓库模板 + 原生机制</span><span class="panel-index" id="capability-index">01 / 06</span></div>
+        <h3 id="capability-name">让新会话知道项目怎么工作。</h3><p id="capability-description">把目录结构、构建与测试命令、开发约定写进 CLAUDE.md；按目录组织规则，用记忆保存可重复使用的经验。</p>
+        <dl class="mechanism-facts"><div><dt>你提供什么</dt><dd id="capability-input">项目说明、路径规则、可持续维护的经验记录。</dd></div><div><dt>运行时怎么处理</dt><dd id="capability-process">Claude Code 加载相关文字，模型结合实际源码进行判断。</dd></div><div><dt>能得到什么</dt><dd id="capability-output">更一致的项目上下文，减少重复输入与环境摸索。</dd></div></dl>
+        <div class="code-example"><span id="capability-file">CLAUDE.md · 简化示意</span><pre><code id="capability-code"># 项目约定
+构建：npm run build
+测试：npm test
+新增功能沿用现有目录与命名。</code></pre></div>
+        <p class="panel-boundary" id="capability-boundary">文字规范进入模型上下文；强制操作限制需要权限配置或能阻断的事件检查。</p><a class="text-link" id="capability-source" data-source="CLAUDE.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/CLAUDE.md" target="_blank" rel="noopener noreferrer">查看仓库依据 ↗</a>
+      </article></div>
+      <p class="footnote">这里的六项用于解释职责。当前 Claude Code 已将自定义 Commands 并入 Skills，旧的 .claude/commands/ 文件继续兼容；“Command → Agent → Skill”是组织方式。<a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener noreferrer">官方说明 ↗</a></p>
+    </section>
+
+    <section class="section" id="mechanism" aria-labelledby="mechanism-title">
+      <div class="section-heading"><div><p class="eyebrow">03 / 工作原理</p><h2 id="mechanism-title">模型做判断，工具做操作，结果再反馈。</h2></div><span class="section-aside">Agentic loop / 代理执行循环</span></div>
+      <p class="section-lead">Markdown 文件提供任务知识；Claude Code 把相关指令、源码和工具结果放进上下文，驱动一次次推理与执行。点击下面的步骤，查看各环节的职责。</p>
+      <ol class="loop-steps" aria-label="代理执行循环">
+        <li><button type="button" data-loop="0" class="selected" aria-pressed="true"><span>01</span><strong>读取任务</strong><small>目标与验收条件</small></button></li>
+        <li><button type="button" data-loop="1" aria-pressed="false"><span>02</span><strong>收集上下文</strong><small>规则、技能、源码</small></button></li>
+        <li><button type="button" data-loop="2" aria-pressed="false"><span>03</span><strong>决定行动</strong><small>模型选择下一步</small></button></li>
+        <li><button type="button" data-loop="3" aria-pressed="false"><span>04</span><strong>工具执行</strong><small>运行时调度操作</small></button></li>
+        <li><button type="button" data-loop="4" aria-pressed="false"><span>05</span><strong>验证与调整</strong><small>检查结果，继续循环</small></button></li>
+      </ol>
+      <div class="loop-detail" aria-live="polite"><span class="loop-symbol" id="loop-symbol" aria-hidden="true">◎</span><div><span class="detail-owner" id="loop-owner">用户 / 任务定义</span><h3 id="loop-name">先说明要实现什么，以及如何确认成功。</h3><p id="loop-description">例如：修复登录失败，保留现有接口，相关测试通过。清楚的目标和验收条件，能帮助后续每一步围绕同一个任务展开。</p></div><span class="loop-return">反馈 → 下一步</span></div>
+      <div class="principle-grid"><article><span class="small-label">知识按需进入</span><h3>Skills 提供上下文</h3><p>先暴露名称和触发描述，使用时加载完整做法，参考资料按需读取。子代理的 skills 字段也可以预加载技能说明。</p></article><article><span class="small-label">过程分开保存</span><h3>Subagents 隔离上下文</h3><p>研究和搜索日志留在子任务里，主会话接收结果。并行修改同一工作区时，仍需考虑文件冲突。</p></article><article><span class="small-label">执行层承担约束</span><h3>权限与 Hooks 控制操作</h3><p>“必须先测试”是文字要求。程序权限、阻断脚本和实际测试结果，分别承担限制、检查与验证。</p></article></div>
+      <p class="footnote">依据：<a href="https://code.claude.com/docs/en/how-claude-code-works" target="_blank" rel="noopener noreferrer">官方执行循环</a> · <a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener noreferrer">子代理</a> · <a href="https://code.claude.com/docs/en/features-overview" target="_blank" rel="noopener noreferrer">扩展机制与约束</a></p>
+      <div class="execution-trace" id="execution-trace">
+        <div class="subsection-heading"><div><span class="small-label">继续拆开一层 / 从文字到行动</span><h3>同一句请求，如何走到工具执行？</h3></div><span class="demo-label">执行轨迹示意 / 非实测记录</span></div>
+        <p class="trace-intro">以“检查本次改动是否影响已有行为”为例。流程文件先成为模型的上下文，模型产生工具调用，再由运行时执行。下方是简化解释，省略了内部系统指令。</p>
+        <div class="trace-tabs" role="tablist" aria-label="指令到执行的四个环节">
+          <button type="button" id="trace-request" role="tab" aria-selected="true" aria-controls="trace-panel" data-trace="request"><span>01</span>原始请求</button>
+          <button type="button" id="trace-context" role="tab" aria-selected="false" aria-controls="trace-panel" tabindex="-1" data-trace="context"><span>02</span>组织上下文</button>
+          <button type="button" id="trace-tool" role="tab" aria-selected="false" aria-controls="trace-panel" tabindex="-1" data-trace="tool"><span>03</span>调用工具</button>
+          <button type="button" id="trace-feedback" role="tab" aria-selected="false" aria-controls="trace-panel" tabindex="-1" data-trace="feedback"><span>04</span>结果反馈</button>
+        </div>
+        <article class="trace-panel" id="trace-panel" role="tabpanel" aria-labelledby="trace-request" tabindex="0"><div class="trace-explanation"><span class="small-label" id="trace-owner">用户提供 / 本次目标</span><h4 id="trace-title">一句话描述任务，再补齐范围。</h4><p id="trace-description">用户给出检查目标与改动范围。需要明确是当前未提交修改，还是某个提交、分支或 PR，才能取得正确材料。</p><dl><dt>这一环节交付</dt><dd id="trace-output">目标、修改范围、预期检查方式。</dd></dl></div><div class="trace-payload"><span id="trace-label">原始输入 · 示意</span><pre><code id="trace-code">检查当前未提交的修改。
+说明行为变化、可能的问题，
+以及哪些检查已经执行。</code></pre><span class="payload-note">内容用于解释角色与数据交接。</span></div></article>
+        <p class="footnote">模型看到的是组织后的文字和工具结果；工具、独立上下文、权限检查与事件调度由运行框架提供。<a data-source="reports/why-harness-is-important.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/reports/why-harness-is-important.md" target="_blank" rel="noopener noreferrer">仓库对运行框架的分析 ↗</a></p>
+      </div>
+    </section>
+
+    <section class="section" id="workflow" aria-labelledby="workflow-title">
+      <div class="section-heading"><div><p class="eyebrow">04 / 真实工作流</p><h2 id="workflow-title">用一张天气卡片，看清任务如何交接。</h2></div><span class="demo-label"><i></i>流程解释 / 不调用实时 API</span></div>
+      <p class="section-lead">仓库的 /weather-orchestrator 示例固定查询迪拜温度：先取得用户偏好，再委派获取数据，最后生成文件。下面逐步解释当前源码里的实际流程。</p>
+      <div class="weather-demo"><div class="weather-track" aria-label="天气编排的六个步骤">
+        <button type="button" data-weather="0" class="selected" aria-pressed="true"><span>1</span><div><strong>取得用户输入</strong><small>摄氏 / 华氏</small></div></button>
+        <button type="button" data-weather="1" aria-pressed="false"><span>2</span><div><strong>委派 weather-agent</strong><small>任务与单位传给子代理</small></div></button>
+        <button type="button" data-weather="2" aria-pressed="false"><span>3</span><div><strong>调用 weather-fetcher</strong><small>Skill → WebFetch → Open-Meteo</small></div></button>
+        <button type="button" data-weather="3" aria-pressed="false"><span>4</span><div><strong>交回温度与单位</strong><small>主会话检查返回结果</small></div></button>
+        <button type="button" data-weather="4" aria-pressed="false"><span>5</span><div><strong>调用 SVG 生成技能</strong><small>使用已有结果与模板</small></div></button>
+        <button type="button" data-weather="5" aria-pressed="false"><span>6</span><div><strong>写入交付文件</strong><small>weather.svg + output.md</small></div></button>
+      </div><div class="weather-inspector"><div class="inspector-top"><span id="weather-stage">主会话 / Command</span><span id="weather-count">01 / 06</span></div><div class="weather-content" aria-live="polite"><span class="inspector-label">这一环节做什么</span><h3 id="weather-name">明确温度单位。</h3><p id="weather-description">命令要求先用 AskUserQuestion 取得摄氏或华氏的选择，然后把单位传给天气子代理。</p><div class="inspector-code"><span id="weather-file">.claude/commands/weather-orchestrator.md</span><pre><code id="weather-code">/weather-orchestrator
+  ↓ AskUserQuestion
+unit = Celsius | Fahrenheit</code></pre></div><div class="handoff"><span>交给下一环节</span><strong id="weather-output">用户选择的温度单位</strong></div><a class="inspector-source" id="weather-source" data-source=".claude/commands/weather-orchestrator.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/.claude/commands/weather-orchestrator.md" target="_blank" rel="noopener noreferrer">查看这一环节的源码 ↗</a></div><div class="weather-controls"><button type="button" id="weather-prev" disabled aria-label="天气流程：上一步">← 上一步</button><div class="step-progress" aria-hidden="true"><i id="weather-progress"></i></div><button type="button" id="weather-next" aria-label="天气流程：下一步">下一步 →</button></div></div></div>
+      <p class="footnote">源码阅读结论：当前 weather-agent 明确调用 Skill(weather-fetcher)，再由技能指令驱动 WebFetch。部分编排文档仍描述为仅预加载；本页以固定版本的实际文件为准。天气工作流本次未执行。</p>
+      <div class="other-workflows"><article><span class="small-label">功能开发 / RPI</span><h3>研究 → 规划 → 实施</h3><p>先评估需求的可行性，生成产品、体验与技术计划，再按阶段实现、测试、审查和取得用户验收。</p><p class="artifact">产出：RESEARCH.md · PLAN.md · 实施记录</p><a data-source="development-workflows/rpi/rpi-workflow.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/development-workflows/rpi/rpi-workflow.md" target="_blank" rel="noopener noreferrer">RPI 模板与命令 ↗</a></article><article><span class="small-label">资料维护 / 并行研究</span><h3>收集 → 比较 → 更新</h3><p>研究其他 GitHub 工作流仓库，整理流程和组件数量，比较变化后更新本库的 README。</p><p class="artifact">产出：研究结果 · 差异记录 · 更新建议</p><a data-source=".claude/commands/workflows/development-workflows.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/.claude/commands/workflows/development-workflows.md" target="_blank" rel="noopener noreferrer">资料维护命令 ↗</a></article><article><span class="small-label">协作审查 / 跨模型</span><h3>规划 → 第二视角 → 验证</h3><p>教程展示 Claude Code 制定计划，另一模型核对计划与实现，再返回开发会话继续工作。</p><p class="artifact">产出：修订计划 · 审查发现 · 验证记录</p><a data-source="development-workflows/cross-model-workflow/cross-model-workflow.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/development-workflows/cross-model-workflow/cross-model-workflow.md" target="_blank" rel="noopener noreferrer">跨模型使用教程 ↗</a></article></div>
+    </section>
+
+    <section class="section" id="value" aria-labelledby="value-title">
+      <div class="section-heading"><div><p class="eyebrow">05 / 场景与价值</p><h2 id="value-title">选一个实际任务，再判断是否值得引入。</h2></div><span class="section-aside">场景取舍 / 基于能力的研究判断</span></div>
+      <div class="scenario-tabs" role="tablist" aria-label="应用场景">
+        <button type="button" id="scenario-repeat" role="tab" aria-selected="true" aria-controls="scenario-panel" data-scenario="repeat">重复开发任务</button>
+        <button type="button" id="scenario-feature" role="tab" aria-selected="false" aria-controls="scenario-panel" tabindex="-1" data-scenario="feature">复杂功能开发</button>
+        <button type="button" id="scenario-team" role="tab" aria-selected="false" aria-controls="scenario-panel" tabindex="-1" data-scenario="team">团队项目交接</button>
+        <button type="button" id="scenario-research" role="tab" aria-selected="false" aria-controls="scenario-panel" tabindex="-1" data-scenario="research">资料研究与更新</button>
+      </div>
+      <article class="scenario-panel" id="scenario-panel" role="tabpanel" aria-labelledby="scenario-repeat" tabindex="0"><div class="scenario-main"><span class="small-label">从问题开始</span><h3 id="scenario-name">每天都在重复解释同一套检查步骤。</h3><p id="scenario-description">例如提交前检查、变更说明、固定格式的代码审查。把稳定的做法沉淀为一个 Skill 或 Command。</p><div class="scenario-tools" id="scenario-tools"><span>Commands</span><span>Skills</span><span>参考模板</span></div></div><dl class="scenario-results"><div><dt>可获得的价值</dt><dd id="scenario-benefit">减少重复提示，稳定任务输入、执行要求和输出格式。</dd></div><div><dt>如何确认有用</dt><dd id="scenario-check">观察重复输入次数、漏检项和产出是否符合检查清单。</dd></div><div><dt>引入与维护成本</dt><dd id="scenario-cost">需要把有效步骤提炼清楚，并在工具或项目约定改变时更新。</dd></div></dl></article>
+      <div class="value-chain"><span>临时经验</span><i aria-hidden="true">→</i><span>可复用指令</span><i aria-hidden="true">→</i><span>清晰的任务交接</span><i aria-hidden="true">→</i><strong>可检查的工程结果</strong></div>
+      <p class="value-note">价值来自工作方式的改进。实际收益取决于任务、模型、工具与验证质量；本研究没有测量生产效率提升或错误率下降。</p>
+    </section>
+
+    <section class="section" id="start" aria-labelledby="start-title">
+      <div class="section-heading"><div><p class="eyebrow">06 / 如何借鉴</p><h2 id="start-title">从一个经常重复的任务开始。</h2></div></div>
+      <div class="adoption-steps"><article><span>01</span><h3>补齐项目基础信息</h3><p>记录构建、测试、目录约定和验收方式，让新会话能找到正确的工作入口。</p></article><article><span>02</span><h3>选一个流程做成技能</h3><p>从仓库挑选相关模板，换成自己项目的输入、操作步骤、工具和交付要求。</p></article><article><span>03</span><h3>验证后，再增加分工</h3><p>检查实际产出；任务足够复杂时再加入子代理、外部工具或阶段验收。</p></article></div>
+      <div class="boundary-box"><div><span class="small-label">借鉴前，分清这些边界</span><h3>按需要选择模板，<br>按实际结果判断效果。</h3></div><ul><li><strong>运行环境：</strong>示例需要 Claude Code、模型访问，以及对应网络、工具和文件权限。</li><li><strong>外部资源：</strong>README 收录的框架和 MCP 工具需分别安装配置；本库展示其用法与入口。</li><li><strong>权限与约束：</strong>文字中的“只读”“必须”属于任务要求，仍需核对真实工具权限和检查逻辑。</li><li><strong>示例范围：</strong>天气示例固定查询迪拜温度；仓库的 Hooks 脚本主要做通知和日志。</li><li><strong>维护成本：</strong>说明、模型配置和工具字段可能随版本变化，需要与实际文件、官方文档核对。</li></ul></div>
+    </section>
+
+    <section class="section practice-section" id="practice" aria-labelledby="practice-title">
+      <div class="section-heading"><div><p class="eyebrow">07 / 选用与实践</p><h2 id="practice-title">从你的目标，选择最小的组合。</h2></div><span class="section-aside">选用建议与原创适配示例</span></div>
+      <div class="mechanism-chooser"><div class="chooser-input"><label for="mechanism-goal">你现在主要需要什么？</label><select id="mechanism-goal"><option value="repeat">反复执行相同的步骤</option><option value="rules">每次都遵循项目约定</option><option value="delegate">把独立研究或审查分出去</option><option value="event">每次事件发生都执行操作</option><option value="external">访问外部系统的工具与数据</option><option value="once">只完成一次简单任务</option></select><p>先判断触发方式，再考虑上下文、工具和验收。下方取舍属于本页研究建议。</p></div><article class="chooser-result" aria-live="polite"><span class="small-label">建议起点</span><h3 id="recommendation-name">Skill · 一个可重复调用的流程</h3><p id="recommendation-reason">把稳定步骤、参考资料与输出要求保存下来；用户通过 /名称 主动调用，也可按描述由模型选用。</p><div class="chooser-cost"><span>需要承担的成本</span><p id="recommendation-cost">提炼触发条件与验收标准，并随项目约定维护。</p></div><a id="recommendation-link" href="#capabilities" data-jump-capability="skill">查看对应机制 ↑</a></article></div>
+      <div class="selection-table-wrap"><table class="selection-table"><caption>不同机制的主要职责</caption><thead><tr><th scope="col">选项</th><th scope="col">触发与上下文</th><th scope="col">最适合解决</th></tr></thead><tbody><tr><th scope="row">直接提示</th><td>一次请求，使用当前上下文</td><td>单次解释、小范围修改、输入已齐全的任务</td></tr><tr><th scope="row">CLAUDE.md / rules</th><td>会话启动或匹配相关路径时加载</td><td>构建命令、目录约定、跨任务持续使用的知识</td></tr><tr><th scope="row">Skill / Command 入口</th><td>显式调用或按描述发现；默认在当前会话使用</td><td>重复步骤、领域说明、模板与脚本；也可配置 fork</td></tr><tr><th scope="row">Subagent</th><td>被委派任务；使用独立上下文</td><td>大量检索、专门审查、可明确交接的子任务</td></tr><tr><th scope="row">Hook</th><td>匹配的生命周期事件触发</td><td>事件记录、通知、格式化或经验证的阻断检查</td></tr><tr><th scope="row">MCP</th><td>运行时连接服务，模型调用工具</td><td>把外部系统的操作和数据接入任务</td></tr></tbody></table></div>
+      <p class="footnote">当前 Commands 与 Skills 已合并，旧命令目录继续兼容。新建示例采用 Skill 格式，三层编排适合需要分工的任务；简单任务可以直接完成。<a href="https://code.claude.com/docs/en/features-overview" target="_blank" rel="noopener noreferrer">官方职责对照 ↗</a></p>
+
+      <div class="subsection-heading adoption-heading"><div><span class="small-label">把原则落到文件 / 原创教学示例</span><h3>把“检查这次改动”变成一次可复用调用。</h3></div><a class="starter-download" href="./assets/starter/review-starter.zip" download>下载示例包 <span aria-hidden="true">↓</span></a></div>
+      <div class="starter-layout"><div class="starter-instructions"><ol><li><strong>整理项目知识。</strong>把示例中的构建、测试与目录说明换成实际信息，合并进现有 CLAUDE.md。</li><li><strong>保存审查技能。</strong>把示例 SKILL.md 放到 .claude/skills/review-change/，核对当前工具与权限设置。</li><li><strong>主动调用与核对。</strong>在 Claude Code 中输入 /review-change，明确修改范围；再按检查清单核对产出。</li></ol><p class="starter-disclosure">这是本页编写的学习模板，借鉴仓库的组织方式；未在 Claude Code 中运行。示例文字不替代权限设置。</p></div><div class="starter-tree"><span>示例包中的建议目录</span><pre><code>your-project/
+├── CLAUDE.example.md
+├── DELIVERY-CHECKLIST.md
+├── README.md
+└── .claude/skills/review-change/
+    └── SKILL.md</code></pre><p>实际使用前，先填写项目命令与路径。</p></div></div>
+      <div class="starter-files"><details open><summary><span>01 / 项目约定</span><strong>CLAUDE.example.md</strong></summary><div><p>记录项目结构、现有构建与测试命令，以及验收方式；按项目事实补齐后合并到已有说明。</p><pre><code># 项目约定
+构建：填写项目当前的实际命令
+测试：填写项目当前的实际命令
+审查输出：行为变化、具体发现、验证证据
+缺少环境或没有运行时，明确记录原因。</code></pre><a href="./assets/starter/CLAUDE.example.md" download>下载这个示例 ↓</a></div></details><details><summary><span>02 / 可调用技能</span><strong>review-change / SKILL.md</strong></summary><div><p>由用户显式调用，先确定范围，再读取规则和差异，核对问题及检查证据。</p><pre><code>name: review-change
+description: 审查给定范围的代码变更与验证证据
+disable-model-invocation: true
+
+取得明确的 diff 范围 → 读取相关代码
+→ 核对具体发现 → 汇总检查与未验证项</code></pre><a href="./assets/starter/review-change.SKILL.md" download>下载这个示例 ↓</a></div></details><details><summary><span>03 / 验收依据</span><strong>DELIVERY-CHECKLIST.md</strong></summary><div><p>用可复查的输入、文件位置和检查结果判断是否完成；保留没有执行的部分。</p><pre><code>- 修改范围与用户要求是否一致？
+- 发现是否有具体文件位置与依据？
+- 检查命令、结果或未运行原因是否记录？
+- 结论是否区分已验证与仍待确认？</code></pre><a href="./assets/starter/DELIVERY-CHECKLIST.md" download>下载检查清单 ↓</a></div></details></div>
+      <div class="io-contract"><div><span class="small-label">输入 / 输出 / 验收</span><h3>一次任务应该留下什么？</h3></div><dl><div><dt>明确输入</dt><dd>目标、修改范围、相关 diff、项目约定与可执行的检查方式。</dd></div><div><dt>可复查输出</dt><dd>行为变化、问题对应的位置与理由、已执行的检查、尚未验证的部分。</dd></div><div><dt>完成依据</dt><dd>需求是否满足，发现能否复现，相关检查是否通过，阻碍是否已说明。</dd></div><div><dt>失败反馈</dt><dd>记录缺依赖、工具错误、权限拒绝或验证失败；调整后再次核对。</dd></div></dl></div>
+
+      <div class="subsection-heading evaluation-heading"><div><span class="small-label">价值验证 / 避免只看流程变复杂</span><h3>用同一类任务，比较封装前后的变化。</h3></div></div>
+      <div class="evaluation-grid"><article><span>复用收益</span><h4>少解释了什么？</h4><p>记录重复输入、临时补充与遗漏项，检查模板是否减少相同问题。</p></article><article><span>产出质量</span><h4>结果是否可核对？</h4><p>比较需求覆盖、具体证据、未验证项与实际返工，复查每条发现。</p></article><article><span>全部成本</span><h4>付出了多少工作？</h4><p>一起记录首次适配、维护、模型使用、工具执行和子任务协调成本。</p></article></div>
+      <p class="footnote">比较时尽量保持任务类型、代码范围、模型和验收标准一致。本页提供观察维度，不提供未经测量的效率或准确率结论。</p>
+      <div class="migration-notes"><h3>实际迁移时，核对三件事。</h3><div><article><strong>目录与知识加载</strong><p>项目整体约定放根目录，组件规则按工作路径组织。Skills 的触发与预加载需要分别判断。</p></article><article><strong>工具授权的含义</strong><p>Skill 的 allowed-tools 是免确认授权。实际限制需核对权限规则、子代理工具配置与阻断逻辑。</p></article><article><strong>事件脚本的行为</strong><p>本库 Hooks 配置为异步声音与日志处理。异步执行不能作为阻止工具行为的检查点。</p></article></div><p class="footnote"><a data-source="best-practice/claude-memory.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/best-practice/claude-memory.md" target="_blank" rel="noopener noreferrer">知识组织示例</a> · <a href="https://code.claude.com/docs/en/skills#pre-approve-tools-for-a-skill" target="_blank" rel="noopener noreferrer">allowed-tools</a> · <a data-source=".claude/settings.json" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/.claude/settings.json" target="_blank" rel="noopener noreferrer">仓库事件配置</a> · <a href="https://code.claude.com/docs/en/hooks#run-hooks-in-the-background" target="_blank" rel="noopener noreferrer">异步 Hook 边界</a></p></div>
+      <div class="practice-faq"><h3>几个容易混淆的问题</h3><details><summary>读取这个仓库，就能自动掌握所有内容吗？</summary><p>与当前工作路径相关的项目指令会由运行时加载。普通研究报告与外部链接，需要按任务读取；技能通常只在相关或调用时加载完整内容。</p></details><details><summary>写好一段提示，与配置这些机制有什么区别？</summary><p>提示提供目标与知识。运行框架还负责实际工具、上下文分工、权限和事件调度。单次小任务可以直接提示；重复或复杂任务再按需要组织这些能力。</p></details><details><summary>可以把这些文件用到其他编程助手吗？</summary><p>其中的任务知识与检查方法可以改写复用。目录、字段、触发方式、工具名称和权限语义属于具体工具，迁移时需要逐项核对。</p></details><details><summary>“流程执行完成”就代表代码正确吗？</summary><p>完成状态说明任务走到了交付环节。代码行为需要测试、运行观察、审查与验收证据支持，文件和结论应能回到实际输入。</p></details></div>
+    </section>
+
+    <section class="section sources-section" id="sources" aria-labelledby="sources-title">
+      <div class="section-heading"><div><p class="eyebrow">08 / 证据与来源</p><h2 id="sources-title">每个结论，都能回到实际文件。</h2></div><span class="section-aside">资料核查 / 2026.10.05</span></div>
+      <div class="evidence-summary"><div><span class="small-label">研究快照</span><strong>870f39e36b6a</strong><p>上游提交固定于 2026.10.05。<br>代码链接指向这份快照。</p></div><div><span class="small-label">验证范围</span><strong>文档与源码阅读</strong><p>本页为原创研究与交互解释。<br>未执行 Claude Code 工作流。</p></div><div><span class="small-label">资料授权</span><strong>MIT / Shayan Rais</strong><p>上游许可已核查。<br>本页保留作者与来源归属。</p></div></div>
+      <div class="sources-grid"><a data-source="CLAUDE.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/CLAUDE.md" target="_blank" rel="noopener noreferrer"><span>仓库定位与结构</span><small>CLAUDE.md</small><b>↗</b></a><a data-source=".claude/commands/weather-orchestrator.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/.claude/commands/weather-orchestrator.md" target="_blank" rel="noopener noreferrer"><span>天气编排与数据交接</span><small>weather-orchestrator.md</small><b>↗</b></a><a data-source=".claude/agents/weather-agent.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/.claude/agents/weather-agent.md" target="_blank" rel="noopener noreferrer"><span>天气子代理的实际配置</span><small>weather-agent.md</small><b>↗</b></a><a data-source=".claude/hooks/scripts/hooks.py" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/.claude/hooks/scripts/hooks.py" target="_blank" rel="noopener noreferrer"><span>事件声音与日志实现</span><small>hooks.py</small><b>↗</b></a><a data-source="development-workflows/rpi/rpi-workflow.md" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/development-workflows/rpi/rpi-workflow.md" target="_blank" rel="noopener noreferrer"><span>分阶段开发工作流</span><small>rpi-workflow.md</small><b>↗</b></a><a data-source=".mcp.json" href="https://github.com/shanraisshan/claude-code-best-practice/blob/main/.mcp.json" target="_blank" rel="noopener noreferrer"><span>外部 MCP 服务配置</span><small>.mcp.json</small><b>↗</b></a><a href="https://code.claude.com/docs/en/how-claude-code-works" target="_blank" rel="noopener noreferrer"><span>Claude Code 执行原理</span><small>Anthropic 官方文档</small><b>↗</b></a><a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener noreferrer"><span>Skills 与 Commands 机制</span><small>Anthropic 官方文档</small><b>↗</b></a></div>
+    </section>
+    <footer><span>006 / Claude Code Best Practice 研究</span><a href="#overview">回到顶部 ↑</a></footer>
+  </main>
+</body>
+</html>

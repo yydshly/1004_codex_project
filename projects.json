@@ -32,6 +32,21 @@
       "demo_url": "https://yydshly.github.io/1004_codex_project/demos/002-codeflow/"
     },
     {
+      "number": 6,
+      "slug": "claude-code-best-practice",
+      "name": "Claude Code Best Practice · 能力与工作流研究",
+      "summary": "Claude Code 的社区学习资料、配置模板与工作流参考实现：通过项目记忆、Commands / Skills、Subagents、Hooks 与 MCP 组织重复任务和多步骤开发。完整模块总图覆盖 47 项功能主题，按知识与上下文、执行与协作、配置权限与扩展、会话体验、审查与持续工作、外部系统、本库示例和资料导航整理为 8 组 63 个条目，每项说明技术机制与使用入口。适用于代码研究与审查、复杂功能开发、团队交接、资料维护和外部工具接入；价值是沉淀知识、复用流程、减少重复说明与遗漏、明确交接和验收依据。实际推理和工具执行由 Claude Code 与外部服务提供，收益需结合适配、维护和执行成本验证。",
+      "repository": "https://github.com/shanraisshan/claude-code-best-practice",
+      "status": "已完成",
+      "tags": [
+        "Claude Code",
+        "工作流编排",
+        "上下文工程"
+      ],
+      "cover": "assets/module-map.png",
+      "demo_url": "https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/"
+    },
+    {
       "number": 7,
       "slug": "spirula-studio",
       "name": "Spirula Studio · 实拍三维重建与高斯原理",

@@ -1,0 +1,110 @@
+{
+  "title": "Claude Code Best Practice · 完整模块总图",
+  "sha": "870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82",
+  "date": "2026-10-05",
+  "groups": [
+    {
+      "id": "A", "title": "知识与上下文", "question": "让模型知道什么？", "color": "#256c79",
+      "items": [
+        {"names": ["Memory"], "title": "Memory｜项目知识与记忆", "kind": "native", "tech": "CLAUDE.md、路径规则与自动记忆进入相关上下文。", "use": "写真实构建／测试命令；局部约定放 .claude/rules/。", "url": "https://code.claude.com/docs/en/memory"},
+        {"names": ["Skills"], "title": "Skills｜按需加载的做法", "kind": "native", "tech": "SKILL.md + YAML；description 触发，附带资料按需读。", "use": "放 .claude/skills/<name>/；/名称；可设 context: fork。", "url": "https://code.claude.com/docs/en/skills"},
+        {"names": ["Commands"], "title": "Commands｜重复任务入口", "kind": "native", "tech": "自定义命令已并入 Skills；旧 commands/ 仍兼容。", "use": "保存目标、参数和交付要求，再用 /名称 调用。", "url": "https://code.claude.com/docs/en/skills"},
+        {"names": ["Context Window"], "title": "Context Window｜管理上下文", "kind": "native", "tech": "任务、规则、历史与工具返回占用模型上下文。", "use": "/context 看占用；/compact 压缩；/clear 开始新任务。", "url": "https://code.claude.com/docs/en/context-window"},
+        {"names": ["Best Practices"], "title": "Best Practices｜提示与开发方法", "kind": "reference", "tech": "澄清目标、规划、取得证据、分阶段检查与交付。", "use": "按任务选择步骤；把重复要求提炼成项目约定。", "url": "https://code.claude.com/docs/en/best-practices"},
+        {"names": ["Prompt Library"], "title": "Prompt Library｜提示示例", "kind": "reference", "tech": "官方提示库与提示工程教程，属于参考材料。", "use": "选接近任务的示例，替换输入、约束和验收要求。", "url": "https://code.claude.com/docs/en/prompt-library"},
+        {"names": ["AI Terms"], "title": "AI Terms｜术语与共同语言", "kind": "reference", "tech": "解释模型、Agent、上下文和工具等基础概念。", "use": "遇到概念混淆时查术语；本项链接到作者另一仓库。", "url": "https://github.com/shanraisshan/claude-code-codex-cursor-gemini/blob/main/reports/ai-terms.md"}
+      ]
+    },
+    {
+      "id": "B", "title": "执行与协作", "question": "谁来做？怎样交接？", "color": "#3f695a",
+      "items": [
+        {"names": ["Subagents"], "title": "Subagents｜独立任务上下文", "kind": "native", "tech": "agents/*.md；model、tools、skills、memory 等配置。", "use": "/agents 管理；明确委派目标、材料和返回格式。", "url": "https://code.claude.com/docs/en/sub-agents"},
+        {"names": ["Workflows"], "title": "Workflows｜组合任务步骤", "kind": "native", "tech": "用命令／技能组织规划、执行、审查和交付。", "use": "先定义输入输出，再组合；天气入口见 G1。", "url": "https://code.claude.com/docs/en/common-workflows"},
+        {"names": ["Dynamic Workflows"], "title": "Dynamic Workflows｜规模化编排", "kind": "native", "tech": "运行框架编排多阶段子代理，后台显示阶段与结果。", "use": "/workflows 查看；/deep-research 或保存自定义工作流。", "url": "https://code.claude.com/docs/en/workflows"},
+        {"names": ["Agent Teams"], "title": "Agent Teams｜多个会话协作", "kind": "native", "tech": "独立 Claude Code 会话通过任务表与消息协调。", "use": "启用 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1；写清分工。", "url": "https://code.claude.com/docs/en/agent-teams"},
+        {"names": ["Agent View"], "title": "Agent View｜多会话看板", "kind": "native", "tech": "集中分派、观察、进入后台会话；属于预览功能。", "use": "claude agents；/bg 后台化；进入某会话继续处理。", "url": "https://code.claude.com/docs/en/agent-view"},
+        {"names": ["Cross-Session Messaging"], "title": "Cross-Session Messaging｜会话通信", "kind": "native", "tech": "ListAgents 发现会话，SendMessage 传递工作信息。", "use": "/list-agents 查看；用 @会话 或文字指明消息目标。", "url": "https://code.claude.com/docs/en/cross-session-messaging"},
+        {"names": ["Tasks"], "title": "Tasks｜工作项与依赖", "kind": "native", "tech": "任务列表保存状态、依赖；不同产品任务范围有差异。", "use": "/tasks 查看；区分任务清单、后台作业与定时任务。", "url": "reports/claude-global-vs-project-settings.md#tasks-system"},
+        {"names": ["Git Worktrees"], "title": "Git Worktrees｜隔离代码修改", "kind": "native", "tech": "同一 Git 仓库的独立工作目录；仍共享仓库历史。", "use": "claude --worktree；子代理可设 isolation: worktree。", "url": "https://code.claude.com/docs/en/worktrees"}
+      ]
+    },
+    {
+      "id": "C", "title": "配置、权限与扩展", "question": "允许做什么？接什么工具？", "color": "#9b5e38",
+      "items": [
+        {"names": ["Settings"], "title": "Settings｜运行配置与硬约束", "kind": "native", "tech": "settings.json 多级配置：权限、模型、输出、沙箱、按键。", "use": "项目共享与 local 分开；/config、/permissions 核对生效。", "url": "https://code.claude.com/docs/en/settings"},
+        {"names": ["Auto Mode"], "title": "Auto Mode｜自动权限判断", "kind": "native", "tech": "运行时按自动模式评估工具操作，仍受策略约束。", "use": "--permission-mode auto；Shift+Tab 切换可用模式。", "url": "https://code.claude.com/docs/en/permission-modes"},
+        {"names": ["Hooks"], "title": "Hooks｜事件触发的程序", "kind": "native", "tech": "事件 → stdin JSON → 脚本／决策；本库为异步声音与日志。", "use": "在 settings 配事件；同步阻断与异步通知分别验证。", "url": "https://code.claude.com/docs/en/hooks"},
+        {"names": ["MCP Servers"], "title": "MCP Servers｜外部工具协议", "kind": "native", "tech": ".mcp.json 连接服务；本库列 Playwright／Context7／DeepWiki。", "use": "安装服务依赖、配置认证；/mcp 核对工具是否连通。", "url": "https://code.claude.com/docs/en/mcp"},
+        {"names": ["Plugins"], "title": "Plugins｜可分发的扩展包", "kind": "native", "tech": "将 Skills、Agents、Hooks 与 MCP 等打包，市场分发。", "use": "/plugin 发现／安装；核对插件作用域、依赖与配置。", "url": "https://code.claude.com/docs/en/plugins"},
+        {"names": ["CLI Startup Flags"], "title": "CLI Startup Flags｜启动控制", "kind": "native", "tech": "启动参数控制模型、权限、会话与非交互输出。", "use": "claude --help；claude -p 处理脚本任务；先核对参数。", "url": "https://code.claude.com/docs/en/cli-reference"},
+        {"names": ["Devcontainers"], "title": "Devcontainers｜统一开发环境", "kind": "native", "tech": ".devcontainer/ 声明容器、工具链与环境配置。", "use": "按官方示例配置后在容器启动；核对挂载和网络。", "url": "https://code.claude.com/docs/en/devcontainer"},
+        {"names": ["Agent SDK"], "title": "Agent SDK｜程序中嵌入 Agent", "kind": "native", "tech": "Python／TypeScript 库暴露会话、工具与执行循环。", "use": "按 SDK Quickstart 集成；自行处理业务输入与结果。", "url": "https://code.claude.com/docs/en/agent-sdk/overview"}
+      ]
+    },
+    {
+      "id": "D", "title": "会话与交互体验", "question": "如何继续、回退和观察？", "color": "#68578a",
+      "items": [
+        {"names": ["Sessions"], "title": "Sessions｜保存与恢复会话", "kind": "native", "tech": "保留对话历史；恢复／分支决定携带哪些已有上下文。", "use": "--continue／--resume；/resume、/branch；给会话命名。", "url": "https://code.claude.com/docs/en/sessions"},
+        {"names": ["Checkpointing"], "title": "Checkpointing｜回退检查点", "kind": "native", "tech": "记录会话与受追踪的文件编辑；覆盖范围需核对。", "use": "/rewind 或双击 Esc；选择回退内容，重要版本保留 Git。", "url": "https://code.claude.com/docs/en/checkpointing"},
+        {"names": ["Status Line"], "title": "Status Line｜状态栏", "kind": "native", "tech": "settings 的 statusLine 运行程序，输出模型／上下文等状态。", "use": "/statusline 或配置脚本；作者完整实现链接到外部仓库。", "url": "https://code.claude.com/docs/en/statusline"},
+        {"names": ["No Flicker Mode"], "title": "No Flicker Mode｜终端显示", "kind": "native", "tech": "全屏 TUI／无闪烁模式调整终端渲染和滚动体验。", "use": "/tui fullscreen；或 CLAUDE_CODE_NO_FLICKER=1。", "url": "https://code.claude.com/docs/en/fullscreen"},
+        {"names": ["Voice Dictation"], "title": "Voice Dictation｜语音输入", "kind": "native", "tech": "语音转写为任务输入，执行能力仍来自工具与运行时。", "use": "/voice 启用；按当前界面录音；核对转写与语言。", "url": "https://code.claude.com/docs/en/voice-dictation"},
+        {"names": ["Fast Mode"], "title": "Fast Mode｜响应速度模式", "kind": "native", "tech": "更快输出的模型服务模式；可用性与费用单独核对。", "use": "/fast；或 fastMode 配置；不等同于减少验收步骤。", "url": "https://code.claude.com/docs/en/fast-mode"},
+        {"names": ["Advisor"], "title": "Advisor｜难题升级咨询", "kind": "native", "tech": "主模型遇到难题时可咨询配置的顾问模型。", "use": "/advisor；advisorModel／--advisor；核对模型兼容性。", "url": "https://code.claude.com/docs/en/advisor"},
+        {"names": ["Power-ups"], "title": "Power-ups｜交互学习课程", "kind": "native", "tech": "内置动画课程逐项展示特性，仓库记录 10 个主题。", "use": "/powerup；选一课操作；看本库 power-ups 文档。", "url": "best-practice/claude-power-ups.md"}
+      ]
+    },
+    {
+      "id": "E", "title": "审查与持续工作", "question": "怎样检查？什么时候继续？", "color": "#a14552",
+      "items": [
+        {"names": ["Code Review"], "title": "Code Review｜托管 PR 审查", "kind": "native", "tech": "GitHub App 对 PR 作托管审查；与本地技能区分。", "use": "连接仓库并配置审查；本地 /code-review 见下一项。", "url": "https://code.claude.com/docs/en/code-review"},
+        {"names": ["Bundled Skills"], "title": "Bundled Skills｜内置任务技能", "kind": "native", "tech": "随 Claude Code 提供的提示流程，由模型协调工具执行。", "use": "/code-review 审查；/batch 批量改动；/help 查当前列表。", "url": "https://code.claude.com/docs/en/skills#bundled-skills"},
+        {"names": ["Ultrareview"], "title": "Ultrareview｜深入验证审查", "kind": "native", "tech": "云端沙箱里的多代理审查与独立验证。", "use": "/code-review ultra；claude ultrareview [target]。", "url": "https://code.claude.com/docs/en/ultrareview"},
+        {"names": ["Goal"], "title": "Goal｜由完成条件驱动", "kind": "native", "tech": "条件评估器判断已呈现的证据，跨轮继续完成目标。", "use": "/goal <可观察条件>；/goal clear；另行核对实际产物。", "url": "https://code.claude.com/docs/en/goal"},
+        {"names": ["Ralph Wiggum Loop"], "title": "Ralph Wiggum Loop｜迭代插件", "kind": "external", "tech": "插件让任务循环迭代；自演进实现是作者另一个仓库。", "use": "单独安装／克隆相应实现，设置停止条件与成本上限。", "url": "https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum"},
+        {"names": ["Scheduled Tasks"], "title": "Scheduled Tasks｜会话内调度", "kind": "native", "tech": "/loop 与 Cron 工具按时间触发；会话运行状态影响执行。", "use": "/loop 5m 检查状态；任务存续与恢复按当前版本核对。", "url": "https://code.claude.com/docs/en/scheduled-tasks"},
+        {"names": ["Routines"], "title": "Routines｜持久定时与事件工作", "kind": "native", "tech": "云端任务可按时间／事件运行；Desktop 另有本机调度。", "use": "claude.ai/code/routines 或 /schedule；配置环境与验收。", "url": "https://code.claude.com/docs/en/routines"}
+      ]
+    },
+    {
+      "id": "F", "title": "外部系统与入口", "question": "如何触达浏览器、云端和 CI？", "color": "#286c96",
+      "items": [
+        {"names": ["Chrome"], "title": "Chrome｜浏览器连接", "kind": "native", "tech": "Claude Code 与 Chrome 扩展连接，操作浏览器。", "use": "安装并连接扩展，claude --chrome；区别于 MCP 浏览器。", "url": "https://code.claude.com/docs/en/chrome"},
+        {"names": ["Computer Use"], "title": "Computer Use｜电脑交互", "kind": "native", "tech": "通过专用 MCP／桌面功能取得屏幕与交互工具。", "use": "按平台准备连接与权限，描述可观察的界面任务。", "url": "https://code.claude.com/docs/en/computer-use"},
+        {"names": ["Claude Code Web"], "title": "Claude Code Web｜云端会话", "kind": "native", "tech": "云环境取得仓库与工具，不自动共享本机工作目录。", "use": "claude.ai/code；连接仓库，配置环境后分派任务。", "url": "https://code.claude.com/docs/en/claude-code-on-the-web"},
+        {"names": ["Remote Control"], "title": "Remote Control｜远程控制本机会话", "kind": "native", "tech": "远端界面连接本机执行中的 Claude Code 会话。", "use": "/remote-control 或 /rc；保持本机会话可用。", "url": "https://code.claude.com/docs/en/remote-control"},
+        {"names": ["Channels"], "title": "Channels｜推送事件到会话", "kind": "native", "tech": "插件式通道将外部通知／消息推入运行中的会话。", "use": "安装通道插件，--channels 启用并配置发送方。", "url": "https://code.claude.com/docs/en/channels"},
+        {"names": ["Slack"], "title": "Slack｜协作入口", "kind": "native", "tech": "Slack 集成把线程里的请求交给 Claude Code 工作。", "use": "连接 Slack 与项目，在目标线程 @Claude 并给范围。", "url": "https://code.claude.com/docs/en/slack"},
+        {"names": ["GitHub Actions"], "title": "GitHub Actions｜CI 自动化", "kind": "native", "tech": ".github/workflows/ 中由事件启动任务；也链接 GitLab CI。", "use": "配置工作流、身份和权限，在 PR／Issue／定时事件执行。", "url": "https://code.claude.com/docs/en/github-actions"},
+        {"names": ["Artifacts"], "title": "Artifacts｜成果展示与分享", "kind": "native", "tech": "Artifact 工具与分享入口组织可展示的交付内容。", "use": "生成成果后核对内容和范围，再通过 /share 等入口分享。", "url": "https://code.claude.com/docs/en/artifacts"},
+        {"names": ["Deep Links"], "title": "Deep Links｜链接启动任务", "kind": "native", "tech": "claude-cli://open?repo=…&q=… 携带仓库与任务信息。", "use": "按官方格式构造链接，让已安装的 CLI 打开指定任务。", "url": "https://code.claude.com/docs/en/deep-links"}
+      ]
+    },
+    {
+      "id": "G", "title": "仓库自带的示例与模板", "question": "哪些文件可以真的拿来改？", "color": "#3d7750",
+      "items": [
+        {"names": [], "title": "G1 天气编排｜数据 → SVG 图卡", "kind": "sample", "tech": "命令 → weather-agent → fetcher Skill；WebFetch 查固定迪拜 Open-Meteo → SVG Skill。", "use": "/weather-orchestrator 选 C／F；输出 weather.svg + output.md。", "url": ".claude/commands/weather-orchestrator.md"},
+        {"names": [], "title": "G2 PKT 时间｜比较三种入口", "kind": "sample", "tech": "命令、time-agent-pkt、Skill 都用 TZ=Asia/Karachi + date。", "use": "/time-command、/time-skill 或委派 time-agent-pkt；需 Bash。", "url": "implementation/claude-commands-implementation.md"},
+        {"names": [], "title": "G3 团队建流程｜迪拜时间图卡", "kind": "sample", "tech": "团队教程生成 Command → Agent → Skill；TZ=Asia/Dubai。", "use": "进入 agent-teams/，启动 claude，/time-orchestrator。", "url": "implementation/claude-agent-teams-implementation.md"},
+        {"names": [], "title": "G4 RPI｜研究 → 计划 → 实施", "kind": "sample", "tech": "Research／Plan／Implement 命令 + 8 个角色 + 分阶段验收。", "use": "/rpi:research → /rpi:plan → /rpi:implement；先适配模板。", "url": "development-workflows/rpi/rpi-workflow.md"},
+        {"names": [], "title": "G5 资料维护｜调研 → 比较 → 更新", "kind": "sample", "tech": "维护 Concepts、4 类规范、开发流程、Skills／Agents 集合。", "use": "workflows/ 下相应斜杠命令；核对差异、来源与 changelog。", "url": ".claude/commands/workflows/best-practice/workflow-concepts.md"},
+        {"names": [], "title": "G6 演示与浏览器｜输出资料", "kind": "sample", "tech": "3 个演示代理 + 3 个演示技能；agent-browser 另依赖 CLI。", "use": "针对目标演示稿委派代理；改结构／样式；浏览器先装依赖。", "url": ".claude/agents/presentation-claude-code.md"},
+        {"names": [], "title": "G7 跨模型教程｜第二视角核对", "kind": "sample", "tech": "两个终端：计划 → 另一模型审查 → 实施 → 再验证。", "use": "人工传递计划、diff 与结果；外部 Plugin／MCP／Router 另装。", "url": "development-workflows/cross-model-workflow/cross-model-workflow.md"},
+        {"names": [], "title": "配置样例｜通知、规则和状态", "kind": "sample", "tech": "root: 10 Commands／11 Agents／7 Skills；JSON、Python、规则。", "use": "选取需要的文件；保留已有配置；.codex 也只有参考文件。", "url": "CLAUDE.md"}
+      ]
+    },
+    {
+      "id": "H", "title": "资料、生态与查阅路径", "question": "从哪里继续找？", "color": "#8b7040",
+      "items": [
+        {"names": [], "title": "规范与实录｜best-practice/ · implementation/", "kind": "reference", "tech": "字段、层级与入口说明；实现记录含截图与演示。", "use": "先查规范，再读关联示例；截图不是本机复现证据。", "url": "best-practice/"},
+        {"names": [], "title": "深入报告｜reports/（12 篇）", "kind": "reference", "tech": "SDK／CLI、浏览器、全局／项目、Mono-repo、记忆与工具。", "use": "另含限额、Agent／Command／Skill、退化、Harness、Spinner、天气迭代。", "url": "reports/"},
+        {"names": [], "title": "课程与经验｜tutorial/ · tips/ · videos/", "kind": "reference", "tech": "Day 0 安装／认证；Day 1 入门；83 条技巧与访谈资料。", "use": "按提示、规划、上下文、会话、Git／PR、调试等类别查。", "url": "tutorial/day1/README.md"},
+        {"names": [], "title": "开发流程索引｜12 个外部框架", "kind": "external", "tech": "Superpowers、Matt Pocock、ECC、Spec Kit、gstack、agent-skills。", "use": "另有 OpenSpec、GSD、BMAD、oh-my-claudecode、Compound、HumanLayer。", "url": "README.md#-development-workflows"},
+        {"names": [], "title": "Skills／Agents 集合｜外部素材库", "kind": "external", "tech": "Skills：mattpocock/skills、anthropics/skills、Understand-Anything、scientific-agent-skills、wshobson/agents、awesome-agent-skills、impeccable、agent-skills、claude-skills、draw-json-architecture-skill。", "use": "Agents：agency-agents、awesome-claude-code-subagents；按需要挑选并单独安装。", "url": "README.md#-skill-collections"},
+        {"names": [], "title": "跨模型接入｜Plugin · MCP · Router", "kind": "external", "tech": "codex-plugin-cc、pal-mcp、claude-code-router、CLIProxyAPI。", "use": "按目标选桥接方式；另外准备 CLI、服务、认证与费用。", "url": "README.md#-cross-model-workflows"},
+        {"names": [], "title": "维护与展示｜changelog/ · presentation/", "kind": "reference", "tech": "更新与验证清单、HTML 演示稿、配图和模板资料。", "use": "追踪文档变化、查看演示；README 另列对比、订阅与社区。", "url": "changelog/"},
+        {"names": [], "title": "对我们的价值｜稳定重复完成研究", "kind": "reference", "tech": "沉淀输入、证据、输出格式与验收；收益仍需实际比较。", "use": "GitHub 研究 → 模块／机制／边界 → 网页 → 检查与交付。", "url": "README.md#how-to-use"}
+      ]
+    }
+  ]
+}

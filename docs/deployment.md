@@ -7,6 +7,7 @@
 - [项目研究总索引](https://yydshly.github.io/1004_codex_project/)
 - [001 · TaskView Community 研究网页](https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/)，整理 [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community) 的能力、原理、场景、输入输出与 Agent 扩展价值。
 - [002 · CodeFlow 研究网页](https://yydshly.github.io/1004_codex_project/demos/002-codeflow/#understanding)，以理解汇总图引导，说明能力、混合解析与关系推断、十种实际效果、输入输出、CLI / Card / JSON 扩展、使用场景，以及 Source Insight、Ix、GitNexus 的差异。页面包含锁定快照分析 15 个真实源码文件的原生运行器。
+- [006 · Claude Code Best Practice 研究网页](https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/)，以[完整模块总图](https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/module-map.html)引导，覆盖 47 项功能主题、8 组 63 个条目，说明资料与模板的能力、技术机制、使用入口、开发与审查场景，以及知识沉淀、流程复用和验收价值。网页包含机制选择、执行链路说明和原创审查模板；交互不调用 Claude Code 或外部服务。
 
 这里部署的是原创研究网页、理解汇总图和 CodeFlow 固定版本的浏览器运行资源。CodeFlow 原生示例实际解析公开原创 Mini Shop 源码；历史三层影响交互另行标为教学示意。网页不提供生产分析后端，也未部署 Ix、GitNexus、Source Insight；TaskView 及其他服务的数据库、MCP 和 Agent 执行环境需要另行部署。
 

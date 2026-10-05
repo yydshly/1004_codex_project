@@ -1,0 +1,439 @@
+{
+  "sha": "870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82",
+  "featureCount": 47,
+  "groupCount": 8,
+  "rowCount": 63,
+  "dimensions": [
+    4400,
+    3800
+  ],
+  "features": [
+    "Memory",
+    "Skills",
+    "Commands",
+    "Context Window",
+    "Best Practices",
+    "Prompt Library",
+    "AI Terms",
+    "Subagents",
+    "Workflows",
+    "Dynamic Workflows",
+    "Agent Teams",
+    "Agent View",
+    "Cross-Session Messaging",
+    "Tasks",
+    "Git Worktrees",
+    "Settings",
+    "Auto Mode",
+    "Hooks",
+    "MCP Servers",
+    "Plugins",
+    "CLI Startup Flags",
+    "Devcontainers",
+    "Agent SDK",
+    "Sessions",
+    "Checkpointing",
+    "Status Line",
+    "No Flicker Mode",
+    "Voice Dictation",
+    "Fast Mode",
+    "Advisor",
+    "Power-ups",
+    "Code Review",
+    "Bundled Skills",
+    "Ultrareview",
+    "Goal",
+    "Ralph Wiggum Loop",
+    "Scheduled Tasks",
+    "Routines",
+    "Chrome",
+    "Computer Use",
+    "Claude Code Web",
+    "Remote Control",
+    "Channels",
+    "Slack",
+    "GitHub Actions",
+    "Artifacts",
+    "Deep Links"
+  ],
+  "rows": [
+    {
+      "group": "A",
+      "title": "Memory｜项目知识与记忆",
+      "bottom": 260,
+      "url": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "group": "A",
+      "title": "Skills｜按需加载的做法",
+      "bottom": 376,
+      "url": "https://code.claude.com/docs/en/skills"
+    },
+    {
+      "group": "A",
+      "title": "Commands｜重复任务入口",
+      "bottom": 492,
+      "url": "https://code.claude.com/docs/en/skills"
+    },
+    {
+      "group": "A",
+      "title": "Context Window｜管理上下文",
+      "bottom": 608,
+      "url": "https://code.claude.com/docs/en/context-window"
+    },
+    {
+      "group": "A",
+      "title": "Best Practices｜提示与开发方法",
+      "bottom": 724,
+      "url": "https://code.claude.com/docs/en/best-practices"
+    },
+    {
+      "group": "A",
+      "title": "Prompt Library｜提示示例",
+      "bottom": 840,
+      "url": "https://code.claude.com/docs/en/prompt-library"
+    },
+    {
+      "group": "A",
+      "title": "AI Terms｜术语与共同语言",
+      "bottom": 956,
+      "url": "https://github.com/shanraisshan/claude-code-codex-cursor-gemini/blob/main/reports/ai-terms.md"
+    },
+    {
+      "group": "B",
+      "title": "Subagents｜独立任务上下文",
+      "bottom": 260,
+      "url": "https://code.claude.com/docs/en/sub-agents"
+    },
+    {
+      "group": "B",
+      "title": "Workflows｜组合任务步骤",
+      "bottom": 376,
+      "url": "https://code.claude.com/docs/en/common-workflows"
+    },
+    {
+      "group": "B",
+      "title": "Dynamic Workflows｜规模化编排",
+      "bottom": 492,
+      "url": "https://code.claude.com/docs/en/workflows"
+    },
+    {
+      "group": "B",
+      "title": "Agent Teams｜多个会话协作",
+      "bottom": 608,
+      "url": "https://code.claude.com/docs/en/agent-teams"
+    },
+    {
+      "group": "B",
+      "title": "Agent View｜多会话看板",
+      "bottom": 724,
+      "url": "https://code.claude.com/docs/en/agent-view"
+    },
+    {
+      "group": "B",
+      "title": "Cross-Session Messaging｜会话通信",
+      "bottom": 840,
+      "url": "https://code.claude.com/docs/en/cross-session-messaging"
+    },
+    {
+      "group": "B",
+      "title": "Tasks｜工作项与依赖",
+      "bottom": 956,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/reports/claude-global-vs-project-settings.md#tasks-system"
+    },
+    {
+      "group": "B",
+      "title": "Git Worktrees｜隔离代码修改",
+      "bottom": 1072,
+      "url": "https://code.claude.com/docs/en/worktrees"
+    },
+    {
+      "group": "C",
+      "title": "Settings｜运行配置与硬约束",
+      "bottom": 260,
+      "url": "https://code.claude.com/docs/en/settings"
+    },
+    {
+      "group": "C",
+      "title": "Auto Mode｜自动权限判断",
+      "bottom": 376,
+      "url": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "group": "C",
+      "title": "Hooks｜事件触发的程序",
+      "bottom": 492,
+      "url": "https://code.claude.com/docs/en/hooks"
+    },
+    {
+      "group": "C",
+      "title": "MCP Servers｜外部工具协议",
+      "bottom": 608,
+      "url": "https://code.claude.com/docs/en/mcp"
+    },
+    {
+      "group": "C",
+      "title": "Plugins｜可分发的扩展包",
+      "bottom": 724,
+      "url": "https://code.claude.com/docs/en/plugins"
+    },
+    {
+      "group": "C",
+      "title": "CLI Startup Flags｜启动控制",
+      "bottom": 840,
+      "url": "https://code.claude.com/docs/en/cli-reference"
+    },
+    {
+      "group": "C",
+      "title": "Devcontainers｜统一开发环境",
+      "bottom": 956,
+      "url": "https://code.claude.com/docs/en/devcontainer"
+    },
+    {
+      "group": "C",
+      "title": "Agent SDK｜程序中嵌入 Agent",
+      "bottom": 1072,
+      "url": "https://code.claude.com/docs/en/agent-sdk/overview"
+    },
+    {
+      "group": "D",
+      "title": "Sessions｜保存与恢复会话",
+      "bottom": 260,
+      "url": "https://code.claude.com/docs/en/sessions"
+    },
+    {
+      "group": "D",
+      "title": "Checkpointing｜回退检查点",
+      "bottom": 376,
+      "url": "https://code.claude.com/docs/en/checkpointing"
+    },
+    {
+      "group": "D",
+      "title": "Status Line｜状态栏",
+      "bottom": 492,
+      "url": "https://code.claude.com/docs/en/statusline"
+    },
+    {
+      "group": "D",
+      "title": "No Flicker Mode｜终端显示",
+      "bottom": 608,
+      "url": "https://code.claude.com/docs/en/fullscreen"
+    },
+    {
+      "group": "D",
+      "title": "Voice Dictation｜语音输入",
+      "bottom": 724,
+      "url": "https://code.claude.com/docs/en/voice-dictation"
+    },
+    {
+      "group": "D",
+      "title": "Fast Mode｜响应速度模式",
+      "bottom": 840,
+      "url": "https://code.claude.com/docs/en/fast-mode"
+    },
+    {
+      "group": "D",
+      "title": "Advisor｜难题升级咨询",
+      "bottom": 956,
+      "url": "https://code.claude.com/docs/en/advisor"
+    },
+    {
+      "group": "D",
+      "title": "Power-ups｜交互学习课程",
+      "bottom": 1072,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/best-practice/claude-power-ups.md"
+    },
+    {
+      "group": "E",
+      "title": "Code Review｜托管 PR 审查",
+      "bottom": 260,
+      "url": "https://code.claude.com/docs/en/code-review"
+    },
+    {
+      "group": "E",
+      "title": "Bundled Skills｜内置任务技能",
+      "bottom": 376,
+      "url": "https://code.claude.com/docs/en/skills#bundled-skills"
+    },
+    {
+      "group": "E",
+      "title": "Ultrareview｜深入验证审查",
+      "bottom": 492,
+      "url": "https://code.claude.com/docs/en/ultrareview"
+    },
+    {
+      "group": "E",
+      "title": "Goal｜由完成条件驱动",
+      "bottom": 608,
+      "url": "https://code.claude.com/docs/en/goal"
+    },
+    {
+      "group": "E",
+      "title": "Ralph Wiggum Loop｜迭代插件",
+      "bottom": 724,
+      "url": "https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum"
+    },
+    {
+      "group": "E",
+      "title": "Scheduled Tasks｜会话内调度",
+      "bottom": 840,
+      "url": "https://code.claude.com/docs/en/scheduled-tasks"
+    },
+    {
+      "group": "E",
+      "title": "Routines｜持久定时与事件工作",
+      "bottom": 956,
+      "url": "https://code.claude.com/docs/en/routines"
+    },
+    {
+      "group": "F",
+      "title": "Chrome｜浏览器连接",
+      "bottom": 260,
+      "url": "https://code.claude.com/docs/en/chrome"
+    },
+    {
+      "group": "F",
+      "title": "Computer Use｜电脑交互",
+      "bottom": 376,
+      "url": "https://code.claude.com/docs/en/computer-use"
+    },
+    {
+      "group": "F",
+      "title": "Claude Code Web｜云端会话",
+      "bottom": 492,
+      "url": "https://code.claude.com/docs/en/claude-code-on-the-web"
+    },
+    {
+      "group": "F",
+      "title": "Remote Control｜远程控制本机会话",
+      "bottom": 608,
+      "url": "https://code.claude.com/docs/en/remote-control"
+    },
+    {
+      "group": "F",
+      "title": "Channels｜推送事件到会话",
+      "bottom": 724,
+      "url": "https://code.claude.com/docs/en/channels"
+    },
+    {
+      "group": "F",
+      "title": "Slack｜协作入口",
+      "bottom": 840,
+      "url": "https://code.claude.com/docs/en/slack"
+    },
+    {
+      "group": "F",
+      "title": "GitHub Actions｜CI 自动化",
+      "bottom": 956,
+      "url": "https://code.claude.com/docs/en/github-actions"
+    },
+    {
+      "group": "F",
+      "title": "Artifacts｜成果展示与分享",
+      "bottom": 1072,
+      "url": "https://code.claude.com/docs/en/artifacts"
+    },
+    {
+      "group": "F",
+      "title": "Deep Links｜链接启动任务",
+      "bottom": 1188,
+      "url": "https://code.claude.com/docs/en/deep-links"
+    },
+    {
+      "group": "G",
+      "title": "G1 天气编排｜数据 → SVG 图卡",
+      "bottom": 291,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/.claude/commands/weather-orchestrator.md"
+    },
+    {
+      "group": "G",
+      "title": "G2 PKT 时间｜比较三种入口",
+      "bottom": 407,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/implementation/claude-commands-implementation.md"
+    },
+    {
+      "group": "G",
+      "title": "G3 团队建流程｜迪拜时间图卡",
+      "bottom": 523,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/implementation/claude-agent-teams-implementation.md"
+    },
+    {
+      "group": "G",
+      "title": "G4 RPI｜研究 → 计划 → 实施",
+      "bottom": 639,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/development-workflows/rpi/rpi-workflow.md"
+    },
+    {
+      "group": "G",
+      "title": "G5 资料维护｜调研 → 比较 → 更新",
+      "bottom": 755,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/.claude/commands/workflows/best-practice/workflow-concepts.md"
+    },
+    {
+      "group": "G",
+      "title": "G6 演示与浏览器｜输出资料",
+      "bottom": 871,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/.claude/agents/presentation-claude-code.md"
+    },
+    {
+      "group": "G",
+      "title": "G7 跨模型教程｜第二视角核对",
+      "bottom": 987,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/development-workflows/cross-model-workflow/cross-model-workflow.md"
+    },
+    {
+      "group": "G",
+      "title": "配置样例｜通知、规则和状态",
+      "bottom": 1103,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/CLAUDE.md"
+    },
+    {
+      "group": "H",
+      "title": "规范与实录｜best-practice/ · implementation/",
+      "bottom": 260,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/tree/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/best-practice/"
+    },
+    {
+      "group": "H",
+      "title": "深入报告｜reports/（12 篇）",
+      "bottom": 371,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/tree/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/reports/"
+    },
+    {
+      "group": "H",
+      "title": "课程与经验｜tutorial/ · tips/ · videos/",
+      "bottom": 482,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/tutorial/day1/README.md"
+    },
+    {
+      "group": "H",
+      "title": "开发流程索引｜12 个外部框架",
+      "bottom": 624,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/README.md#-development-workflows"
+    },
+    {
+      "group": "H",
+      "title": "Skills／Agents 集合｜外部素材库",
+      "bottom": 859,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/README.md#-skill-collections"
+    },
+    {
+      "group": "H",
+      "title": "跨模型接入｜Plugin · MCP · Router",
+      "bottom": 970,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/README.md#-cross-model-workflows"
+    },
+    {
+      "group": "H",
+      "title": "维护与展示｜changelog/ · presentation/",
+      "bottom": 1081,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/tree/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/changelog/"
+    },
+    {
+      "group": "H",
+      "title": "对我们的价值｜稳定重复完成研究",
+      "bottom": 1192,
+      "url": "https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/README.md#how-to-use"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Claude Code Best Practice 完整模块总图：47 项功能、仓库示例、技术机制与使用入口。">
+  <title>完整模块总图 · Claude Code Best Practice</title>
+  <style>
+    :root{color-scheme:light;--paper:#f4f3eb;--ink:#24352f;--line:#d7dece}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei",sans-serif;height:100dvh;display:flex;flex-direction:column}a{color:inherit;text-underline-offset:4px}header{padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:22px;border-bottom:1px solid var(--line);flex-wrap:wrap;background:#fffdf8}header h1{font-size:18px;margin:0;font-weight:650}.caption{font-size:11px;color:#52635d;margin:7px 0 0;line-height:1.7}.title>a{font-size:11px;display:inline-block;margin-bottom:7px}.controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.controls button,.controls select,.download{font:12px "Microsoft YaHei",sans-serif;padding:9px 11px;border:1px solid var(--line);border-radius:4px;background:var(--paper);color:var(--ink);cursor:pointer;min-height:37px}.controls button:hover,.controls select:hover,.download:hover{background:#e6ebdf}.download{text-decoration:none;display:inline-block}.controls button:focus-visible,.controls select:focus-visible,a:focus-visible{outline:2px solid #a04e32;outline-offset:3px}#zoom-level{font-size:12px;min-width:45px;text-align:center}.viewport{flex:1;min-height:0;overflow:auto;padding:16px;overscroll-behavior:contain;background:#e7e9df;scrollbar-gutter:stable}.plane{width:max-content;min-width:100%;min-height:100%;display:flex;justify-content:center;align-items:flex-start}#poster{display:block;flex:none;border:0;box-shadow:0 3px 18px #24352f15;max-width:none}footer{border-top:1px solid var(--line);font-size:11px;line-height:1.7;padding:7px 22px;display:flex;gap:18px;justify-content:space-between}footer a{white-space:nowrap}@media(max-width:700px){header{padding:12px 14px;gap:12px}header h1{font-size:16px}.caption{font-size:10px}.controls{gap:6px}.controls button,.controls select,.download{font-size:11px;padding:8px}.viewport{padding:8px}footer{padding:7px 14px;font-size:10px;display:block}footer a{display:inline-block;margin-top:3px}}@media print{header,footer{display:none}body{height:auto}.viewport{overflow:visible;padding:0;background:white}.plane{display:block;width:auto;min-width:0}#poster{width:100%!important;height:auto!important;aspect-ratio:44/38;box-shadow:none}@page{size:A3 landscape;margin:8mm}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title"><a href="./index.html#overview">← 返回研究网页</a><h1>Claude Code Best Practice · 完整模块总图</h1><p class="caption">47 项功能 + 仓库示例 + 资料目录。每项说明技术与用法；点击图中的模块查看来源。</p></div>
+    <div class="controls" aria-label="总图查看工具">
+      <label for="area" style="font-size:12px">定位</label><select id="area"><option value="all">整体总览</option><option value="A">A 知识与上下文</option><option value="B">B 执行与协作</option><option value="C">C 配置与扩展</option><option value="D">D 会话与体验</option><option value="E">E 审查与持续工作</option><option value="F">F 外部系统</option><option value="G">G 仓库实际示例</option><option value="H">H 资料与生态</option></select>
+      <button type="button" id="fit">适合窗口</button><button type="button" id="minus" aria-label="缩小总图">−</button><output id="zoom-level" aria-live="polite">—</output><button type="button" id="plus" aria-label="放大总图">+</button><button type="button" id="actual">100%</button>
+      <a class="download" href="./assets/module-map.png" download>PNG 原图 ↓</a><a class="download" href="./assets/module-map.svg" download>SVG 矢量图 ↓</a>
+    </div>
+  </header>
+  <main class="viewport" id="viewport" aria-label="可滚动与缩放的完整模块总图"><div class="plane"><object id="poster" data="./assets/module-map.svg" type="image/svg+xml" aria-label="八组模块，技术细节与使用入口"><p>可直接<a href="./assets/module-map.svg">打开 SVG 总图</a>或<a href="./assets/module-map.png">查看 PNG 原图</a>。</p></object></div></main>
+  <footer><span>固定版本 870f39e36b6a · 核查于 2026-10-05。仓库模板、官方能力与外部生态分别标注；上游流程未在本机执行。</span><a href="https://github.com/shanraisshan/claude-code-best-practice/tree/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82" target="_blank" rel="noopener noreferrer">查看研究版本 ↗</a></footer>
+  <script>
+    "use strict";
+    (()=>{
+      const width=4400,height=3800,panelWidth=1041.5,panelHeight=1360;
+      const viewport=document.getElementById("viewport"),poster=document.getElementById("poster"),area=document.getElementById("area"),level=document.getElementById("zoom-level");
+      let scale=1,fitting=true;
+      function update(next,center=true){
+        const old=scale;
+        const px=(viewport.scrollLeft+viewport.clientWidth/2)/old,py=(viewport.scrollTop+viewport.clientHeight/2)/old;
+        scale=Math.max(.045,Math.min(2.5,next));
+        poster.style.width=`${width*scale}px`;poster.style.height=`${height*scale}px`;
+        level.textContent=`${Math.round(scale*100)}%`;
+        if(center){viewport.scrollLeft=px*scale-viewport.clientWidth/2;viewport.scrollTop=py*scale-viewport.clientHeight/2;}
+      }
+      function fit(){fitting=true;area.value="all";update(Math.min((viewport.clientWidth-32)/width,(viewport.clientHeight-32)/height),false);viewport.scrollTo(0,0);}
+      function zoom(next){fitting=false;update(next);}
+      document.getElementById("fit").addEventListener("click",fit);
+      document.getElementById("plus").addEventListener("click",()=>zoom(scale*1.35));
+      document.getElementById("minus").addEventListener("click",()=>zoom(scale/1.35));
+      document.getElementById("actual").addEventListener("click",()=>zoom(1));
+      area.addEventListener("change",()=>{
+        if(area.value==="all"){fit();return;}
+        fitting=false;const index=area.value.charCodeAt(0)-65;
+        update(Math.min(1.45,Math.max(.55,(viewport.clientWidth-40)/(panelWidth+40))),false);
+        viewport.scrollTo({left:(72+(index%4)*(panelWidth+30))*scale-8,top:(463+Math.floor(index/4)*(panelHeight+30))*scale-8,behavior:"instant"});
+      });
+      addEventListener("resize",()=>{if(fitting)fit();});
+      fit();
+    })();
+  </script>
+</body>
+</html>

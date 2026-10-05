@@ -1,0 +1,780 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4400" height="3800" viewBox="0 0 4400 3800" role="img" aria-labelledby="map-title map-desc">
+<title id="map-title">Claude Code Best Practice · 完整模块总图</title>
+<desc id="map-desc">覆盖固定版本 README 的全部 47 项功能、7 类实际工作流示例，以及资料与生态目录。每项说明技术机制、如何使用与来源。图中模块可点击查看来源。</desc>
+<style>text{font-family:Microsoft YaHei, Noto Sans CJK SC, sans-serif;}a:hover text{fill:#a04e32;}.row-title{letter-spacing:-0.3px;}</style>
+<rect x="0" y="0" width="4400" height="3800" rx="0" fill="#f4f3eb" stroke="none"/>
+<text x="72" y="65" font-size="28" fill="#8b5d3b" font-weight="600" >开源项目研究集 / 006     ·     模块、机制与用法速查</text>
+<text x="72" y="139" font-size="70" fill="#24352f" font-weight="700" >Claude Code Best Practice</text>
+<text x="1170" y="139" font-size="60" fill="#24352f" font-weight="700" >完整模块总图</text>
+<text x="72" y="190" font-size="31" fill="#52635d" font-weight="400" >社区课程 + 配置参考实现 + 生态导航。图中列出功能，不等于仓库已经实现、安装或验证了这些功能。</text>
+<text x="4328" y="62" font-size="26" fill="#52635d" font-weight="400" text-anchor="end">2026-10-05 · 870f39e36b6a</text>
+<rect x="72" y="228" width="1310" height="145" rx="12" fill="#e8eddf" stroke="#d6ddce"/>
+<text x="98" y="271" font-size="33" fill="#24352f" font-weight="650" >01  仓库提供方法与模板</text>
+<text x="98" y="314" font-size="27" fill="#52635d" font-weight="400" >Markdown / YAML / JSON / Python / 参考资料</text>
+<text x="98" y="350" font-size="26" fill="#52635d" font-weight="400" >告诉模型任务是什么、按什么约定完成。</text>
+<rect x="1545" y="228" width="1310" height="145" rx="12" fill="#e5eef0" stroke="#d6ddce"/>
+<text x="1571" y="271" font-size="33" fill="#24352f" font-weight="650" >02  Claude Code 提供执行框架</text>
+<text x="1571" y="314" font-size="27" fill="#52635d" font-weight="400" >模型 + 上下文 + 权限 + 委派 + 事件调度</text>
+<text x="1571" y="350" font-size="26" fill="#52635d" font-weight="400" >模型选择行动，运行时执行并接收反馈。</text>
+<rect x="3018" y="228" width="1310" height="145" rx="12" fill="#f2e7dc" stroke="#d6ddce"/>
+<text x="3044" y="271" font-size="33" fill="#24352f" font-weight="650" >03  工具与服务提供实际操作</text>
+<text x="3044" y="314" font-size="27" fill="#52635d" font-weight="400" >文件 / Shell / Browser / MCP / API / CI</text>
+<text x="3044" y="350" font-size="26" fill="#52635d" font-weight="400" >读取证据、取得外部数据、生成和检查产物。</text>
+<text x="1420" y="316" font-size="59" fill="#7b8d7d" font-weight="400" text-anchor="middle">→</text>
+<text x="2893" y="316" font-size="59" fill="#7b8d7d" font-weight="400" text-anchor="middle">→</text>
+<text x="72" y="424" font-size="28" fill="#52635d" font-weight="400" >阅读：先看分组 → 找模块 → 看“技术 / 使用” → 点击矢量图中的模块查看来源。</text>
+<rect x="2690" y="395" width="24" height="24" rx="5" fill="#e4f0f6" stroke="#246782"/>
+<text x="2726" y="417" font-size="25" fill="#246782" font-weight="400" >官方运行时能力</text>
+<rect x="3091" y="395" width="24" height="24" rx="5" fill="#e5f1e4" stroke="#3d7750"/>
+<text x="3127" y="417" font-size="25" fill="#3d7750" font-weight="400" >本库文件与样例</text>
+<rect x="3492" y="395" width="24" height="24" rx="5" fill="#eeebf5" stroke="#695880"/>
+<text x="3528" y="417" font-size="25" fill="#695880" font-weight="400" >外部项目与生态</text>
+<rect x="3893" y="395" width="24" height="24" rx="5" fill="#f5eddc" stroke="#8b7040"/>
+<text x="3929" y="417" font-size="25" fill="#8b7040" font-weight="400" >资料与研究建议</text>
+<g id="group-A" data-x="72" data-width="1041.5">
+<rect x="72" y="463" width="1041.5" height="1360" rx="16" fill="#fffdf8" stroke="#d7dece"/>
+<rect x="72" y="463" width="1041.5" height="112" rx="16" fill="#e9ede3" stroke="none"/>
+<rect x="72" y="533" width="1041.5" height="42" rx="0" fill="#e9ede3" stroke="none"/>
+<text x="97" y="511" font-size="39" fill="#256c79" font-weight="700" >A  知识与上下文</text>
+<text x="97" y="552" font-size="27" fill="#52635d" font-weight="400" >让模型知道什么？</text>
+<a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener noreferrer" aria-label="Memory｜项目知识与记忆，查看来源">
+<text x="98" y="614" font-size="29" fill="#24352f" font-weight="650" class="row-title">Memory｜项目知识与记忆</text>
+<rect x="1008.5" y="585" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="610" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="650" font-size="23" fill="#256c79" font-weight="550" >技术</text>
+<text x="164" y="650" font-size="25" fill="#52635d" font-weight="400" >CLAUDE.md、路径规则与自动记忆进入相关上下文。</text>
+<text x="98" y="681" font-size="23" fill="#256c79" font-weight="550" >使用</text>
+<text x="164" y="681" font-size="25" fill="#24352f" font-weight="400" >写真实构建／测试命令；局部约定放 .claude/rules/。</text>
+</a>
+<path d="M98,718 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener noreferrer" aria-label="Skills｜按需加载的做法，查看来源">
+<text x="98" y="730" font-size="29" fill="#24352f" font-weight="650" class="row-title">Skills｜按需加载的做法</text>
+<rect x="1008.5" y="701" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="726" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="766" font-size="23" fill="#256c79" font-weight="550" >技术</text>
+<text x="164" y="766" font-size="25" fill="#52635d" font-weight="400" >SKILL.md + YAML；description 触发，附带资料按需读。</text>
+<text x="98" y="797" font-size="23" fill="#256c79" font-weight="550" >使用</text>
+<text x="164" y="797" font-size="25" fill="#24352f" font-weight="400" >放 .claude/skills/&lt;name&gt;/；/名称；可设 context: fork。</text>
+</a>
+<path d="M98,834 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener noreferrer" aria-label="Commands｜重复任务入口，查看来源">
+<text x="98" y="846" font-size="29" fill="#24352f" font-weight="650" class="row-title">Commands｜重复任务入口</text>
+<rect x="1008.5" y="817" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="842" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="882" font-size="23" fill="#256c79" font-weight="550" >技术</text>
+<text x="164" y="882" font-size="25" fill="#52635d" font-weight="400" >自定义命令已并入 Skills；旧 commands/ 仍兼容。</text>
+<text x="98" y="913" font-size="23" fill="#256c79" font-weight="550" >使用</text>
+<text x="164" y="913" font-size="25" fill="#24352f" font-weight="400" >保存目标、参数和交付要求，再用 /名称 调用。</text>
+</a>
+<path d="M98,950 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/context-window" target="_blank" rel="noopener noreferrer" aria-label="Context Window｜管理上下文，查看来源">
+<text x="98" y="962" font-size="29" fill="#24352f" font-weight="650" class="row-title">Context Window｜管理上下文</text>
+<rect x="1008.5" y="933" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="958" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="998" font-size="23" fill="#256c79" font-weight="550" >技术</text>
+<text x="164" y="998" font-size="25" fill="#52635d" font-weight="400" >任务、规则、历史与工具返回占用模型上下文。</text>
+<text x="98" y="1029" font-size="23" fill="#256c79" font-weight="550" >使用</text>
+<text x="164" y="1029" font-size="25" fill="#24352f" font-weight="400" >/context 看占用；/compact 压缩；/clear 开始新任务。</text>
+</a>
+<path d="M98,1066 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener noreferrer" aria-label="Best Practices｜提示与开发方法，查看来源">
+<text x="98" y="1078" font-size="29" fill="#24352f" font-weight="650" class="row-title">Best Practices｜提示与开发方法</text>
+<rect x="1008.5" y="1049" width="78" height="35" rx="5" fill="#f5eddc" stroke="none"/>
+<text x="1047.5" y="1074" font-size="23" fill="#8b7040" font-weight="550" text-anchor="middle">资料</text>
+<text x="98" y="1114" font-size="23" fill="#256c79" font-weight="550" >技术</text>
+<text x="164" y="1114" font-size="25" fill="#52635d" font-weight="400" >澄清目标、规划、取得证据、分阶段检查与交付。</text>
+<text x="98" y="1145" font-size="23" fill="#256c79" font-weight="550" >使用</text>
+<text x="164" y="1145" font-size="25" fill="#24352f" font-weight="400" >按任务选择步骤；把重复要求提炼成项目约定。</text>
+</a>
+<path d="M98,1182 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/prompt-library" target="_blank" rel="noopener noreferrer" aria-label="Prompt Library｜提示示例，查看来源">
+<text x="98" y="1194" font-size="29" fill="#24352f" font-weight="650" class="row-title">Prompt Library｜提示示例</text>
+<rect x="1008.5" y="1165" width="78" height="35" rx="5" fill="#f5eddc" stroke="none"/>
+<text x="1047.5" y="1190" font-size="23" fill="#8b7040" font-weight="550" text-anchor="middle">资料</text>
+<text x="98" y="1230" font-size="23" fill="#256c79" font-weight="550" >技术</text>
+<text x="164" y="1230" font-size="25" fill="#52635d" font-weight="400" >官方提示库与提示工程教程，属于参考材料。</text>
+<text x="98" y="1261" font-size="23" fill="#256c79" font-weight="550" >使用</text>
+<text x="164" y="1261" font-size="25" fill="#24352f" font-weight="400" >选接近任务的示例，替换输入、约束和验收要求。</text>
+</a>
+<path d="M98,1298 H1087.5" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-codex-cursor-gemini/blob/main/reports/ai-terms.md" target="_blank" rel="noopener noreferrer" aria-label="AI Terms｜术语与共同语言，查看来源">
+<text x="98" y="1310" font-size="29" fill="#24352f" font-weight="650" class="row-title">AI Terms｜术语与共同语言</text>
+<rect x="1008.5" y="1281" width="78" height="35" rx="5" fill="#f5eddc" stroke="none"/>
+<text x="1047.5" y="1306" font-size="23" fill="#8b7040" font-weight="550" text-anchor="middle">资料</text>
+<text x="98" y="1346" font-size="23" fill="#256c79" font-weight="550" >技术</text>
+<text x="164" y="1346" font-size="25" fill="#52635d" font-weight="400" >解释模型、Agent、上下文和工具等基础概念。</text>
+<text x="98" y="1377" font-size="23" fill="#256c79" font-weight="550" >使用</text>
+<text x="164" y="1377" font-size="25" fill="#24352f" font-weight="400" >遇到概念混淆时查术语；本项链接到作者另一仓库。</text>
+</a>
+<rect x="92" y="1693" width="1001.5" height="107" rx="6" fill="#f0f2e9" stroke="none"/>
+<text x="107" y="1721" font-size="25" fill="#52635d" font-weight="400" >选用：事实和规则写 Memory；重复做法写 Skill。普通报告需要按任务读取，整库不会</text>
+<text x="107" y="1754" font-size="25" fill="#52635d" font-weight="400" >自动进入上下文。</text>
+</g>
+<g id="group-B" data-x="1143.5" data-width="1041.5">
+<rect x="1143.5" y="463" width="1041.5" height="1360" rx="16" fill="#fffdf8" stroke="#d7dece"/>
+<rect x="1143.5" y="463" width="1041.5" height="112" rx="16" fill="#e9ede3" stroke="none"/>
+<rect x="1143.5" y="533" width="1041.5" height="42" rx="0" fill="#e9ede3" stroke="none"/>
+<text x="1168.5" y="511" font-size="39" fill="#3f695a" font-weight="700" >B  执行与协作</text>
+<text x="1168.5" y="552" font-size="27" fill="#52635d" font-weight="400" >谁来做？怎样交接？</text>
+<a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener noreferrer" aria-label="Subagents｜独立任务上下文，查看来源">
+<text x="1169.5" y="614" font-size="29" fill="#24352f" font-weight="650" class="row-title">Subagents｜独立任务上下文</text>
+<rect x="2080" y="585" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="610" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="650" font-size="23" fill="#3f695a" font-weight="550" >技术</text>
+<text x="1235.5" y="650" font-size="25" fill="#52635d" font-weight="400" >agents/*.md；model、tools、skills、memory 等配置。</text>
+<text x="1169.5" y="681" font-size="23" fill="#3f695a" font-weight="550" >使用</text>
+<text x="1235.5" y="681" font-size="25" fill="#24352f" font-weight="400" >/agents 管理；明确委派目标、材料和返回格式。</text>
+</a>
+<path d="M1169.5,718 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/common-workflows" target="_blank" rel="noopener noreferrer" aria-label="Workflows｜组合任务步骤，查看来源">
+<text x="1169.5" y="730" font-size="29" fill="#24352f" font-weight="650" class="row-title">Workflows｜组合任务步骤</text>
+<rect x="2080" y="701" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="726" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="766" font-size="23" fill="#3f695a" font-weight="550" >技术</text>
+<text x="1235.5" y="766" font-size="25" fill="#52635d" font-weight="400" >用命令／技能组织规划、执行、审查和交付。</text>
+<text x="1169.5" y="797" font-size="23" fill="#3f695a" font-weight="550" >使用</text>
+<text x="1235.5" y="797" font-size="25" fill="#24352f" font-weight="400" >先定义输入输出，再组合；天气入口见 G1。</text>
+</a>
+<path d="M1169.5,834 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/workflows" target="_blank" rel="noopener noreferrer" aria-label="Dynamic Workflows｜规模化编排，查看来源">
+<text x="1169.5" y="846" font-size="29" fill="#24352f" font-weight="650" class="row-title">Dynamic Workflows｜规模化编排</text>
+<rect x="2080" y="817" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="842" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="882" font-size="23" fill="#3f695a" font-weight="550" >技术</text>
+<text x="1235.5" y="882" font-size="25" fill="#52635d" font-weight="400" >运行框架编排多阶段子代理，后台显示阶段与结果。</text>
+<text x="1169.5" y="913" font-size="23" fill="#3f695a" font-weight="550" >使用</text>
+<text x="1235.5" y="913" font-size="25" fill="#24352f" font-weight="400" >/workflows 查看；/deep-research 或保存自定义工作流。</text>
+</a>
+<path d="M1169.5,950 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/agent-teams" target="_blank" rel="noopener noreferrer" aria-label="Agent Teams｜多个会话协作，查看来源">
+<text x="1169.5" y="962" font-size="29" fill="#24352f" font-weight="650" class="row-title">Agent Teams｜多个会话协作</text>
+<rect x="2080" y="933" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="958" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="998" font-size="23" fill="#3f695a" font-weight="550" >技术</text>
+<text x="1235.5" y="998" font-size="25" fill="#52635d" font-weight="400" >独立 Claude Code 会话通过任务表与消息协调。</text>
+<text x="1169.5" y="1029" font-size="23" fill="#3f695a" font-weight="550" >使用</text>
+<text x="1235.5" y="1029" font-size="25" fill="#24352f" font-weight="400" >启用 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1；写清分工。</text>
+</a>
+<path d="M1169.5,1066 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/agent-view" target="_blank" rel="noopener noreferrer" aria-label="Agent View｜多会话看板，查看来源">
+<text x="1169.5" y="1078" font-size="29" fill="#24352f" font-weight="650" class="row-title">Agent View｜多会话看板</text>
+<rect x="2080" y="1049" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="1074" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="1114" font-size="23" fill="#3f695a" font-weight="550" >技术</text>
+<text x="1235.5" y="1114" font-size="25" fill="#52635d" font-weight="400" >集中分派、观察、进入后台会话；属于预览功能。</text>
+<text x="1169.5" y="1145" font-size="23" fill="#3f695a" font-weight="550" >使用</text>
+<text x="1235.5" y="1145" font-size="25" fill="#24352f" font-weight="400" >claude agents；/bg 后台化；进入某会话继续处理。</text>
+</a>
+<path d="M1169.5,1182 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/cross-session-messaging" target="_blank" rel="noopener noreferrer" aria-label="Cross-Session Messaging｜会话通信，查看来源">
+<text x="1169.5" y="1194" font-size="29" fill="#24352f" font-weight="650" class="row-title">Cross-Session Messaging｜会话通信</text>
+<rect x="2080" y="1165" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="1190" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="1230" font-size="23" fill="#3f695a" font-weight="550" >技术</text>
+<text x="1235.5" y="1230" font-size="25" fill="#52635d" font-weight="400" >ListAgents 发现会话，SendMessage 传递工作信息。</text>
+<text x="1169.5" y="1261" font-size="23" fill="#3f695a" font-weight="550" >使用</text>
+<text x="1235.5" y="1261" font-size="25" fill="#24352f" font-weight="400" >/list-agents 查看；用 @会话 或文字指明消息目标。</text>
+</a>
+<path d="M1169.5,1298 H2159" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/reports/claude-global-vs-project-settings.md#tasks-system" target="_blank" rel="noopener noreferrer" aria-label="Tasks｜工作项与依赖，查看来源">
+<text x="1169.5" y="1310" font-size="29" fill="#24352f" font-weight="650" class="row-title">Tasks｜工作项与依赖</text>
+<rect x="2080" y="1281" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="1306" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="1346" font-size="23" fill="#3f695a" font-weight="550" >技术</text>
+<text x="1235.5" y="1346" font-size="25" fill="#52635d" font-weight="400" >任务列表保存状态、依赖；不同产品任务范围有差异。</text>
+<text x="1169.5" y="1377" font-size="23" fill="#3f695a" font-weight="550" >使用</text>
+<text x="1235.5" y="1377" font-size="25" fill="#24352f" font-weight="400" >/tasks 查看；区分任务清单、后台作业与定时任务。</text>
+</a>
+<path d="M1169.5,1414 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/worktrees" target="_blank" rel="noopener noreferrer" aria-label="Git Worktrees｜隔离代码修改，查看来源">
+<text x="1169.5" y="1426" font-size="29" fill="#24352f" font-weight="650" class="row-title">Git Worktrees｜隔离代码修改</text>
+<rect x="2080" y="1397" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="1422" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="1462" font-size="23" fill="#3f695a" font-weight="550" >技术</text>
+<text x="1235.5" y="1462" font-size="25" fill="#52635d" font-weight="400" >同一 Git 仓库的独立工作目录；仍共享仓库历史。</text>
+<text x="1169.5" y="1493" font-size="23" fill="#3f695a" font-weight="550" >使用</text>
+<text x="1235.5" y="1493" font-size="25" fill="#24352f" font-weight="400" >claude --worktree；子代理可设 isolation: worktree。</text>
+</a>
+<rect x="1163.5" y="1693" width="1001.5" height="107" rx="6" fill="#f0f2e9" stroke="none"/>
+<text x="1178.5" y="1721" font-size="25" fill="#52635d" font-weight="400" >选用：独立上下文适合可交接任务；并行写代码需处理文件冲突。团队、子代理、看板</text>
+<text x="1178.5" y="1754" font-size="25" fill="#52635d" font-weight="400" >和 Worktree 分别解决不同问题。</text>
+</g>
+<g id="group-C" data-x="2215" data-width="1041.5">
+<rect x="2215" y="463" width="1041.5" height="1360" rx="16" fill="#fffdf8" stroke="#d7dece"/>
+<rect x="2215" y="463" width="1041.5" height="112" rx="16" fill="#e9ede3" stroke="none"/>
+<rect x="2215" y="533" width="1041.5" height="42" rx="0" fill="#e9ede3" stroke="none"/>
+<text x="2240" y="511" font-size="39" fill="#9b5e38" font-weight="700" >C  配置、权限与扩展</text>
+<text x="2240" y="552" font-size="27" fill="#52635d" font-weight="400" >允许做什么？接什么工具？</text>
+<a href="https://code.claude.com/docs/en/settings" target="_blank" rel="noopener noreferrer" aria-label="Settings｜运行配置与硬约束，查看来源">
+<text x="2241" y="614" font-size="29" fill="#24352f" font-weight="650" class="row-title">Settings｜运行配置与硬约束</text>
+<rect x="3151.5" y="585" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="3190.5" y="610" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="2241" y="650" font-size="23" fill="#9b5e38" font-weight="550" >技术</text>
+<text x="2307" y="650" font-size="25" fill="#52635d" font-weight="400" >settings.json 多级配置：权限、模型、输出、沙箱、按键。</text>
+<text x="2241" y="681" font-size="23" fill="#9b5e38" font-weight="550" >使用</text>
+<text x="2307" y="681" font-size="25" fill="#24352f" font-weight="400" >项目共享与 local 分开；/config、/permissions 核对生效。</text>
+</a>
+<path d="M2241,718 H3230.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/permission-modes" target="_blank" rel="noopener noreferrer" aria-label="Auto Mode｜自动权限判断，查看来源">
+<text x="2241" y="730" font-size="29" fill="#24352f" font-weight="650" class="row-title">Auto Mode｜自动权限判断</text>
+<rect x="3151.5" y="701" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="3190.5" y="726" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="2241" y="766" font-size="23" fill="#9b5e38" font-weight="550" >技术</text>
+<text x="2307" y="766" font-size="25" fill="#52635d" font-weight="400" >运行时按自动模式评估工具操作，仍受策略约束。</text>
+<text x="2241" y="797" font-size="23" fill="#9b5e38" font-weight="550" >使用</text>
+<text x="2307" y="797" font-size="25" fill="#24352f" font-weight="400" >--permission-mode auto；Shift+Tab 切换可用模式。</text>
+</a>
+<path d="M2241,834 H3230.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener noreferrer" aria-label="Hooks｜事件触发的程序，查看来源">
+<text x="2241" y="846" font-size="29" fill="#24352f" font-weight="650" class="row-title">Hooks｜事件触发的程序</text>
+<rect x="3151.5" y="817" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="3190.5" y="842" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="2241" y="882" font-size="23" fill="#9b5e38" font-weight="550" >技术</text>
+<text x="2307" y="882" font-size="25" fill="#52635d" font-weight="400" >事件 → stdin JSON → 脚本／决策；本库为异步声音与日志。</text>
+<text x="2241" y="913" font-size="23" fill="#9b5e38" font-weight="550" >使用</text>
+<text x="2307" y="913" font-size="25" fill="#24352f" font-weight="400" >在 settings 配事件；同步阻断与异步通知分别验证。</text>
+</a>
+<path d="M2241,950 H3230.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/mcp" target="_blank" rel="noopener noreferrer" aria-label="MCP Servers｜外部工具协议，查看来源">
+<text x="2241" y="962" font-size="29" fill="#24352f" font-weight="650" class="row-title">MCP Servers｜外部工具协议</text>
+<rect x="3151.5" y="933" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="3190.5" y="958" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="2241" y="998" font-size="23" fill="#9b5e38" font-weight="550" >技术</text>
+<text x="2307" y="998" font-size="25" fill="#52635d" font-weight="400" >.mcp.json 连接服务；本库列 Playwright／Context7／DeepWiki。</text>
+<text x="2241" y="1029" font-size="23" fill="#9b5e38" font-weight="550" >使用</text>
+<text x="2307" y="1029" font-size="25" fill="#24352f" font-weight="400" >安装服务依赖、配置认证；/mcp 核对工具是否连通。</text>
+</a>
+<path d="M2241,1066 H3230.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/plugins" target="_blank" rel="noopener noreferrer" aria-label="Plugins｜可分发的扩展包，查看来源">
+<text x="2241" y="1078" font-size="29" fill="#24352f" font-weight="650" class="row-title">Plugins｜可分发的扩展包</text>
+<rect x="3151.5" y="1049" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="3190.5" y="1074" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="2241" y="1114" font-size="23" fill="#9b5e38" font-weight="550" >技术</text>
+<text x="2307" y="1114" font-size="25" fill="#52635d" font-weight="400" >将 Skills、Agents、Hooks 与 MCP 等打包，市场分发。</text>
+<text x="2241" y="1145" font-size="23" fill="#9b5e38" font-weight="550" >使用</text>
+<text x="2307" y="1145" font-size="25" fill="#24352f" font-weight="400" >/plugin 发现／安装；核对插件作用域、依赖与配置。</text>
+</a>
+<path d="M2241,1182 H3230.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/cli-reference" target="_blank" rel="noopener noreferrer" aria-label="CLI Startup Flags｜启动控制，查看来源">
+<text x="2241" y="1194" font-size="29" fill="#24352f" font-weight="650" class="row-title">CLI Startup Flags｜启动控制</text>
+<rect x="3151.5" y="1165" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="3190.5" y="1190" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="2241" y="1230" font-size="23" fill="#9b5e38" font-weight="550" >技术</text>
+<text x="2307" y="1230" font-size="25" fill="#52635d" font-weight="400" >启动参数控制模型、权限、会话与非交互输出。</text>
+<text x="2241" y="1261" font-size="23" fill="#9b5e38" font-weight="550" >使用</text>
+<text x="2307" y="1261" font-size="25" fill="#24352f" font-weight="400" >claude --help；claude -p 处理脚本任务；先核对参数。</text>
+</a>
+<path d="M2241,1298 H3230.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/devcontainer" target="_blank" rel="noopener noreferrer" aria-label="Devcontainers｜统一开发环境，查看来源">
+<text x="2241" y="1310" font-size="29" fill="#24352f" font-weight="650" class="row-title">Devcontainers｜统一开发环境</text>
+<rect x="3151.5" y="1281" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="3190.5" y="1306" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="2241" y="1346" font-size="23" fill="#9b5e38" font-weight="550" >技术</text>
+<text x="2307" y="1346" font-size="25" fill="#52635d" font-weight="400" >.devcontainer/ 声明容器、工具链与环境配置。</text>
+<text x="2241" y="1377" font-size="23" fill="#9b5e38" font-weight="550" >使用</text>
+<text x="2307" y="1377" font-size="25" fill="#24352f" font-weight="400" >按官方示例配置后在容器启动；核对挂载和网络。</text>
+</a>
+<path d="M2241,1414 H3230.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/agent-sdk/overview" target="_blank" rel="noopener noreferrer" aria-label="Agent SDK｜程序中嵌入 Agent，查看来源">
+<text x="2241" y="1426" font-size="29" fill="#24352f" font-weight="650" class="row-title">Agent SDK｜程序中嵌入 Agent</text>
+<rect x="3151.5" y="1397" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="3190.5" y="1422" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="2241" y="1462" font-size="23" fill="#9b5e38" font-weight="550" >技术</text>
+<text x="2307" y="1462" font-size="25" fill="#52635d" font-weight="400" >Python／TypeScript 库暴露会话、工具与执行循环。</text>
+<text x="2241" y="1493" font-size="23" fill="#9b5e38" font-weight="550" >使用</text>
+<text x="2307" y="1493" font-size="25" fill="#24352f" font-weight="400" >按 SDK Quickstart 集成；自行处理业务输入与结果。</text>
+</a>
+<rect x="2235" y="1693" width="1001.5" height="107" rx="6" fill="#f0f2e9" stroke="none"/>
+<text x="2250" y="1721" font-size="25" fill="#52635d" font-weight="400" >选用：先核对当前生效配置，再接工具。本库的宽泛权限与个人偏好，需要按你的项目</text>
+<text x="2250" y="1754" font-size="25" fill="#52635d" font-weight="400" >重新判断。</text>
+</g>
+<g id="group-D" data-x="3286.5" data-width="1041.5">
+<rect x="3286.5" y="463" width="1041.5" height="1360" rx="16" fill="#fffdf8" stroke="#d7dece"/>
+<rect x="3286.5" y="463" width="1041.5" height="112" rx="16" fill="#e9ede3" stroke="none"/>
+<rect x="3286.5" y="533" width="1041.5" height="42" rx="0" fill="#e9ede3" stroke="none"/>
+<text x="3311.5" y="511" font-size="39" fill="#68578a" font-weight="700" >D  会话与交互体验</text>
+<text x="3311.5" y="552" font-size="27" fill="#52635d" font-weight="400" >如何继续、回退和观察？</text>
+<a href="https://code.claude.com/docs/en/sessions" target="_blank" rel="noopener noreferrer" aria-label="Sessions｜保存与恢复会话，查看来源">
+<text x="3312.5" y="614" font-size="29" fill="#24352f" font-weight="650" class="row-title">Sessions｜保存与恢复会话</text>
+<rect x="4223" y="585" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="4262" y="610" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="3312.5" y="650" font-size="23" fill="#68578a" font-weight="550" >技术</text>
+<text x="3378.5" y="650" font-size="25" fill="#52635d" font-weight="400" >保留对话历史；恢复／分支决定携带哪些已有上下文。</text>
+<text x="3312.5" y="681" font-size="23" fill="#68578a" font-weight="550" >使用</text>
+<text x="3378.5" y="681" font-size="25" fill="#24352f" font-weight="400" >--continue／--resume；/resume、/branch；给会话命名。</text>
+</a>
+<path d="M3312.5,718 H4302" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/checkpointing" target="_blank" rel="noopener noreferrer" aria-label="Checkpointing｜回退检查点，查看来源">
+<text x="3312.5" y="730" font-size="29" fill="#24352f" font-weight="650" class="row-title">Checkpointing｜回退检查点</text>
+<rect x="4223" y="701" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="4262" y="726" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="3312.5" y="766" font-size="23" fill="#68578a" font-weight="550" >技术</text>
+<text x="3378.5" y="766" font-size="25" fill="#52635d" font-weight="400" >记录会话与受追踪的文件编辑；覆盖范围需核对。</text>
+<text x="3312.5" y="797" font-size="23" fill="#68578a" font-weight="550" >使用</text>
+<text x="3378.5" y="797" font-size="25" fill="#24352f" font-weight="400" >/rewind 或双击 Esc；选择回退内容，重要版本保留 Git。</text>
+</a>
+<path d="M3312.5,834 H4302" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/statusline" target="_blank" rel="noopener noreferrer" aria-label="Status Line｜状态栏，查看来源">
+<text x="3312.5" y="846" font-size="29" fill="#24352f" font-weight="650" class="row-title">Status Line｜状态栏</text>
+<rect x="4223" y="817" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="4262" y="842" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="3312.5" y="882" font-size="23" fill="#68578a" font-weight="550" >技术</text>
+<text x="3378.5" y="882" font-size="25" fill="#52635d" font-weight="400" >settings 的 statusLine 运行程序，输出模型／上下文等状态。</text>
+<text x="3312.5" y="913" font-size="23" fill="#68578a" font-weight="550" >使用</text>
+<text x="3378.5" y="913" font-size="25" fill="#24352f" font-weight="400" >/statusline 或配置脚本；作者完整实现链接到外部仓库。</text>
+</a>
+<path d="M3312.5,950 H4302" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/fullscreen" target="_blank" rel="noopener noreferrer" aria-label="No Flicker Mode｜终端显示，查看来源">
+<text x="3312.5" y="962" font-size="29" fill="#24352f" font-weight="650" class="row-title">No Flicker Mode｜终端显示</text>
+<rect x="4223" y="933" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="4262" y="958" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="3312.5" y="998" font-size="23" fill="#68578a" font-weight="550" >技术</text>
+<text x="3378.5" y="998" font-size="25" fill="#52635d" font-weight="400" >全屏 TUI／无闪烁模式调整终端渲染和滚动体验。</text>
+<text x="3312.5" y="1029" font-size="23" fill="#68578a" font-weight="550" >使用</text>
+<text x="3378.5" y="1029" font-size="25" fill="#24352f" font-weight="400" >/tui fullscreen；或 CLAUDE_CODE_NO_FLICKER=1。</text>
+</a>
+<path d="M3312.5,1066 H4302" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/voice-dictation" target="_blank" rel="noopener noreferrer" aria-label="Voice Dictation｜语音输入，查看来源">
+<text x="3312.5" y="1078" font-size="29" fill="#24352f" font-weight="650" class="row-title">Voice Dictation｜语音输入</text>
+<rect x="4223" y="1049" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="4262" y="1074" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="3312.5" y="1114" font-size="23" fill="#68578a" font-weight="550" >技术</text>
+<text x="3378.5" y="1114" font-size="25" fill="#52635d" font-weight="400" >语音转写为任务输入，执行能力仍来自工具与运行时。</text>
+<text x="3312.5" y="1145" font-size="23" fill="#68578a" font-weight="550" >使用</text>
+<text x="3378.5" y="1145" font-size="25" fill="#24352f" font-weight="400" >/voice 启用；按当前界面录音；核对转写与语言。</text>
+</a>
+<path d="M3312.5,1182 H4302" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/fast-mode" target="_blank" rel="noopener noreferrer" aria-label="Fast Mode｜响应速度模式，查看来源">
+<text x="3312.5" y="1194" font-size="29" fill="#24352f" font-weight="650" class="row-title">Fast Mode｜响应速度模式</text>
+<rect x="4223" y="1165" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="4262" y="1190" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="3312.5" y="1230" font-size="23" fill="#68578a" font-weight="550" >技术</text>
+<text x="3378.5" y="1230" font-size="25" fill="#52635d" font-weight="400" >更快输出的模型服务模式；可用性与费用单独核对。</text>
+<text x="3312.5" y="1261" font-size="23" fill="#68578a" font-weight="550" >使用</text>
+<text x="3378.5" y="1261" font-size="25" fill="#24352f" font-weight="400" >/fast；或 fastMode 配置；不等同于减少验收步骤。</text>
+</a>
+<path d="M3312.5,1298 H4302" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/advisor" target="_blank" rel="noopener noreferrer" aria-label="Advisor｜难题升级咨询，查看来源">
+<text x="3312.5" y="1310" font-size="29" fill="#24352f" font-weight="650" class="row-title">Advisor｜难题升级咨询</text>
+<rect x="4223" y="1281" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="4262" y="1306" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="3312.5" y="1346" font-size="23" fill="#68578a" font-weight="550" >技术</text>
+<text x="3378.5" y="1346" font-size="25" fill="#52635d" font-weight="400" >主模型遇到难题时可咨询配置的顾问模型。</text>
+<text x="3312.5" y="1377" font-size="23" fill="#68578a" font-weight="550" >使用</text>
+<text x="3378.5" y="1377" font-size="25" fill="#24352f" font-weight="400" >/advisor；advisorModel／--advisor；核对模型兼容性。</text>
+</a>
+<path d="M3312.5,1414 H4302" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/best-practice/claude-power-ups.md" target="_blank" rel="noopener noreferrer" aria-label="Power-ups｜交互学习课程，查看来源">
+<text x="3312.5" y="1426" font-size="29" fill="#24352f" font-weight="650" class="row-title">Power-ups｜交互学习课程</text>
+<rect x="4223" y="1397" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="4262" y="1422" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="3312.5" y="1462" font-size="23" fill="#68578a" font-weight="550" >技术</text>
+<text x="3378.5" y="1462" font-size="25" fill="#52635d" font-weight="400" >内置动画课程逐项展示特性，仓库记录 10 个主题。</text>
+<text x="3312.5" y="1493" font-size="23" fill="#68578a" font-weight="550" >使用</text>
+<text x="3378.5" y="1493" font-size="25" fill="#24352f" font-weight="400" >/powerup；选一课操作；看本库 power-ups 文档。</text>
+</a>
+<rect x="3306.5" y="1693" width="1001.5" height="107" rx="6" fill="#f0f2e9" stroke="none"/>
+<text x="3321.5" y="1721" font-size="25" fill="#52635d" font-weight="400" >选用：相关任务恢复会话；新任务重新整理输入。显示、语音与速度模式改善交互体验</text>
+<text x="3321.5" y="1754" font-size="25" fill="#52635d" font-weight="400" >，结果仍要验收。</text>
+</g>
+<g id="group-E" data-x="72" data-width="1041.5">
+<rect x="72" y="1853" width="1041.5" height="1360" rx="16" fill="#fffdf8" stroke="#d7dece"/>
+<rect x="72" y="1853" width="1041.5" height="112" rx="16" fill="#e9ede3" stroke="none"/>
+<rect x="72" y="1923" width="1041.5" height="42" rx="0" fill="#e9ede3" stroke="none"/>
+<text x="97" y="1901" font-size="39" fill="#a14552" font-weight="700" >E  审查与持续工作</text>
+<text x="97" y="1942" font-size="27" fill="#52635d" font-weight="400" >怎样检查？什么时候继续？</text>
+<a href="https://code.claude.com/docs/en/code-review" target="_blank" rel="noopener noreferrer" aria-label="Code Review｜托管 PR 审查，查看来源">
+<text x="98" y="2004" font-size="29" fill="#24352f" font-weight="650" class="row-title">Code Review｜托管 PR 审查</text>
+<rect x="1008.5" y="1975" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="2000" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="2040" font-size="23" fill="#a14552" font-weight="550" >技术</text>
+<text x="164" y="2040" font-size="25" fill="#52635d" font-weight="400" >GitHub App 对 PR 作托管审查；与本地技能区分。</text>
+<text x="98" y="2071" font-size="23" fill="#a14552" font-weight="550" >使用</text>
+<text x="164" y="2071" font-size="25" fill="#24352f" font-weight="400" >连接仓库并配置审查；本地 /code-review 见下一项。</text>
+</a>
+<path d="M98,2108 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/skills#bundled-skills" target="_blank" rel="noopener noreferrer" aria-label="Bundled Skills｜内置任务技能，查看来源">
+<text x="98" y="2120" font-size="29" fill="#24352f" font-weight="650" class="row-title">Bundled Skills｜内置任务技能</text>
+<rect x="1008.5" y="2091" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="2116" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="2156" font-size="23" fill="#a14552" font-weight="550" >技术</text>
+<text x="164" y="2156" font-size="25" fill="#52635d" font-weight="400" >随 Claude Code 提供的提示流程，由模型协调工具执行。</text>
+<text x="98" y="2187" font-size="23" fill="#a14552" font-weight="550" >使用</text>
+<text x="164" y="2187" font-size="25" fill="#24352f" font-weight="400" >/code-review 审查；/batch 批量改动；/help 查当前列表。</text>
+</a>
+<path d="M98,2224 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/ultrareview" target="_blank" rel="noopener noreferrer" aria-label="Ultrareview｜深入验证审查，查看来源">
+<text x="98" y="2236" font-size="29" fill="#24352f" font-weight="650" class="row-title">Ultrareview｜深入验证审查</text>
+<rect x="1008.5" y="2207" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="2232" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="2272" font-size="23" fill="#a14552" font-weight="550" >技术</text>
+<text x="164" y="2272" font-size="25" fill="#52635d" font-weight="400" >云端沙箱里的多代理审查与独立验证。</text>
+<text x="98" y="2303" font-size="23" fill="#a14552" font-weight="550" >使用</text>
+<text x="164" y="2303" font-size="25" fill="#24352f" font-weight="400" >/code-review ultra；claude ultrareview [target]。</text>
+</a>
+<path d="M98,2340 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/goal" target="_blank" rel="noopener noreferrer" aria-label="Goal｜由完成条件驱动，查看来源">
+<text x="98" y="2352" font-size="29" fill="#24352f" font-weight="650" class="row-title">Goal｜由完成条件驱动</text>
+<rect x="1008.5" y="2323" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="2348" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="2388" font-size="23" fill="#a14552" font-weight="550" >技术</text>
+<text x="164" y="2388" font-size="25" fill="#52635d" font-weight="400" >条件评估器判断已呈现的证据，跨轮继续完成目标。</text>
+<text x="98" y="2419" font-size="23" fill="#a14552" font-weight="550" >使用</text>
+<text x="164" y="2419" font-size="25" fill="#24352f" font-weight="400" >/goal &lt;可观察条件&gt;；/goal clear；另行核对实际产物。</text>
+</a>
+<path d="M98,2456 H1087.5" stroke="#e4e8df"/>
+<a href="https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum" target="_blank" rel="noopener noreferrer" aria-label="Ralph Wiggum Loop｜迭代插件，查看来源">
+<text x="98" y="2468" font-size="29" fill="#24352f" font-weight="650" class="row-title">Ralph Wiggum Loop｜迭代插件</text>
+<rect x="1008.5" y="2439" width="78" height="35" rx="5" fill="#eeebf5" stroke="none"/>
+<text x="1047.5" y="2464" font-size="23" fill="#695880" font-weight="550" text-anchor="middle">外部</text>
+<text x="98" y="2504" font-size="23" fill="#a14552" font-weight="550" >技术</text>
+<text x="164" y="2504" font-size="25" fill="#52635d" font-weight="400" >插件让任务循环迭代；自演进实现是作者另一个仓库。</text>
+<text x="98" y="2535" font-size="23" fill="#a14552" font-weight="550" >使用</text>
+<text x="164" y="2535" font-size="25" fill="#24352f" font-weight="400" >单独安装／克隆相应实现，设置停止条件与成本上限。</text>
+</a>
+<path d="M98,2572 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/scheduled-tasks" target="_blank" rel="noopener noreferrer" aria-label="Scheduled Tasks｜会话内调度，查看来源">
+<text x="98" y="2584" font-size="29" fill="#24352f" font-weight="650" class="row-title">Scheduled Tasks｜会话内调度</text>
+<rect x="1008.5" y="2555" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="2580" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="2620" font-size="23" fill="#a14552" font-weight="550" >技术</text>
+<text x="164" y="2620" font-size="25" fill="#52635d" font-weight="400" >/loop 与 Cron 工具按时间触发；会话运行状态影响执行。</text>
+<text x="98" y="2651" font-size="23" fill="#a14552" font-weight="550" >使用</text>
+<text x="164" y="2651" font-size="25" fill="#24352f" font-weight="400" >/loop 5m 检查状态；任务存续与恢复按当前版本核对。</text>
+</a>
+<path d="M98,2688 H1087.5" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/routines" target="_blank" rel="noopener noreferrer" aria-label="Routines｜持久定时与事件工作，查看来源">
+<text x="98" y="2700" font-size="29" fill="#24352f" font-weight="650" class="row-title">Routines｜持久定时与事件工作</text>
+<rect x="1008.5" y="2671" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="1047.5" y="2696" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="98" y="2736" font-size="23" fill="#a14552" font-weight="550" >技术</text>
+<text x="164" y="2736" font-size="25" fill="#52635d" font-weight="400" >云端任务可按时间／事件运行；Desktop 另有本机调度。</text>
+<text x="98" y="2767" font-size="23" fill="#a14552" font-weight="550" >使用</text>
+<text x="164" y="2767" font-size="25" fill="#24352f" font-weight="400" >claude.ai/code/routines 或 /schedule；配置环境与验收。</text>
+</a>
+<rect x="92" y="3083" width="1001.5" height="107" rx="6" fill="#f0f2e9" stroke="none"/>
+<text x="107" y="3111" font-size="25" fill="#52635d" font-weight="400" >选用：验收代码看证据；Goal 按条件继续，Loop 按时间触发；持久调度选择相应云端</text>
+<text x="107" y="3144" font-size="25" fill="#52635d" font-weight="400" >或本机方案。</text>
+</g>
+<g id="group-F" data-x="1143.5" data-width="1041.5">
+<rect x="1143.5" y="1853" width="1041.5" height="1360" rx="16" fill="#fffdf8" stroke="#d7dece"/>
+<rect x="1143.5" y="1853" width="1041.5" height="112" rx="16" fill="#e9ede3" stroke="none"/>
+<rect x="1143.5" y="1923" width="1041.5" height="42" rx="0" fill="#e9ede3" stroke="none"/>
+<text x="1168.5" y="1901" font-size="39" fill="#286c96" font-weight="700" >F  外部系统与入口</text>
+<text x="1168.5" y="1942" font-size="27" fill="#52635d" font-weight="400" >如何触达浏览器、云端和 CI？</text>
+<a href="https://code.claude.com/docs/en/chrome" target="_blank" rel="noopener noreferrer" aria-label="Chrome｜浏览器连接，查看来源">
+<text x="1169.5" y="2004" font-size="29" fill="#24352f" font-weight="650" class="row-title">Chrome｜浏览器连接</text>
+<rect x="2080" y="1975" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="2000" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="2040" font-size="23" fill="#286c96" font-weight="550" >技术</text>
+<text x="1235.5" y="2040" font-size="25" fill="#52635d" font-weight="400" >Claude Code 与 Chrome 扩展连接，操作浏览器。</text>
+<text x="1169.5" y="2071" font-size="23" fill="#286c96" font-weight="550" >使用</text>
+<text x="1235.5" y="2071" font-size="25" fill="#24352f" font-weight="400" >安装并连接扩展，claude --chrome；区别于 MCP 浏览器。</text>
+</a>
+<path d="M1169.5,2108 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/computer-use" target="_blank" rel="noopener noreferrer" aria-label="Computer Use｜电脑交互，查看来源">
+<text x="1169.5" y="2120" font-size="29" fill="#24352f" font-weight="650" class="row-title">Computer Use｜电脑交互</text>
+<rect x="2080" y="2091" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="2116" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="2156" font-size="23" fill="#286c96" font-weight="550" >技术</text>
+<text x="1235.5" y="2156" font-size="25" fill="#52635d" font-weight="400" >通过专用 MCP／桌面功能取得屏幕与交互工具。</text>
+<text x="1169.5" y="2187" font-size="23" fill="#286c96" font-weight="550" >使用</text>
+<text x="1235.5" y="2187" font-size="25" fill="#24352f" font-weight="400" >按平台准备连接与权限，描述可观察的界面任务。</text>
+</a>
+<path d="M1169.5,2224 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/claude-code-on-the-web" target="_blank" rel="noopener noreferrer" aria-label="Claude Code Web｜云端会话，查看来源">
+<text x="1169.5" y="2236" font-size="29" fill="#24352f" font-weight="650" class="row-title">Claude Code Web｜云端会话</text>
+<rect x="2080" y="2207" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="2232" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="2272" font-size="23" fill="#286c96" font-weight="550" >技术</text>
+<text x="1235.5" y="2272" font-size="25" fill="#52635d" font-weight="400" >云环境取得仓库与工具，不自动共享本机工作目录。</text>
+<text x="1169.5" y="2303" font-size="23" fill="#286c96" font-weight="550" >使用</text>
+<text x="1235.5" y="2303" font-size="25" fill="#24352f" font-weight="400" >claude.ai/code；连接仓库，配置环境后分派任务。</text>
+</a>
+<path d="M1169.5,2340 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/remote-control" target="_blank" rel="noopener noreferrer" aria-label="Remote Control｜远程控制本机会话，查看来源">
+<text x="1169.5" y="2352" font-size="29" fill="#24352f" font-weight="650" class="row-title">Remote Control｜远程控制本机会话</text>
+<rect x="2080" y="2323" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="2348" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="2388" font-size="23" fill="#286c96" font-weight="550" >技术</text>
+<text x="1235.5" y="2388" font-size="25" fill="#52635d" font-weight="400" >远端界面连接本机执行中的 Claude Code 会话。</text>
+<text x="1169.5" y="2419" font-size="23" fill="#286c96" font-weight="550" >使用</text>
+<text x="1235.5" y="2419" font-size="25" fill="#24352f" font-weight="400" >/remote-control 或 /rc；保持本机会话可用。</text>
+</a>
+<path d="M1169.5,2456 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/channels" target="_blank" rel="noopener noreferrer" aria-label="Channels｜推送事件到会话，查看来源">
+<text x="1169.5" y="2468" font-size="29" fill="#24352f" font-weight="650" class="row-title">Channels｜推送事件到会话</text>
+<rect x="2080" y="2439" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="2464" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="2504" font-size="23" fill="#286c96" font-weight="550" >技术</text>
+<text x="1235.5" y="2504" font-size="25" fill="#52635d" font-weight="400" >插件式通道将外部通知／消息推入运行中的会话。</text>
+<text x="1169.5" y="2535" font-size="23" fill="#286c96" font-weight="550" >使用</text>
+<text x="1235.5" y="2535" font-size="25" fill="#24352f" font-weight="400" >安装通道插件，--channels 启用并配置发送方。</text>
+</a>
+<path d="M1169.5,2572 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/slack" target="_blank" rel="noopener noreferrer" aria-label="Slack｜协作入口，查看来源">
+<text x="1169.5" y="2584" font-size="29" fill="#24352f" font-weight="650" class="row-title">Slack｜协作入口</text>
+<rect x="2080" y="2555" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="2580" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="2620" font-size="23" fill="#286c96" font-weight="550" >技术</text>
+<text x="1235.5" y="2620" font-size="25" fill="#52635d" font-weight="400" >Slack 集成把线程里的请求交给 Claude Code 工作。</text>
+<text x="1169.5" y="2651" font-size="23" fill="#286c96" font-weight="550" >使用</text>
+<text x="1235.5" y="2651" font-size="25" fill="#24352f" font-weight="400" >连接 Slack 与项目，在目标线程 @Claude 并给范围。</text>
+</a>
+<path d="M1169.5,2688 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/github-actions" target="_blank" rel="noopener noreferrer" aria-label="GitHub Actions｜CI 自动化，查看来源">
+<text x="1169.5" y="2700" font-size="29" fill="#24352f" font-weight="650" class="row-title">GitHub Actions｜CI 自动化</text>
+<rect x="2080" y="2671" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="2696" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="2736" font-size="23" fill="#286c96" font-weight="550" >技术</text>
+<text x="1235.5" y="2736" font-size="25" fill="#52635d" font-weight="400" >.github/workflows/ 中由事件启动任务；也链接 GitLab CI。</text>
+<text x="1169.5" y="2767" font-size="23" fill="#286c96" font-weight="550" >使用</text>
+<text x="1235.5" y="2767" font-size="25" fill="#24352f" font-weight="400" >配置工作流、身份和权限，在 PR／Issue／定时事件执行。</text>
+</a>
+<path d="M1169.5,2804 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/artifacts" target="_blank" rel="noopener noreferrer" aria-label="Artifacts｜成果展示与分享，查看来源">
+<text x="1169.5" y="2816" font-size="29" fill="#24352f" font-weight="650" class="row-title">Artifacts｜成果展示与分享</text>
+<rect x="2080" y="2787" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="2812" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="2852" font-size="23" fill="#286c96" font-weight="550" >技术</text>
+<text x="1235.5" y="2852" font-size="25" fill="#52635d" font-weight="400" >Artifact 工具与分享入口组织可展示的交付内容。</text>
+<text x="1169.5" y="2883" font-size="23" fill="#286c96" font-weight="550" >使用</text>
+<text x="1235.5" y="2883" font-size="25" fill="#24352f" font-weight="400" >生成成果后核对内容和范围，再通过 /share 等入口分享。</text>
+</a>
+<path d="M1169.5,2920 H2159" stroke="#e4e8df"/>
+<a href="https://code.claude.com/docs/en/deep-links" target="_blank" rel="noopener noreferrer" aria-label="Deep Links｜链接启动任务，查看来源">
+<text x="1169.5" y="2932" font-size="29" fill="#24352f" font-weight="650" class="row-title">Deep Links｜链接启动任务</text>
+<rect x="2080" y="2903" width="78" height="35" rx="5" fill="#e4f0f6" stroke="none"/>
+<text x="2119" y="2928" font-size="23" fill="#246782" font-weight="550" text-anchor="middle">官方</text>
+<text x="1169.5" y="2968" font-size="23" fill="#286c96" font-weight="550" >技术</text>
+<text x="1235.5" y="2968" font-size="25" fill="#52635d" font-weight="400" >claude-cli://open?repo=…&amp;q=… 携带仓库与任务信息。</text>
+<text x="1169.5" y="2999" font-size="23" fill="#286c96" font-weight="550" >使用</text>
+<text x="1235.5" y="2999" font-size="25" fill="#24352f" font-weight="400" >按官方格式构造链接，让已安装的 CLI 打开指定任务。</text>
+</a>
+<rect x="1163.5" y="3083" width="1001.5" height="107" rx="6" fill="#f0f2e9" stroke="none"/>
+<text x="1178.5" y="3111" font-size="25" fill="#52635d" font-weight="400" >选用：浏览器、电脑、远程界面和云环境有各自依赖。先确定数据与执行发生在哪里，</text>
+<text x="1178.5" y="3144" font-size="25" fill="#52635d" font-weight="400" >再选入口。</text>
+</g>
+<g id="group-G" data-x="2215" data-width="1041.5">
+<rect x="2215" y="1853" width="1041.5" height="1360" rx="16" fill="#fffdf8" stroke="#d7dece"/>
+<rect x="2215" y="1853" width="1041.5" height="112" rx="16" fill="#e9ede3" stroke="none"/>
+<rect x="2215" y="1923" width="1041.5" height="42" rx="0" fill="#e9ede3" stroke="none"/>
+<text x="2240" y="1901" font-size="39" fill="#3d7750" font-weight="700" >G  仓库自带的示例与模板</text>
+<text x="2240" y="1942" font-size="27" fill="#52635d" font-weight="400" >哪些文件可以真的拿来改？</text>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/.claude/commands/weather-orchestrator.md" target="_blank" rel="noopener noreferrer" aria-label="G1 天气编排｜数据 → SVG 图卡，查看来源">
+<text x="2241" y="2004" font-size="29" fill="#24352f" font-weight="650" class="row-title">G1 天气编排｜数据 → SVG 图卡</text>
+<rect x="3151.5" y="1975" width="78" height="35" rx="5" fill="#e5f1e4" stroke="none"/>
+<text x="3190.5" y="2000" font-size="23" fill="#3d7750" font-weight="550" text-anchor="middle">本库</text>
+<text x="2241" y="2040" font-size="23" fill="#3d7750" font-weight="550" >技术</text>
+<text x="2307" y="2040" font-size="25" fill="#52635d" font-weight="400" >命令 → weather-agent → fetcher Skill；WebFetch 查固定迪拜</text>
+<text x="2307" y="2071" font-size="25" fill="#52635d" font-weight="400" >Open-Meteo → SVG Skill。</text>
+<text x="2241" y="2102" font-size="23" fill="#3d7750" font-weight="550" >使用</text>
+<text x="2307" y="2102" font-size="25" fill="#24352f" font-weight="400" >/weather-orchestrator 选 C／F；输出 weather.svg + output.md。</text>
+</a>
+<path d="M2241,2139 H3230.5" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/implementation/claude-commands-implementation.md" target="_blank" rel="noopener noreferrer" aria-label="G2 PKT 时间｜比较三种入口，查看来源">
+<text x="2241" y="2151" font-size="29" fill="#24352f" font-weight="650" class="row-title">G2 PKT 时间｜比较三种入口</text>
+<rect x="3151.5" y="2122" width="78" height="35" rx="5" fill="#e5f1e4" stroke="none"/>
+<text x="3190.5" y="2147" font-size="23" fill="#3d7750" font-weight="550" text-anchor="middle">本库</text>
+<text x="2241" y="2187" font-size="23" fill="#3d7750" font-weight="550" >技术</text>
+<text x="2307" y="2187" font-size="25" fill="#52635d" font-weight="400" >命令、time-agent-pkt、Skill 都用 TZ=Asia/Karachi + date。</text>
+<text x="2241" y="2218" font-size="23" fill="#3d7750" font-weight="550" >使用</text>
+<text x="2307" y="2218" font-size="25" fill="#24352f" font-weight="400" >/time-command、/time-skill 或委派 time-agent-pkt；需 Bash。</text>
+</a>
+<path d="M2241,2255 H3230.5" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/implementation/claude-agent-teams-implementation.md" target="_blank" rel="noopener noreferrer" aria-label="G3 团队建流程｜迪拜时间图卡，查看来源">
+<text x="2241" y="2267" font-size="29" fill="#24352f" font-weight="650" class="row-title">G3 团队建流程｜迪拜时间图卡</text>
+<rect x="3151.5" y="2238" width="78" height="35" rx="5" fill="#e5f1e4" stroke="none"/>
+<text x="3190.5" y="2263" font-size="23" fill="#3d7750" font-weight="550" text-anchor="middle">本库</text>
+<text x="2241" y="2303" font-size="23" fill="#3d7750" font-weight="550" >技术</text>
+<text x="2307" y="2303" font-size="25" fill="#52635d" font-weight="400" >团队教程生成 Command → Agent → Skill；TZ=Asia/Dubai。</text>
+<text x="2241" y="2334" font-size="23" fill="#3d7750" font-weight="550" >使用</text>
+<text x="2307" y="2334" font-size="25" fill="#24352f" font-weight="400" >进入 agent-teams/，启动 claude，/time-orchestrator。</text>
+</a>
+<path d="M2241,2371 H3230.5" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/development-workflows/rpi/rpi-workflow.md" target="_blank" rel="noopener noreferrer" aria-label="G4 RPI｜研究 → 计划 → 实施，查看来源">
+<text x="2241" y="2383" font-size="29" fill="#24352f" font-weight="650" class="row-title">G4 RPI｜研究 → 计划 → 实施</text>
+<rect x="3151.5" y="2354" width="78" height="35" rx="5" fill="#e5f1e4" stroke="none"/>
+<text x="3190.5" y="2379" font-size="23" fill="#3d7750" font-weight="550" text-anchor="middle">本库</text>
+<text x="2241" y="2419" font-size="23" fill="#3d7750" font-weight="550" >技术</text>
+<text x="2307" y="2419" font-size="25" fill="#52635d" font-weight="400" >Research／Plan／Implement 命令 + 8 个角色 + 分阶段验收。</text>
+<text x="2241" y="2450" font-size="23" fill="#3d7750" font-weight="550" >使用</text>
+<text x="2307" y="2450" font-size="25" fill="#24352f" font-weight="400" >/rpi:research → /rpi:plan → /rpi:implement；先适配模板。</text>
+</a>
+<path d="M2241,2487 H3230.5" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/.claude/commands/workflows/best-practice/workflow-concepts.md" target="_blank" rel="noopener noreferrer" aria-label="G5 资料维护｜调研 → 比较 → 更新，查看来源">
+<text x="2241" y="2499" font-size="29" fill="#24352f" font-weight="650" class="row-title">G5 资料维护｜调研 → 比较 → 更新</text>
+<rect x="3151.5" y="2470" width="78" height="35" rx="5" fill="#e5f1e4" stroke="none"/>
+<text x="3190.5" y="2495" font-size="23" fill="#3d7750" font-weight="550" text-anchor="middle">本库</text>
+<text x="2241" y="2535" font-size="23" fill="#3d7750" font-weight="550" >技术</text>
+<text x="2307" y="2535" font-size="25" fill="#52635d" font-weight="400" >维护 Concepts、4 类规范、开发流程、Skills／Agents 集合。</text>
+<text x="2241" y="2566" font-size="23" fill="#3d7750" font-weight="550" >使用</text>
+<text x="2307" y="2566" font-size="25" fill="#24352f" font-weight="400" >workflows/ 下相应斜杠命令；核对差异、来源与 changelog。</text>
+</a>
+<path d="M2241,2603 H3230.5" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/.claude/agents/presentation-claude-code.md" target="_blank" rel="noopener noreferrer" aria-label="G6 演示与浏览器｜输出资料，查看来源">
+<text x="2241" y="2615" font-size="29" fill="#24352f" font-weight="650" class="row-title">G6 演示与浏览器｜输出资料</text>
+<rect x="3151.5" y="2586" width="78" height="35" rx="5" fill="#e5f1e4" stroke="none"/>
+<text x="3190.5" y="2611" font-size="23" fill="#3d7750" font-weight="550" text-anchor="middle">本库</text>
+<text x="2241" y="2651" font-size="23" fill="#3d7750" font-weight="550" >技术</text>
+<text x="2307" y="2651" font-size="25" fill="#52635d" font-weight="400" >3 个演示代理 + 3 个演示技能；agent-browser 另依赖 CLI。</text>
+<text x="2241" y="2682" font-size="23" fill="#3d7750" font-weight="550" >使用</text>
+<text x="2307" y="2682" font-size="25" fill="#24352f" font-weight="400" >针对目标演示稿委派代理；改结构／样式；浏览器先装依赖。</text>
+</a>
+<path d="M2241,2719 H3230.5" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/development-workflows/cross-model-workflow/cross-model-workflow.md" target="_blank" rel="noopener noreferrer" aria-label="G7 跨模型教程｜第二视角核对，查看来源">
+<text x="2241" y="2731" font-size="29" fill="#24352f" font-weight="650" class="row-title">G7 跨模型教程｜第二视角核对</text>
+<rect x="3151.5" y="2702" width="78" height="35" rx="5" fill="#e5f1e4" stroke="none"/>
+<text x="3190.5" y="2727" font-size="23" fill="#3d7750" font-weight="550" text-anchor="middle">本库</text>
+<text x="2241" y="2767" font-size="23" fill="#3d7750" font-weight="550" >技术</text>
+<text x="2307" y="2767" font-size="25" fill="#52635d" font-weight="400" >两个终端：计划 → 另一模型审查 → 实施 → 再验证。</text>
+<text x="2241" y="2798" font-size="23" fill="#3d7750" font-weight="550" >使用</text>
+<text x="2307" y="2798" font-size="25" fill="#24352f" font-weight="400" >人工传递计划、diff 与结果；外部 Plugin／MCP／Router 另装。</text>
+</a>
+<path d="M2241,2835 H3230.5" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/CLAUDE.md" target="_blank" rel="noopener noreferrer" aria-label="配置样例｜通知、规则和状态，查看来源">
+<text x="2241" y="2847" font-size="29" fill="#24352f" font-weight="650" class="row-title">配置样例｜通知、规则和状态</text>
+<rect x="3151.5" y="2818" width="78" height="35" rx="5" fill="#e5f1e4" stroke="none"/>
+<text x="3190.5" y="2843" font-size="23" fill="#3d7750" font-weight="550" text-anchor="middle">本库</text>
+<text x="2241" y="2883" font-size="23" fill="#3d7750" font-weight="550" >技术</text>
+<text x="2307" y="2883" font-size="25" fill="#52635d" font-weight="400" >root: 10 Commands／11 Agents／7 Skills；JSON、Python、规则。</text>
+<text x="2241" y="2914" font-size="23" fill="#3d7750" font-weight="550" >使用</text>
+<text x="2307" y="2914" font-size="25" fill="#24352f" font-weight="400" >选取需要的文件；保留已有配置；.codex 也只有参考文件。</text>
+</a>
+<rect x="2235" y="3083" width="1001.5" height="107" rx="6" fill="#f0f2e9" stroke="none"/>
+<text x="2250" y="3111" font-size="25" fill="#52635d" font-weight="400" >这些是可读、可改的文件或教程。本研究核查源码与文档，未执行上游天气、RPI、团队</text>
+<text x="2250" y="3144" font-size="25" fill="#52635d" font-weight="400" >或跨模型工作流。</text>
+</g>
+<g id="group-H" data-x="3286.5" data-width="1041.5">
+<rect x="3286.5" y="1853" width="1041.5" height="1360" rx="16" fill="#fffdf8" stroke="#d7dece"/>
+<rect x="3286.5" y="1853" width="1041.5" height="112" rx="16" fill="#e9ede3" stroke="none"/>
+<rect x="3286.5" y="1923" width="1041.5" height="42" rx="0" fill="#e9ede3" stroke="none"/>
+<text x="3311.5" y="1901" font-size="39" fill="#8b7040" font-weight="700" >H  资料、生态与查阅路径</text>
+<text x="3311.5" y="1942" font-size="27" fill="#52635d" font-weight="400" >从哪里继续找？</text>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/tree/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/best-practice/" target="_blank" rel="noopener noreferrer" aria-label="规范与实录｜best-practice/ · implementation/，查看来源">
+<text x="3312.5" y="2004" font-size="29" fill="#24352f" font-weight="650" class="row-title">规范与实录｜best-practice/ · implementation/</text>
+<rect x="4223" y="1975" width="78" height="35" rx="5" fill="#f5eddc" stroke="none"/>
+<text x="4262" y="2000" font-size="23" fill="#8b7040" font-weight="550" text-anchor="middle">资料</text>
+<text x="3312.5" y="2040" font-size="23" fill="#8b7040" font-weight="550" >技术</text>
+<text x="3378.5" y="2040" font-size="25" fill="#52635d" font-weight="400" >字段、层级与入口说明；实现记录含截图与演示。</text>
+<text x="3312.5" y="2071" font-size="23" fill="#8b7040" font-weight="550" >使用</text>
+<text x="3378.5" y="2071" font-size="25" fill="#24352f" font-weight="400" >先查规范，再读关联示例；截图不是本机复现证据。</text>
+</a>
+<path d="M3312.5,2108 H4302" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/tree/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/reports/" target="_blank" rel="noopener noreferrer" aria-label="深入报告｜reports/（12 篇），查看来源">
+<text x="3312.5" y="2115" font-size="29" fill="#24352f" font-weight="650" class="row-title">深入报告｜reports/（12 篇）</text>
+<rect x="4223" y="2086" width="78" height="35" rx="5" fill="#f5eddc" stroke="none"/>
+<text x="4262" y="2111" font-size="23" fill="#8b7040" font-weight="550" text-anchor="middle">资料</text>
+<text x="3312.5" y="2151" font-size="23" fill="#8b7040" font-weight="550" >技术</text>
+<text x="3378.5" y="2151" font-size="25" fill="#52635d" font-weight="400" >SDK／CLI、浏览器、全局／项目、Mono-repo、记忆与工具。</text>
+<text x="3312.5" y="2182" font-size="23" fill="#8b7040" font-weight="550" >使用</text>
+<text x="3378.5" y="2182" font-size="25" fill="#24352f" font-weight="400" >另含限额、Agent／Command／Skill、退化、Harness、Spinner、天气迭代。</text>
+</a>
+<path d="M3312.5,2219 H4302" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/tutorial/day1/README.md" target="_blank" rel="noopener noreferrer" aria-label="课程与经验｜tutorial/ · tips/ · videos/，查看来源">
+<text x="3312.5" y="2226" font-size="29" fill="#24352f" font-weight="650" class="row-title">课程与经验｜tutorial/ · tips/ · videos/</text>
+<rect x="4223" y="2197" width="78" height="35" rx="5" fill="#f5eddc" stroke="none"/>
+<text x="4262" y="2222" font-size="23" fill="#8b7040" font-weight="550" text-anchor="middle">资料</text>
+<text x="3312.5" y="2262" font-size="23" fill="#8b7040" font-weight="550" >技术</text>
+<text x="3378.5" y="2262" font-size="25" fill="#52635d" font-weight="400" >Day 0 安装／认证；Day 1 入门；83 条技巧与访谈资料。</text>
+<text x="3312.5" y="2293" font-size="23" fill="#8b7040" font-weight="550" >使用</text>
+<text x="3378.5" y="2293" font-size="25" fill="#24352f" font-weight="400" >按提示、规划、上下文、会话、Git／PR、调试等类别查。</text>
+</a>
+<path d="M3312.5,2330 H4302" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/README.md#-development-workflows" target="_blank" rel="noopener noreferrer" aria-label="开发流程索引｜12 个外部框架，查看来源">
+<text x="3312.5" y="2337" font-size="29" fill="#24352f" font-weight="650" class="row-title">开发流程索引｜12 个外部框架</text>
+<rect x="4223" y="2308" width="78" height="35" rx="5" fill="#eeebf5" stroke="none"/>
+<text x="4262" y="2333" font-size="23" fill="#695880" font-weight="550" text-anchor="middle">外部</text>
+<text x="3312.5" y="2373" font-size="23" fill="#8b7040" font-weight="550" >技术</text>
+<text x="3378.5" y="2373" font-size="25" fill="#52635d" font-weight="400" >Superpowers、Matt Pocock、ECC、Spec Kit、gstack、agent-skills。</text>
+<text x="3312.5" y="2404" font-size="23" fill="#8b7040" font-weight="550" >使用</text>
+<text x="3378.5" y="2404" font-size="25" fill="#24352f" font-weight="400" >另有 OpenSpec、GSD、BMAD、oh-my-claudecode、Compound、</text>
+<text x="3378.5" y="2435" font-size="25" fill="#24352f" font-weight="400" >HumanLayer。</text>
+</a>
+<path d="M3312.5,2472 H4302" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/README.md#-skill-collections" target="_blank" rel="noopener noreferrer" aria-label="Skills／Agents 集合｜外部素材库，查看来源">
+<text x="3312.5" y="2479" font-size="29" fill="#24352f" font-weight="650" class="row-title">Skills／Agents 集合｜外部素材库</text>
+<rect x="4223" y="2450" width="78" height="35" rx="5" fill="#eeebf5" stroke="none"/>
+<text x="4262" y="2475" font-size="23" fill="#695880" font-weight="550" text-anchor="middle">外部</text>
+<text x="3312.5" y="2515" font-size="23" fill="#8b7040" font-weight="550" >技术</text>
+<text x="3378.5" y="2515" font-size="25" fill="#52635d" font-weight="400" >Skills：mattpocock/skills、anthropics/skills、</text>
+<text x="3378.5" y="2546" font-size="25" fill="#52635d" font-weight="400" >Understand-Anything、scientific-agent-skills、wshobson/agents、</text>
+<text x="3378.5" y="2577" font-size="25" fill="#52635d" font-weight="400" >awesome-agent-skills、impeccable、agent-skills、claude-skills、</text>
+<text x="3378.5" y="2608" font-size="25" fill="#52635d" font-weight="400" >draw-json-architecture-skill。</text>
+<text x="3312.5" y="2639" font-size="23" fill="#8b7040" font-weight="550" >使用</text>
+<text x="3378.5" y="2639" font-size="25" fill="#24352f" font-weight="400" >Agents：agency-agents、awesome-claude-code-subagents；按需要挑</text>
+<text x="3378.5" y="2670" font-size="25" fill="#24352f" font-weight="400" >选并单独安装。</text>
+</a>
+<path d="M3312.5,2707 H4302" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/README.md#-cross-model-workflows" target="_blank" rel="noopener noreferrer" aria-label="跨模型接入｜Plugin · MCP · Router，查看来源">
+<text x="3312.5" y="2714" font-size="29" fill="#24352f" font-weight="650" class="row-title">跨模型接入｜Plugin · MCP · Router</text>
+<rect x="4223" y="2685" width="78" height="35" rx="5" fill="#eeebf5" stroke="none"/>
+<text x="4262" y="2710" font-size="23" fill="#695880" font-weight="550" text-anchor="middle">外部</text>
+<text x="3312.5" y="2750" font-size="23" fill="#8b7040" font-weight="550" >技术</text>
+<text x="3378.5" y="2750" font-size="25" fill="#52635d" font-weight="400" >codex-plugin-cc、pal-mcp、claude-code-router、CLIProxyAPI。</text>
+<text x="3312.5" y="2781" font-size="23" fill="#8b7040" font-weight="550" >使用</text>
+<text x="3378.5" y="2781" font-size="25" fill="#24352f" font-weight="400" >按目标选桥接方式；另外准备 CLI、服务、认证与费用。</text>
+</a>
+<path d="M3312.5,2818 H4302" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/tree/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/changelog/" target="_blank" rel="noopener noreferrer" aria-label="维护与展示｜changelog/ · presentation/，查看来源">
+<text x="3312.5" y="2825" font-size="29" fill="#24352f" font-weight="650" class="row-title">维护与展示｜changelog/ · presentation/</text>
+<rect x="4223" y="2796" width="78" height="35" rx="5" fill="#f5eddc" stroke="none"/>
+<text x="4262" y="2821" font-size="23" fill="#8b7040" font-weight="550" text-anchor="middle">资料</text>
+<text x="3312.5" y="2861" font-size="23" fill="#8b7040" font-weight="550" >技术</text>
+<text x="3378.5" y="2861" font-size="25" fill="#52635d" font-weight="400" >更新与验证清单、HTML 演示稿、配图和模板资料。</text>
+<text x="3312.5" y="2892" font-size="23" fill="#8b7040" font-weight="550" >使用</text>
+<text x="3378.5" y="2892" font-size="25" fill="#24352f" font-weight="400" >追踪文档变化、查看演示；README 另列对比、订阅与社区。</text>
+</a>
+<path d="M3312.5,2929 H4302" stroke="#e4e8df"/>
+<a href="https://github.com/shanraisshan/claude-code-best-practice/blob/870f39e36b6aaf63a31edc0bfdb5f20ef14c4d82/README.md#how-to-use" target="_blank" rel="noopener noreferrer" aria-label="对我们的价值｜稳定重复完成研究，查看来源">
+<text x="3312.5" y="2936" font-size="29" fill="#24352f" font-weight="650" class="row-title">对我们的价值｜稳定重复完成研究</text>
+<rect x="4223" y="2907" width="78" height="35" rx="5" fill="#f5eddc" stroke="none"/>
+<text x="4262" y="2932" font-size="23" fill="#8b7040" font-weight="550" text-anchor="middle">资料</text>
+<text x="3312.5" y="2972" font-size="23" fill="#8b7040" font-weight="550" >技术</text>
+<text x="3378.5" y="2972" font-size="25" fill="#52635d" font-weight="400" >沉淀输入、证据、输出格式与验收；收益仍需实际比较。</text>
+<text x="3312.5" y="3003" font-size="23" fill="#8b7040" font-weight="550" >使用</text>
+<text x="3378.5" y="3003" font-size="25" fill="#24352f" font-weight="400" >GitHub 研究 → 模块／机制／边界 → 网页 → 检查与交付。</text>
+</a>
+<rect x="3306.5" y="3083" width="1001.5" height="107" rx="6" fill="#f0f2e9" stroke="none"/>
+<text x="3321.5" y="3111" font-size="25" fill="#52635d" font-weight="400" >索引中的第三方项目需要另行研究与安装；Stars、素材数量与外链展示不构成本库实</text>
+<text x="3321.5" y="3144" font-size="25" fill="#52635d" font-weight="400" >测能力或收益。</text>
+</g>
+<text x="72" y="3270" font-size="37" fill="#24352f" font-weight="700" >我们的落地路线</text>
+<text x="420" y="3270" font-size="28" fill="#52635d" font-weight="400" >原创研究建议：先用必要模块，再观察返工、证据完整度和总成本。</text>
+<rect x="72" y="3295" width="688.5" height="147" rx="9" fill="#e6ebdf" stroke="#d7dece"/>
+<text x="94" y="3334" font-size="29" fill="#24352f" font-weight="650" >01 明确范围</text>
+<text x="94" y="3372" font-size="25" fill="#52635d" font-weight="400" >研究什么库、哪个版本、要回答什么</text>
+<text x="94" y="3420" font-size="24" fill="#607158" font-weight="400" >直接提示 / A</text>
+<rect x="785.5" y="3295" width="688.5" height="147" rx="9" fill="#e6ebdf" stroke="#d7dece"/>
+<text x="807.5" y="3334" font-size="29" fill="#24352f" font-weight="650" >02 取得证据</text>
+<text x="807.5" y="3372" font-size="25" fill="#52635d" font-weight="400" >源码、文档、接口、实际输入输出</text>
+<text x="807.5" y="3420" font-size="24" fill="#607158" font-weight="400" >Subagent + MCP / B·C</text>
+<rect x="1499" y="3295" width="688.5" height="147" rx="9" fill="#e6ebdf" stroke="#d7dece"/>
+<text x="1521" y="3334" font-size="29" fill="#24352f" font-weight="650" >03 沉淀研究方法</text>
+<text x="1521" y="3372" font-size="25" fill="#52635d" font-weight="400" >模块、原理、边界与来源结构</text>
+<text x="1521" y="3420" font-size="24" fill="#607158" font-weight="400" >Memory + Skill / A·G</text>
+<rect x="2212.5" y="3295" width="688.5" height="147" rx="9" fill="#e6ebdf" stroke="#d7dece"/>
+<text x="2234.5" y="3334" font-size="29" fill="#24352f" font-weight="650" >04 生成网页</text>
+<text x="2234.5" y="3372" font-size="25" fill="#52635d" font-weight="400" >沿用项目结构、输出可查看成果</text>
+<text x="2234.5" y="3420" font-size="24" fill="#607158" font-weight="400" >文件 / Shell / Browser</text>
+<rect x="2926" y="3295" width="688.5" height="147" rx="9" fill="#e6ebdf" stroke="#d7dece"/>
+<text x="2948" y="3334" font-size="29" fill="#24352f" font-weight="650" >05 检查与验收</text>
+<text x="2948" y="3372" font-size="25" fill="#52635d" font-weight="400" >运行检查；标明没有验证的部分</text>
+<text x="2948" y="3420" font-size="24" fill="#607158" font-weight="400" >Review + 证据 / E</text>
+<rect x="3639.5" y="3295" width="688.5" height="147" rx="9" fill="#e6ebdf" stroke="#d7dece"/>
+<text x="3661.5" y="3334" font-size="29" fill="#24352f" font-weight="650" >06 保存并复用</text>
+<text x="3661.5" y="3372" font-size="25" fill="#52635d" font-weight="400" >版本、结果、规则与更新记录</text>
+<text x="3661.5" y="3420" font-size="24" fill="#607158" font-weight="400" >项目知识 / G·H</text>
+<text x="72" y="3478" font-size="32" fill="#8b5d3b" font-weight="650" >读图时保持四个边界</text>
+<text x="72" y="3523" font-size="28" fill="#24352f" font-weight="650" >知识与模型</text>
+<text x="72" y="3560" font-size="25" fill="#52635d" font-weight="400" >Markdown 进入推理上下文；角色与 Skill 都不会训练一个新模型。</text>
+<text x="1143.5" y="3523" font-size="28" fill="#24352f" font-weight="650" >权限与文字</text>
+<text x="1143.5" y="3560" font-size="25" fill="#52635d" font-weight="400" >allowed-tools 是免确认授权；Agent 的工具限制按 tools / disallowedTools 核对。</text>
+<text x="2215" y="3523" font-size="28" fill="#24352f" font-weight="650" >隔离与阻断</text>
+<text x="2215" y="3560" font-size="25" fill="#52635d" font-weight="400" >独立上下文不等于文件隔离；async Hook 做通知，无法充当同步阻断。</text>
+<text x="3286.5" y="3523" font-size="28" fill="#24352f" font-weight="650" >可用性与证据</text>
+<text x="3286.5" y="3560" font-size="25" fill="#52635d" font-weight="400" >入口、Beta 与账号条件按当前 /help 和官方文档核对；模板与演示不代表已实测。</text>
+<text x="72" y="3714" font-size="26" fill="#52635d" font-weight="400" >范围：README Concepts + Hot 全部 47 项；仓库实际示例；课程、报告、集合与其他导航。覆盖按上述固定提交核对。</text>
+<text x="72" y="3755" font-size="25" fill="#52635d" font-weight="400" >依据：shanraisshan/claude-code-best-practice + Claude Code 官方文档。上游 MIT © 2025–2026 Shayan Rais；本图为原创研究整理。</text>
+<text x="4328" y="3755" font-size="25" fill="#8b5d3b" font-weight="400" text-anchor="end">查看细节请放大 · 矢量图中模块可点击</text>
+</svg>
