@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f5f2e9">
+  <meta name="description" content="Forge3D 中文研究档案：用真实高程、点云、地理影像和已有 3DGS 构建具体地点，理解公共数据与无人机实拍两条输入路线、融合渲染原理、用途、数据获取、全球覆盖及使用边界。本页为静态图文导览，尚未本机运行验证。">
+  <title>Forge3D · 从真实数据到三维场景｜008 研究档案</title>
+  <style>
+    :root { --paper:#f5f2e9; --panel:#fffdf7; --ink:#192e32; --muted:#536769; --line:#d9dfd5; --green:#17615a; --orange:#ac501c; --soft:#e6eee6; --radius:18px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:24px; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; font-size:17px; line-height:1.8; -webkit-font-smoothing:antialiased; }
+    a { color:var(--green); text-underline-offset:4px; text-decoration-thickness:1px; overflow-wrap:anywhere; }
+    a:hover { color:#984317; }
+    a:focus-visible, [tabindex]:focus-visible { outline:3px solid var(--orange); outline-offset:5px; border-radius:4px; }
+    .skip { position:absolute; z-index:20; top:8px; left:10px; transform:translateY(-150%); background:var(--ink); color:white; padding:10px 18px; }
+    .skip:focus { transform:translateY(0); }
+    .wrap { width:min(1180px,calc(100% - 72px)); margin-inline:auto; }
+    header { padding:24px 0 20px; border-bottom:1px solid var(--line); }
+    .back { display:inline-block; font-size:13px; margin-bottom:19px; text-decoration:none; }
+    .masthead { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .archive { font-size:13px; font-weight:700; letter-spacing:.1em; }
+    .archive span { display:inline-grid; place-items:center; background:var(--ink); color:var(--panel); width:39px; height:39px; margin-right:13px; border-radius:50%; letter-spacing:0; }
+    .status { font-size:13px; background:var(--soft); color:#31554c; padding:5px 13px; border:1px solid #cadaca; border-radius:99px; }
+    .hero { padding-top:36px; }
+    .eyebrow { color:var(--orange); font-size:12px; letter-spacing:.12em; font-weight:750; margin:0 0 10px; }
+    h1 { font-size:clamp(30px,4.5vw,51px); line-height:1.25; letter-spacing:-.035em; margin:0 0 16px; max-width:1050px; }
+    .hero-lead { color:var(--muted); margin:0; max-width:1000px; font-size:18px; line-height:1.8; }
+    .overview { margin:28px 0 0; }
+    .image-link { display:block; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; box-shadow:0 10px 28px #233b3510; }
+    .image-link img { width:100%; height:auto; display:block; }
+    figcaption { display:flex; gap:20px; align-items:flex-start; justify-content:space-between; margin-top:12px; color:var(--muted); font-size:14px; line-height:1.7; }
+    .image-note { max-width:890px; }
+    .open-original { flex-shrink:0; font-weight:650; white-space:nowrap; }
+    nav { display:flex; flex-wrap:wrap; gap:5px 24px; padding:25px 0; border-bottom:1px solid var(--line); font-size:14px; }
+    nav a { text-decoration:none; padding:3px 0; }
+    .section { padding:56px 0; border-bottom:1px solid var(--line); }
+    .section-title { display:flex; align-items:baseline; gap:17px; margin-bottom:22px; }
+    .number { color:var(--orange); font-family:ui-monospace,monospace; font-size:14px; font-weight:700; }
+    h2 { font-size:clamp(25px,3vw,32px); line-height:1.4; letter-spacing:-.025em; margin:0; }
+    h3 { font-size:21px; line-height:1.5; margin:0 0 12px; }
+    p { margin:0 0 17px; }
+    p:last-child { margin-bottom:0; }
+    .reading { max-width:970px; }
+    .lead { font-size:21px; line-height:1.75; }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+    .three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
+    .panel { background:var(--panel); padding:27px 30px; border:1px solid var(--line); border-radius:var(--radius); min-width:0; }
+    .panel p { color:var(--muted); }
+    .label { font-size:12px; font-weight:750; color:var(--orange); letter-spacing:.07em; display:block; margin-bottom:10px; }
+    .tags { display:flex; flex-wrap:wrap; gap:9px; margin-top:24px; }
+    .tag { font-size:13px; line-height:1.5; border:1px solid #cfd8cf; background:#edf1e8; padding:6px 12px; border-radius:99px; }
+    ul, ol { margin:0; padding-left:24px; }
+    li { margin-bottom:11px; padding-left:4px; }
+    li:last-child { margin-bottom:0; }
+    .callout { margin-top:26px; padding:21px 25px; background:#f0e7d7; border-left:3px solid var(--orange); border-radius:0 12px 12px 0; }
+    .callout p { margin:0; }
+    .flow { margin-top:24px; padding:22px 26px; border:1px solid #adc1b1; background:#e6efe3; border-radius:var(--radius); text-align:center; }
+    .flow strong { color:var(--green); }
+    .steps { list-style:none; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:20px; counter-reset:step; }
+    .steps li { counter-increment:step; margin:0; padding:26px 28px; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); }
+    .step-head { display:flex; align-items:baseline; gap:13px; margin-bottom:12px; }
+    .step-head::before { content:"0" counter(step); color:var(--orange); font:700 15px ui-monospace,monospace; }
+    .step-head h3 { margin:0; }
+    .steps p { color:var(--muted); }
+    .result-line { display:block; margin-top:14px; color:var(--green); font-size:14px; font-weight:650; }
+    .source { color:var(--muted); font-size:14px; margin-top:22px; }
+    .use { padding-top:20px; border-top:2px solid #adbfb3; }
+    .use p { color:var(--muted); }
+    .extension { margin-top:32px; }
+    .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--line); border-radius:12px; background:var(--panel); }
+    table { border-collapse:collapse; width:100%; min-width:870px; font-size:16px; line-height:1.7; }
+    caption { text-align:left; padding:16px 22px; font-size:14px; color:var(--muted); background:#eaf0e6; }
+    th, td { padding:18px 21px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); }
+    thead th { font-size:13px; background:#f0f3eb; color:#4a625a; letter-spacing:.02em; }
+    tbody th { width:18%; font-weight:700; }
+    tbody tr:last-child td, tbody tr:last-child th { border-bottom:0; }
+    .scroll-note { color:var(--muted); font-size:13px; margin-bottom:12px; }
+    .boundary { display:grid; grid-template-columns:1fr 1fr; gap:25px 42px; }
+    .boundary article { padding-top:17px; border-top:1px solid #c4cfc4; }
+    .boundary h3 { font-size:19px; }
+    .boundary p { color:var(--muted); }
+    .experiment { margin-top:32px; border:1px solid #adc1b1; background:#e6efe3; border-radius:var(--radius); padding:28px 30px; }
+    .sources { display:grid; grid-template-columns:1fr 1fr; column-gap:42px; row-gap:18px; padding:0; list-style:none; }
+    .sources li { padding:0; margin:0; }
+    .sources small { display:block; font-size:13px; color:var(--muted); margin-top:2px; }
+    footer { padding:30px 0 45px; color:var(--muted); font-size:13px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px 25px; }
+    code { font-family:ui-monospace,"Cascadia Code",monospace; font-size:.9em; overflow-wrap:anywhere; }
+    @media (max-width:800px) { .wrap { width:calc(100% - 40px); } .two-col,.three-col,.boundary,.steps { grid-template-columns:1fr; gap:24px; } .section { padding:42px 0; } .hero { padding-top:28px; } .panel,.steps li { padding:24px; } .lead { font-size:19px; } figcaption { flex-direction:column; gap:8px; } .sources { grid-template-columns:1fr; gap:18px; } }
+    @media (max-width:480px) { body { font-size:16px; } .wrap { width:calc(100% - 32px); } header { padding:20px 0 16px; } .masthead { align-items:flex-start; flex-direction:column; gap:12px; } .archive,.status { font-size:12px; } .archive span { width:32px; height:32px; margin-right:9px; } h1 { font-size:31px; } .hero-lead { font-size:16px; } .overview { margin-top:22px; } nav { gap:5px 19px; padding:22px 0; } .section-title { gap:11px; } .panel,.steps li,.experiment,.flow { padding:22px; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+    @media print { body { background:white; color:#111; font-size:12pt; } .wrap { width:100%; } nav,.skip,.back,.open-original { display:none; } .section { padding:24px 0; } .table-wrap { overflow:visible; } table { min-width:0; font-size:9pt; } .steps li,.panel,.use,.boundary article { break-inside:avoid; } a { color:inherit; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">跳到研究正文</a>
+  <header class="wrap">
+    <a class="back" href="../../">← 返回研究目录</a>
+    <div class="masthead">
+      <div class="archive"><span>008</span> FORGE3D · 中文研究档案</div>
+      <div class="status">静态图文导览 · 尚未本机验证</div>
+    </div>
+  </header>
+  <main class="wrap" id="content">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">REAL GEODATA + CAPTURED ASSETS → ALIGNED SCENE → RENDERING</p>
+      <h1 id="hero-title">用真实数据，构建真实地点的三维场景</h1>
+      <p class="hero-lead">高程给出山体起伏，点云补充空间结构，影像提供地表外观，已有 3DGS 表现局部实拍场景。Forge3D 把对齐后的数据放进共同的渲染系统，让地形、树木与建筑参与同一套遮挡、光照和阴影计算。</p>
+      <figure class="overview">
+        <a class="image-link" href="forge3d-overview.png" target="_blank" rel="noopener" aria-label="打开 Forge3D 中文概念汇总图原尺寸">
+          <img src="forge3d-overview.png" alt="Forge3D 中文概念汇总图：山谷展示效果，高程、点云、影像和已有 3DGS 的分工，公共数据与无人机实拍两条路线，经坐标和尺度对齐进入融合渲染，输出图片与漫游视频，并列出能力、扩展与边界。" width="1672" height="941" fetchpriority="high">
+        </a>
+        <figcaption>
+          <span class="image-note">上图为本研究制作的<strong>概念引导图</strong>。山谷、点云和流程画面用于解释目标效果，<strong>不是 Forge3D 实际运行截图，也不是本次测量或重建结果</strong>。点击图片可打开原尺寸。</span>
+          <a class="open-original" href="forge3d-overview.png" target="_blank" rel="noopener">打开原图 ↗</a>
+        </figcaption>
+      </figure>
+    </section>
+    <nav aria-label="本页内容">
+      <a href="#summary">核心价值</a><a href="#data">数据是什么</a><a href="#routes">两条输入路线</a><a href="#principle">融合渲染原理</a><a href="#uses">用途与扩展</a><a href="#access">获取与全球覆盖</a><a href="#limits">边界与验证</a><a href="#sources">官方来源</a>
+    </nav>
+
+    <section class="section" id="summary" aria-labelledby="summary-title">
+      <div class="section-title"><span class="number">01</span><h2 id="summary-title">核心价值：从有依据的数据，到可观察的场景</h2></div>
+      <div class="reading">
+        <p class="lead">它给我们的路径是：选一个真实地点，收集相应的地理资料或实拍重建资产，再把它们组合成可从不同角度展示的三维场景。</p>
+        <p>Forge3D 的定位是 Python 控制的地形与地理可视化工具，底层使用 Rust 和 WebGPU。它能读取高程与其他空间数据，设置相机和环境，生成静态图、地图或镜头序列。它承担渲染环节；照片重建、数据采集和精度验收需要相应的上游工具与流程。</p>
+        <p>截图中的 1.41.0 更新重点，是把 DEM 地形、COPC LiDAR 点云和已有三维高斯放进统一的路径追踪流程，让山脊遮挡树木、树木向地面投影。这种统一计算是场景真实感的关键。</p>
+        <p>真实数据提供的是<strong>位置、形态和外观依据</strong>。渲染的太阳、天空、雾效与镜头可以另行设置，因此输出画面不一定对应某一时刻现场实际看到的景象。</p>
+      </div>
+      <div class="tags" aria-label="研究关键词"><span class="tag">真实地点</span><span class="tag">DEM 地形</span><span class="tag">COPC 点云</span><span class="tag">已有 3DGS</span><span class="tag">统一遮挡与阴影</span><span class="tag">Python 批处理</span></div>
+      <p class="source">依据：<a href="https://github.com/milos-agathon/forge3d" target="_blank" rel="noopener">上游项目介绍 ↗</a> · <a href="https://github.com/milos-agathon/forge3d/blob/main/CHANGELOG.md" target="_blank" rel="noopener">版本记录 ↗</a> · <a href="https://github.com/milos-agathon/forge3d/blob/ac6bc40a5d6395c407056bb6e63cb932352f961d/docs/splat-fused.md" target="_blank" rel="noopener">融合渲染文档 ↗</a>。</p>
+    </section>
+
+    <section class="section" id="data" aria-labelledby="data-title">
+      <div class="section-title"><span class="number">02</span><h2 id="data-title">四类输入，分别回答不同问题</h2></div>
+      <p class="scroll-note">手机上可左右滑动表格。</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="高程、点云、影像和三维高斯的比较">
+        <table>
+          <caption>山谷场景中的数据分工；是否同时具备这些输入，取决于当地数据和项目目标。</caption>
+          <thead><tr><th scope="col">输入</th><th scope="col">它是什么</th><th scope="col">怎样获得</th><th scope="col">能提供什么</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">高程 DEM<br><small>每个位置有多高</small></th><td>将区域划成网格，每个格点存一个高度。裸地模型 DTM 描述地面；表面模型 DSM 可包含树冠、屋顶。</td><td>卫星雷达、立体摄影、航空激光测量；点云经地面分类与插值也能生成高程栅格。常见文件是 GeoTIFF。</td><td>山脉、坡面和谷底的整体形状。单一高度场无法完整表达洞穴、悬挑或同一位置的多层结构。</td></tr>
+            <tr><th scope="row">点云<br><small>空间中有哪些点</small></th><td>大量带 X、Y、Z 坐标的采样点，可附分类、回波、强度或颜色。它本身没有连续表面，颜色也不一定自带。</td><td>飞机、无人机、车载或地面 LiDAR；多视图摄影也可计算点云。常见格式为 LAS / LAZ，COPC 是便于分区读取的 LAZ 组织方式。</td><td>地面、树冠、屋顶等空间结构。只有采集视角实际看见或测到的部分有数据，密度与遮挡会影响细节。</td></tr>
+            <tr><th scope="row">地理影像<br><small>表面是什么样</small></th><td>带地理位置的像素。正射影像经过几何纠正，可与地图对齐；卫星、航空影像的分辨率差别很大。</td><td>卫星拍摄、有人机航拍或无人机摄影，经过纠正与拼接。地形着色通常需裁剪并重采样到对应网格。</td><td>颜色与纹理，例如草地、道路和屋顶外观。俯视照片不会自动变成建筑立面或实体几何。</td></tr>
+            <tr><th scope="row">已有 3DGS<br><small>局部实拍的三维外观</small></th><td>一组带位置、尺度、方向、透明度与颜色参数的三维高斯。即使同为 .ply 文件，普通点云与训练好的高斯资产也不是同一种数据。</td><td>用外部工具对多视角照片及相机信息优化，导出兼容资产，再定位到地理场景。并非把一张航拍图交给 Forge3D 就能自动生成。</td><td>补充重点区域的实拍外观，供新视角展示。高斯拟合的视觉效果不自动等于可测量的完整表面。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout"><p><strong>“30 米高程”与“10 厘米影像”描述不同事情。</strong>前者主要是高度网格的采样间距，后者是影像像素对应的地面尺寸。贴上清晰照片可以让场景看起来细致，但不会把粗糙地形变成同等精度的几何。</p></div>
+      <p class="source">产品实例：<a href="https://www.swisstopo.admin.ch/en/height-model-swissalti3d" target="_blank" rel="noopener">swissALTI3D 高程 ↗</a> · <a href="https://www.swisstopo.admin.ch/en/height-model-swisssurface3d" target="_blank" rel="noopener">swissSURFACE3D 点云 ↗</a> · <a href="https://www.swisstopo.admin.ch/en/orthoimage-swissimage-10" target="_blank" rel="noopener">SWISSIMAGE 正射影像 ↗</a>。3DGS 参考 <a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noopener">原论文项目 ↗</a>。</p>
+    </section>
+
+    <section class="section" id="routes" aria-labelledby="routes-title">
+      <div class="section-title"><span class="number">03</span><h2 id="routes-title">两条输入路线，可以在同一个场景汇合</h2></div>
+      <div class="two-col">
+        <article class="panel">
+          <span class="label">ROUTE A / 公共资料</span><h3>先从开放的地理数据开始</h3>
+          <ol><li>确定区域，查找对应高程、点云和正射影像。</li><li>记录测量年份、坐标与高程基准、分辨率和许可。</li><li>只下载需要的瓦片，裁剪、分类、整理格式。</li><li>将影像与地形配准，再按需加入点云或已有高斯。</li></ol>
+          <p class="extension">适合先获得山谷、山体或城市区域的大范围背景。不是每个地点都具有公开的高密度点云与高清航片。</p>
+        </article>
+        <article class="panel">
+          <span class="label">ROUTE B / 无人机实拍</span><h3>对重点区域补充自己的采集</h3>
+          <ol><li>用有重叠的多角度照片覆盖目标区域；立面通常还需斜拍。</li><li>在外部摄影测量工具中求解相机与空间关系。</li><li>按需求生成点云、DSM、正射影像；另用兼容工具重建 3DGS。</li><li>用测量控制或可靠参考检查尺度、位置和高程，再导入渲染。</li></ol>
+          <p class="extension">普通相机无人机取得的是照片；搭载激光设备才能直接采集 LiDAR。摄影测量点云也是计算得到的三维结果。</p>
+        </article>
+      </div>
+      <div class="flow"><p><strong>公共地形作背景 + 实拍重建补重点区域</strong><br>裁剪与整理 → 坐标、尺度、高程对齐 → Forge3D 融合渲染 → 图片 / 多视角序列 / 漫游视频</p></div>
+      <div class="callout"><p><strong>对齐是汇合的前提。</strong>经纬度与以米为单位的局部坐标不能直接相加；摄影重建还可能只有相对尺度。水平坐标、高程基准、单位、轴方向和局部原点都要一致，否则会出现悬空、错位或大小不对。</p></div>
+      <p class="source"><a href="https://docs.opendronemap.org/" target="_blank" rel="noopener">OpenDroneMap 官方文档 ↗</a>介绍从航空照片生成地理资产的外部流程；<a href="https://github.com/milos-agathon/forge3d/blob/ac6bc40a5d6395c407056bb6e63cb932352f961d/docs/splat-fused.md" target="_blank" rel="noopener">Forge3D 融合文档 ↗</a>说明已有高斯的变换与定位。两条路线的组合是本研究提出的使用流程，尚未本机验证。</p>
+    </section>
+
+    <section class="section" id="principle" aria-labelledby="principle-title">
+      <div class="section-title"><span class="number">04</span><h2 id="principle-title">原理：不同表示，共同参与光线计算</h2></div>
+      <ol class="steps">
+        <li><div class="step-head"><h3>准备不同形式的空间资产</h3></div><p>DEM 保留为高度场，点云提供离散采样，高斯保留外观与空间参数。影像在地形上提供颜色。它们不必先全部转换成同一种网格。</p><span class="result-line">前提：位置和尺度已经对齐</span></li>
+        <li><div class="step-head"><h3>建立统一的空间查询</h3></div><p>融合路径把地形、点云与高斯加入共同的加速结构。相机光线查询场景，阴影光线也查询这些对象，判断光能到达哪里、被哪些对象遮挡。</p><span class="result-line">结果：山体与局部对象相互遮挡</span></li>
+        <li><div class="step-head"><h3>计算光照、阴影和雾效</h3></div><p>路径追踪根据表面属性与环境计算画面，融合流程使用 ReSTIR 进行光照采样。太阳、天空、高度雾和地形配色共同形成展示效果。</p><span class="result-line">重点：同一套场景中的相互作用</span></li>
+        <li><div class="step-head"><h3>分块、分页并输出视图</h3></div><p>输出可分块处理来控制像素缓冲占用，场景资产可按需载入驻留池。连续改变相机生成一组帧，再由视频工具合成镜头序列。</p><span class="result-line">输出：静态帧与多视角序列</span></li>
+      </ol>
+      <div class="reading extension"><p>官方说明包含地形配色、平滑法线、LiDAR 表面片元、分页与多视角渲染等选项。交互地形查看器、批处理和融合路径各有自己的使用条件；支持一种输出能力并不代表所有模式都具有相同速度或许可。</p></div>
+      <p class="source">依据：<a href="https://github.com/milos-agathon/forge3d/blob/ac6bc40a5d6395c407056bb6e63cb932352f961d/docs/splat-fused.md" target="_blank" rel="noopener">融合渲染的输入、遮挡、分页与序列说明 ↗</a>。本页仅以图文解释，未加载三维引擎。</p>
+    </section>
+
+    <section class="section" id="uses" aria-labelledby="uses-title">
+      <div class="section-title"><span class="number">05</span><h2 id="uses-title">用途，以及我们可以继续扩展的方向</h2></div>
+      <div class="three-col">
+        <article class="use"><span class="label">LANDSCAPE / 景观表达</span><h3>真实地点的图像与漫游</h3><p>展示山谷、地形和重点建筑，设置镜头路线、日照与雾效，制作空间介绍、旅游讲解和景观视频。</p></article>
+        <article class="use"><span class="label">MAP / 地理信息表达</span><h3>把二维资料放回空间</h3><p>在真实起伏上表达道路、地表分类或主题数据。重点是更清楚地呈现空间关系；地图注记等功能须核对具体模式与许可。</p></article>
+        <article class="use"><span class="label">REUSE / 地理资产复用</span><h3>大范围背景与局部实拍结合</h3><p>公共地形和影像可以反复使用，自己的无人机重建补充重点区域，形成可更新、可生成不同视角的展示资产。</p></article>
+      </div>
+      <div class="reading extension">
+        <h3>后续可做：业务标注、时间对比与交互展示</h3>
+        <p>可以设计兴趣点、图层开关、镜头书签与解释面板；采集同一区域不同年份的数据，可以进一步做变化对比。把地理背景与实拍资产组合，也有机会成为数字场景的基础。</p>
+        <p><strong>这些是扩展方向，尚不是本档案完成的功能。</strong>导航、碰撞、实时网页展示、变化检测和业务计算需要额外开发。洪水、滑坡、日照评估等分析还要接入相应算法与验证，画面的光照效果不能替代专业计算结果。</p>
+      </div>
+    </section>
+
+    <section class="section" id="access" aria-labelledby="access-title">
+      <div class="section-title"><span class="number">06</span><h2 id="access-title">如何取得数据，是否已经覆盖全世界</h2></div>
+      <div class="reading"><p class="lead">全球已有公开的基础地形与卫星影像；精细到树木、屋顶和立面的数据，覆盖与开放程度仍不均匀。</p><p>对截图中的瑞士山谷，我们可以从官方开放产品获取自己的源数据。尚未确认作者公开了视频所用的全部裁剪文件、处理脚本与场景参数，因此“能用相同类别的公共数据”与“拿到作者的完整项目”需要区分。</p></div>
+      <p class="scroll-note extension">手机上可左右滑动表格。</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="可获取的数据与覆盖范围">
+        <table>
+          <caption>建议先按地点与目标细节查覆盖，再选择产品；不要把基础全球覆盖理解为全球精细三维扫描。</caption>
+          <thead><tr><th scope="col">数据入口</th><th scope="col">提供什么</th><th scope="col">覆盖与使用方式</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">瑞士 swisstopo</th><td><a href="https://www.swisstopo.admin.ch/en/height-model-swissalti3d" target="_blank" rel="noopener">swissALTI3D</a> 高程、<a href="https://www.swisstopo.admin.ch/en/height-model-swisssurface3d" target="_blank" rel="noopener">swissSURFACE3D</a> 分类点云、<a href="https://www.swisstopo.admin.ch/en/orthoimage-swissimage-10" target="_blank" rel="noopener">SWISSIMAGE</a> 正射影像。</td><td>在官方产品页选择区域与瓦片，查看日期和数据属性后下载。正式开放产品允许加工与商用，按条款标注来源；样例和特殊服务另查适用条件。</td></tr>
+            <tr><th scope="row">Copernicus DEM</th><td>全球陆地的 GLO-30 / GLO-90，标称约 30 / 90 米网格。</td><td><a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM" target="_blank" rel="noopener">官方产品与获取说明</a>。免费许可且有来源标注义务；它是包含植被及建筑表面的 DSM，适合基础地形背景。</td></tr>
+            <tr><th scope="row">卫星地理影像</th><td>例如 Sentinel-2 的部分波段为 10 米分辨率，可用于大范围地表颜色与分类。</td><td><a href="https://dataspace.copernicus.eu/data-collections/copernicus-sentinel-missions/sentinel-2" target="_blank" rel="noopener">Sentinel-2 官方说明</a>。有全球性陆地观测，但单景受云与日期影响；10 米像素无法提供航空照片级屋顶细节。</td></tr>
+            <tr><th scope="row">区域航空 LiDAR</th><td>例如美国 USGS 3DEP 的分类点云与高程产品。</td><td><a href="https://www.usgs.gov/3d-elevation-program/about-3dep-products-services" target="_blank" rel="noopener">USGS 免费产品入口</a>。其他国家、地区各有政策；须按具体地点查覆盖、点密度、年份和许可。</td></tr>
+            <tr><th scope="row">卫星激光观测</th><td>GEDI 等提供沿轨足迹里的地面高度与植被结构观测。</td><td><a href="https://gedi.umd.edu/mission/technology/" target="_blank" rel="noopener">GEDI 官方采样说明</a>。属于轨道采样，不是连续覆盖的航空点云，不能直接当作全球逐棵树、逐栋建筑的精细三维资产。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout"><p><strong>免费获取不意味着所有来源具有同一许可。</strong>数据、渲染软件、外部重建工具和训练资产都要分别查看条款。Forge3D 核心采用 Apache-2.0 或 MIT，部分 Pro 功能需要商业许可。</p></div>
+      <p class="source">许可依据：<a href="https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices" target="_blank" rel="noopener">swisstopo 使用条款 ↗</a> · <a href="https://github.com/milos-agathon/forge3d#license" target="_blank" rel="noopener">Forge3D 核心与 Pro 许可 ↗</a>。</p>
+    </section>
+
+    <section class="section" id="limits" aria-labelledby="limits-title">
+      <div class="section-title"><span class="number">07</span><h2 id="limits-title">使用边界：画面、精度与速度分别验证</h2></div>
+      <div class="boundary">
+        <article><h3>清晰纹理，不等于准确几何</h3><p>影像像素、DEM 网格间距、点密度和测量误差各有含义。视觉真实感不能证明尺寸、位置与高程达到工程精度。</p></article>
+        <article><h3>支持 4K 输出，不等于实时 4K</h3><p>分块输出控制显存，不能直接推导帧率。飞行视频可以由逐帧渲染后合成；速度须结合硬件、场景、采样与渲染模式测试。</p></article>
+        <article><h3>按需加载，仍有容量边界</h3><p>分页有固定的驻留池。融合文档中的精确模式若单视角所需页面超过池容量，会报预算错误；渐进模式则需关注加载过程中的结果状态。</p></article>
+        <article><h3>DEM 是高度场，形状表达有限</h3><p>一个水平位置存一个高度，不能完整表达洞穴、悬挑与垂直多层结构。建筑立面和复杂局部需要其他几何或捕获资产。</p></article>
+        <article><h3>实拍外观可能保留原光照</h3><p>3DGS 资产中的采集光照可能已经体现在颜色里，重新照明时可能带来明暗或色彩偏差。显示效果与材质恢复需要分开评估。</p></article>
+        <article><h3>公开不代表最新，也不保证完整</h3><p>不同数据可能来自不同年份，树木、建筑和道路会变化；水面、阴影、云和遮挡也会留下缺口。需要保存每份输入的来源与日期。</p></article>
+      </div>
+      <div class="experiment">
+        <h3>下一步验证：先做一个小范围场景</h3>
+        <ol><li>选一块有明确数据来源的区域，先使用 DEM 与正射影像。</li><li>核对坐标、基准、单位、区域边界和许可，保存来源清单。</li><li>输出低分辨率测试帧，检查地形形态、贴图与相机方向。</li><li>加入点云；有需要时再补外部重建的 3DGS，检查配准和阴影。</li><li>记录硬件、版本、采样、耗时和峰值内存，再提高输出尺寸。</li><li>最后生成多视角序列，检查闪烁、分页状态与可用的细节范围。</li></ol>
+        <p class="extension"><strong>当前状态：</strong>已完成资料与路线研究、概念引导图和本静态导览；尚未在本机运行 Forge3D、下载该山谷数据或完成渲染复测。本页没有提供性能、画质或几何精度的实测结论。</p>
+      </div>
+      <p class="source">融合能力和限制依据：<a href="https://github.com/milos-agathon/forge3d/blob/ac6bc40a5d6395c407056bb6e63cb932352f961d/docs/splat-fused.md" target="_blank" rel="noopener">官方融合文档 ↗</a>。以上验证流程为研究提出的下一步工作。</p>
+    </section>
+
+    <section class="section" id="sources" aria-labelledby="sources-title">
+      <div class="section-title"><span class="number">08</span><h2 id="sources-title">来源与完整记录</h2></div>
+      <ul class="sources">
+        <li><a href="https://github.com/milos-agathon/forge3d" target="_blank" rel="noopener">Forge3D 上游 GitHub ↗</a><small>项目定位、输入输出、使用入口与核心 / Pro 许可。</small></li>
+        <li><a href="https://github.com/milos-agathon/forge3d/blob/ac6bc40a5d6395c407056bb6e63cb932352f961d/docs/splat-fused.md" target="_blank" rel="noopener">融合渲染官方文档 ↗</a><small>DEM、COPC 与已有 3DGS 的统一渲染，以及分页和输出限制。</small></li>
+        <li><a href="https://github.com/milos-agathon/forge3d/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Forge3D 更新日志 ↗</a><small>复核截图所述 1.41.0 版本与功能；安装时还应核对实际可获得的版本。</small></li>
+        <li><a href="https://www.swisstopo.admin.ch/en/geodata-and-applications" target="_blank" rel="noopener">swisstopo 地理数据 ↗</a><small>瑞士高程、点云、正射影像的官方产品入口。</small></li>
+        <li><a href="https://www.swisstopo.admin.ch/en/terms-of-use-free-geodata-and-geoservices" target="_blank" rel="noopener">swisstopo 开放数据条款 ↗</a><small>使用、加工、发布及来源标注要求。</small></li>
+        <li><a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM" target="_blank" rel="noopener">Copernicus DEM 官方产品 ↗</a><small>全球基础高程的覆盖、分辨率、DSM 属性与许可。</small></li>
+        <li><a href="https://docs.opendronemap.org/" target="_blank" rel="noopener">OpenDroneMap 官方文档 ↗</a><small>无人机照片的外部摄影测量流程与地理资产输出。</small></li>
+        <li><a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noopener">3D Gaussian Splatting 原论文项目 ↗</a><small>多视角输入、场景优化与新视角渲染的基础背景。</small></li>
+        <li><a href="https://x.com/milos_gis/status/2106764377735016932" target="_blank" rel="noopener">用户提供的原帖 ↗</a><small>本研究从用户提供的帖子截图开始；这里保留普通链接，原视频内容未独立复测。</small></li>
+        <li><a href="https://github.com/yydshly/1004_codex_project/tree/main/projects/008-forge3d" target="_blank" rel="noopener">完整研究记录与源文件 ↗</a><small>本仓库项目目录 projects/008-forge3d：研究笔记、概念图与导览源码。</small></li>
+      </ul>
+    </section>
+  </main>
+  <footer class="wrap"><span>研究日期：2026-10-05 · 归档日期：2026-10-06</span><span>008 Forge3D · 概念图文研究 · 本机验证待完成</span></footer>
+</body>
+</html>

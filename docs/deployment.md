@@ -9,6 +9,7 @@
 - [002 · CodeFlow 研究网页](https://yydshly.github.io/1004_codex_project/demos/002-codeflow/#understanding)，以理解汇总图引导，说明能力、混合解析与关系推断、十种实际效果、输入输出、CLI / Card / JSON 扩展、使用场景，以及 Source Insight、Ix、GitNexus 的差异。页面包含锁定快照分析 15 个真实源码文件的原生运行器。
 - [004 · 场景与模型风格图谱](https://yydshly.github.io/1004_codex_project/demos/004-scene-style-atlas/)，以[完整理解总览](https://yydshly.github.io/1004_codex_project/demos/004-scene-style-atlas/understanding/)串起原游戏官方画面、三轮原创实时样板、体感原理、使用价值和产品扩展；保留 V1/V2 完整存档及人物专项记录。人物研究暂停，故事、行动和游戏系统仍为候选。
 - [006 · Claude Code Best Practice 研究网页](https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/)，以[完整模块总图](https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/module-map.html)引导，覆盖 47 项功能主题、8 组 63 个条目，说明资料与模板的能力、技术机制、使用入口、开发与审查场景，以及知识沉淀、流程复用和验收价值。网页包含机制选择、执行链路说明和原创审查模板；交互不调用 Claude Code 或外部服务。
+- [008 · Forge3D 真实数据融合与三维场景渲染](https://yydshly.github.io/1004_codex_project/demos/008-forge3d/)，使用本次生成的理解引导图，汇总高程、点云、影像与已有 3DGS 的分工，公共数据和无人机外部重建两条路线、统一配准与融合渲染原理、应用价值、精度与覆盖边界、授权及后期验证步骤。此页是静态研究导览，概念效果图不作为 Forge3D 实测截图；原版渲染与性能仍待验证。
 
 这里部署的是原创研究网页、理解汇总图和 CodeFlow 固定版本的浏览器运行资源。CodeFlow 原生示例实际解析公开原创 Mini Shop 源码；历史三层影响交互另行标为教学示意。网页不提供生产分析后端，也未部署 Ix、GitNexus、Source Insight；TaskView 及其他服务的数据库、MCP 和 Agent 执行环境需要另行部署。
 

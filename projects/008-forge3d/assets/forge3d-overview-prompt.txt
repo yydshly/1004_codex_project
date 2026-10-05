@@ -1,0 +1,84 @@
+Use case: infographic-diagram, scientific-educational.
+Create ONE polished, comprehensive Simplified Chinese infographic poster for a non-specialist's long-term technical reference. It summarizes our understanding of the Python geospatial rendering library Forge3D. The output MUST be a single large high-resolution landscape image, target 3840×2160, 16:9. Crisp readable Chinese typography, generous margins, consistent hierarchy, thin clean arrows, premium technical editorial layout. Warm off-white background, deep navy text, teal/blue/orange accents. Do not make a wall of tiny text. All specified Chinese copy must render exactly and be legible at full size. No unrequested text, no fake logos, no invented measured claims.
+
+The lesson: real geospatial data provide terrain, objects and surface appearance; public data can be combined with local drone reconstruction. Forge3D renders and fuses prepared data; it does NOT itself train Gaussian splats or perform drone photogrammetry. Illustrations must be openly labeled conceptual, never as actual Forge3D benchmarks.
+
+LAYOUT:
+Header approx 8% height. Upper visual and explanation area approx 40% height. Central process band approx 18% height. Bottom three information cards approx 28% height. Tiny but readable source footer approx 6%. Use a coherent precise grid.
+
+HEADER EXACT COPY:
+"Forge3D｜从真实数据到三维场景"
+Subtitle: "能力 · 原理 · 数据 · 无人机搭配 · 后期复用"
+Small descriptor: "Python 控制 · Rust + WebGPU 底层"
+
+UPPER LEFT, around 58% of width: a visually impressive wide scene illustration of a realistic Swiss Alpine U-shaped valley with dramatic cliffs, meadow floor, small village, individual tree canopies, aerial perspective and morning height fog, lit by low sun with plausible mountain and tree shadows. This is a synthetic teaching illustration, not a claimed render. Use a camera view similar to an oblique aerial mountain-valley scene, not a map symbol. Label above: "目标效果：有地理依据的真实地点展示"
+Visible small overlay caption: "概念效果示意 · 非实际运行截图"
+Below the main valley image, four evenly spaced small visual thumbnails showing the same scene or compatible local scene:
+1. terrain contour and shaded relief map, label "地形与三维地图"
+2. village and building detail from local photo reconstruction, label "局部建筑与植被"
+3. same valley in morning sunlight and haze, label "光照、阴影与雾效"
+4. camera trajectory through the valley, label "飞行视角与漫游视频"
+These are effect illustrations, not UI screenshots and not measured software outputs. Keep geography consistent.
+
+UPPER RIGHT around 42% of width: "数据分别提供什么"
+Three compact rows, each with a compelling small illustrated visual and exact text:
+"高程 DEM" / "每个位置的高度" / "构建山体、坡面和谷底"
+Visual: blue wireframe heightfield mountain.
+"点云" / "大量带 XYZ 坐标的测量点" / "补充树冠、屋顶与空间结构"
+Visual: a recognizably colored dot-cloud village and trees.
+"地理影像" / "带坐标的地表照片" / "提供颜色和纹理"
+Visual: an orthographic aerial valley texture map with field boundaries.
+A small fourth annotation below: "3DGS：由外部多视角重建得到的高斯场景表示"
+Use a tiny cluster of colored ellipsoids to illustrate splats.
+One emphasized scientific relation: "点云可加工成高程；多视角照片也可生成点云"
+
+CENTRAL WORKFLOW BAND title "核心原理与可复用流程"
+Draw TWO clear input lanes merging into coordinate alignment:
+Lane A, blue: "公开数据" -> small sublabels "高程 / 点云 / 影像" -> "裁剪与整理" -> merge.
+Lane B, orange with a small real-looking drone and overlapping camera-view icons: "无人机多角度实拍" -> "外部摄影测量 / 3DGS 重建" -> merge.
+MERGE node: "坐标、尺度与高程对齐"
+Then one clearly emphasized central engine box: "Forge3D 融合渲染"
+Inside or directly beneath it exact label: "地形 + 点云 + 高斯共同参与光线追踪"
+Below engine: "统一遮挡、光照与相互阴影"
+Arrow from engine to outputs node "静帧图片 / 多视角序列 / 漫游视频"
+Clearly show the external reconstruction step OUTSIDE the Forge3D engine box.
+Small formula-like plain-language line beneath the workflow: "公开地形做背景，实拍重建补重点区域"
+
+BOTTOM THREE CARDS, balanced widths and readable font:
+
+CARD 1 heading "已具备的能力"
+Exact short list:
+"DEM、COPC 点云与 3DGS 融合"
+"太阳、天空、高度雾与地形配色"
+"按需分页与显存预算管理"
+"1080p / 4K 分块输出"
+"Python 批处理与多视角序列"
+Use tiny matching icons. Do not say all are realtime.
+
+CARD 2 heading "价值与后期扩展"
+Exact short list:
+"复用真实数据，构建具体地点"
+"开放数据提供大范围基础"
+"无人机补充局部纹理和几何"
+"可组合业务标注、时序与应用"
+"可用于景观展示、地图与场景分析"
+Highlighted bottom line:
+"当前：掌握路线｜需要时：小范围验证"
+The business-label/time-series/application line is an extension possibility, not a claimed built-in feature.
+
+CARD 3 heading "使用边界"
+Exact short list:
+"纹理清晰 ≠ 几何准确"
+"全球有基础数据，精细覆盖不均"
+"4K 输出 ≠ 实时 4K"
+"DEM 高度场无法表达悬挑"
+"实拍 3DGS 可能残留原光照"
+"开源核心；部分 Pro 功能需许可"
+Avoid alarmist warning styling; use calm neutral technical notes.
+
+SOURCE FOOTER exact:
+"资料依据：Forge3D 官方文档 · swisstopo 开放数据 · OpenDroneMap"
+"整理日期：2026-10-05｜效果图为概念示意"
+Do not add fabricated QR codes, performance numbers or URLs that were not specified.
+
+Ensure correct diagram topology, photorealistic-looking illustrative scene panels alongside clean vector-style data icons, excellent Chinese text accuracy, and comprehensive yet instantly scannable information. ONE image only.

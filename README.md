@@ -18,6 +18,7 @@
 | 005 | [水流与鸭子互动 · 循环玩法研究](projects/005-water-duck-loops/README.md) | 以 Duck 的像素瀑布视频和鸭子编辑器为参考，区分视觉启发、像素鸭配色及 PNG/SVG 导出能力与我们的原创玩法实验。用速度场、涟漪推力、水量转移和状态规则连接玩家操作、水的变化、鸭子响应、目标反馈及可见回程，保留 V1 自由玩水、V2 引流挑战、V3 可读水流和 V4 蓄水救援。以九模块研究总览图引导，汇总搭水路、不同鸭子、跨区域连锁救援和瀑布花园等系列方向，以及水鸭机制、素材、关卡参数、验证流程和团队沟通的后期复用价值；网页支持本地实验记录与 JSON 导出，归档程序检查和两种放水策略案例。原视频的游戏身份、与编辑器的关系及算法未确认，现有规则近似不等于完整流体；C–F 扩展待实现，实际玩家理解、策略平衡、长期可玩性与产品收益仍待验证。 | 研究中 | 水流互动、循环玩法、像素场景 | [x.com/duck\_wtd/status/2106807563073339790](https://x.com/duck_wtd/status/2106807563073339790) | [静态文件](site/demos/005-water-duck-loops/index.html) |
 | 006 | [Claude Code Best Practice · 能力与工作流研究](projects/006-claude-code-best-practice/README.md) | Claude Code 的社区学习资料、配置模板与工作流参考实现：通过项目记忆、Commands / Skills、Subagents、Hooks 与 MCP 组织重复任务和多步骤开发。完整模块总图覆盖 47 项功能主题，按知识与上下文、执行与协作、配置权限与扩展、会话体验、审查与持续工作、外部系统、本库示例和资料导航整理为 8 组 63 个条目，每项说明技术机制与使用入口。适用于代码研究与审查、复杂功能开发、团队交接、资料维护和外部工具接入；价值是沉淀知识、复用流程、减少重复说明与遗漏、明确交接和验收依据。实际推理和工具执行由 Claude Code 与外部服务提供，收益需结合适配、维护和执行成本验证。 | 已完成 | Claude Code、工作流编排、上下文工程 | [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) | [Demo](https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/) |
 | 007 | [Spirula Studio · 实拍三维重建与高斯原理](projects/007-spirula-studio/README.md) | 把同一静态对象的多角度照片、绕拍视频，经抽帧、掩膜、SfM 相机求解和逐场景高斯优化，变成可自由观察、保存和编辑的三维高斯资产，并提取带纹理网格、渲染图片与漫游视频。独立 C++ 桌面与 CLI 整合重建、批处理、编辑和导出；Vulkan/CUDA、训练量化与 GPU 内存优化支撑计算。中文总图和源码研究解释高斯、可微渲染、密度控制与占据场网格提取，覆盖商品/文物展示、空间导览、内容制作及采集管理、跨机调度、质量验收等扩展，并对比 Splat.js、QuerySplat、LichtFeld、SuperSplat、TRELLIS.2、Forge3D 的职责。实拍资产可复用，外观逼真不保证测量或制造精度；资料与源码已审校，Spirula 本机运行与性能待验证。 | 研究中 | 实拍三维重建、3D Gaussian Splatting、输入输出与工具对比 | [harry7557558/spirula-studio](https://github.com/harry7557558/spirula-studio) | [静态文件](site/demos/007-spirula-studio/index.html) |
+| 008 | [Forge3D · 真实数据融合与三维场景渲染](projects/008-forge3d/README.md) | Forge3D 是 Python 驱动、Rust 与 WebGPU 实现的地理三维渲染库，可将准备好的真实高程 DEM、COPC 激光雷达点云和已有 3D 高斯放入同一场景，以统一遮挡、阴影、太阳与雾效输出地形地图、场景图片和飞行镜头序列；影像为地表提供颜色，分块渲染与按需分页帮助控制大场景显存，1080p／4K 输出不自动意味着实时。研究从瑞士劳特布鲁嫩案例出发，解释高程塑造地形、点云描述空间结构、正射影像提供外观，以及三者如何裁剪、配准并统一坐标与高程基准。直接价值是复用公共真实数据构造具体地点，也可用无人机多角度实拍，经外部摄影测量或 3DGS 重建补足局部细节，再接入融合渲染；Forge3D 本身不负责照片重建或高斯训练。全球已有中等分辨率高程与卫星影像，精细点云和厘米级影像的开放覆盖因地区而异，纹理清晰度不能代替几何精度。开源核心、Pro 功能、各数据源与重建工具的授权分别核对，作者完整演示素材包尚未确认公开。可扩展到地点导览、数字场景、路线演示、规划沟通、采集质量与资产管理；当前沉淀技术思路，真正使用时按地点、精度和预算做小样验收。附完整理解引导图与图文导览；资料研究完成，原版渲染及性能未在本机验证。 | 已完成 | 地理三维、数据融合、高程与点云、3DGS、无人机重建、产品复用 | [milos-agathon/forge3d](https://github.com/milos-agathon/forge3d) | [静态文件](site/demos/008-forge3d/index.html) |
 
 <!-- PROJECT_INDEX:END -->
 
@@ -86,6 +87,16 @@ Claude Code 的社区学习资料、配置模板与工作流参考实现：通�
 [研究记录](projects/007-spirula-studio/README.md) · [harry7557558/spirula-studio](https://github.com/harry7557558/spirula-studio)
 
 ![Spirula Studio · 实拍三维重建与高斯原理 研究引导图](projects/007-spirula-studio/assets/spirula-studio-overview.png)
+
+### **008 · Forge3D · 真实数据融合与三维场景渲染**
+
+**项目摘要**
+
+Forge3D 是 Python 驱动、Rust 与 WebGPU 实现的地理三维渲染库，可将准备好的真实高程 DEM、COPC 激光雷达点云和已有 3D 高斯放入同一场景，以统一遮挡、阴影、太阳与雾效输出地形地图、场景图片和飞行镜头序列；影像为地表提供颜色，分块渲染与按需分页帮助控制大场景显存，1080p／4K 输出不自动意味着实时。研究从瑞士劳特布鲁嫩案例出发，解释高程塑造地形、点云描述空间结构、正射影像提供外观，以及三者如何裁剪、配准并统一坐标与高程基准。直接价值是复用公共真实数据构造具体地点，也可用无人机多角度实拍，经外部摄影测量或 3DGS 重建补足局部细节，再接入融合渲染；Forge3D 本身不负责照片重建或高斯训练。全球已有中等分辨率高程与卫星影像，精细点云和厘米级影像的开放覆盖因地区而异，纹理清晰度不能代替几何精度。开源核心、Pro 功能、各数据源与重建工具的授权分别核对，作者完整演示素材包尚未确认公开。可扩展到地点导览、数字场景、路线演示、规划沟通、采集质量与资产管理；当前沉淀技术思路，真正使用时按地点、精度和预算做小样验收。附完整理解引导图与图文导览；资料研究完成，原版渲染及性能未在本机验证。
+
+[研究记录](projects/008-forge3d/README.md) · [milos-agathon/forge3d](https://github.com/milos-agathon/forge3d)
+
+![Forge3D · 真实数据融合与三维场景渲染 研究引导图](projects/008-forge3d/assets/forge3d-overview.png)
 
 <!-- PROJECT_GALLERY:END -->
 
