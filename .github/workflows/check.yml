@@ -22,3 +22,5 @@ jobs:
           python-version: "3.11"
       - name: Check registry and generated files
         run: python scripts/catalog.py check
+      - name: Test catalog compatibility
+        run: python -B -m unittest discover -s scripts -p 'test_*.py' -v

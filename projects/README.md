@@ -8,6 +8,8 @@
 python scripts/catalog.py add --slug your-project --name "项目名称" --repo "https://github.com/owner/repo" --summary "研究摘要"
 ```
 
+研究没有公开源码的产品时，将 `--repo` 换成 `--source "https://example.com/product"`，登记真实的产品或作者来源。两种来源参数只能选择一种。
+
 每个子项目的文档从 [项目模板](../templates/project/README.md) 生成，通常包含以下内容：
 
 | 路径 | 内容 |

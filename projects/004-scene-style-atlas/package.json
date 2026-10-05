@@ -1,0 +1,13 @@
+{
+  "name": "scene-style-atlas",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local preview for the original medium-shot scene style atlas",
+  "scripts": {
+    "dev": "node dev-server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

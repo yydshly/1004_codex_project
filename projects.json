@@ -32,6 +32,22 @@
       "demo_url": "https://yydshly.github.io/1004_codex_project/demos/002-codeflow/"
     },
     {
+      "number": 4,
+      "slug": "scene-style-atlas",
+      "name": "场景与模型风格图谱 · Defilade 视觉研究",
+      "summary": "从 Defilade 公开中景展示出发，研究场景布局、模型比例、材质光影、镜头与动态反馈如何共同形成玩家体感。原创 Three.js 样板完成三场景三风格比较、建筑植被道路车辆细化和人物专项，保留 V1/V2 完整存档与同机位对照。以含原游戏官方画面和实际样板的总览图引导，整理探索过程、效果差距、技术原理、美术选型与团队沟通场景，以及比例、配色、镜头和模块规则的复用价值；区分官方参考、实时结果、AI 概念和待验证判断。扩展方向覆盖风格方案库、场景组合、营地状态，以及故事、玩家行动与游戏系统；人物研究暂停，候选方向尚未实现，当前成果用于研究与原型，不等于完整游戏或正式资产。",
+      "repository": "",
+      "status": "已完成",
+      "tags": [
+        "游戏美术",
+        "场景与模型",
+        "风格沉淀"
+      ],
+      "cover": "assets/scene-style-understanding.png",
+      "demo_url": "https://yydshly.github.io/1004_codex_project/demos/004-scene-style-atlas/",
+      "source_url": "https://x.com/nexindie/status/2106723291868373127"
+    },
+    {
       "number": 6,
       "slug": "claude-code-best-practice",
       "name": "Claude Code Best Practice · 能力与工作流研究",

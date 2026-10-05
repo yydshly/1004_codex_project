@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#161c19">
+  <meta name="description" content="从 Defilade 的公开演示出发，研究场景、模型、光影和动态如何形成游戏体感。通过三种场景与三种原创美术方向，观察可沉淀的游戏风格资产。">
+  <title>004 · 中景 FIELD ATLAS — 场景与模型风格图谱</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23161c19'/%3E%3Cpath d='M12 42 32 30 52 42 32 54Z' fill='%238ba18b'/%3E%3Cpath d='M12 31 32 19 52 31 32 43Z' fill='%23dbe99b'/%3E%3Cpath d='M12 20 32 8 52 20 32 32Z' fill='%23eef2dd'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/":"./vendor/three/addons/"}}</script>
+</head>
+<body>
+  <a class="skip-link" href="#workbench">跳到场景工作台</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="中景 FIELD ATLAS 首页">
+      <span class="brand-number">004</span>
+      <span class="brand-title">中景 <span>FIELD ATLAS</span></span>
+    </a>
+    <div class="header-end">
+      <span class="header-note">游戏美术 · 视觉研究</span>
+      <a class="back-link" href="../../"><span aria-hidden="true">↖</span> 返回目录</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-main">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> SCENE / MODEL / FEEL</p>
+        <h1 id="page-title">中景里的游戏气质<span class="title-dot">。</span></h1>
+        <p class="hero-statement">场景 × 模型 × 光影 × 动态，共同形成玩家体感。</p>
+      </div>
+      <p class="hero-note">从 Defilade 的公开演示出发，<br>把一次视觉观察，转为可积累的美术方向。<br><span>下方为原创场景研究演示。</span></p>
+    </section>
+
+    <section class="iteration-summary" aria-labelledby="iteration-summary-title">
+      <div><p class="eyebrow">UNDERSTANDING / 研究与回顾</p><h2 id="iteration-summary-title">把画面吸引力，整理成可复用的理解。</h2><p>用一张总览图和完整说明回顾原游戏参考、三轮实际效果、体感原理、使用价值与产品扩展。人物研究暂时停在 V3，过程与证据保留。</p></div>
+      <div class="iteration-links"><a class="iteration-primary" href="./understanding/">打开理解汇总与总览图 <span aria-hidden="true">↗</span></a><a href="./detail-study/">当前场景与人物样板</a><a href="./versions/v2/detail-study/">第二轮完整存档</a><a href="./versions/v1/">第一轮完整存档</a><a href="#iteration-log">查看制作记录 ↓</a></div>
+    </section>
+
+    <section class="workbench" id="workbench" aria-labelledby="workbench-title">
+      <div class="workbench-toolbar">
+        <div class="control-family">
+          <h2 class="control-label" id="workbench-title"><span>01</span> 观察场景</h2>
+          <div class="segmented scene-options" role="group" aria-label="选择场景">
+            <button type="button" class="active" data-scene="village" aria-pressed="true">乡村道路</button>
+            <button type="button" data-scene="industry" aria-pressed="false">工业院落</button>
+            <button type="button" data-scene="town" aria-pressed="false">城镇街区</button>
+          </div>
+        </div>
+        <div class="control-family">
+          <p class="control-label"><span>02</span> 切换美术方向</p>
+          <div class="segmented style-options" role="group" aria-label="选择美术风格">
+            <button type="button" class="active" data-style="natural" aria-pressed="true"><i class="style-dot natural-dot" aria-hidden="true"></i>自然写实</button>
+            <button type="button" data-style="miniature" aria-pressed="false"><i class="style-dot miniature-dot" aria-hidden="true"></i>温暖微缩</button>
+            <button type="button" data-style="wasteland" aria-pressed="false"><i class="style-dot wasteland-dot" aria-hidden="true"></i>荒凉废土</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="workbench-body">
+        <div class="viewport" id="viewport">
+          <canvas id="scene-canvas" aria-label="原创三维中景演示，可拖动旋转视角和滚轮缩放" tabindex="0"></canvas>
+          <div class="scene-corner scene-corner-top"><span class="live-mark" aria-hidden="true"></span><span id="scene-name">乡村道路</span><span class="scene-type">程序几何 · 原创演示</span></div>
+          <div class="scene-corner scene-corner-bottom"><span class="view-tag">MEDIUM SHOT</span><span id="interaction-hint">拖动旋转 · 滚轮拉近 / 拉远</span></div>
+          <div class="scene-loading" id="scene-loading" role="status"><span class="loading-symbol" aria-hidden="true">◈</span><p>正在构建这片场景…</p><span>地形 · 建筑 · 植被 · 光影</span></div>
+          <div class="scene-error" id="scene-error" role="alert" hidden>场景暂时无法加载。请使用支持 WebGL 的浏览器打开本页。</div>
+          <noscript><div class="scene-error">请开启 JavaScript 查看三维场景。下方的风格档案仍可阅读。</div></noscript>
+        </div>
+
+        <aside class="style-file" aria-labelledby="style-name">
+          <div class="file-heading"><span class="eyebrow">STYLE FILE / 表现档案</span><span class="file-mark" aria-hidden="true">＋</span></div>
+          <h3 id="style-name">自然写实</h3>
+          <p class="style-feeling" id="style-feeling">可信、克制，有生活痕迹。</p>
+          <p class="style-description" id="style-description">自然的地景色彩与清晰的模型轮廓，让建筑、道路和行动共同构成一个可信的地方。</p>
+          <div class="palette-line"><span>场景色谱</span><div id="style-palette" class="style-palette" aria-label="当前风格配色"></div></div>
+
+          <div class="sliders">
+            <div class="slider-control">
+              <label for="camera-scale">镜头尺度 <output id="camera-value" for="camera-scale">26</output></label>
+              <input id="camera-scale" type="range" min="16" max="40" step="1" value="26" aria-describedby="camera-help">
+              <div class="range-note" id="camera-help"><span>更近</span><span>更远</span></div>
+            </div>
+            <div class="slider-control">
+              <label for="detail-level">模型与场景细节 <output id="detail-value" for="detail-level">丰富</output></label>
+              <input id="detail-level" type="range" min="0" max="2" step="1" value="2">
+              <div class="range-note"><span>主要体块</span><span>生活痕迹</span></div>
+            </div>
+            <div class="slider-control">
+              <label for="light-strength">光照强度 <output id="light-value" for="light-strength">1.0×</output></label>
+              <input id="light-strength" type="range" min="0.7" max="1.8" step="0.1" value="1">
+            </div>
+          </div>
+          <p class="file-footnote">保持场景，改变表现。<br>观察同一个地方如何产生不同的感受。</p>
+        </aside>
+      </div>
+
+      <div class="workbench-footer">
+        <div class="scene-actions" role="group" aria-label="场景操作">
+          <button type="button" id="motion-toggle" aria-pressed="true">暂停动态</button>
+          <button type="button" id="event-trigger" class="accent-button">观察冲击反馈 <span aria-hidden="true">↗</span></button>
+          <button type="button" id="reset-view">恢复中景</button>
+          <button type="button" id="snapshot">保存画面 <span aria-hidden="true">↓</span></button>
+        </div>
+        <p id="scene-status" class="scene-status" aria-live="polite">观察场景中的尺度、层次与动态。</p>
+      </div>
+      <p class="workbench-caption"><span>OBSERVATION NOTE</span> 这是几何简化的美术观察样本，写实指视觉方向。切换场景看组织，切换风格看气质，触发反馈看重量感。</p>
+    </section>
+
+    <section class="research-section directions" aria-labelledby="directions-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">01 / VISUAL DIRECTIONS</p><h2 id="directions-title">同一片世界，三种感受。</h2></div>
+        <p>改变的不只是颜色，<br>还有比例、形体与情绪。</p>
+      </div>
+      <div class="direction-grid">
+        <article class="direction-card">
+          <div class="direction-image direction-natural" role="img" aria-label="自然写实方向的原创 AI 概念图：乡村道路、自然植被与朴素建筑"><span>AI 概念图 · 风格提案</span></div>
+          <div class="direction-copy"><div class="card-meta"><span>方向 01</span><span>可信 · 克制</span></div><h3>自然写实</h3><p>朴素建筑、自然地景与清晰轮廓。保留真实比例，用有节制的细节建立生活感。</p><div class="direction-rule">沉淀重点 <span>自然配色 / 体块层次 / 环境叙事</span></div></div>
+        </article>
+        <article class="direction-card">
+          <div class="direction-image direction-miniature" role="img" aria-label="温暖微缩方向的原创 AI 概念图：简洁形体、柔和明亮色彩与微缩场景"><span>AI 概念图 · 风格提案</span></div>
+          <div class="direction-copy"><div class="card-meta"><span>方向 02</span><span>亲近 · 易读</span></div><h3>温暖微缩</h3><p>更概括的形体、更柔软的边缘。通过尺寸、饱和度和圆润材质，让世界产生可亲近的手感。</p><div class="direction-rule">沉淀重点 <span>比例夸张 / 形体简化 / 柔和反馈</span></div></div>
+        </article>
+        <article class="direction-card">
+          <div class="direction-image direction-wasteland" role="img" aria-label="荒凉废土方向的原创 AI 概念图：受损建筑、灰冷地景与低饱和场景"><span>AI 概念图 · 风格提案</span></div>
+          <div class="direction-copy"><div class="card-meta"><span>方向 03</span><span>紧张 · 粗粝</span></div><h3>荒凉废土</h3><p>低饱和地景、磨损表面与受损轮廓。让空地、残骸和局部暖色共同传达压力与生存感。</p><div class="direction-rule">沉淀重点 <span>损坏状态 / 明暗对比 / 冲击重量</span></div></div>
+        </article>
+      </div>
+      <p class="section-note">概念图用于表达原创视觉方向；上方三维演示用于比较组成规则。两者均不是原游戏截图。</p>
+    </section>
+
+    <section class="research-section layers-section" aria-labelledby="layers-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">02 / STYLE SYSTEM</p><h2 id="layers-title">把风格，沉淀成五层规则。</h2></div>
+        <p>从一次好看的画面，<br>走向可以持续制作的资产体系。</p>
+      </div>
+      <div class="layers-grid">
+        <article class="layer-card"><span class="layer-number">01</span><h3>场景组织</h3><p class="layer-feeling">先让它像一个地方。</p><p>道路如何连接聚落，建筑与树群怎样分布，哪里拥挤、哪里留白。</p><div class="asset-label">可沉淀资产</div><p class="asset-content">布局样板 · 道路与地块模块 · 植被组合 · 生活痕迹</p></article>
+        <article class="layer-card"><span class="layer-number">02</span><h3>模型语言</h3><p class="layer-feeling">形体决定识别与亲近感。</p><p>统一人物、车辆和建筑的比例，规定轮廓特点与中景下的细节密度。</p><div class="asset-label">可沉淀资产</div><p class="asset-content">比例规范 · 轮廓范例 · 建筑组件 · 完好与受损状态</p></article>
+        <article class="layer-card"><span class="layer-number">03</span><h3>材质与光影</h3><p class="layer-feeling">让不同模型属于同一个世界。</p><p>控制色谱、粗糙度、阴影层次与环境光，让重点可读、背景有气氛。</p><div class="asset-label">可沉淀资产</div><p class="asset-content">材质库 · 配色规则 · 光照预设 · 表面磨损规范</p></article>
+        <article class="layer-card"><span class="layer-number">04</span><h3>动态反馈</h3><p class="layer-feeling">动起来，才知道有没有重量。</p><p>协调移动速度、动作节奏、烟尘尺度和碎片运动，让事件留下可见后果。</p><div class="asset-label">可沉淀资产</div><p class="asset-content">动作节奏 · 粒子效果 · 破坏表现 · 音画配合规则</p></article>
+        <article class="layer-card"><span class="layer-number">05</span><h3>镜头与尺度</h3><p class="layer-feeling">决定玩家如何读这个世界。</p><p>统一观察角度与画面范围，检查中景里的层次、遮挡与单位辨识。</p><div class="asset-label">可沉淀资产</div><p class="asset-content">镜头预设 · 构图样板 · 可读性截图 · 细节分级</p></article>
+      </div>
+      <div class="system-principle"><span class="principle-symbol" aria-hidden="true">↳</span><p><strong>值得积累的是一组稳定的关系。</strong> 场景换了，模型换了，玩家仍能认出同一种气质。</p><span class="principle-tag">风格一致 · 题材可变</span></div>
+    </section>
+
+    <section class="research-section extensions" aria-labelledby="extensions-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">03 / GAME EXTENSIONS</p><h2 id="extensions-title">从美术资产，延伸游戏体验。</h2></div>
+        <p>以下是设计假设，<br>需要通过玩法原型继续验证。</p>
+      </div>
+      <div class="extension-grid">
+        <article class="extension-card"><div class="extension-meta"><span>假设 A</span><span>地形 / 遮挡 / 重量</span></div><h3>小队战术</h3><p>围绕街角、院落与林带组织行动，让清晰的模型轮廓和冲击反馈服务于战场判断。</p><div class="reuse-row"><span>复用基础</span><p>聚落场景、人物与车辆、损坏状态</p></div><div class="verify-row"><span>验证重点</span><p>中景能否看清位置、行动与反馈</p></div></article>
+        <article class="extension-card"><div class="extension-meta"><span>假设 B</span><span>探索 / 痕迹 / 气氛</span></div><h3>废土探索</h3><p>把建筑、道路和残骸转为探索线索，用磨损、空地与局部光源形成环境叙事。</p><div class="reuse-row"><span>复用基础</span><p>街区模块、磨损材质、废弃物件</p></div><div class="verify-row"><span>验证重点</span><p>环境能否引导路线并传达故事</p></div></article>
+        <article class="extension-card"><div class="extension-meta"><span>假设 C</span><span>建设 / 日常 / 变化</span></div><h3>营地建设</h3><p>让同一套建筑和地景承担搭建、修复与日常活动，通过场景变化表现营地的成长。</p><div class="reuse-row"><span>复用基础</span><p>建筑组件、自然地景、生活细节</p></div><div class="verify-row"><span>验证重点</span><p>建设前后是否带来可见的成长感</p></div></article>
+      </div>
+    </section>
+
+    <section class="research-section iteration-log" id="iteration-log" aria-labelledby="iteration-log-title">
+      <div class="section-heading"><div><p class="eyebrow">04 / MAKING HISTORY</p><h2 id="iteration-log-title">把每一步，留下来。</h2></div><p>先回看目的与问题，<br>再比较本轮实际改进。</p></div>
+      <div class="iteration-cards">
+        <article><span class="iteration-tag">V1 · 已存档</span><h3>场景组织与风格探索</h3><p>建立三种场景、三种风格和观察控件。发现基础体块、球状树冠与平面纹理，仍有明显积木感。</p><a href="./versions/v1/">回看完整第一轮 ↗</a></article>
+        <article><span class="iteration-tag">V2 · 已存档</span><h3>轮廓、材质与布景细化</h3><p>先做好一块中景：瓦片、石砌、门窗、自然枝叶、车辙与生活痕迹。用同坐标对照判断细化是否形成整体质感。</p><a href="./versions/v2/detail-study/">回看第二轮细化样板 ↗</a></article>
+        <article><span class="iteration-tag">V3 · 已留存 · 人物暂停</span><h3>人物的比例、服饰与动作</h3><p>共用同一个人物模块，在近景与中景里比较基本体块、连贯人体、军帽背包和关节动作；观察人与门、车辆的尺度关系。人物制作暂时停止，成果留存。</p><a href="./detail-study/#character-study">回看人物近景与动作 ↗</a></article>
+        <article><span class="iteration-tag">V4 · 候选 · 未启动</span><h3>真实资产与风格一致性</h3><p>正式模型、GLB、PBR 材质和一致性检查保留为候选方向，尚未开展。目前先回到场景风格沉淀与产品体验的讨论。</p><span class="iteration-planned">候选方向 · 不自动继续人物制作</span></article>
+      </div>
+      <p class="section-note">前两轮源码、截图与验收记录保持冻结。当前对照组用于同构图观察；早期完整实现可从各自的存档单独打开。</p>
+    </section>
+
+    <footer class="research-footer">
+      <div class="footer-top"><div><p class="eyebrow">SOURCE & SCOPE / 来源与边界</p><h2>观察有来源，提案有边界。</h2></div><div class="source-links"><a href="https://x.com/nexindie/status/2106723291868373127" target="_blank" rel="noopener noreferrer">X · 原始演示 <span aria-hidden="true">↗</span></a><a href="https://store.steampowered.com/app/5246700/" target="_blank" rel="noopener noreferrer">Steam · 官方介绍 <span aria-hidden="true">↗</span></a></div></div>
+      <p class="boundary-copy">研究依据包括官方公开介绍与视频视觉观察。本页的风格提案、AI 概念图及程序几何演示为原创研究表达，没有使用 Defilade 的原游戏模型或源码，也不代表原游戏的实际性能与完整玩法。</p>
+      <div class="footer-bottom"><span>004 · 中景 FIELD ATLAS</span><span>场景 / 模型 / 游戏美术研究</span><a href="#top">回到页首 ↑</a></div>
+    </footer>
+  </main>
+  <dialog id="snapshot-dialog" aria-labelledby="snapshot-title">
+    <div class="snapshot-heading"><h2 id="snapshot-title">保存当前画面</h2><button id="snapshot-close" type="button" aria-label="关闭画面预览">关闭</button></div>
+    <img id="snapshot-image" alt="当前原创三维场景的 PNG 画面预览">
+    <div class="snapshot-bottom"><p>这是本页实时场景的渲染结果。</p><a id="snapshot-download" download="scene-atlas.png">下载 PNG</a></div>
+  </dialog>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -23,3 +23,7 @@
 *.ico binary
 *.pdf binary
 *.zip binary
+
+# Keep frozen 004 snapshots byte-identical to their SHA-256 manifests.
+projects/004-scene-style-atlas/demo/versions/** -text
+site/demos/004-scene-style-atlas/versions/** -text

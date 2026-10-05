@@ -1,0 +1,60 @@
+{
+  "recorded": "2026-10-05",
+  "timezone": "Asia/Shanghai",
+  "width": 3200,
+  "height": 4800,
+  "method": "Deterministic SVG evidence diagram rendered with sharp; no generative reconstruction of screenshots.",
+  "referencePage": "https://store.steampowered.com/app/5246700/",
+  "labels": 121,
+  "images": [
+    {
+      "file": "defilade-official-overview.jpg",
+      "bytes": 504421,
+      "sha256": "0a8d0c40c8e9176611f59e55eeb07a56992672a759bd6ee15269c30038caa6b5"
+    },
+    {
+      "file": "defilade-official-detail.jpg",
+      "bytes": 621698,
+      "sha256": "a17e107507647eea7c4aa0f3b82451584dda7878af8ae11005e5f95e586ecfef"
+    },
+    {
+      "file": "v2-refined.png",
+      "bytes": 827131,
+      "sha256": "25322ccbf5c74a8787945be0091cd7f3c5873c5226cbbcc0ff356140a80de9bd"
+    },
+    {
+      "file": "v1-scene.png",
+      "bytes": 1847063,
+      "sha256": "1a92cf1d04880da563888dbbdd9cfb36ef8617097e39cb86320afd0a3f53314e"
+    },
+    {
+      "file": "style-triptych.png",
+      "bytes": 3240369,
+      "sha256": "6a2f3ed9c982250eadbcb6b31ae88b9c32353ccf27f4263b9ae8385ea87ecccc"
+    },
+    {
+      "file": "v2-baseline.png",
+      "bytes": 186864,
+      "sha256": "8e223be656be248a2367e59a20b1bb6557960bfbbdef4095624a91e74c3501f0"
+    },
+    {
+      "file": "v2-refined.png",
+      "bytes": 827131,
+      "sha256": "25322ccbf5c74a8787945be0091cd7f3c5873c5226cbbcc0ff356140a80de9bd"
+    },
+    {
+      "file": "v3-baseline.png",
+      "bytes": 46109,
+      "sha256": "b7c5bcd6b220e9c1b15f967c7840ac0c42ccda047723498bf88ab49506d03d83"
+    },
+    {
+      "file": "v3-refined.png",
+      "bytes": 96767,
+      "sha256": "7293ca0b69d5a696b5fe9952b2445ea0e30f65e12b7b053d0fed6fbcb094f842"
+    }
+  ],
+  "outputs": {
+    "svgBytes": 10950052,
+    "pngBytes": 5682309
+  }
+}

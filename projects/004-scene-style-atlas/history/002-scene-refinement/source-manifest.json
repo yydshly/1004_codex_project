@@ -1,0 +1,137 @@
+{
+  "version": "V2",
+  "recorded": "2026-10-05",
+  "purpose": "Frozen published V2 before character refinement",
+  "files": [
+    {
+      "path": "app.js",
+      "sha256": "1BE7EE40D47052D8A8E5B211749967E495C01860F44E724BA841DA5253792F57",
+      "bytes": 32196
+    },
+    {
+      "path": "index.html",
+      "sha256": "12830E7F2E99B8924B47B961D3DB82EF97A3A3B5FAD25C42452B116304D1F009",
+      "bytes": 18407
+    },
+    {
+      "path": "styles.css",
+      "sha256": "42E7347CE61C1C8B31E9A1818D5EBE39164F5A5F2C536A4ADE5F8A143F788396",
+      "bytes": 24330
+    },
+    {
+      "path": "assets/ASSET-LICENSES.md",
+      "sha256": "CD2697ECF43FF790A63A596219E12BBE29038C60E13191FA0D95A28B244B246D",
+      "bytes": 1376
+    },
+    {
+      "path": "assets/style-triptych.png",
+      "sha256": "6A2F3ED9C982250EADBCB6B31AE88B9C32353CCF27F4263B9AE8385EA87ECCCC",
+      "bytes": 3240369
+    },
+    {
+      "path": "detail-study/app.js",
+      "sha256": "09518A300EE4DF9FBCD5D2F6319451299AD1FD6127B29396708ADF0D66020ECE",
+      "bytes": 10035
+    },
+    {
+      "path": "detail-study/index.html",
+      "sha256": "60950D604B6A2DBDAF9E020BEE220A271985BA1C0108607111F6863CAAC58306",
+      "bytes": 12711
+    },
+    {
+      "path": "detail-study/scene-builder.js",
+      "sha256": "20A8484F2B9F91860D84C7FE9418BFA3A8A80C948694087286E0912B39E81E1C",
+      "bytes": 31996
+    },
+    {
+      "path": "detail-study/styles.css",
+      "sha256": "699CB6250997B52BBAEF8D208279EA890CD5DD07B4A2DA86337A60B55AD65E70",
+      "bytes": 17802
+    },
+    {
+      "path": "detail-study/assets/blockout-natural.png",
+      "sha256": "8E223BE656BE248A2367E59A20B1BB6557960BFBBDEF4095624A91E74C3501F0",
+      "bytes": 186864
+    },
+    {
+      "path": "detail-study/assets/refined-natural.png",
+      "sha256": "25322CCBF5C74A8787945BE0091CD7F3C5873C5226CBBCC0FF356140A80DE9BD",
+      "bytes": 827131
+    },
+    {
+      "path": "vendor/three/LICENSE",
+      "sha256": "8B378EBE60E2FE500158CB0AC71CB5E8B7D92953C2ABCC63A0EB90499653B5BC",
+      "bytes": 1081
+    },
+    {
+      "path": "vendor/three/three.core.js",
+      "sha256": "9EDDE002B066A9A05676A6127F67735B62BAF399BDEA529F2F7E31657DA769E6",
+      "bytes": 1458113
+    },
+    {
+      "path": "vendor/three/three.module.js",
+      "sha256": "9052042D676CB0FDC1DDFEFE193053F34B7AC0513A616FDAC4535D49987812EA",
+      "bytes": 662772
+    },
+    {
+      "path": "vendor/three/VERSION.txt",
+      "sha256": "9B8A4A3ADCBF866C1FD5B3B5C3EA11EB27DB9B05F7507BE73A1EF315A68B65EE",
+      "bytes": 83
+    },
+    {
+      "path": "vendor/three/addons/controls/OrbitControls.js",
+      "sha256": "3D79D07ECB686B4E5D93232EEDAB255331C1BEEF711E13164EAA1F68655A5F2B",
+      "bytes": 40755
+    },
+    {
+      "path": "versions/v1/app.js",
+      "sha256": "1BE7EE40D47052D8A8E5B211749967E495C01860F44E724BA841DA5253792F57",
+      "bytes": 32196
+    },
+    {
+      "path": "versions/v1/index.html",
+      "sha256": "6381DFF1F4D79416CF2B3CA569B0A9AE4A7577AB6D199B22A00D5FC15CA13677",
+      "bytes": 16228
+    },
+    {
+      "path": "versions/v1/styles.css",
+      "sha256": "432FD6CC28E4B72FF7A47BE90186A5ED4C9BA09E16FB09C6F35435EFB01E84A4",
+      "bytes": 22940
+    },
+    {
+      "path": "versions/v1/assets/ASSET-LICENSES.md",
+      "sha256": "B4A5C5F56EC0A895E07D6FA117104AE1FF4E4BBCA501A3575AD940ABC82C3731",
+      "bytes": 957
+    },
+    {
+      "path": "versions/v1/assets/style-triptych.png",
+      "sha256": "6A2F3ED9C982250EADBCB6B31AE88B9C32353CCF27F4263B9AE8385EA87ECCCC",
+      "bytes": 3240369
+    },
+    {
+      "path": "versions/v1/vendor/three/LICENSE",
+      "sha256": "8B378EBE60E2FE500158CB0AC71CB5E8B7D92953C2ABCC63A0EB90499653B5BC",
+      "bytes": 1081
+    },
+    {
+      "path": "versions/v1/vendor/three/three.core.js",
+      "sha256": "9EDDE002B066A9A05676A6127F67735B62BAF399BDEA529F2F7E31657DA769E6",
+      "bytes": 1458113
+    },
+    {
+      "path": "versions/v1/vendor/three/three.module.js",
+      "sha256": "9052042D676CB0FDC1DDFEFE193053F34B7AC0513A616FDAC4535D49987812EA",
+      "bytes": 662772
+    },
+    {
+      "path": "versions/v1/vendor/three/VERSION.txt",
+      "sha256": "9B8A4A3ADCBF866C1FD5B3B5C3EA11EB27DB9B05F7507BE73A1EF315A68B65EE",
+      "bytes": 83
+    },
+    {
+      "path": "versions/v1/vendor/three/addons/controls/OrbitControls.js",
+      "sha256": "3D79D07ECB686B4E5D93232EEDAB255331C1BEEF711E13164EAA1F68655A5F2B",
+      "bytes": 40755
+    }
+  ]
+}

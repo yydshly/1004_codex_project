@@ -1,6 +1,6 @@
 # 子项目研究指南
 
-本仓库用于集中研究多个 GitHub 项目。根 README 提供摘要、按编号排序的索引和项目图片；详细分析写在各子项目目录中。
+本仓库用于集中研究多个开源项目与产品。根 README 提供摘要、按编号排序的索引和项目图片；详细分析写在各子项目目录中。
 
 ## 新增一个研究项目
 
@@ -11,6 +11,14 @@ python scripts/catalog.py add --slug example-project --name "项目名称" --rep
 python scripts/catalog.py sync
 python scripts/catalog.py check
 ```
+
+没有公开源码仓库的产品研究使用 `--source` 指定真实来源，不必填写虚构仓库：
+
+```powershell
+python scripts/catalog.py add --slug example-product --name "产品名称" --source "https://example.com/product" --summary "产品体验、视觉效果与实现思路研究"
+```
+
+`--repo` 与 `--source` 必须且只能选择一个；前者要求 GitHub 仓库地址，后者接受公开 HTTP(S) 来源地址。
 
 `add` 从已登记项目的最大编号继续分配，首次为 `001`，并生成以下目录。`example-project` 是命令示例，请替换为实际项目的英文短名。
 
@@ -34,7 +42,8 @@ projects/001-example-project/
 | `slug` | 用于目录名的英文短名，与已创建目录保持一致 |
 | `name` | 项目展示名称 |
 | `summary` | 简洁说明项目用途与研究重点 |
-| `repository` | 上游 GitHub 仓库链接 |
+| `repository` | 上游 GitHub 仓库链接；无公开仓库时填 `""`，并提供 `source_url` |
+| `source_url` | 可选，产品官网、作者主页或其他公开研究来源的 HTTP(S) 链接；`repository` 为空时必须填写 |
 | `status` | `待研究`、`研究中`、`已复现`、`已完成`、`已归档`，新增默认 `待研究` |
 | `tags` | 主题标签数组，例如 `["可视化", "前端"]` |
 | `cover` | 相对子项目目录的图片路径，例如 `assets/cover.png`；暂缺图片时填 `""` |
@@ -44,15 +53,17 @@ projects/001-example-project/
 
 新增时可用 `--status "研究中"` 指定状态，并通过重复的 `--tag "标签"` 添加多个标签。
 
+旧的 GitHub 项目记录无需添加 `source_url`。索引优先展示仓库链接；仓库为空时展示 `source_url`，并以域名与页面路径作为来源名称。
+
 `sync` 更新根 README 的 `PROJECT_INDEX`、`PROJECT_GALLERY` 标记区，生成 `site/index.html`、`site/covers/` 和 `site/demos/`。不要手改这些生成内容；自制网页放在项目的 `demo/` 中，根 README 标记区之外的介绍可以直接编辑。`check` 检查登记信息、项目文件、排序和生成内容的一致性；失败时先修正报告的问题，再同步。
 
 ## 建议研究顺序
 
-1. 记录上游仓库、所研究的版本或提交，以及原始许可。
+1. 记录上游仓库或真实产品来源、所研究的版本 / 提交 / 资料日期，以及原始许可或资料授权条件。
 2. 明确研究问题：解决什么问题、关键实现在哪里、准备验证什么。
-3. 按上游说明复现，记录环境、命令、结果和遇到的问题。
+3. 按上游说明复现，记录环境、命令、结果和遇到的问题；无公开源码的产品先记录公开效果与交互流程，再提出可验证的机制假设。
 4. 在 `notes.md` 留下代码位置、观察结果、截图和可追溯链接。
-5. 将结论、适用场景、局限与复现入口整理到项目 README。
+5. 将结论、适用场景、局限与复现入口整理到项目 README，区分官方披露、直接观察、推断与待验证事项。
 6. 有演示时按[部署指南](deployment.md)整理，再运行 `sync` 和 `check`。
 
 优先记录研究材料与必要的改动说明；需要引入上游源码、依赖或素材时，保留原作者署名、版权声明和许可文件，并遵守其授权条件。本仓库的文档组织不改变上游项目的许可。

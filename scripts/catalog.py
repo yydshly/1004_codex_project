@@ -14,6 +14,7 @@ from urllib.parse import quote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 STATUSES = ("待研究", "研究中", "已复现", "已完成", "已归档")
 FIELDS = {"number", "slug", "name", "summary", "repository", "status", "tags", "cover", "demo_url"}
+OPTIONAL_FIELDS = {"source_url"}
 BLOCKS = ("PROJECT_INDEX", "PROJECT_GALLERY")
 MANAGED_DIRS = ("site/demos", "site/covers")
 FORBIDDEN_NAMES = {"node_modules", "__pycache__", "venv"}
@@ -52,6 +53,29 @@ def valid_url(value, label, repository=False):
         raise ValueError("repository 必须为 https://github.com/owner/repo 格式")
 
 
+def validate_source(project):
+    """Accept a GitHub repository or a public source for non-code research."""
+    repository = project["repository"]
+    source = project.get("source_url", "")
+    valid_text(repository, "repository", empty=True)
+    valid_text(source, "source_url", empty=True)
+    if repository:
+        valid_url(repository, "repository", repository=True)
+    if source:
+        valid_url(source, "source_url")
+    if not repository and not source:
+        raise ValueError("repository 为空时必须提供有效的 source_url")
+
+
+def source_reference(project):
+    """Preserve repository labels while providing a readable source fallback."""
+    if project["repository"]:
+        return project["repository"], urlsplit(project["repository"]).path.strip("/")
+    source = project["source_url"]
+    parsed = urlsplit(source)
+    return source, parsed.netloc + parsed.path.rstrip("/")
+
+
 def load_projects(root):
     data = json.loads(inside(root, "projects.json").read_text(encoding="utf-8"))
     if not isinstance(data, dict) or set(data) != {"version", "projects"} or type(data["version"]) is not int or data["version"] != 1:
@@ -60,8 +84,8 @@ def load_projects(root):
         raise ValueError("projects 必须为数组")
     numbers, slugs = set(), set()
     for project in data["projects"]:
-        if not isinstance(project, dict) or set(project) != FIELDS:
-            raise ValueError(f"项目字段必须为: {', '.join(sorted(FIELDS))}")
+        if not isinstance(project, dict) or not FIELDS.issubset(project) or set(project) - FIELDS - OPTIONAL_FIELDS:
+            raise ValueError(f"项目必需字段为: {', '.join(sorted(FIELDS))}；可选字段为: {', '.join(sorted(OPTIONAL_FIELDS))}")
         number, slug = project["number"], project["slug"]
         if type(number) is not int or number < 1 or number in numbers:
             raise ValueError("number 必须为唯一正整数")
@@ -69,11 +93,11 @@ def load_projects(root):
             raise ValueError("slug 必须唯一，由小写字母、数字、单个连字符组成，最长 64 字符")
         numbers.add(number)
         slugs.add(slug)
-        for field in ("name", "summary", "status", "repository"):
+        for field in ("name", "summary", "status"):
             valid_text(project[field], field)
         if project["status"] not in STATUSES:
             raise ValueError(f"status 必须为: {', '.join(STATUSES)}")
-        valid_url(project["repository"], "repository", repository=True)
+        validate_source(project)
         if not isinstance(project["tags"], list):
             raise ValueError("tags 必须为不重复的文本数组")
         for tag in project["tags"]:
@@ -134,7 +158,7 @@ def render(root, projects):
     for project in projects:
         identifier = project_id(project)
         project_path = f"projects/{identifier}"
-        repository_name = urlsplit(project["repository"]).path.strip("/")
+        source_href, source_name = source_reference(project)
         static_files = demo_files(root, project)
         for name, content in static_files.items():
             outputs[f"site/demos/{identifier}/{name}"] = content
@@ -145,8 +169,8 @@ def render(root, projects):
         readme_demo_href = url(readme_demo) if project["demo_url"] else relative_url(readme_demo)
         demo_link = f"[{demo_label}]({readme_demo_href})" if readme_demo else "—"
         tags = "、".join(project["tags"]) or "—"
-        rows.append(f"| {project['number']:03d} | [{markdown(project['name'])}]({project_path}/README.md) | {markdown(project['summary'])} | {markdown(project['status'])} | {markdown(tags)} | [{markdown(repository_name)}]({url(project['repository'])}) | {demo_link} |")
-        gallery.append(f"### **{project['number']:03d} · {markdown(project['name'])}**\n\n**项目摘要**\n\n{markdown(project['summary'])}\n\n[研究记录]({project_path}/README.md) · [{markdown(repository_name)}]({url(project['repository'])})")
+        rows.append(f"| {project['number']:03d} | [{markdown(project['name'])}]({project_path}/README.md) | {markdown(project['summary'])} | {markdown(project['status'])} | {markdown(tags)} | [{markdown(source_name)}]({url(source_href)}) | {demo_link} |")
+        gallery.append(f"### **{project['number']:03d} · {markdown(project['name'])}**\n\n**项目摘要**\n\n{markdown(project['summary'])}\n\n[研究记录]({project_path}/README.md) · [{markdown(source_name)}]({url(source_href)})")
         cover_html = "<div class=\"cover empty\">截图待补充</div>"
         if project["cover"]:
             cover = project["cover"]
@@ -159,8 +183,8 @@ def render(root, projects):
         research_url = f"https://github.com/yydshly/1004_codex_project/blob/main/{project_path}/README.md"
         demo_href = url(demo) if project["demo_url"] else relative_url(demo)
         demo_html = f'<a href="{html.escape(demo_href, quote=True)}">打开 Demo ↗</a>' if demo else '<span class="muted">Demo 待补充</span>'
-        cards.append(f'<article>{cover_html}<div class="content"><div class="meta">{project["number"]:03d} · {html.escape(project["status"])}</div><h2><strong>{html.escape(project["name"])}</strong></h2><p class="summary-label">项目摘要</p><p>{html.escape(project["summary"])}</p><p class="tags">{html.escape(tags)}</p><nav><a href="{research_url}">研究记录</a><a href="{html.escape(url(project["repository"]), quote=True)}">{html.escape(repository_name)} ↗</a>{demo_html}</nav></div></article>')
-    index = ("| 编号 | 子项目 | 摘要 | 状态 | 标签 | 原仓库 | Demo |\n"
+        cards.append(f'<article>{cover_html}<div class="content"><div class="meta">{project["number"]:03d} · {html.escape(project["status"])}</div><h2><strong>{html.escape(project["name"])}</strong></h2><p class="summary-label">项目摘要</p><p>{html.escape(project["summary"])}</p><p class="tags">{html.escape(tags)}</p><nav><a href="{research_url}">研究记录</a><a href="{html.escape(url(source_href), quote=True)}">{html.escape(source_name)} ↗</a>{demo_html}</nav></div></article>')
+    index = ("| 编号 | 子项目 | 摘要 | 状态 | 标签 | 来源 | Demo |\n"
              "| --- | --- | --- | --- | --- | --- | --- |\n" + "\n".join(rows)) if rows else "目前尚未录入研究项目。首个项目将从 **001** 开始，按编号升序展示。"
     gallery_text = "\n\n".join(gallery) if gallery else "录入子项目并添加真实截图后，这里会按编号展示项目摘要与图片。"
     readme = inside(root, "README.md").read_text(encoding="utf-8")
@@ -175,11 +199,11 @@ def render(root, projects):
     body = "\n".join(cards) or '<div class="empty-state"><h2>从 001 开始记录</h2><p>研究目录已就绪。录入首个项目后，这里会展示摘要、截图与 Demo。</p></div>'
     page = f'''<!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="优秀 GitHub 项目的研究记录、复现过程与 Web Demo 索引"><title>GitHub 项目研究目录</title>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="优秀开源项目与产品的研究记录、复现过程与 Web Demo 索引"><title>项目与产品研究目录</title>
 <style>
 :root{{color-scheme:light;--ink:#172a3a;--muted:#607080;--line:#dce4eb;--accent:#075c65}}*{{box-sizing:border-box}}body{{margin:0;background:#f4f7fa;color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}}main{{max-width:1120px;margin:auto;padding:64px 24px}}a{{color:var(--accent);text-underline-offset:4px}}a:focus-visible{{outline:3px solid #de8c34;outline-offset:4px}}header{{margin-bottom:36px}}.eyebrow,.meta{{font-size:13px;letter-spacing:.08em;color:var(--accent)}}h1{{font-size:clamp(30px,5vw,46px);line-height:1.2;margin:16px 0}}header p{{max-width:680px;color:var(--muted)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px}}article{{border:1px solid var(--line);border-radius:16px;background:white;overflow:hidden}}.cover{{display:block;width:100%;height:190px;object-fit:contain;background:#e8eef3}}.empty{{display:grid;place-items:center;color:var(--muted);font-size:14px}}.content{{padding:24px}}h2{{font-size:22px;margin:8px 0}}.content p{{margin:12px 0}}.summary-label{{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:0}}.tags,.muted{{color:var(--muted);font-size:13px}}nav{{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;margin-top:24px}}.empty-state{{padding:48px 28px;background:white;border:1px dashed var(--line);border-radius:16px}}.empty-state p,footer{{color:var(--muted)}}footer{{margin-top:40px;font-size:13px}}@media(max-width:600px){{main{{padding:36px 18px}}}}
 </style></head>
-<body><main><header><div class="eyebrow">GITHUB RESEARCH / 有序记录 · 持续复现</div><h1>优秀项目，逐个研究。</h1><p>记录值得学习的 GitHub 项目，从源码阅读到本地复现，沉淀截图、结论与可体验的 Web Demo。</p><a href="https://github.com/yydshly/1004_codex_project">查看研究总仓库 ↗</a></header><section class="grid" aria-label="按编号升序排列的研究项目">{body}</section><footer>共 {len(projects)} 个研究项目 · 编号固定，按升序展示。</footer></main></body></html>
+<body><main><header><div class="eyebrow">PROJECT RESEARCH / 有序记录 · 持续复现</div><h1>优秀项目，逐个研究。</h1><p>记录值得学习的开源项目与产品，从源码阅读、产品观察到本地复现，沉淀截图、结论与可体验的 Web Demo。</p><a href="https://github.com/yydshly/1004_codex_project">查看研究总仓库 ↗</a></header><section class="grid" aria-label="按编号升序排列的研究项目">{body}</section><footer>共 {len(projects)} 个研究项目 · 编号固定，按升序展示。</footer></main></body></html>
 '''
     outputs["site/index.html"] = page.encode("utf-8")
     outputs["site/.nojekyll"] = b""
@@ -266,15 +290,17 @@ def add(root, args):
     render(root, projects)
     project = dict(number=max((p["number"] for p in projects), default=0) + 1,
                    slug=args.slug, name=args.name, summary=args.summary,
-                   repository=args.repo.rstrip("/").removesuffix(".git"),
+                   repository=args.repo.rstrip("/").removesuffix(".git") if args.repo else "",
                    status=args.status, tags=args.tag, cover="", demo_url="")
+    if args.source:
+        project["source_url"] = args.source
     if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", args.slug) or len(args.slug) > 64:
         raise ValueError("slug 必须由小写字母、数字、单个连字符组成，最长 64 字符")
     if any(p["slug"] == args.slug for p in projects):
         raise ValueError(f"slug 已存在: {args.slug}")
     for field in ("name", "summary"):
         valid_text(project[field], field)
-    valid_url(project["repository"], "repository", repository=True)
+    validate_source(project)
     for tag in project["tags"]:
         valid_text(tag, "tag")
     if len(set(project["tags"])) != len(project["tags"]):
@@ -282,8 +308,10 @@ def add(root, args):
     destination = inside(root, f"projects/{project_id(project)}")
     if destination.exists():
         raise ValueError(f"目录已存在: {destination.relative_to(root)}")
+    source_href, _ = source_reference(project)
     replacements = {"NUMBER": f"{project['number']:03d}", "SLUG": project["slug"], "NAME": markdown(project["name"]),
-                    "SUMMARY": markdown(project["summary"]), "REPOSITORY": url(project["repository"]), "PROJECT_ID": project_id(project)}
+                    "SUMMARY": markdown(project["summary"]), "REPOSITORY": url(project["repository"]),
+                    "SOURCE_URL": url(source_href), "PROJECT_ID": project_id(project)}
     templates = {}
     for filename in ("README.md", "notes.md"):
         content = inside(root, f"templates/project/{filename}").read_text(encoding="utf-8")
@@ -325,7 +353,9 @@ def main():
     create = commands.add_parser("add", help="分配下一个编号并创建研究目录")
     create.add_argument("--slug", required=True)
     create.add_argument("--name", required=True)
-    create.add_argument("--repo", required=True)
+    sources = create.add_mutually_exclusive_group(required=True)
+    sources.add_argument("--repo", help="上游 GitHub 仓库地址")
+    sources.add_argument("--source", help="产品、作者主页或其他公开研究来源的 HTTP(S) 地址")
     create.add_argument("--summary", required=True)
     create.add_argument("--status", choices=STATUSES, default="待研究")
     create.add_argument("--tag", action="append", default=[])

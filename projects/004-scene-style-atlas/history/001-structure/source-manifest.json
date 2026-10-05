@@ -1,0 +1,57 @@
+{
+  "version": "V1",
+  "recorded": "2026-10-05",
+  "purpose": "Frozen runnable baseline before V2 fidelity work",
+  "files": [
+    {
+      "path": "app.js",
+      "sha256": "1BE7EE40D47052D8A8E5B211749967E495C01860F44E724BA841DA5253792F57",
+      "bytes": 32196
+    },
+    {
+      "path": "index.html",
+      "sha256": "6381DFF1F4D79416CF2B3CA569B0A9AE4A7577AB6D199B22A00D5FC15CA13677",
+      "bytes": 16228
+    },
+    {
+      "path": "styles.css",
+      "sha256": "432FD6CC28E4B72FF7A47BE90186A5ED4C9BA09E16FB09C6F35435EFB01E84A4",
+      "bytes": 22940
+    },
+    {
+      "path": "assets/ASSET-LICENSES.md",
+      "sha256": "B4A5C5F56EC0A895E07D6FA117104AE1FF4E4BBCA501A3575AD940ABC82C3731",
+      "bytes": 957
+    },
+    {
+      "path": "assets/style-triptych.png",
+      "sha256": "6A2F3ED9C982250EADBCB6B31AE88B9C32353CCF27F4263B9AE8385EA87ECCCC",
+      "bytes": 3240369
+    },
+    {
+      "path": "vendor/three/LICENSE",
+      "sha256": "8B378EBE60E2FE500158CB0AC71CB5E8B7D92953C2ABCC63A0EB90499653B5BC",
+      "bytes": 1081
+    },
+    {
+      "path": "vendor/three/three.core.js",
+      "sha256": "9EDDE002B066A9A05676A6127F67735B62BAF399BDEA529F2F7E31657DA769E6",
+      "bytes": 1458113
+    },
+    {
+      "path": "vendor/three/three.module.js",
+      "sha256": "9052042D676CB0FDC1DDFEFE193053F34B7AC0513A616FDAC4535D49987812EA",
+      "bytes": 662772
+    },
+    {
+      "path": "vendor/three/VERSION.txt",
+      "sha256": "9B8A4A3ADCBF866C1FD5B3B5C3EA11EB27DB9B05F7507BE73A1EF315A68B65EE",
+      "bytes": 83
+    },
+    {
+      "path": "vendor/three/addons/controls/OrbitControls.js",
+      "sha256": "3D79D07ECB686B4E5D93232EEDAB255331C1BEEF711E13164EAA1F68655A5F2B",
+      "bytes": 40755
+    }
+  ]
+}

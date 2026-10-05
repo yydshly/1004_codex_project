@@ -1,0 +1,43 @@
+{
+  "recorded": "2026-10-05",
+  "timezone": "Asia/Shanghai",
+  "title": "Defilade",
+  "developer": [
+    "RBGames"
+  ],
+  "page": "https://store.steampowered.com/app/5246700/",
+  "api": "https://store.steampowered.com/api/appdetails?appids=5246700",
+  "referencePost": "https://x.com/nexindie/status/2106723291868373127",
+  "status": {
+    "coming_soon": true,
+    "date": "Coming soon"
+  },
+  "description": "Official marketing material; screenshot rights remain with the game rights holders.",
+  "screenshots": [
+    {
+      "id": 0,
+      "path_thumbnail": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/70786c76a4da89df37cb990cb513bb82cd7d2692/ss_70786c76a4da89df37cb990cb513bb82cd7d2692.600x338.jpg?t=1791039425",
+      "path_full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/70786c76a4da89df37cb990cb513bb82cd7d2692/ss_70786c76a4da89df37cb990cb513bb82cd7d2692.1920x1080.jpg?t=1791039425"
+    },
+    {
+      "id": 1,
+      "path_thumbnail": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/c93271f561921612b371dce5589dae9b8eec88ce/ss_c93271f561921612b371dce5589dae9b8eec88ce.600x338.jpg?t=1791039425",
+      "path_full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/c93271f561921612b371dce5589dae9b8eec88ce/ss_c93271f561921612b371dce5589dae9b8eec88ce.1920x1080.jpg?t=1791039425"
+    },
+    {
+      "id": 2,
+      "path_thumbnail": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/8a9a1705bcd97443699a3e544101f4679f23c01d/ss_8a9a1705bcd97443699a3e544101f4679f23c01d.600x338.jpg?t=1791039425",
+      "path_full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/8a9a1705bcd97443699a3e544101f4679f23c01d/ss_8a9a1705bcd97443699a3e544101f4679f23c01d.1920x1080.jpg?t=1791039425"
+    },
+    {
+      "id": 3,
+      "path_thumbnail": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/5833bbdfb9e82eb68535b68295debf7865f47a63/ss_5833bbdfb9e82eb68535b68295debf7865f47a63.600x338.jpg?t=1791039425",
+      "path_full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/5833bbdfb9e82eb68535b68295debf7865f47a63/ss_5833bbdfb9e82eb68535b68295debf7865f47a63.1920x1080.jpg?t=1791039425"
+    },
+    {
+      "id": 4,
+      "path_thumbnail": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/6c0a0cb2aaf9f9d530c1479fb9df780116fd0791/ss_6c0a0cb2aaf9f9d530c1479fb9df780116fd0791.600x338.jpg?t=1791039425",
+      "path_full": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5246700/6c0a0cb2aaf9f9d530c1479fb9df780116fd0791/ss_6c0a0cb2aaf9f9d530c1479fb9df780116fd0791.1920x1080.jpg?t=1791039425"
+    }
+  ]
+}
