@@ -1,0 +1,42 @@
+{
+  "schema": "water-duck-trials",
+  "version": 1,
+  "exportedAt": "2026-10-05T11:19:57.459Z",
+  "note": "包含人工输入与程序检查；撤回记录保留 withdrawn 标记，不应计入试玩结论。",
+  "records": [
+    {
+      "id": "25c47a12-caa3-42a6-9dc8-acca6540f95b",
+      "created": "2026-10-05T06:18:01.180Z",
+      "experiment": "A",
+      "source": "automated",
+      "condition": "hints-on",
+      "decision": "insufficient",
+      "order": "first",
+      "hypothesis": "V3 增加提示后，原有入圈、回水与升级循环仍可完整运行（程序检查）。",
+      "prediction": "按可见亮圈选择闸门，四次入圈的水滴回到上游后应进入第二轮。",
+      "observation": "依据可见目标自动开闸，约 37 秒内完成四次入圈，60 分、零失误，进入第 2 轮。方向提示开关及说明正常。本条只验证程序运行，不代表新玩家理解或可玩性。",
+      "next": "由实际试玩者比较方向提示开启与关闭，交换顺序，记录预测、误推和失败解释。",
+      "hits": 4,
+      "misses": 0,
+      "nudges": 0,
+      "withdrawn": false
+    },
+    {
+      "id": "b32b5759-36f9-4c1a-9424-f7c6757cb11b",
+      "created": "2026-10-05T11:19:57.140Z",
+      "experiment": "B",
+      "source": "automated",
+      "condition": "reservoir-batch",
+      "decision": "insufficient",
+      "order": "other",
+      "hypothesis": "集中放水策略能让六只鸭安全抵达，并沿可见回路全部返回；验证规则运行。",
+      "prediction": "上池达到48时自动点击集中放水，共两次；预期救齐并等回程后结算。",
+      "observation": "2026-10-05 程序检查：独立V4页面从初始24/96重置，依据可见按钮是否可用自动操作，先试少量再试集中。集中48两次，累计放水96格，首救约8.7秒，救齐约17.5秒，135分，回家6/6，溢流0；结束后显示再玩一轮。少量24六次也救齐并回家，首救约1.2秒、救齐约24.7秒、131分、累计放水144格（循环复用）。程序轮询和帧率会影响小数时间；这不是人类试玩、策略平衡或乐趣结论。",
+      "next": "让实际玩家比较及时首救与成批连救，交换策略顺序；记录预判与选择理由。",
+      "hits": 6,
+      "misses": 0,
+      "nudges": 2,
+      "withdrawn": false
+    }
+  ]
+}

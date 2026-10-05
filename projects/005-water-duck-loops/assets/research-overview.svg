@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+<title id="title">水流与鸭子互动：从效果到可玩循环</title><desc id="desc">玩家操作改变水的运动，鸭子反馈变化。可见回游将上游、分流、水圈、水潭与回流水柱连接起来；扩展依次验证可读性、水量和路线设计。</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#087c9e" stroke-width="1.5"/></marker></defs>
+<rect width="1400" height="760" fill="#edf5f8"/>
+<g font-family="system-ui,Microsoft YaHei,sans-serif" fill="#183a4b">
+<text x="66" y="66" font-size="20" fill="#087c9e">005 / 水流互动与循环玩法研究</text><text x="66" y="132" font-size="46" font-weight="600">水与鸭子：从视觉效果到可玩循环</text>
+<text x="66" y="179" font-size="24" fill="#546e7b">水参与规则，鸭子反馈变化，循环保持可见。</text>
+<g transform="translate(66 228)"><rect width="350" height="156" rx="16" fill="#fff" stroke="#cddfe7"/><text x="26" y="40" font-size="18" fill="#087c9e">玩家操作</text><text x="26" y="84" font-size="30">开闸 · 拨水</text><text x="26" y="124" font-size="21" fill="#546e7b">预判主路线，补救局部偏移</text></g>
+<g transform="translate(525 228)"><rect width="350" height="156" rx="16" fill="#dceff5" stroke="#cddfe7"/><text x="26" y="40" font-size="18" fill="#087c9e">水发生变化</text><text x="26" y="84" font-size="30">分流 · 推力 · 回流</text><text x="26" y="124" font-size="21" fill="#546e7b">流向、速度与水位需要可读</text></g>
+<g transform="translate(984 228)"><rect width="350" height="156" rx="16" fill="#fff3cf" stroke="#cddfe7"/><text x="26" y="40" font-size="18" fill="#865700">鸭子与场景反馈</text><text x="26" y="84" font-size="30">入圈 · 蓄水 · 升级</text><text x="26" y="124" font-size="21" fill="#546e7b">成功与失败应能被解释</text></g>
+<path d="M432 305H505M891 305H964" fill="none" stroke="#087c9e" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="66" y="455" font-size="20" fill="#087c9e">可见回游 / 每一圈都能看见来路和去路</text>
+<g font-size="25" text-anchor="middle"><rect x="66" y="482" width="207" height="70" rx="10" fill="#fff"/><text x="170" y="526">上游</text><rect x="330" y="482" width="207" height="70" rx="10" fill="#fff"/><text x="433" y="526">开闸分流</text><rect x="594" y="482" width="207" height="70" rx="10" fill="#fff"/><text x="697" y="526">水圈与落水</text><rect x="858" y="482" width="207" height="70" rx="10" fill="#fff"/><text x="961" y="526">水潭</text><rect x="1122" y="482" width="212" height="70" rx="10" fill="#fff"/><text x="1228" y="526">气泡水柱</text></g>
+<path d="M281 518H319M545 518H584M809 518H848M1073 518H1112M1228 566V604H170V566" stroke="#087c9e" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="700" y="595" font-size="18" text-anchor="middle" fill="#087c9e">回到上游，再次进入玩家的选择</text>
+<text x="66" y="690" font-size="21" fill="#546e7b">下一步：看懂水 → 控制水量 → 设计水路</text><text x="1334" y="690" text-anchor="end" font-size="18" fill="#546e7b">原创研究结构示意 · 2026-10-05</text>
+</g></svg>

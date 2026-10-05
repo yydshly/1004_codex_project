@@ -1,0 +1,25 @@
+{
+  "schema": "water-duck-trials",
+  "version": 1,
+  "exportedAt": "2026-10-05T06:18:27.294Z",
+  "note": "包含人工输入与程序检查；撤回记录保留 withdrawn 标记，不应计入试玩结论。",
+  "records": [
+    {
+      "id": "25c47a12-caa3-42a6-9dc8-acca6540f95b",
+      "created": "2026-10-05T06:18:01.180Z",
+      "experiment": "A",
+      "source": "automated",
+      "condition": "hints-on",
+      "decision": "insufficient",
+      "order": "first",
+      "hypothesis": "V3 增加提示后，原有入圈、回水与升级循环仍可完整运行（程序检查）。",
+      "prediction": "按可见亮圈选择闸门，四次入圈的水滴回到上游后应进入第二轮。",
+      "observation": "依据可见目标自动开闸，约 37 秒内完成四次入圈，60 分、零失误，进入第 2 轮。方向提示开关及说明正常。本条只验证程序运行，不代表新玩家理解或可玩性。",
+      "next": "由实际试玩者比较方向提示开启与关闭，交换顺序，记录预测、误推和失败解释。",
+      "hits": 4,
+      "misses": 0,
+      "nudges": 0,
+      "withdrawn": false
+    }
+  ]
+}

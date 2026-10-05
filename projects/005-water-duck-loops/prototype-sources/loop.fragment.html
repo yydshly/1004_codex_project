@@ -1,0 +1,255 @@
+<div id="duck-water-loop">
+  <div class="viz-row">
+    <span id="dwl-round">第 1 轮</span>
+    <span class="tabular-nums" id="dwl-tank">蓄水 0 / 4</span>
+    <span class="tabular-nums" id="dwl-faults">失误 0 / 3</span>
+    <span class="tabular-nums" id="dwl-score">得分 0</span>
+  </div>
+  <div class="viz-row">
+    <button type="button" class="btn btn-primary" id="dwl-play">开始挑战</button>
+    <button type="button" class="btn" id="dwl-left" aria-pressed="true">← 开左闸</button>
+    <button type="button" class="btn" id="dwl-right" aria-pressed="false">开右闸 →</button>
+    <span class="viz-badge" id="dwl-target" aria-live="polite">亮圈：左侧</span>
+  </div>
+  <div class="viz-row">
+    <span class="text-small">涟漪</span>
+    <button type="button" class="btn btn-ghost" id="dwl-nudge-left" aria-label="向左拨水（A）">← 拨水</button>
+    <button type="button" class="btn btn-ghost" id="dwl-nudge-right" aria-label="向右拨水（D）">拨水 →</button>
+  </div>
+  <canvas class="cursor-interaction" id="dwl-canvas" width="640" height="420" role="img" aria-label="小鸭水环游戏。开左右闸门改变水流；点鸭子旁边的水面产生涟漪，推动鸭子穿过亮圈。小鸭沿右侧回流水柱返回上游。">小鸭水环游戏</canvas>
+  <div id="dwl-message" class="text-small" role="status" aria-live="polite">目标：为上游蓄满 4 滴水</div>
+</div>
+<style>
+  #duck-water-loop {display:grid;gap:12px;}
+  #duck-water-loop canvas {display:block;width:100%;height:auto;image-rendering:pixelated;touch-action:pan-y;}
+</style>
+<script>
+(() => {
+  const root=document.getElementById('duck-water-loop');
+  const canvas=root.querySelector('#dwl-canvas'),ctx=canvas.getContext('2d');
+  const play=root.querySelector('#dwl-play'),left=root.querySelector('#dwl-left'),right=root.querySelector('#dwl-right');
+  const roundText=root.querySelector('#dwl-round'),tankText=root.querySelector('#dwl-tank');
+  const faultText=root.querySelector('#dwl-faults'),scoreText=root.querySelector('#dwl-score');
+  const targetText=root.querySelector('#dwl-target'),message=root.querySelector('#dwl-message');
+  const nudgeLeft=root.querySelector('#dwl-nudge-left'),nudgeRight=root.querySelector('#dwl-nudge-right');
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let phase='ready',gate=-1,level=1,charge=0,faults=0,score=0,combo=0,time=0,previous=0,lastTarget=1;
+  let ducks=[],ripples=[],drops=[],sparkles=[],feedbackTimer=0,P={},lastSaved=null;
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const speed=()=>Math.min(1.85,.95+(level-1)*.13);
+  const mix=(a,p,b='--background')=>{
+    const el=document.createElement('span');el.style.display='none';el.style.color=`color-mix(in srgb, var(${a}) ${p}%, var(${b}))`;root.append(el);
+    const color=getComputedStyle(el).color;el.remove();return color;
+  };
+  function colors(){P={sky:mix('--blue',10),water:mix('--blue',48),deep:mix('--blue',72),light:mix('--blue',28),foam:mix('--background',91,'--blue'),
+    bank:mix('--green',26),grass:mix('--green',47),leaf:mix('--green',65),moss:mix('--green',34),rock:mix('--foreground',34),rock2:mix('--foreground',23),rock3:mix('--foreground',16),
+    outline:mix('--foreground',85),duck:mix('--yellow',87),white:mix('--background',92,'--yellow'),beak:mix('--orange',94),gold:mix('--yellow',87),hit:mix('--green',83),miss:mix('--red',83),faint:mix('--foreground',14)};}
+  const rect=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),w,h);};
+  function ellipse(x,y,rx,ry,c){ctx.fillStyle=c;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill();}
+  function line(points,width,color){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();}
+  function target(){lastTarget=Math.random()<.8?-lastTarget:lastTarget;return lastTarget;}
+  function duck(stage='feed',index=0){return{stage,x:stage==='feed'?300:96+index*28,y:stage==='feed'?80:334,branch:gate,target:target(),checked:false,offset:0,vx:0,vy:0,bob:Math.random()*6.28,white:index%2===1,glow:0};}
+  function nextDuck(){return ducks.filter(d=>(d.stage==='feed'||d.stage==='fall')&&!d.checked).sort((a,b)=>b.y-a.y)[0]||null;}
+  function sync(){
+    roundText.textContent='第 '+level+' 轮';tankText.textContent='蓄水 '+charge+' / 4';faultText.textContent='失误 '+faults+' / 3';scoreText.textContent='得分 '+score;
+    play.textContent={ready:'开始挑战',running:'暂停',paused:'继续',over:'再玩一轮'}[phase];
+    nudgeLeft.disabled=phase!=='running';nudgeRight.disabled=phase!=='running';
+    left.setAttribute('aria-pressed',String(gate===-1));right.setAttribute('aria-pressed',String(gate===1));
+    const d=nextDuck();targetText.textContent=d?'亮圈：'+(d.target===-1?'左侧':'右侧'):'小鸭回流中';
+  }
+  function say(text){message.textContent=text;feedbackTimer=180;}
+  function save(){const p={version:2,level,charge,faults,score,gate,pendingDrops:drops.map(d=>({x:d.x,y:d.y,index:d.index,path:d.path}))};lastSaved=JSON.stringify(p);if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:{玩法:'开闸引流、涟漪微调、小鸭回游',轮次:level,蓄水:charge,失误:faults,得分:score,闸门:gate===-1?'左':'右'},privateContent:p}).catch(()=>{});}
+  function restore(s){const p=s?.privateContent;if(!p||p.version!==2||JSON.stringify(p)===lastSaved)return;
+    level=clamp(Math.round(p.level)||1,1,99);charge=clamp(Math.round(p.charge)||0,0,3);faults=clamp(Math.round(p.faults)||0,0,3);score=Math.max(0,Math.round(p.score)||0);gate=p.gate===1?1:-1;
+    phase=faults>=3?'over':'ready';lastTarget=1;ducks=[duck()];for(let i=1;i<Math.min(3,level);i++)ducks.push(duck('pool',i));
+    drops=Array.isArray(p.pendingDrops)?p.pendingDrops.filter(d=>Number.isFinite(d.x)&&Number.isFinite(d.y)&&Number.isInteger(d.index)&&Array.isArray(d.path)&&d.path.length<=6&&d.index>=0&&d.index<d.path.length&&d.path.every(point=>Array.isArray(point)&&point.length===2&&point.every(Number.isFinite))).slice(0,8).map(d=>({x:d.x,y:d.y,index:d.index,path:d.path})):[];
+    ripples=[];sparkles=[];if(phase==='over')message.textContent='本轮结束 · 得分 '+score;sync();draw();
+  }
+  function start(){
+    if(phase==='running')phase='paused';
+    else if(phase==='paused')phase='running';
+    else{if(phase==='over'){level=1;charge=0;faults=0;score=0;combo=0;lastTarget=1;ducks=[duck()];drops=[];sparkles=[];ripples=[];}
+      phase='running';say('本只目标：'+(nextDuck()?.target===-1?'左圈':'右圈'));}
+    sync();save();draw();
+  }
+  function choose(side){gate=side;sync();save();draw();}
+  play.addEventListener('click',start);left.addEventListener('click',()=>choose(-1));right.addEventListener('click',()=>choose(1));
+  nudgeLeft.addEventListener('click',()=>nudge(-1));nudgeRight.addEventListener('click',()=>nudge(1));
+  root.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();choose(-1);}if(e.key==='ArrowRight'){e.preventDefault();choose(1);}if(e.key.toLowerCase()==='a'){e.preventDefault();nudge(-1);}if(e.key.toLowerCase()==='d'){e.preventDefault();nudge(1);}});
+  function baseX(y,branch){const t=clamp((y-116)/67,0,1);return 300+branch*96*(t*t*(3-2*t));}
+  function ringX(side){const amplitude=level===1?7:Math.min(30,13+level*4);return 300+side*96+Math.sin(time*.024+side)*amplitude;}
+  function ringRadius(){return Math.max(15,23-level*2);}
+  function burst(x,y,color){for(let i=0;i<15;i++){const a=Math.random()*Math.PI*2;const v=.4+Math.random()*1.2;sparkles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,age:0,color});}}
+  function checkpoint(d){
+    d.checked=true;const distance=Math.abs(d.x-ringX(d.branch));
+    if(d.branch===d.target&&distance<ringRadius()){
+      combo++;const points=10+(distance<7?5:0);score+=points;d.glow=120;burst(d.x,220,P.gold);ripples.push({x:d.x,y:223,age:0,color:P.gold});
+      drops.push({x:d.x,y:220,index:0,path:[[d.x,293],[480,340],[576,340],[576,57],[331,57],[317,44]],phase:Math.random()*6.28});
+      say(distance<7?'精准入圈 +'+points+' · 水滴回流中':'入圈 +'+points+' · 水滴回流中');
+    }else{
+      combo=0;faults++;charge=Math.max(0,charge-1);burst(d.x,220,P.miss);ripples.push({x:d.x,y:223,age:0,color:P.miss});
+      say(d.branch!==d.target?'走错水路 · 蓄水退一格':'擦过水圈 · 可用涟漪微调');
+      if(faults>=3){phase='over';say('本轮结束 · 得分 '+score);}
+    }
+    sync();save();
+  }
+  function deposit(){
+    charge++;burst(317,44,P.foam);
+    if(charge>=4){charge=0;faults=0;level++;say('蓄水完成 · 第 '+level+' 轮，水流加快');
+      if(ducks.length<Math.min(3,level))ducks.push(duck('pool',ducks.length));}
+    else say('水滴入池 · 蓄水 '+charge+' / 4');
+    sync();save();
+  }
+  function update(dt){
+    time+=dt;
+    if(phase!=='running')return;
+    const s=speed();
+    for(const d of ducks){
+      d.glow=Math.max(0,d.glow-dt);d.vx*=Math.pow(.955,dt);d.vy*=Math.pow(.945,dt);
+      if(d.stage==='feed'){
+        d.x=clamp(d.x+(300-d.x)*.08*dt+d.vx*dt,276,324);d.y+=.85*s*dt;
+        if(d.y>=116){d.y=116;d.branch=gate;d.offset=clamp(d.x-300,-12,12);d.stage='fall';}
+      }else if(d.stage==='fall'){
+        const margin=Math.min(31,23+(level-1)*2);d.offset=clamp(d.offset+d.vx*dt,-margin,margin);d.offset*=Math.pow(.994,dt);
+        const v=(d.y<183?.95:1.1+(d.y-183)*.014)*s*(d.branch===gate?1.15:.83);
+        d.y+=v*dt;d.x=baseX(d.y,d.branch)+d.offset;
+        if(!d.checked&&d.y>=220){checkpoint(d);if(phase==='over')break;}
+        if(d.y>=296){d.y=296;d.stage='pool';d.offset=0;d.vy=.3;burst(d.x,300,P.foam);ripples.push({x:d.x,y:307,age:0,color:P.foam});}
+      }else if(d.stage==='pool'){
+        d.x+=(1.7*s+Math.sin(d.y*.045+time*.019)*.13+d.vx)*dt;
+        if(d.x<70){d.x=70;d.vx=Math.abs(d.vx)*.45;}
+        d.y+=(338-d.y)*.035*dt+d.vy*dt;d.y=clamp(d.y,302,360);
+        if(d.x>=576){d.x=576;d.stage='lift';d.vx=0;d.vy=0;}
+      }else if(d.stage==='lift'){
+        d.y-=2.6*s*dt;d.x=576+Math.sin(time*.07+d.bob)*2;
+        if(d.y<=57){d.y=57;d.x=576;d.stage='return';}
+      }else if(d.stage==='return'){
+        d.x-=2.7*s*dt;d.y=57+Math.sin(time*.035+d.bob)*1.8;
+        if(d.x<=300){d.x=300;d.y=57;d.stage='feed';d.target=target();d.checked=false;d.offset=0;d.vx=0;d.vy=0;sync();}
+      }
+    }
+    if(phase==='over')return;
+    const delivered=[];
+    for(const drop of drops){
+      const p=drop.path[drop.index],dx=p[0]-drop.x,dy=p[1]-drop.y,len=Math.hypot(dx,dy),step=4.4*s*dt;
+      if(len<=step){drop.x=p[0];drop.y=p[1];drop.index++;if(drop.index>=drop.path.length)delivered.push(drop);}
+      else{drop.x+=dx/len*step;drop.y+=dy/len*step;}
+    }
+    drops=drops.filter(d=>!delivered.includes(d));for(const d of delivered)deposit();
+    ripples.forEach(r=>r.age+=dt);ripples=ripples.filter(r=>r.age<62);
+    sparkles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=.018*dt;p.age+=dt;});sparkles=sparkles.filter(p=>p.age<44);
+    feedbackTimer=Math.max(0,feedbackTimer-dt);
+    if(feedbackTimer===0)message.textContent=nextDuck()?'目标：为上游蓄满 4 滴水':'小鸭乘水柱回到上游';
+  }
+  function wave(x,y){
+    ripples.push({x,y,age:0,color:P.foam});
+    for(const d of ducks){if(!['feed','fall','pool'].includes(d.stage))continue;const dx=d.x-x,dy=d.y-y,r=Math.hypot(dx,dy);
+      if(r<94&&r>1){const power=(1-r/94)*3.7;d.vx=clamp(d.vx+dx/r*power,-3.2,3.2);d.vy=clamp(d.vy+dy/r*power,-2.5,2.5);}}
+  }
+  function nudge(side){if(phase!=='running')return;const d=nextDuck()||ducks.find(d=>d.stage==='pool');if(d){wave(d.x-side*27,d.y);draw();}}
+  function isWater(x,y){
+    if(y>=298&&y<=367&&x>56&&x<592)return true;
+    if(x>558&&x<594&&y>48&&y<350)return true;
+    if(y>47&&y<73&&x>292&&x<578)return true;
+    if(y>75&&y<117&&Math.abs(x-300)<32)return true;
+    if(y>=117&&y<297)return[-1,1].some(side=>Math.abs(x-baseX(y,side))<43);
+    return false;
+  }
+  canvas.addEventListener('pointerdown',e=>{
+    if(phase!=='running')return;const b=canvas.getBoundingClientRect(),x=(e.clientX-b.left)*640/b.width,y=(e.clientY-b.top)*420/b.height;
+    if(isWater(x,y)){wave(x,y);draw();}
+  });
+  function drawDuck(d,perched=false){
+    const bob=Math.sin(time*.045+d.bob)*(perched?.4:1.2);ctx.save();ctx.translate(Math.round(d.x),Math.round(d.y+bob));
+    if(!perched){ellipse(0,8,11,3,P.light);if(d.glow>0){ctx.globalAlpha=.5;ellipse(0,0,18,12,P.gold);ctx.globalAlpha=1;}}
+    const direction=d.stage==='return'?-1:d.stage==='pool'?1:d.branch===-1?-1:1;
+    ctx.save();ctx.scale(direction,1);if(d.stage==='fall'&&d.y>184)ctx.rotate(Math.sin(time*.026+d.bob)*.13);
+    rect(-8,0,16,8,P.outline);rect(-6,-2,13,2,P.outline);rect(1,-9,8,10,P.outline);
+    const body=d.white?P.white:P.duck;rect(-6,0,12,6,body);rect(-5,-1,11,3,body);rect(3,-7,5,8,body);
+    rect(-9,0,3,3,body);rect(8,-3,5,3,P.beak);rect(6,-6,2,2,P.outline);rect(-2,3,5,2,d.white?P.foam:P.gold);ctx.restore();
+    if(!perched&&!d.checked&&['feed','fall'].includes(d.stage)){
+      const sign=d.target;rect(-1,-26,2,11,P.outline);
+      ctx.fillStyle=P.gold;ctx.beginPath();ctx.moveTo(sign*13,-22);ctx.lineTo(sign*5,-28);ctx.lineTo(sign*5,-25);ctx.lineTo(-sign*5,-25);ctx.lineTo(-sign*5,-19);ctx.lineTo(sign*5,-19);ctx.lineTo(sign*5,-16);ctx.closePath();ctx.fill();
+    }
+    if(d.stage==='lift'&&!perched){ctx.strokeStyle=P.foam;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(0,-1,17,16,0,0,Math.PI*2);ctx.stroke();}
+    ctx.restore();
+  }
+  function stone(x,y,w,h){rect(x,y,w,h,P.rock);rect(x,y,w,4,P.moss);rect(x+3,y+6,w-7,5,P.rock2);rect(x+6,y+13,w-12,Math.max(3,h-16),P.rock3);}
+  function tree(x,y){rect(x-11,y+7,22,15,P.moss);rect(x-7,y-2,18,18,P.grass);rect(x-3,y-6,11,9,P.bank);}
+  function waterArrow(x,y,up=false){const s=up?-1:1;line([[x-5,y-4*s],[x,y+2*s],[x+5,y-4*s]],2,P.foam);}
+  function world(){
+    rect(0,0,640,420,P.sky);rect(0,86,640,334,P.bank);rect(27,88,592,302,P.moss);rect(43,103,563,281,P.bank);
+    for(let i=0;i<19;i++)tree(18+i*34,77+Math.sin(i*19)*6);
+    for(let i=0;i<8;i++)tree(i%2?614:20,125+i*31);
+    line([[300,57],[576,57],[576,345]],42,P.deep);line([[300,57],[576,57],[576,345]],30,P.water);
+    for(let i=0;i<14;i++){
+      const y=346-((time*2.6*speed()+i*23)%284);ctx.strokeStyle=P.foam;ctx.lineWidth=1;ctx.beginPath();ctx.ellipse(573+(i%3)*3,y,3+i%3,3+i%3,0,0,Math.PI*2);ctx.stroke();
+    }
+    for(let i=0;i<9;i++){const x=574-((time*2.7*speed()+i*32)%270);rect(x,55+(i%3)*4,8,1,P.foam);}
+    waterArrow(576,146,true);waterArrow(576,232,true);
+    line([[300,70],[300,117]],59,P.deep);line([[300,70],[300,117]],46,P.water);
+    for(let side of [-1,1]){
+      const path=[];for(let y=117;y<=185;y+=4)path.push([baseX(y,side),y]);
+      const width=Math.min(82,66+(level-1)*4);line(path,width+8,P.deep);line(path,width,P.water);
+      rect(300+side*96-width/2,184,width,115,P.deep);rect(300+side*96-width/2+5,184,width-10,115,P.water);
+      const selected=gate===side;ctx.globalAlpha=selected?1:.45;
+      for(let i=0;i<13;i++){
+        const x=300+side*96-width/2+6+i*(width-13)/13,y=187+((time*(selected?2.8:1.5)*speed()+i*29)%109);
+        rect(x,y,2,7+(i%4)*3,P.foam);rect(x+3,y+9,1,4,P.light);
+      }ctx.globalAlpha=1;
+      for(let i=0;i<7;i++){
+        const y=120+((time*(selected?1.1:.55)*speed()+i*11)%62),x=baseX(y,side);rect(x-13+(i%4)*8,y,4,2,P.foam);
+      }
+    }
+    for(let row=0;row<5;row++){
+      stone(68+(row%2)*4,171+row*26,89,24);stone(443-(row%2)*3,171+row*26,87,24);
+      stone(260+(row%2)*3,178+row*24,80-(row%2)*6,22);
+    }
+    rect(270,166,60,11,P.grass);tree(298,151);
+    ellipse(313,333,270,48,P.deep);ellipse(313,329,258,38,P.water);
+    for(let i=0;i<49;i++){const x=62+((time*.62*speed()+i*43)%500),y=309+(i*17)%42;rect(x,y,5+i%4,1,i%3?P.light:P.foam);}
+    for(let i=0;i<18;i++){const x=170+(i*31)%63;rect(x,299+Math.sin(time*.055+i)*4,3+i%3,2,P.foam);rect(x+192,299+Math.cos(time*.055+i)*4,3+i%3,2,P.foam);}
+    for(let i=0;i<6;i++){const x=375+i*31;line([[x-4,342],[x+2,347],[x-4,352]],2,P.foam);}
+    const tankY=23;stone(237,tankY,126,45);rect(243,29,114,32,P.sky);
+    const fill=8+charge*5;rect(243,61-fill,114,fill,P.water);
+    for(let i=0;i<4;i++){rect(250+i*26,51,17,5,i<charge?P.foam:P.faint);}
+    rect(282,63,35,8,P.water);
+    for(let side of [-1,1]){
+      const x=300+side*35;ctx.save();ctx.translate(x,134);ctx.rotate(side*.56);
+      rect(-26,-3,52,6,P.outline);rect(-22,-2,44,4,gate===side?P.grass:P.rock2);ctx.restore();
+      if(gate!==side){rect(x-11,126,22,8,P.rock);rect(x-8,125,16,3,P.rock2);}
+    }
+    for(let row=0;row<4;row++)for(let side of [-1,1])for(let j=0;j<2;j++){
+      drawDuck({x:side===-1?89+j*32:463+j*30,y:170+row*26,bob:row+j,white:(row+j)%2===0,branch:side,checked:true,stage:'perch'},true);
+    }
+    for(let i=0;i<Math.min(16,3+(level-1)*3);i++){
+      const x=80+(i*103)%454,y=i%2?388:376;rect(x-3,y+2,8,4,P.leaf);rect(x,y-4,3,8,P.grass);ellipse(x+1,y-5,4,3,i%2?P.gold:P.foam);
+    }
+  }
+  function rings(){
+    const focus=nextDuck()?.target;
+    for(let side of [-1,1]){
+      const x=ringX(side),radius=ringRadius(),active=focus===side;
+      ctx.strokeStyle=active?P.gold:P.light;ctx.lineWidth=active?4:2;ctx.beginPath();ctx.ellipse(x,220,radius,radius*.67,0,0,Math.PI*2);ctx.stroke();
+      if(active){rect(x-2,197,4,4,P.gold);rect(x-radius-6,219,3,3,P.gold);rect(x+radius+3,219,3,3,P.gold);}
+    }
+  }
+  function draw(){
+    world();rings();
+    for(const r of ripples){ctx.globalAlpha=1-r.age/62;ctx.strokeStyle=r.color;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(r.x,r.y,5+r.age*.85,3+r.age*.34,0,0,Math.PI*2);ctx.stroke();}ctx.globalAlpha=1;
+    [...ducks].sort((a,b)=>a.y-b.y).forEach(d=>drawDuck(d));
+    for(const d of drops){ellipse(d.x,d.y,5,6,P.foam);ellipse(d.x-1,d.y-1,2,2,P.gold);}
+    for(const p of sparkles){ctx.globalAlpha=1-p.age/44;rect(p.x,p.y,3,3,p.color);}ctx.globalAlpha=1;
+    if(phase==='paused'||phase==='over'){ctx.globalAlpha=.2;rect(0,0,640,420,P.outline);ctx.globalAlpha=1;}
+  }
+  window.addEventListener('openai:set_globals',e=>{if(e.detail?.globals?.widgetState)restore(e.detail.globals.widgetState);});
+  const observer=new MutationObserver(()=>{colors();draw();});observer.observe(document.documentElement,{attributes:true,attributeFilter:['class','style','data-theme']});
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{colors();draw();});
+  colors();ducks=[duck()];sync();restore(window.openai?.widgetState);draw();
+  function animate(now){const dt=clamp((now-previous)/16.667,0,2);previous=now;
+    if(phase==='running'||(phase==='ready'&&!reduced)){update(dt);draw();}
+    if(root.isConnected)requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+})();
+</script>

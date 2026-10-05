@@ -48,6 +48,22 @@
       "source_url": "https://x.com/nexindie/status/2106723291868373127"
     },
     {
+      "number": 5,
+      "slug": "water-duck-loops",
+      "name": "水流与鸭子互动 · 循环玩法研究",
+      "summary": "以 Duck 的像素瀑布视频和鸭子编辑器为参考，区分视觉启发、像素鸭配色及 PNG/SVG 导出能力与我们的原创玩法实验。用速度场、涟漪推力、水量转移和状态规则连接玩家操作、水的变化、鸭子响应、目标反馈及可见回程，保留 V1 自由玩水、V2 引流挑战、V3 可读水流和 V4 蓄水救援。以九模块研究总览图引导，汇总搭水路、不同鸭子、跨区域连锁救援和瀑布花园等系列方向，以及水鸭机制、素材、关卡参数、验证流程和团队沟通的后期复用价值；网页支持本地实验记录与 JSON 导出，归档程序检查和两种放水策略案例。原视频的游戏身份、与编辑器的关系及算法未确认，现有规则近似不等于完整流体；C–F 扩展待实现，实际玩家理解、策略平衡、长期可玩性与产品收益仍待验证。",
+      "repository": "",
+      "status": "研究中",
+      "tags": [
+        "水流互动",
+        "循环玩法",
+        "像素场景"
+      ],
+      "cover": "assets/water-duck-series-map-v1.png",
+      "demo_url": "",
+      "source_url": "https://x.com/duck_wtd/status/2106807563073339790"
+    },
+    {
       "number": 6,
       "slug": "claude-code-best-practice",
       "name": "Claude Code Best Practice · 能力与工作流研究",

@@ -1,0 +1,229 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4800" height="3775" viewBox="0 0 4800 3775" role="img" aria-labelledby="map-title map-desc">
+<title id="map-title">水与鸭子 · 从视觉循环到游戏系列</title>
+<desc id="map-desc">源网页能力、互动原理、原型演进、系列扩展、复用价值、证据边界、风险与后续路线的完整研究总览。</desc>
+<metadata>Native diagram drawing. Exact UTF-8 content, original pixel-duck decoration. No generated model image or reference screenshot.</metadata>
+<rect x="0" y="0" width="4800" height="3775" rx="0" fill="#f4f7f6"/>
+<rect x="0" y="0" width="4800" height="336" rx="0" fill="#e6f2f5"/>
+<text x="140" y="85.84" fill="#087f91" font-size="32" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">研究图谱 / 项目 005</text>
+<text x="140" y="209.87" fill="#16384b" font-size="101" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水与鸭子 · 从视觉循环到游戏系列</text>
+<text x="140" y="304.28" fill="#536c79" font-size="44" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">来源能力 → 可玩机制 → 原型证据 → 系列扩展 → 长期复用</text>
+<text x="4340" y="85.84" fill="#536c79" font-size="32" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">2026-10-05</text>
+<rect x="4192" y="199" width="176" height="80" rx="0" fill="#65513e"/>
+<rect x="4208" y="175" width="144" height="88" rx="0" fill="#ffd254"/>
+<rect x="4304" y="111" width="88" height="96" rx="0" fill="#65513e"/>
+<rect x="4320" y="127" width="72" height="88" rx="0" fill="#ffe16c"/>
+<rect x="4376" y="167" width="56" height="32" rx="0" fill="#e78a30"/>
+<rect x="4360" y="143" width="16" height="16" rx="0" fill="#16384b"/>
+<rect x="4208" y="207" width="72" height="32" rx="0" fill="#edb83f"/>
+<rect x="4454" y="190" width="132" height="60" rx="0" fill="#65513e"/>
+<rect x="4466" y="172" width="108" height="66" rx="0" fill="#fff5d2"/>
+<rect x="4538" y="124" width="66" height="72" rx="0" fill="#65513e"/>
+<rect x="4550" y="136" width="54" height="66" rx="0" fill="#fff5d2"/>
+<rect x="4592" y="166" width="42" height="24" rx="0" fill="#e78a30"/>
+<rect x="4580" y="148" width="12" height="12" rx="0" fill="#16384b"/>
+<rect x="4466" y="196" width="54" height="24" rx="0" fill="#e7dab7"/>
+<polyline points="4090,287 4630,287" fill="none" stroke="#77bdcf" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="140" y="358" width="128" height="48" rx="24" fill="#ffffff" stroke="#377caf" stroke-width="2"/>
+<text x="159" y="392.1" fill="#377caf" font-size="30" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">已观察</text>
+<rect x="293" y="358" width="250.062" height="48" rx="24" fill="#ffffff" stroke="#238464" stroke-width="2"/>
+<text x="312" y="392.1" fill="#238464" font-size="30" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">已实现 / 已检查</text>
+<rect x="568.062" y="358" width="280.062" height="48" rx="24" fill="#ffffff" stroke="#b47924" stroke-width="2"/>
+<text x="587.062" y="392.1" fill="#b47924" font-size="30" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">设计推断 / 待验证</text>
+<rect x="873.125" y="358" width="128" height="48" rx="24" fill="#ffffff" stroke="#7d8793" stroke-width="2"/>
+<text x="892.125" y="392.1" fill="#7d8793" font-size="30" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">未确认</text>
+<text x="3220" y="396.1" fill="#536c79" font-size="30" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">状态标注用于区分事实、运行证据和未来机会</text>
+<rect x="140" y="458" width="725" height="122" rx="22" fill="#ffffff" stroke="#b5d2dc" stroke-width="3"/>
+<text x="412.5" y="517.15" fill="#087f91" font-size="45" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">玩家操作</text>
+<text x="331.109" y="563.97" fill="#536c79" font-size="31" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">选路 / 点水 / 蓄水 / 放水</text>
+<polyline points="875.6,508 891,519 875.6,530" fill="none" stroke="#087f91" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="899" y="458" width="725" height="122" rx="22" fill="#ffffff" stroke="#b5d2dc" stroke-width="3"/>
+<text x="1171.5" y="517.15" fill="#087f91" font-size="45" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水的变化</text>
+<text x="1090.11" y="563.97" fill="#536c79" font-size="31" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">方向 / 水量 / 水位 / 推力</text>
+<polyline points="1634.6,508 1650,519 1634.6,530" fill="none" stroke="#087f91" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1658" y="458" width="725" height="122" rx="22" fill="#ffffff" stroke="#b5d2dc" stroke-width="3"/>
+<text x="1930.5" y="517.15" fill="#087f91" font-size="45" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">鸭子响应</text>
+<text x="1849.11" y="563.97" fill="#536c79" font-size="31" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">轨迹 / 停留 / 抵达 / 回游</text>
+<polyline points="2393.6,508 2409,519 2393.6,530" fill="none" stroke="#087f91" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="2417" y="458" width="725" height="122" rx="22" fill="#ffffff" stroke="#b5d2dc" stroke-width="3"/>
+<text x="2667" y="517.15" fill="#087f91" font-size="45" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">目标与反馈</text>
+<text x="2608.11" y="563.97" fill="#536c79" font-size="31" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">成功 / 补救 / 奖励 / 失误</text>
+<polyline points="3152.6,508 3168,519 3152.6,530" fill="none" stroke="#087f91" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="3176" y="458" width="725" height="122" rx="22" fill="#ffffff" stroke="#b5d2dc" stroke-width="3"/>
+<text x="3448.5" y="517.15" fill="#087f91" font-size="45" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">可见回程</text>
+<text x="3398.7" y="563.97" fill="#536c79" font-size="31" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水回池 / 鸭回安全区</text>
+<polyline points="3911.6,508 3927,519 3911.6,530" fill="none" stroke="#087f91" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="3935" y="458" width="725" height="122" rx="22" fill="#ffffff" stroke="#b5d2dc" stroke-width="3"/>
+<text x="4185" y="517.15" fill="#087f91" font-size="45" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">下一次决策</text>
+<text x="4141.91" y="563.97" fill="#536c79" font-size="31" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">读水 / 换策略 / 再尝试</text>
+<polyline points="4297.5,587 4297.5,640 502.5,640 502.5,587" fill="none" stroke="#60a9b7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="490.5,603.8 502.5,587 514.5,603.8" fill="none" stroke="#60a9b7" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="1610" y="617" width="1580" height="50" rx="10" fill="#f4f7f6"/>
+<text x="2094" y="653.58" fill="#087f91" font-size="34" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">回程让循环可见；每一轮仍需要新的判断</text>
+<rect x="140" y="726" width="1466.67" height="837" rx="28" fill="#e0e7e8"/>
+<rect x="140" y="716" width="1466.67" height="837" rx="28" fill="#ffffff" stroke="#cedde2" stroke-width="2"/>
+<rect x="141" y="743" width="9" height="783" rx="4" fill="#377caf"/>
+<rect x="184" y="754" width="75" height="70" rx="18" fill="#377caf"/>
+<text x="197.453" y="803.93" fill="#ffffff" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">01</text>
+<text x="285" y="806.85" fill="#16384b" font-size="55" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">源网页能力</text>
+<text x="285" y="848.23" fill="#377caf" font-size="29" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">已观察 / 关系未确认</text>
+<text x="194" y="914.93" fill="#377caf" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">像素鸭编辑器</text>
+<text x="194" y="968.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">换色像素鸭，导出 PNG / SVG；可理解为角色模板与配色工作流。</text>
+<text x="194" y="1048.93" fill="#377caf" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">视频视觉参考</text>
+<text x="194" y="1102.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">鸭子、瀑布、分层水潭及循环感，为水与角色互动提供视觉启发。</text>
+<text x="194" y="1182.93" fill="#377caf" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">身份与边界</text>
+<text x="194" y="1236.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">视频游戏身份、与编辑器的关系及原作算法未确认；已知网页提供素材编辑能</text>
+<text x="194" y="1290.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">力。</text>
+<text x="194" y="1370.93" fill="#377caf" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">可以借鉴什么</text>
+<text x="194" y="1424.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">借鉴轮廓、配色与水路层次；我们的场景、规则和原型为原创实验。</text>
+<rect x="1666.67" y="726" width="1466.67" height="837" rx="28" fill="#e0e7e8"/>
+<rect x="1666.67" y="716" width="1466.67" height="837" rx="28" fill="#ffffff" stroke="#cedde2" stroke-width="2"/>
+<rect x="1667.67" y="743" width="9" height="783" rx="4" fill="#087f91"/>
+<rect x="1710.67" y="754" width="75" height="70" rx="18" fill="#087f91"/>
+<text x="1724.12" y="803.93" fill="#ffffff" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">02</text>
+<text x="1811.67" y="806.85" fill="#16384b" font-size="55" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">原理与角色分工</text>
+<text x="1811.67" y="848.23" fill="#087f91" font-size="29" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">我们的规则近似</text>
+<text x="1720.67" y="914.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">输入到结果</text>
+<text x="1720.67" y="968.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">改水的方向、水量或节奏 → 鸭子响应 → 目标反馈 → 下一轮。</text>
+<text x="1720.67" y="1048.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水的四种角色</text>
+<text x="1720.67" y="1102.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">操作媒介、路径、有限资源、视觉反馈；水位与流向需对应规则。</text>
+<text x="1720.67" y="1182.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">鸭子的作用</text>
+<text x="1720.67" y="1236.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">将水流变成可见行动，呈现停留、输运与安全；同时是目标对象与情感角色。</text>
+<text x="1720.67" y="1316.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">可见回程</text>
+<text x="1720.67" y="1370.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水潭、抬升管和上游水路连接下一轮；循环应带来新的判断。</text>
+<text x="1720.67" y="1450.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">实现边界</text>
+<text x="1720.67" y="1504.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">速度场、局部推力、水量账目与状态转换近似互动，无完整流体求解。</text>
+<rect x="3193.33" y="726" width="1466.67" height="837" rx="28" fill="#e0e7e8"/>
+<rect x="3193.33" y="716" width="1466.67" height="837" rx="28" fill="#ffffff" stroke="#cedde2" stroke-width="2"/>
+<rect x="3194.33" y="743" width="9" height="783" rx="4" fill="#087f91"/>
+<rect x="3237.33" y="754" width="75" height="70" rx="18" fill="#087f91"/>
+<text x="3250.79" y="803.93" fill="#ffffff" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">03</text>
+<text x="3338.33" y="806.85" fill="#16384b" font-size="55" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">可玩性成立条件</text>
+<text x="3338.33" y="848.23" fill="#087f91" font-size="29" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">设计假设 / 待试玩</text>
+<text x="3247.33" y="914.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">看得懂因果</text>
+<text x="3247.33" y="968.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">能预测方向与门槛，解释成功或失败；提示帮助理解而非代做。</text>
+<text x="3247.33" y="1048.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">行动改变结果</text>
+<text x="3247.33" y="1102.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">选闸、拨水和放水时机影响鸭子，结果可感知、可控制。</text>
+<text x="3247.33" y="1182.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">存在取舍</text>
+<text x="3247.33" y="1236.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">早放与集中放水、速度与精度各有代价，让多种策略有机会成立。</text>
+<text x="3247.33" y="1316.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">允许补救</text>
+<text x="3247.33" y="1370.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">能发现误判并调整；失败给出可行动的原因，避免只能等待。</text>
+<text x="3247.33" y="1450.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">愿意再玩</text>
+<text x="3247.33" y="1504.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">目标、路线或资源变化产生新选择；重复观赏不等于长期可玩。</text>
+<rect x="140" y="1623" width="1466.67" height="945" rx="28" fill="#e0e7e8"/>
+<rect x="140" y="1613" width="1466.67" height="945" rx="28" fill="#ffffff" stroke="#cedde2" stroke-width="2"/>
+<rect x="141" y="1640" width="9" height="891" rx="4" fill="#238464"/>
+<rect x="184" y="1651" width="75" height="70" rx="18" fill="#238464"/>
+<text x="197.453" y="1700.93" fill="#ffffff" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">04</text>
+<text x="285" y="1703.85" fill="#16384b" font-size="55" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">V1–V4 原型演进</text>
+<text x="285" y="1745.23" fill="#238464" font-size="29" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">已实现 / 研究原型</text>
+<text x="194" y="1811.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">V1 自由玩水</text>
+<text x="194" y="1865.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">瀑布、漩涡与分流；加鸭、调强度、点涟漪，观察水的影响。</text>
+<text x="194" y="1945.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">V2 引流入圈</text>
+<text x="194" y="1999.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">选闸、拨水入圈，积水升级或失误结束；鸭子与水滴可见回游。</text>
+<text x="194" y="2079.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">V3 可读水流</text>
+<text x="194" y="2133.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">流向、分流时机、涟漪范围、失败解释与计数，支持提示开关对照。</text>
+<text x="194" y="2213.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">V4 蓄水救援</text>
+<text x="194" y="2267.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水量 120 循环，浅湾至少 12 才推动；24 格早放 / 48 格集中，45 秒救六鸭；</text>
+<text x="194" y="2321.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">每鸭本轮仅计一次。</text>
+<text x="194" y="2401.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">共同定位</text>
+<text x="194" y="2455.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">分别检验互动、目标、可读性与资源取舍；并非四款完成游戏。</text>
+<rect x="1666.67" y="1623" width="1466.67" height="945" rx="28" fill="#e0e7e8"/>
+<rect x="1666.67" y="1613" width="1466.67" height="945" rx="28" fill="#ffffff" stroke="#cedde2" stroke-width="2"/>
+<rect x="1667.67" y="1640" width="9" height="891" rx="4" fill="#087f91"/>
+<rect x="1710.67" y="1651" width="75" height="70" rx="18" fill="#087f91"/>
+<text x="1724.12" y="1700.93" fill="#ffffff" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">05</text>
+<text x="1811.67" y="1703.85" fill="#16384b" font-size="55" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">游戏系列扩展</text>
+<text x="1811.67" y="1745.23" fill="#087f91" font-size="29" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">部分原型 / 其余待实现</text>
+<text x="1720.67" y="1811.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">引流操作</text>
+<text x="1720.67" y="1865.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">选路、反应与局部补救，增加岔路和目标变化；已有 V2 / V3。</text>
+<text x="1720.67" y="1945.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">蓄水策略</text>
+<text x="1720.67" y="1999.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水量、节奏与救援窗口形成取舍；已有 V4，策略平衡待验证。</text>
+<text x="1720.67" y="2079.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水路解谜</text>
+<text x="1720.67" y="2133.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">摆挡板、接水道，规划完整循环；关卡和鸭子能力差异待实现。</text>
+<text x="1720.67" y="2213.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">连锁与花园</text>
+<text x="1720.67" y="2267.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">跨区传播与补救、开新水潭；单浅湾批量救援不等于跨区连锁。</text>
+<text x="1720.67" y="2347.93" fill="#087f91" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">系列共同核心</text>
+<text x="1720.67" y="2401.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">共享机制与视觉语言，以操作、资源、规划、建造形成不同决策。</text>
+<rect x="3193.33" y="1623" width="1466.67" height="945" rx="28" fill="#e0e7e8"/>
+<rect x="3193.33" y="1613" width="1466.67" height="945" rx="28" fill="#ffffff" stroke="#cedde2" stroke-width="2"/>
+<rect x="3194.33" y="1640" width="9" height="891" rx="4" fill="#b47924"/>
+<rect x="3237.33" y="1651" width="75" height="70" rx="18" fill="#b47924"/>
+<text x="3250.79" y="1700.93" fill="#ffffff" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">06</text>
+<text x="3338.33" y="1703.85" fill="#16384b" font-size="55" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">后期复用价值</text>
+<text x="3338.33" y="1745.23" fill="#b47924" font-size="29" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">潜在价值 / 尚未产品化</text>
+<text x="3247.33" y="1811.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">机制工具箱</text>
+<text x="3247.33" y="1865.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">抽取水流、鸭子状态、输入与反馈，降低下一款原型的制作与验证成本；工具</text>
+<text x="3247.33" y="1919.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">箱仍需建设。</text>
+<text x="3247.33" y="1999.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">内容生产</text>
+<text x="3247.33" y="2053.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">配色、鸭子特性、关卡参数与主题模板持续积累，提高系列内容复用与试验效</text>
+<text x="3247.33" y="2107.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">率。</text>
+<text x="3247.33" y="2187.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">研究积累</text>
+<text x="3247.33" y="2241.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">研究页、本地记录与 JSON 导出积累案例，便于复现和比较。</text>
+<text x="3247.33" y="2321.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">展示与沟通</text>
+<text x="3247.33" y="2375.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">可试玩原型帮助团队讨论因果与取舍；静态网页便于展示和试验。</text>
+<text x="3247.33" y="2455.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">产品方向</text>
+<text x="3247.33" y="2509.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">可探索解谜、休闲、建造与展示；平台、受众和商业潜力未验证。</text>
+<rect x="140" y="2628" width="1466.67" height="837" rx="28" fill="#e0e7e8"/>
+<rect x="140" y="2618" width="1466.67" height="837" rx="28" fill="#ffffff" stroke="#cedde2" stroke-width="2"/>
+<rect x="141" y="2645" width="9" height="783" rx="4" fill="#238464"/>
+<rect x="184" y="2656" width="75" height="70" rx="18" fill="#238464"/>
+<text x="197.453" y="2705.93" fill="#ffffff" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">07</text>
+<text x="285" y="2708.85" fill="#16384b" font-size="55" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">证据与未验证</text>
+<text x="285" y="2750.23" fill="#238464" font-size="29" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">程序结果 ≠ 玩家结论</text>
+<text x="194" y="2816.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">已有运行证据</text>
+<text x="194" y="2870.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">V3 四次入圈升级；V4 两种节奏救齐六鸭，检查了回程与守恒。</text>
+<text x="194" y="2950.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">检查的作用</text>
+<text x="194" y="3004.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">V4 13 项模型检查覆盖部分规则与边界；浏览器时间受帧率影响。</text>
+<text x="194" y="3084.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">尚缺玩家证据</text>
+<text x="194" y="3138.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">新手理解、误判补救、多策略有效性与主动再玩，仍待实际试玩。</text>
+<text x="194" y="3218.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">对照要可比</text>
+<text x="194" y="3272.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">保持条件相近、交换顺序；V3 随机目标差异不能全归因于提示。</text>
+<text x="194" y="3352.93" fill="#238464" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">记录的边界</text>
+<text x="194" y="3406.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">案例支持追踪，不自动证明满意度、留存或商业价值；标记未知。</text>
+<rect x="1666.67" y="2628" width="1466.67" height="837" rx="28" fill="#e0e7e8"/>
+<rect x="1666.67" y="2618" width="1466.67" height="837" rx="28" fill="#ffffff" stroke="#cedde2" stroke-width="2"/>
+<rect x="1667.67" y="2645" width="9" height="783" rx="4" fill="#b47924"/>
+<rect x="1710.67" y="2656" width="75" height="70" rx="18" fill="#b47924"/>
+<text x="1724.12" y="2705.93" fill="#ffffff" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">08</text>
+<text x="1811.67" y="2708.85" fill="#16384b" font-size="55" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">主要风险</text>
+<text x="1811.67" y="2750.23" fill="#b47924" font-size="29" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">后续设计与技术约束</text>
+<text x="1720.67" y="2816.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">只有观赏循环</text>
+<text x="1720.67" y="2870.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水与鸭子好看却缺少选择；需检验行动是否持续影响结果。</text>
+<text x="1720.67" y="2950.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">唯一优势策略</text>
+<text x="1720.67" y="3004.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">等满、固定选路或重复点按若占优，会削弱判断；需调奖励与水速。</text>
+<text x="1720.67" y="3084.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">因果表达不足</text>
+<text x="1720.67" y="3138.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">水位、流向与行为脱节会误导；回程与提示要清楚，不遮挡状态。</text>
+<text x="1720.67" y="3218.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">扩展技术成本</text>
+<text x="1720.67" y="3272.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">更多鸭子与复杂水路带来性能、碰撞及触控问题；流体是成本选择。</text>
+<text x="1720.67" y="3352.93" fill="#b47924" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">资产与传播边界</text>
+<text x="1720.67" y="3406.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">保持引用与原创边界；授权、风格统一、跨平台与传播需分别检验。</text>
+<rect x="3193.33" y="2628" width="1466.67" height="837" rx="28" fill="#e0e7e8"/>
+<rect x="3193.33" y="2618" width="1466.67" height="837" rx="28" fill="#ffffff" stroke="#cedde2" stroke-width="2"/>
+<rect x="3194.33" y="2645" width="9" height="783" rx="4" fill="#377caf"/>
+<rect x="3237.33" y="2656" width="75" height="70" rx="18" fill="#377caf"/>
+<text x="3250.79" y="2705.93" fill="#ffffff" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">09</text>
+<text x="3338.33" y="2708.85" fill="#16384b" font-size="55" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">后续研究路线</text>
+<text x="3338.33" y="2750.23" fill="#377caf" font-size="29" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">先验证核心 / 再扩大内容</text>
+<text x="3247.33" y="2816.93" fill="#377caf" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">① 看懂与控制</text>
+<text x="3247.33" y="2870.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">试玩 V3，记录路线预测、误操作与补救，检查流向和推力理解。</text>
+<text x="3247.33" y="2950.93" fill="#377caf" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">② 选择与平衡</text>
+<text x="3247.33" y="3004.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">对照 V4 两种策略，记录首救、等待、溢流、救齐与解释。</text>
+<text x="3247.33" y="3084.93" fill="#377caf" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">③ 多解与变化</text>
+<text x="3247.33" y="3138.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">做搭水路、不同鸭子与跨区连锁，检验多解、补救和多轮变化。</text>
+<text x="3247.33" y="3218.93" fill="#377caf" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">④ 系列化复用</text>
+<text x="3247.33" y="3272.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">核心成立后抽取模块与资产规范，补触控和性能，再扩关卡主题。</text>
+<text x="3247.33" y="3352.93" fill="#377caf" font-size="39" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">⑤ 产品价值</text>
+<text x="3247.33" y="3406.93" fill="#16384b" font-size="39" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">实际检验再玩、受众和内容需求，再决定系列分支与产品化投入。</text>
+<rect x="140" y="3505" width="4520" height="117" rx="24" fill="#dfeef1"/>
+<text x="1665" y="3574.63" fill="#16384b" font-size="49" font-weight="700" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">共同核心：水是操作媒介与规则，鸭子是反馈角色，循环组织体验。</text>
+<text x="140" y="3682.97" fill="#536c79" font-size="31" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">原视频仅作启发；当前原型为原创实验。程序通过不等于玩法、留存或商业价值已经验证。</text>
+<a href="https://x.com/duck_wtd/status/2106807563073339790" target="_blank">
+<text x="140" y="3735.23" fill="#087f91" font-size="29" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">[1] 原帖 · 视觉参考</text>
+</a>
+<a href="https://ducklings-maker.web.app/" target="_blank">
+<text x="453.094" y="3735.23" fill="#087f91" font-size="29" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">[2] 作者网页 · 像素鸭编辑器</text>
+</a>
+<a href="http://127.0.0.1:8055/demos/005-water-duck-loops/" target="_blank">
+<text x="882.188" y="3735.23" fill="#087f91" font-size="29" font-weight="400" font-family="Microsoft YaHei,PingFang SC,Noto Sans CJK SC,sans-serif">[3] 我们的研究页 · V1–V4</text>
+</a>
+</svg>

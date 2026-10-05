@@ -1,0 +1,44 @@
+{
+  "kind": "program-check",
+  "passed": 13,
+  "checks": [
+    "initial water and ready state",
+    "pause freezes resource, ducks, packets and clock",
+    "shallow water holds ducks and closing leaves water draining",
+    "invalid or unfunded release cannot spend water or count an action",
+    "conservation with deterministic varied gate inputs",
+    "concentrated releases can complete the whole loop",
+    "several small releases can complete the whole loop",
+    "timely first rescue awards thirty points exactly once",
+    "passing five seconds grants no reward and a later rescue cannot claim it",
+    "waiting without action spills and ends without automatic rescue",
+    "settling preserves pause and scores only once",
+    "large time steps preserve finite nonnegative water",
+    "new state resets the whole challenge"
+  ],
+  "strategies": [
+    {
+      "strategy": "two concentrated 48-unit releases",
+      "releases": 2,
+      "rescueTime": 17.283333333332994,
+      "firstRescueTime": 8.400000000000164,
+      "earlyBonus": 0,
+      "returned": 6,
+      "score": 135,
+      "spilled": 0,
+      "releasedWater": 96
+    },
+    {
+      "strategy": "several early 24-unit releases",
+      "releases": 6,
+      "rescueTime": 24.433333333332588,
+      "firstRescueTime": 0.8833333333333326,
+      "earlyBonus": 30,
+      "returned": 6,
+      "score": 131,
+      "spilled": 0,
+      "releasedWater": 144
+    }
+  ],
+  "evidenceLimit": "Model behavior only; no human playability claim."
+}

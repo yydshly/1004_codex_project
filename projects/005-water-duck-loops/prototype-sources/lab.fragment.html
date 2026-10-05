@@ -1,0 +1,205 @@
+<div id="water-duck-playground">
+  <div class="viz-controls">
+    <label class="form-label" for="wd-scene">水流形态
+      <select class="form-select" id="wd-scene">
+        <option value="fall">瀑布</option>
+        <option value="vortex">漩涡</option>
+        <option value="fork">分流</option>
+      </select>
+    </label>
+    <label class="form-label" for="wd-flow">水流强度 <span id="wd-value" class="tabular-nums">60%</span>
+      <input class="form-range" id="wd-flow" type="range" min="15" max="100" value="60">
+    </label>
+  </div>
+  <div class="viz-row">
+    <button type="button" class="btn btn-primary" id="wd-add">放入一群鸭子</button>
+    <button type="button" class="btn" id="wd-pause" aria-pressed="false">暂停</button>
+    <span class="text-small text-muted" id="wd-status" aria-live="polite">瀑布 · 26 只小鸭</span>
+  </div>
+  <canvas id="wd-water" width="480" height="310" class="cursor-interaction" role="img" aria-label="互动水流示意：小鸭随瀑布落入水潭，切换漩涡或分流可改变漂浮路线。">水流与小鸭互动场景</canvas>
+</div>
+<style>
+  #water-duck-playground {display:grid;gap:12px;}
+  #water-duck-playground canvas {width:100%;height:auto;display:block;image-rendering:pixelated;touch-action:pan-y;}
+</style>
+<script>
+(() => {
+  const root=document.getElementById('water-duck-playground');
+  const canvas=root.querySelector('#wd-water'), ctx=canvas.getContext('2d');
+  const sceneInput=root.querySelector('#wd-scene'), flowInput=root.querySelector('#wd-flow');
+  const flowLabel=root.querySelector('#wd-value'), status=root.querySelector('#wd-status');
+  const pauseButton=root.querySelector('#wd-pause'), addButton=root.querySelector('#wd-add');
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  let mode='fall', flow=.6, paused=reduced.matches, tick=0, previous=0, spawnClock=0;
+  let ducks=[], particles=[], ripples=[], palette={}, lastSaved=null;
+  const labels={fall:'瀑布',vortex:'漩涡',fork:'分流'};
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const mix=(a,p,b='--background')=>{
+    const probe=document.createElement('span');
+    probe.style.color=`color-mix(in srgb, var(${a}) ${p}%, var(${b}))`;
+    probe.style.display='none';root.append(probe);
+    const value=getComputedStyle(probe).color;probe.remove();return value;
+  };
+  function colors(){
+    palette={sky:mix('--blue',9),water:mix('--blue',48),deep:mix('--blue',68),
+      ripple:mix('--blue',25),foam:mix('--background',86,'--blue'),
+      shore:mix('--green',30),grass:mix('--green',44),grass2:mix('--green',22),
+      rock:mix('--foreground',36),rock2:mix('--foreground',25),rock3:mix('--foreground',18),
+      outline:mix('--foreground',80),duck:mix('--yellow',85),whiteDuck:mix('--background',94,'--yellow'),
+      beak:mix('--orange',90),shade:mix('--yellow',65,'--foreground')};
+  }
+  const paint=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),w,h);};
+  function ellipse(x,y,rx,ry,c){ctx.fillStyle=c;ctx.beginPath();ctx.ellipse(x,y,rx,ry,0,0,Math.PI*2);ctx.fill();}
+  function seed(){
+    particles=Array.from({length:260},()=>({x:Math.random()*480,y:Math.random()*310,phase:Math.random()*10}));
+    ducks=Array.from({length:26},(_,i)=>newDuck(i));ripples=[];spawnClock=0;
+  }
+  function newDuck(i){
+    let x,y;
+    if(mode==='fall'){x=188+Math.random()*104;y=i<15?30+Math.random()*190:250+Math.random()*25;}
+    else if(mode==='vortex'){const a=Math.random()*Math.PI*2,r=38+Math.random()*96;x=240+Math.cos(a)*r;y=161+Math.sin(a)*r*.7;}
+    else{y=25+Math.random()*245;const side=Math.random()<.5?-1:1;x=y<112?228+Math.random()*24:240+side*(y-112)*92/177+(Math.random()-.5)*12;}
+    return{x,y,vx:0,vy:0,phase:Math.random()*6.28,white:Math.random()<.4,flip:1};
+  }
+  function velocity(x,y){
+    const f=.25+flow*1.6;
+    if(mode==='fall'){
+      if(y<104)return{x:(240-x)*.018+Math.sin(y*.05+tick*.015)*.12,y:.34*f};
+      if(y<231)return{x:(240-x)*.002+Math.sin(y*.06+tick*.02)*.18,y:(.8+(y-104)*.014)*f};
+      const dx=(x-240)/155,dy=(y-264)/24;
+      return{x:-dy*.4*f+Math.sin(tick*.012+x*.03)*.12,y:dx*.16*f+(264-y)*.018};
+    }
+    if(mode==='vortex'){
+      const dx=x-240,dy=(y-162)*1.4,r=Math.sqrt(dx*dx+dy*dy)||1;
+      return{x:(-dy/r)*f*.86-(r>128?dx*.012:0),y:(dx/r)*f*.61-(r>128?dy*.009:0)};
+    }
+    if(y<112)return{x:(240-x)*.016,y:f*.65};
+    const side=x<240?-1:1;
+    const center=240+side*Math.min(92,(y-112)*92/177);
+    return{x:side*(92/177)*.8*f+(center-x)*.09,y:.8*f};
+  }
+  function update(dt){
+    tick+=dt;
+    if(mode==='fall'){
+      spawnClock+=dt;
+      if(spawnClock>55/(.4+flow)){
+        const d=ducks.find(d=>d.y>246);
+        if(d){d.x=194+Math.random()*92;d.y=35;d.vx=0;d.vy=0;}
+        spawnClock=0;
+      }
+    }
+    for(const p of particles){const v=velocity(p.x,p.y);p.x+=v.x*dt;p.y+=v.y*dt;
+      if(mode==='fall'&&(p.y>304||p.x<156||p.x>324)){p.x=182+Math.random()*116;p.y=Math.random()*102;}
+      if(mode==='fork'&&p.y>293){p.x=224+Math.random()*32;p.y=18;}
+      if(mode==='vortex'&&(p.x<100||p.x>380||p.y<62||p.y>262)){p.x=170+Math.random()*140;p.y=105+Math.random()*105;}
+    }
+    for(const d of ducks){
+      const v=velocity(d.x,d.y);d.vx+=(v.x-d.vx)*.05*dt;d.vy+=(v.y-d.vy)*.05*dt;
+      d.x+=d.vx*dt;d.y+=d.vy*dt;d.flip=d.vx<-.06?-1:1;
+      if(mode==='fall'){
+        if(d.y>229&&d.y-d.vy*dt<=229)ripples.push({x:d.x,y:241,age:0});
+        if(d.y<229)d.x=clamp(d.x,184,296);
+        else{d.x=clamp(d.x,106,374);d.y=clamp(d.y,240,284);}
+      }
+      if(mode==='fork'&&d.y>292){d.x=220+Math.random()*40;d.y=16;d.vx=0;d.vy=0;}
+    }
+    for(let i=0;i<ducks.length;i++)for(let j=i+1;j<ducks.length;j++){
+      const a=ducks[i],b=ducks[j],dx=b.x-a.x,dy=b.y-a.y,r=Math.hypot(dx,dy);
+      if(r>0&&r<8){const push=(8-r)*.075*dt;a.x-=dx/r*push;b.x+=dx/r*push;a.y-=dy/r*push;b.y+=dy/r*push;}
+    }
+    ripples.forEach(r=>r.age+=dt);ripples=ripples.filter(r=>r.age<58);
+  }
+  function landscape(){
+    paint(0,0,480,310,palette.sky);
+    paint(0,44,480,266,palette.grass2);
+    for(let i=0;i<15;i++){
+      const x=i*36-10,y=40+Math.sin(i*8)*11;
+      paint(x,y,31,18,palette.shore);paint(x+5,y-6,19,8,palette.grass2);
+      paint(x+9,y+2,15,12,palette.grass);
+    }
+    paint(26,56,428,236,palette.shore);
+    if(mode==='fall'){
+      paint(155,47,170,71,palette.water);
+      for(let side=0;side<2;side++)for(let row=0;row<6;row++){
+        const y=99+row*24,x=side?304:60;
+        paint(x,y,116,22,palette.rock);paint(x,y,116,5,palette.rock2);
+        paint(x+(row%3)*9,y+9,86,9,palette.rock3);
+        paint(x,y,116,3,palette.grass);paint(x+17,y-3,14,4,palette.grass2);
+      }
+      paint(176,102,128,145,palette.deep);paint(188,102,105,145,palette.water);
+      ellipse(240,267,179,35,palette.deep);ellipse(240,264,167,29,palette.water);
+      for(let i=0;i<22;i++){
+        const x=179+i*5.8,y=105+(tick*(1.1+flow*2)+i*23)%128;
+        paint(x,y,2,12+(i%4)*5,palette.foam);paint(x+3,y+8,2,7,palette.ripple);
+      }
+      for(let i=0;i<30;i++){
+        const x=179+(i*29)%126,y=240+Math.sin(i*17+tick*.045)*4;
+        paint(x,y,3+(i%3),2,palette.foam);
+      }
+      for(let row=0;row<6;row++)for(let side=0;side<2;side++)for(let j=0;j<3;j++){
+        drawDuck({x:(side?342:107)+j*17,y:101+row*24,phase:j+row,white:(j+row)%2===0,flip:side?-1:1},true);
+      }
+    }else if(mode==='vortex'){
+      ellipse(240,166,179,120,palette.grass);ellipse(240,164,169,113,palette.deep);ellipse(240,162,160,105,palette.water);
+      ctx.strokeStyle=palette.ripple;ctx.lineWidth=2;
+      for(let k=0;k<5;k++){
+        ctx.beginPath();
+        for(let i=0;i<120;i++){
+          const a=i*.046+tick*.01+k*1.25,r=12+i*.95,x=240+Math.cos(a)*r,y=162+Math.sin(a)*r*.67;
+          if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        }ctx.stroke();
+      }
+      ellipse(240,162,13,9,palette.deep);
+    }else{
+      paint(214,42,52,73,palette.water);
+      ctx.fillStyle=palette.deep;ctx.beginPath();ctx.moveTo(214,104);ctx.lineTo(93,293);ctx.lineTo(164,293);ctx.lineTo(241,135);ctx.lineTo(316,293);ctx.lineTo(386,293);ctx.lineTo(266,104);ctx.closePath();ctx.fill();
+      ctx.strokeStyle=palette.water;ctx.lineWidth=32;
+      for(const sign of [-1,1]){ctx.beginPath();ctx.moveTo(240,74);ctx.lineTo(240,112);ctx.lineTo(240+sign*92,289);ctx.stroke();}
+      paint(224,164,32,15,palette.rock);paint(229,160,22,7,palette.rock2);
+      paint(235,155,11,6,palette.grass);ellipse(132,284,65,15,palette.water);ellipse(348,284,65,15,palette.water);
+    }
+    for(let i=0;i<27;i++){
+      const x=(i*137+31)%475,y=80+(i*41)%221;
+      const valid=mode==='fall'?(x<65||x>420||y>301):mode==='vortex'?Math.hypot((x-240)/1.5,y-162)>126:Math.abs(x-240)>150;
+      if(valid){paint(x,y,8,5,palette.grass);paint(x+3,y-4,3,6,palette.grass);}
+    }
+  }
+  function wet(p){
+    if(mode==='fall')return(p.y<103&&p.x>158&&p.x<322)||(p.y>=103&&p.y<245&&p.x>177&&p.x<303)||((p.x-240)**2/167**2+(p.y-264)**2/29**2<1);
+    if(mode==='vortex')return((p.x-240)**2/158**2+(p.y-162)**2/103**2<1);
+    return p.y<112?Math.abs(p.x-240)<24:Math.abs(Math.abs(p.x-240)-Math.min(92,(p.y-112)*92/177))<17;
+  }
+  function drawDuck(d,perched=false){
+    let x=Math.round(d.x),y=Math.round(d.y+Math.sin(tick*.035+d.phase)*(perched?.2:.8));
+    if(!perched&&!(mode==='fall'&&d.y>105&&d.y<232))ellipse(x,y+4,7,2,palette.ripple);
+    ctx.save();ctx.translate(x,y);ctx.scale(d.flip,1);
+    if(mode==='fall'&&d.y>105&&d.y<232&&!perched)ctx.rotate(Math.sin(d.phase+tick*.025)*.28);
+    paint(-5,-1,10,6,palette.outline);paint(-4,-2,7,2,palette.outline);paint(0,-6,5,6,palette.outline);
+    const c=d.white?palette.whiteDuck:palette.duck;
+    paint(-4,0,8,4,c);paint(-3,-1,6,2,c);paint(1,-5,3,5,c);
+    paint(-5,0,2,2,c);paint(4,-3,3,2,palette.beak);paint(3,-4,1,1,palette.outline);
+    paint(-1,2,3,1,d.white?palette.foam:palette.shade);ctx.restore();
+  }
+  function draw(){
+    landscape();
+    for(const p of particles)if(wet(p)){paint(p.x,p.y,2,mode==='fall'&&p.y>105&&p.y<232?4:1,palette.foam);}
+    for(const r of ripples){ctx.globalAlpha=1-r.age/58;ctx.strokeStyle=palette.foam;ctx.lineWidth=1.3;ctx.beginPath();ctx.ellipse(r.x,r.y,4+r.age*.64,2+r.age*.22,0,0,6.283);ctx.stroke();}ctx.globalAlpha=1;
+    ducks.sort((a,b)=>a.y-b.y).forEach(d=>drawDuck(d));
+  }
+  function ui(){sceneInput.value=mode;flowInput.value=Math.round(flow*100);flowLabel.textContent=Math.round(flow*100)+'%';pauseButton.textContent=paused?'继续':'暂停';pauseButton.setAttribute('aria-pressed',String(paused));status.textContent=labels[mode]+' · '+ducks.length+' 只小鸭';canvas.setAttribute('aria-label',labels[mode]+'水流中有'+ducks.length+'只小鸭。点击水面可产生涟漪，推动附近的鸭子。');}
+  function save(){const privateContent={mode,flow,paused,duckCount:ducks.length};lastSaved=JSON.stringify(privateContent);if(window.openai?.setWidgetState)window.openai.setWidgetState({modelContent:{水流形态:labels[mode],水流强度:Math.round(flow*100),鸭子数量:ducks.length},privateContent}).catch(()=>{});}
+  function restore(snapshot){const s=snapshot?.privateContent;if(!s||!labels[s.mode]||JSON.stringify(s)===lastSaved)return;mode=s.mode;flow=clamp(Number(s.flow)||.6,.15,1);paused=typeof s.paused==='boolean'?s.paused:reduced.matches;seed();if(Number.isFinite(s.duckCount))while(ducks.length<Math.min(80,s.duckCount))ducks.push(newDuck(0));ui();draw();}
+  sceneInput.addEventListener('change',()=>{mode=sceneInput.value;seed();ui();save();draw();});
+  flowInput.addEventListener('input',()=>{flow=Number(flowInput.value)/100;ui();if(paused)draw();});
+  flowInput.addEventListener('change',save);
+  pauseButton.addEventListener('click',()=>{paused=!paused;ui();save();});
+  addButton.addEventListener('click',()=>{for(let i=0;i<6;i++){if(ducks.length>=80)ducks.shift();const d=newDuck(0);if(mode==='fall'||mode==='fork'){d.y=30+Math.random()*15;d.x=219+Math.random()*42;}ducks.push(d);}ui();save();draw();});
+  canvas.addEventListener('pointerdown',e=>{const box=canvas.getBoundingClientRect(),x=(e.clientX-box.left)/box.width*480,y=(e.clientY-box.top)/box.height*310;if(!wet({x,y}))return;ripples.push({x,y,age:0});for(const d of ducks){const dx=d.x-x,dy=d.y-y,r=Math.hypot(dx,dy);if(r>0&&r<75){d.vx+=dx/r*1.6;d.vy+=dy/r*1.6;}}draw();});
+  window.addEventListener('openai:set_globals',e=>{if(e.detail?.globals?.widgetState)restore(e.detail.globals.widgetState);});
+  const observer=new MutationObserver(()=>{colors();draw();});observer.observe(document.documentElement,{attributes:true,attributeFilter:['class','style','data-theme']});
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{colors();draw();});
+  colors();seed();ui();restore(window.openai?.widgetState);draw();
+  function animate(time){const dt=clamp((time-previous)/16.667,0,2);previous=time;if(!paused&&dt>0){update(dt);draw();}if(root.isConnected)requestAnimationFrame(animate);}
+  requestAnimationFrame(animate);
+})();
+</script>

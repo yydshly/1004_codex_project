@@ -1,0 +1,107 @@
+Create one comprehensive Chinese research infographic, a single polished landscape poster, ideally 3840×2160 pixels, sharp legible Simplified Chinese typography. Use case: infographic-diagram. Purpose: summarize our understanding of “water + ducks” as a family of playable games, faithfully distinguishing observed source capabilities, our original implemented prototypes, design hypotheses and future value. This is a readable research map, not a marketing ad.
+
+Style: elegant editorial information design on pale ivory/light blue paper, dark navy text, teal water-flow arrows, small yellow pixel-duck illustrations, restrained amber hypothesis chips and green implemented chips. Precise clean sans-serif Chinese typography, generous spacing, strong hierarchy. Small original pixel-waterfall/duck motifs illustrate relationships, never reproduce an artist’s screenshot. No fake screenshot, logos, QR code, watermark or invented benchmark. Text is the main information carrier. Keep ALL panel text below faithfully rendered; do not hallucinate additional claims. Prefer proper line wrapping to shrinking text excessively.
+
+Layout: title and subtitle at top; a broad middle horizontal causal river/loop linking the main columns; three clearly separated columns, each with three well-sized numbered cards. Bottom shared roadmap plus compact evidence/source footer. Reading order is source → mechanism → our work → extension → value. Use numbered headings and large readable section labels. Connect related cards with subtle arrows, no crossing clutter. Status legend visible: 已观察 (blue), 已实现 (green), 待验证/设想 (amber), 未确认 (gray). The loop is prominent, with a curved return arrow.
+
+EXACT CONTENT:
+
+TITLE:
+水与鸭子：从视觉吸引力到可玩游戏系列
+SUBTITLE:
+玩家改变水，鸭子反馈变化，水路把结果带回下一轮。
+TOP SMALL TAG:
+研究总览 · 2026.10.05
+
+CARD 01:
+01 源网页与视频｜已知能力
+参考视频：像素瀑布、岩壁、水潭、成群小鸭，提供视觉与运动启发。
+作者网页：像素鸭子换色编辑器，可导出 PNG / SVG，提供素材定制能力。
+网页工作流：鸭子图形模板 → 调整部位配色 → 导出素材。
+尚未确认：视频是否来自游戏、是否可试玩；编辑器与视频的关联。
+不能从画面推断：原作的源码、物理算法或关卡规则。
+
+CARD 02:
+02 互动原理｜我们的实现
+水的方向 → 决定鸭子的主要路线
+水量与水位 → 决定是否移动、推动多久
+涟漪推力 → 调整局部偏移
+去程与回程 → 让因果和循环持续可见
+实现方法：速度场、路线约束、局部推力、水量分仓与门槛。
+水：路径、资源与推力。鸭子：运动反馈、目标对象与情感角色。
+这是规则近似；原作算法未知，未使用完整流体求解。
+
+CARD 03:
+03 可玩性成立的条件
+操作能改变结果：选路、补救、等待、放水。
+反馈能解释原因：水先变化，鸭子随后响应。
+选择有收益和代价：早救、连救、时间、溢流。
+循环产生下一次判断：回程、补水、新目标。
+观察循环 ≠ 游戏循环 ≠ 长期成长循环。
+
+CENTRAL FLOW DIAGRAM:
+玩家输入 → 水的变化 → 鸭子响应 → 目标与反馈 → 可见回程 → 下一次决策
+Below loop:
+共享的是互动规律；各分支应提供不同的核心选择。
+
+CARD 04:
+04 我们已经探索｜原创原型
+V1 自由玩水：瀑布 / 漩涡 / 分流，观察水与鸭子的反馈。
+V2 引流挑战：选闸、拨水入圈、失误、四滴回水升级。
+V3 可读水流：箭头、推力范围、分流时机、失败解释。
+V4 蓄水救援：24 格早放 / 48 格集中；45 秒救六鸭；首救与连救奖励。
+研究网页：版本切换、机制拆解、本地记录、JSON 导出。
+
+CARD 05:
+05 系列化方向｜部分已有原型
+引流挑战：路线与补救，偏反应和操作。已有 V2 / V3。
+蓄水救援：水量与时机，偏资源决策。已有 V4。
+水路解谜：三块挡板连接去程与回程。待实现。
+瀑布花园：扩建水潭，让新景观带来新路线。设想。
+扩展变量：鸭子重量与惯性、跨区域连锁、地形、回程设计。
+目标：每个分支形成独立乐趣，并复用共同规则。
+
+CARD 06:
+06 后期价值｜待验证的机会
+技术资产：共享水流、鸭子行为、状态、回程和记录模块。
+内容资产：角色素材、可组合场景、关卡与参数模板。
+研究资产：保留案例，知道哪些规则有效、为何失败。
+表达资产：动作有因果，视觉循环便于演示与传播。
+产品机会：轻量网页小游戏、解谜系列、创意沙盒。
+可逐步形成原型工具箱，目前未做成统一引擎。
+商业潜力需要用户与市场验证，目前不作结论。
+
+CARD 07:
+07 已有证据与边界
+V3：程序完成四次入圈并正常升级。
+V4：两种放水策略均救齐六鸭并完成回游。
+13 项模型检查通过：守恒、门槛、暂停、溢流、结算与奖励边界。
+总水量 120 循环复用；累计放水可超过 120。
+尚未验证：新手理解、策略平衡、长期乐趣、真实手机性能。
+程序通过 ≠ 玩家觉得有趣。
+
+CARD 08:
+08 主要风险｜下一轮要回答
+只追提示点击：需要预判与可解释的补救。
+永远等满更优：需要明确的等待成本和不同收益。
+搭水路只有唯一解：需要多种可行方案。
+画面复杂而因果模糊：先验证可读性，再增加内容。
+水量循环不等于鸭子无限重复：V4 每鸭本轮只计一次。
+规模扩展：碰撞、触控与性能需另测；真实流体是成本选择。
+
+CARD 09:
+09 研究路线与验收
+先看懂水 → 再控制水量 → 再设计水路 → 最后扩展系列。
+记录：操作前预测、首救时间、等待、救援数、放水量、溢流、玩家解释。
+方法：相同初始条件、交换策略顺序、小规模实际试玩。
+验收：能解释结果、有不同有效选择、愿意主动再玩一圈。
+
+BOTTOM EMPHASIS:
+可复用的核心：水是操作媒介与规则，鸭子是反馈角色，循环是组织体验的结构。
+BOTTOM SOURCES:
+参考：Duck 的像素瀑布视频（X）｜作者编辑器：ducklings-maker.web.app
+我们的原型：水流与鸭子互动 · 循环玩法研究（项目 005）
+FOOTNOTE:
+原视频仅作启发；当前场景与规则为原创实验。已实现、待验证与设想分别标记。
+
+Make this ONE visually coherent poster with all nine cards plus the causal loop and roadmap. No text overflow, overlaps, truncated headings, fake fluid simulation claim, fake game identity, or claim that future products/market demand are validated.

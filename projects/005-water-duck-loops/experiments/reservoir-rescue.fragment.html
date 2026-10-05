@@ -1,0 +1,73 @@
+<div id="reservoir-rescue">
+ <div class="viz-row rescue-top"><strong>蓄水救援 V4</strong><span id="rs-time" class="tabular-nums">剩余 45 秒</span><span id="rs-goal">安全抵达 0 / 6</span><span id="rs-score">得分 0</span></div>
+ <div class="viz-row"><button type="button" class="btn btn-primary" id="rs-play">开始救援</button><button type="button" class="btn" id="rs-reset">重新开始</button></div>
+ <div class="rescue-water" aria-label="循环水量"><span id="rs-tank">上池 24 / 60</span><span id="rs-channel">浅湾 0 / 推动门槛 12</span><span id="rs-lower">下池 96</span><span id="rs-pipe">回流管 0</span><small id="rs-total" style="grid-column:1/-1">总水量 120.0 · 分仓数值四舍五入</small></div>
+ <div class="viz-row rescue-gates"><button type="button" class="btn" id="rs-small">少量放水 · 24</button><button type="button" class="btn" id="rs-batch">集中放水 · 48</button><button type="button" class="btn" id="rs-close">提前关闸</button><span id="rs-gate" class="text-small">闸门关闭</span></div>
+ <p id="rs-hint" class="text-small rescue-hint">前 5 秒救出首只 +30 分；集中放水利于连救。满池溢流会绕过浅湾。</p>
+ <canvas id="rs-canvas" width="640" height="450" role="img" aria-label="封闭循环水路：左上池放水进入中间浅湾，水位达到12格才推动六只鸭子向右到安全池；右侧气泡回流管将水和已救鸭带回上游。溢流从左侧绕过鸭子区返回下池。">水与鸭子蓄水救援</canvas>
+ <p id="rs-message" class="text-small" role="status" aria-live="polite"></p>
+ <div id="rs-record" class="text-small rescue-record">本次记录：放水 0 次 · 已放 0 格 · 溢流 0 格 · 回家 0 / 6</div>
+ <details class="rescue-help"><summary>怎么玩 · 水量与结算规则</summary><ol class="text-small">
+  <li>开始后有 45 秒救援窗口。上池起始 24 格，少量放水可立即使用；集中放水要等到 48 格。按钮按定量放水后自动关闸，也可以提前关闭。</li>
+  <li>浅湾水量达到 12 格时鸭子才前进；水不足就停在原处。关闸后浅湾余水仍会推动，水位随后慢慢降低。</li>
+  <li>鸭子通过右侧出口即算救援，每只 10 分。前 5 秒救出第一只额外 +30；相隔不超过 2.5 秒连续抵达，每只额外 +5；救齐后按剩余时间每秒约 +2。及时首救与成批连救提供不同收益。</li>
+  <li>下池的水通过回流管持续补充上池，走完管道才入池。上池最多 60 格，溢流绕过浅湾回下池；它消耗等待时间，却不推动鸭子。总水量始终是 120 格。</li>
+  <li>全部救援或时间到后停止放水与输运；已抵达的鸭子和在途水完成可见回程再结算。未获救鸭子留在浅湾，回家的鸭子本轮不再计分。</li>
+  <li>电脑键盘 1 / 2 选择少量 / 集中放水，Esc 提前关闸，P 暂停。切换原型或隐藏页面会自动暂停；回来后点“继续”。</li>
+ </ol><p class="text-small text-muted">水量分仓与水位门槛是简化游戏规则；气泡抬升用于表现循环。这里没有完整流体模拟。得分与两种策略的差异需要实际试玩验证，程序通过不代表已经证明有趣。</p><p class="text-small text-muted">记录放水前的等待时长、采用的水量、获救数量与溢流量。重新开始会清空本轮；研究页的实验记录可另行保存。</p></details>
+</div>
+<style>
+ #reservoir-rescue{display:grid;gap:10px;max-width:760px;margin:0 auto}#reservoir-rescue p{margin:0}#reservoir-rescue canvas{display:block;width:100%;height:auto;image-rendering:pixelated}#reservoir-rescue .rescue-top{font-size:14px}.rescue-water{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px;background:#edf6fa;border:1px solid #d6e4eb;padding:8px 10px;font-variant-numeric:tabular-nums}.rescue-hint{background:#fff8dc;border-left:3px solid #d89819;padding:8px 10px}.rescue-record{border-top:1px solid var(--border);padding-top:8px}.rescue-help{border:1px solid var(--border);padding:8px 10px;border-radius:5px}.rescue-help summary{cursor:pointer;font-weight:600;font-size:14px}.rescue-help ol{padding-left:22px}.rescue-help li{margin:7px 0}.rescue-help p{margin:8px 0!important}@media(max-width:380px){.rescue-water{grid-template-columns:1fr}.rescue-gates{gap:7px}}
+</style>
+<script src="./core.js"></script>
+<script>
+(() => {
+ 'use strict';const core=ReservoirCore,C=core.constants,root=document.getElementById('reservoir-rescue'),get=id=>root.querySelector('#rs-'+id),canvas=get('canvas'),ctx=canvas.getContext('2d');
+ let state=core.createState(),previous=0,uiTime=0,lastMessage='';const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const rect=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));};
+ function path(points,width,color){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();}
+ function text(t,x,y,color='#234857',size=13){ctx.fillStyle=color;ctx.font=size+'px system-ui,"Microsoft YaHei",sans-serif';ctx.textAlign='left';ctx.fillText(t,x,y);}
+ function arrow(x,y,angle,color='#287b9a'){ctx.save();ctx.translate(x,y);ctx.rotate(angle);path([[-9,0],[8,0],[2,-5],[8,0],[2,5]],2,color);ctx.restore();}
+ const returnPath=[[510,337],[580,337],[580,56],[165,56],[165,92]];
+ const home=d=>[105+(d.id%3)*31,65-Math.floor(d.id/3)*22];
+ const duckReturnPath=d=>[[479,232],[507,283],...returnPath.slice(0,-1),home(d)];
+ function onPath(progress,points=returnPath){const lengths=points.slice(1).map((p,i)=>Math.hypot(p[0]-points[i][0],p[1]-points[i][1])),total=lengths.reduce((a,b)=>a+b,0);let n=Math.max(0,Math.min(1,progress))*total;for(let i=0;i<lengths.length;i++){if(n<=lengths[i]){const f=n/lengths[i];return{ x:points[i][0]+(points[i+1][0]-points[i][0])*f,y:points[i][1]+(points[i+1][1]-points[i][1])*f,angle:Math.atan2(points[i+1][1]-points[i][1],points[i+1][0]-points[i][0])};}n-=lengths[i];}return{x:165,y:92,angle:Math.PI/2};}
+ function duck(x,y,id,angle=0){const white=id%2===1;ctx.save();ctx.translate(Math.round(x),Math.round(y));if(Math.abs(angle)>1.7)ctx.scale(-1,1);rect(-13,7,26,3,'#73aec4');rect(-12,-1,23,10,'#694e38');rect(-9,-4,18,11,white?'#fffbde':'#ffcd4a');rect(3,-12,11,12,'#694e38');rect(5,-10,9,11,white?'#fffbde':'#ffdb5d');rect(12,-5,7,4,'#e58228');rect(10,-8,2,2,'#254151');rect(-9,0,9,4,white?'#e8dab3':'#eeaf36');ctx.restore();}
+ function draw(){
+  const t=reduced?0:state.clock;ctx.clearRect(0,0,640,450);rect(0,0,640,450,'#e8f4f8');rect(0,374,640,76,'#b7d0ae');rect(0,392,640,58,'#9cba95');
+  for(let i=0;i<7;i++){rect(15+i*97,395+(i%2)*15,54,8,'#87a47e');rect(27+i*89,420-(i%3)*9,8,11,'#688d6b');}
+  // Raised terraces, tank, shallow transport channel and lower collecting pond.
+  rect(75,102,159,105,'#90a59e');rect(67,195,177,15,'#708e80');rect(88,76,139,104,'#5e7e88');rect(96,82,123,89,'#cfe4e9');const tankH=state.tank/C.capacity*80;rect(97,169-tankH,121,tankH,'#54b1d4');rect(96,169-tankH,123,3,'#dffaff');
+  path([[216,158],[244,158],[244,234],[475,234],[507,283]],24,'#6f9294');path([[216,158],[244,158],[244,234],[475,234],[507,283]],15,state.channel>=C.threshold?'#4eafcf':'#b0d5dc');
+  rect(225,212,266,50,'#74968d');rect(226,218,264,37,'#bddce2');const fill=Math.min(1,state.channel/42);rect(226,252-fill*30,264,fill*30,'#59b6d3');rect(226,252-fill*30,264,3,'#e3fbff');
+  rect(472,295,90,66,'#769897');rect(480,304,74,47,'#64afc5');rect(34,342,438,21,'#83b8c4');rect(34,349,448,8,'#caedf0');
+  path(returnPath,19,'#81c3d7');path(returnPath,10,'#bdeaf0');for(let j=0;j<14;j++){const p=onPath(((j/14+t*.11)%1));rect(p.x-2,p.y-2,4,4,'#f2ffff');}
+  // This bypass rejoins the lower pond; it never pushes ducks.
+  path([[92,96],[52,96],[52,350],[477,350]],8,state.spillRate>0?'#36a6d1':'#ccdee0');if(state.spillRate>0){for(let j=0;j<7;j++)rect(49,112+((j*31+t*60)%223),6,10,'#d5fbff');}
+  rect(228,141,9,34,state.gate?'#e7ba56':'#626e6c');if(state.gate){for(let j=0;j<6;j++)rect(242,171+((j*11+t*55)%43),4,7,'#dffbff');}
+  for(let j=0;j<8;j++){rect(239+((j*31+t*(state.channel>=12?32:8))%244),243,12,2,'#cfedf3');}
+  arrow(270,234,0);arrow(410,234,0);arrow(580,218,-Math.PI/2);arrow(398,56,Math.PI);arrow(520,337,0);arrow(52,302,Math.PI/2,'#7c9ea5');
+  for(let i=0;i<state.packets.length;i+=12){const p=onPath(state.packets[i].progress);rect(p.x-3,p.y-3,6,6,'#fff5b0');}
+  for(const d of state.ducks){if(d.stage==='waiting'){duck(235+d.progress*244,232+(reduced?0:Math.sin(t*2+d.id)*1.5),d.id);if(d.id===0&&state.elapsed<=5)text('首救 +30',434,209,'#a27319',11);}else if(d.stage==='returning'){const p=onPath(d.returnProgress,duckReturnPath(d));duck(p.x,p.y,d.id,p.angle);}else duck(...home(d),d.id);}
+  text('上池 · '+Math.floor(state.tank)+' / 60',88,199);text('浅湾 · '+(state.channel>=12?'水够，鸭子前进':'水浅，鸭子停留'),239,284,state.channel>=12?'#16795e':'#83633d');text('安全池',481,379);text('溢流旁路',7,327,'#567b89',11);text('气泡回流',548,401,'#367588',11);text('上游安全区',91,27,'#4a766d',11);
+  if(state.phase==='ready'||state.phase==='paused'){rect(238,103,280,54,'#fffdf1');text(state.phase==='ready'?'先看水位，再开始救援':'已暂停 · 水与计时都已停止',251,134,'#4c624e',15);}
+  if(['won','over'].includes(state.phase)){rect(222,104,302,63,state.phase==='won'?'#e0f5da':'#fff0dc');text(state.phase==='won'?'六只都回家了！':'本轮结束 · 救回 '+state.rescued+' 只',235,130,'#356748',17);text('得分 '+state.score+' · 可重试另一种放水节奏',235,152,'#536c65',12);}
+ }
+ function sync(){
+  get('time').textContent=state.phase==='settling'?'回程收尾中':'剩余 '+Math.max(0,Math.ceil(C.deadline-state.elapsed))+' 秒';get('goal').textContent='安全抵达 '+state.rescued+' / 6';get('score').textContent='得分 '+state.score;
+  get('tank').textContent='上池 '+state.tank.toFixed(1)+' / 60';get('channel').textContent='浅湾 '+state.channel.toFixed(1)+' / 推动门槛 12';get('lower').textContent='下池 '+state.lower.toFixed(1);get('pipe').textContent='回流管 '+state.packets.reduce((n,p)=>n+p.amount,0).toFixed(1);get('total').textContent='总水量 '+core.waterTotal(state).toFixed(1)+' · 分仓数值四舍五入';
+  get('play').textContent={ready:'开始救援',running:'暂停',paused:'继续',settling:'暂停回程',won:'再玩一轮',over:'再玩一轮'}[state.phase];const can=state.phase==='running'&&!state.gate;
+  get('small').disabled=!can||state.tank+1e-8<C.small;get('batch').disabled=!can||state.tank+1e-8<C.batch;get('close').disabled=state.phase!=='running'||!state.gate;get('gate').textContent=state.gate?'闸门开启 · 尚余 '+Math.ceil(state.budget)+' 格':'闸门关闭';
+  get('record').textContent='本次记录：放水 '+state.releases+' 次 · 已放 '+Math.round(state.releasedWater)+' 格 · 溢流 '+Math.round(state.spilled)+' 格 · 回家 '+state.returned+' / 6'+(state.firstRescueTime!==null?' · 首救 '+state.firstRescueTime.toFixed(1)+' 秒':'')+(state.rescueTime!==null?' · 救齐/截止 '+state.rescueTime.toFixed(1)+' 秒':'');
+  if(state.message!==lastMessage){get('message').textContent=state.message;lastMessage=state.message;}
+  get('hint').textContent=state.phase==='running'?(state.gate?'正在定量放水。提前关闸可以留下水，浅湾余水仍会继续推动。':state.channel>=12?'浅湾还有推力；观察鸭子前进，决定现在补水还是继续蓄水。':state.tank>=48?'水量够集中放水，也可以少放留水。继续等待可能出现溢流。':'水流不足，鸭子暂时停留。少放较早出发；蓄到 48 能推动更久。'):'前 5 秒救出首只 +30 分；集中放水利于连救。满池溢流会绕过浅湾。';
+ }
+ function changed(){sync();draw();}
+ function reset(){state=core.createState();changed();}
+ get('play').addEventListener('click',()=>{if(['won','over'].includes(state.phase)){reset();core.start(state);}else if(['running','settling'].includes(state.phase))core.pause(state);else core.resume(state);changed();});get('reset').addEventListener('click',reset);
+ get('small').addEventListener('click',()=>{core.release(state,C.small);changed();});get('batch').addEventListener('click',()=>{core.release(state,C.batch);changed();});get('close').addEventListener('click',()=>{core.setGate(state,false);state.message='提前关闸，未放出的水留在上池。浅湾余水继续作用。';changed();});
+ document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(e.key==='1'){core.release(state,C.small);}else if(e.key==='2'){core.release(state,C.batch);}else if(e.key==='Escape'&&state.phase==='running'){core.setGate(state,false);}else if(e.key.toLowerCase()==='p'){if(['running','settling'].includes(state.phase))core.pause(state);else if(state.phase==='paused')core.resume(state);}else return;e.preventDefault();changed();});
+ const autoPause=()=>{core.pause(state);changed();};window.addEventListener('message',event=>{if(event.origin===location.origin&&event.source===parent&&event.data?.type==='water-research-visibility'&&!event.data.visible)autoPause();});document.addEventListener('visibilitychange',()=>{if(document.hidden)autoPause();});
+ function frame(now){const dt=previous?Math.min(.1,(now-previous)/1000):0;previous=now;core.step(state,dt);uiTime+=dt;if(uiTime>.15){sync();uiTime=0;}draw();requestAnimationFrame(frame);}changed();requestAnimationFrame(frame);
+})();
+</script>

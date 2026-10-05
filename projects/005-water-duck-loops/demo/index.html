@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="水流与鸭子互动研究：试玩蓄水救援 V4、可读水流 V3、基础挑战和自由玩水，比较放水策略与视觉循环，保存并导出实验记录。">
+  <title>水与鸭子：从视觉效果到可玩循环</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+  <script src="./journal.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#playground">跳到原型</a>
+  <header class="site-header">
+    <a class="brand" href="../../">研究集 <span>005</span></a>
+    <nav aria-label="研究页导航"><a href="#playground">原型体验</a><a href="#mechanisms">机制拆解</a><a href="#directions">玩法方向</a><a href="#experiments">扩展实验</a><a href="#journal">实验记录</a></nav>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div class="eyebrow">水流互动 / 循环玩法 / 像素场景 <span>2026.10.05</span></div>
+      <h1 id="page-title">水与鸭子<span>从视觉效果到可玩循环</span></h1>
+      <p>让玩家改变水，让鸭子把变化表现出来，再让整条水路回到下一次操作。</p>
+    </section>
+
+    <section class="series-map-section" id="overview" aria-labelledby="overview-title">
+      <div class="section-heading"><h2 id="overview-title">一张图看懂我们的研究</h2><span class="label">来源 → 原理 → 系列 → 价值</span></div>
+      <p>九个模块汇总源网页能力、互动机制、V1–V4 原型、系列扩展、后期复用、证据边界与验证路线。蓝色表示观察，绿色表示实现与检查，琥珀色表示待验证方向。</p>
+      <details class="series-map"><summary>展开完整研究图谱 · 4800 像素高清图</summary><a href="./assets/water-duck-series-map-v1.png" aria-label="打开水与鸭子研究图谱高清原图"><img src="./assets/water-duck-series-map-v1.png" alt="水与鸭子研究总览：源网页能力、角色分工、可玩性条件、四版原型、游戏系列扩展、复用价值、证据、风险与后续路线。已观察、已实现与待验证分别标注。" width="4800" height="3775" loading="lazy"></a></details>
+      <div class="map-downloads"><a href="./assets/water-duck-series-map-v1.png" download>下载高清 PNG</a><a href="./assets/water-duck-series-map-v1.svg" download>下载矢量 SVG</a><span>图片中的来源链接在 SVG 中可点击。</span></div>
+    </section>
+
+    <section class="workbench" id="playground" aria-labelledby="playground-title">
+      <div class="prototype-panel">
+        <div class="section-heading"><h2 id="playground-title">先在水里试一试</h2><span class="label verified">已有原型</span></div>
+        <div class="tabs" role="tablist" aria-label="选择研究原型">
+          <button type="button" role="tab" id="tab-reservoir" aria-controls="prototype-reservoir" aria-selected="true" data-demo="reservoir">蓄水救援 V4</button>
+          <button type="button" role="tab" id="tab-readable" aria-controls="prototype-readable" aria-selected="false" tabindex="-1" data-demo="readable">可读水流 V3</button>
+          <button type="button" role="tab" id="tab-loop" aria-controls="prototype-loop" aria-selected="false" tabindex="-1" data-demo="loop">基础挑战 V2</button>
+          <button type="button" role="tab" id="tab-lab" aria-controls="prototype-lab" aria-selected="false" tabindex="-1" data-demo="lab">自由玩水</button>
+        </div>
+        <div role="tabpanel" id="prototype-reservoir" aria-labelledby="tab-reservoir">
+          <p class="play-instruction">45 秒内把 6 只鸭送进安全池。可立即放 24 水，也可蓄到 48 后集中放水；达到选择的水量自动关闸，也能提前关闭。浅湾水量达到 12，鸭子才前进；关闸后余水仍有效。截止后停止输运，回程完成后结算。</p>
+          <iframe id="frame-reservoir" src="./prototypes/reservoir/index.html" title="蓄水救援 V4：有限水量与放水时机挑战" class="prototype-frame" height="760"></iframe>
+          <div class="prototype-caption"><span>早放争取前 5 秒首救奖励，蓄水争取成批连救。总水量 120 沿可见水路循环；溢流没有救援收益，策略平衡仍待验证。</span><a href="./prototypes/reservoir/index.html">单独体验 V4</a></div>
+        </div>
+        <div role="tabpanel" id="prototype-readable" aria-labelledby="tab-readable" hidden>
+          <p class="play-instruction">先观察水流箭头与亮圈，再开闸。鸭子越过分流点后路线已确定；点在它的右边，会把它向左推。可关闭方向提示，比较是否仍能预判。</p>
+          <template id="template-readable"><iframe id="frame-readable" src="./prototypes/readable/index.html" title="可读水流 V3：流向与涟漪范围实验" class="prototype-frame" height="760"></iframe></template>
+          <div class="prototype-caption"><span>新增流向、推力范围和失败解释。规则能运行，是否更易理解仍待试玩验证。</span><a href="./prototypes/readable/index.html">单独体验 V3</a></div>
+        </div>
+        <div role="tabpanel" id="prototype-loop" aria-labelledby="tab-loop" hidden>
+          <p class="play-instruction">先看亮圈在左还是右，再开始挑战并开对应闸门。点鸭子旁边的水面，或用“拨水”微调方向。</p>
+          <template id="template-loop"><iframe id="frame-loop" src="./prototypes/loop/index.html" title="可玩的鸭子水环循环挑战" class="prototype-frame" height="620"></iframe></template>
+          <div class="prototype-caption"><span>四滴水升级，三次失误结束。鸭子沿回流水柱重新出发。</span><a href="./prototypes/loop/index.html">单独体验</a></div>
+        </div>
+        <div role="tabpanel" id="prototype-lab" aria-labelledby="tab-lab" hidden>
+          <p class="play-instruction">切换瀑布、漩涡和分流，调节水流强度，观察鸭子的轨迹；点水面产生涟漪。</p>
+          <template id="template-lab"><iframe id="frame-lab" src="./prototypes/lab/index.html" title="瀑布、漩涡和分流水流试验" class="prototype-frame" height="620"></iframe></template>
+          <div class="prototype-caption"><span>自由玩水用于观察反馈，没有输赢判定。</span><a href="./prototypes/lab/index.html">单独体验</a></div>
+        </div>
+      </div>
+      <aside class="research-note" aria-labelledby="research-question">
+        <span class="eyebrow">核心问题</span><h2 id="research-question">水本身，<br>能不能很好玩？</h2>
+        <p>短视频吸引我们的是水景的生命感。接下来的研究，把这种观赏性变成玩家可以影响的过程。</p>
+        <ol class="principles"><li><strong>操作能改变结果</strong><span>选路与拨水改变轨迹，放水时机决定救援。</span></li><li><strong>变化能被看懂</strong><span>水先变化，鸭子随后响应。</span></li><li><strong>下一圈值得再玩</strong><span>回流补池，再决定何时放水。</span></li></ol>
+        <div class="note-divider"></div><p class="note-small">当前检验的是简单水流规则和视觉反馈。V4 以有限水量和浅湾门槛近似输运；V1–V3 使用速度场、路线约束与涟漪推力。完整流体模拟与长期可玩性仍待研究。</p>
+      </aside>
+    </section>
+
+    <section id="mechanisms" class="research-section" aria-labelledby="mechanisms-title">
+      <div class="section-heading"><div><div class="eyebrow">01 / 机制</div><h2 id="mechanisms-title">把循环拆开，才知道哪里值得扩展</h2></div></div>
+      <p class="section-lead">下面拆解 V2 / V3 的引流循环；V4 把同一思路变成上池蓄水、浅湾救援、下池收水与可见回流，让水量和时间参与判断。</p>
+      <div class="loop-diagram" aria-label="可见循环：上游、分流、水圈、落水、回游，再回到上游">
+        <button type="button" data-stage="source" aria-pressed="true"><span>01</span>上游蓄水</button><span class="connector" aria-hidden="true">→</span>
+        <button type="button" data-stage="gate" aria-pressed="false"><span>02</span>开闸分流</button><span class="connector" aria-hidden="true">→</span>
+        <button type="button" data-stage="ring" aria-pressed="false"><span>03</span>拨水入圈</button><span class="connector" aria-hidden="true">→</span>
+        <button type="button" data-stage="pond" aria-pressed="false"><span>04</span>落入水潭</button><span class="connector" aria-hidden="true">→</span>
+        <button type="button" data-stage="return" aria-pressed="false"><span>05</span>气泡回游</button><span class="return-label">回到上游</span>
+      </div>
+      <div id="stage-detail" class="stage-detail" aria-live="polite"><h3>上游蓄水</h3><p>V2 / V3 用命中后的四滴水触发升级。V4 将总水量限制为 120：初始上池 24、下池 96；水经可见回流管返回上池，池容量为 60，继续等待可能产生溢流。</p><span class="label">V4：水量已参与规则，策略效果待验证</span></div>
+      <div class="mechanism-grid">
+        <article><div class="small-index">玩家操作</div><h3>预判 + 补救</h3><p>闸门决定主要路线，拨水调整局部偏移。要检验的是：玩家能否主动规划，而不只是追着亮圈点击。</p></article>
+        <article><div class="small-index">水与鸭子</div><h3>让力变得可读</h3><p>流线、泡沫、鸭子的转向和惯性，应表达同一套运动关系。涟漪从点击处向外推，点在鸭子右边会把它推向左边。</p></article>
+        <article><div class="small-index">视觉回程</div><h3>让重来有理由</h3><p>鸭子落水、游向回程水道，再被气泡抬回上游。回程本身也应值得观看，并逐渐成为玩家可以设计的一段水路。</p></article>
+      </div>
+    </section>
+
+    <section id="directions" class="research-section" aria-labelledby="directions-title">
+      <div class="section-heading"><div><div class="eyebrow">02 / 玩法方向</div><h2 id="directions-title">把水变成选择，有三条值得验证的路</h2></div></div>
+      <p class="section-lead">共同目标是让鸭子的行动来自玩家对水的改变。三条路线分别检验反应与补救、资源与时机、设计与试错。</p>
+      <div class="direction-grid">
+        <article><span class="label verified">已有基础挑战</span><h3>引流入圈</h3><p>在分流前选路，偏移时用涟漪补救。玩家需要读懂目标、时机和推动方向。</p><dl><dt>水与鸭子</dt><dd>水路决定主方向，局部推力调整轨迹。</dd><dt>可见循环</dt><dd>入圈 → 落水 → 气泡抬升 → 再次选路。</dd><dt>主要风险</dt><dd>如果只需追着左右提示开闸，熟悉之后缺少新的判断。</dd><dt>最小实验</dt><dd>保持规则与水速不变，比较方向提示开启、关闭时的预测和解释。</dd></dl><button type="button" class="text-button" data-open-demo="readable">体验可读水流</button></article>
+        <article><span class="label verified">可试玩 V4</span><h3>蓄水批量救援</h3><p>先放 24 水争取及时首救，还是蓄到 48 集中放水争取连救？六只鸭在浅湾等待，湾内水量达到门槛才前进。</p><dl><dt>水与鸭子</dt><dd>浅湾水量至少 12 才输运鸭子；定量放水自动关闸，提前关闸后余水仍可能推动救援。</dd><dt>可见循环</dt><dd>上池 → 浅湾 → 安全池；下池水经回流管补池，已救鸭回到上游安全区，本轮不再计数。</dd><dt>主要风险</dt><dd>等待占用 45 秒救援窗；满池溢流绕过浅湾。及时首救、连救与余时奖励已加入，是否平衡仍需实际比较。</dd><dt>最小实验</dt><dd>比较小量多次与集中放水，记录首救时间、等待、放水量、溢流和救援次数，检验是否存在不同有效策略。</dd></dl><button type="button" class="text-button" data-open-demo="reservoir">体验蓄水救援</button></article>
+        <article><span class="label hypothesis">待实现</span><h3>搭建完整循环</h3><p>先摆三块挡板，再观察鸭子是否能通过目标并返回。让回程也成为玩家设计的一部分。</p><dl><dt>水与鸭子</dt><dd>挡板改变连通关系；断路会积水或停鸭。</dd><dt>可见循环</dt><dd>试运行 → 找滞留点 → 改水路 → 完整持续回游。</dd><dt>主要风险</dt><dd>只有唯一解会削弱创造性，过多零件会让因果难以读懂。</dd><dt>最小实验</dt><dd>固定水源与目标，用三块挡板检验是否存在两种有效设计。</dd></dl></article>
+      </div>
+      <div class="research-callout"><strong>先后顺序的理由</strong><p>先确认玩家看得懂水，再把水量变成有代价的选择，最后开放搭水路。每次只加一条关键规则，才能判断乐趣来自哪里。</p></div>
+    </section>
+
+    <section class="research-section" id="experiments" aria-labelledby="experiments-title">
+      <div class="section-heading"><div><div class="eyebrow">03 / 扩展</div><h2 id="experiments-title">先增加判断，再增加内容</h2></div><span class="label hypothesis">A / B 可试玩 · C–F 待实现</span></div>
+      <p class="section-lead">每个实验只回答一个问题：多出的这条规则，是否让玩家产生新的选择？选择一个方向，查看它的操作、反馈和验收问题。</p>
+      <div class="experiment-workspace">
+        <div class="experiment-list" role="group" aria-label="选择扩展实验">
+          <button type="button" data-experiment="readable" aria-pressed="true"><span class="experiment-number">A</span><span><strong>读得见的水流</strong><small>流向、推力范围、失败解释</small></span><span class="priority">可试玩</span></button>
+          <button type="button" data-experiment="overflow" aria-pressed="false"><span class="experiment-number">B</span><span><strong>蓄水与溢流</strong><small>有限水量，45 秒救援窗</small></span><span class="priority">可试玩 V4</span></button>
+          <button type="button" data-experiment="build" aria-pressed="false"><span class="experiment-number">C</span><span><strong>自己搭循环</strong><small>三块挡板，连接完整水路</small></span></button>
+          <button type="button" data-experiment="ducks" aria-pressed="false"><span class="experiment-number">D</span><span><strong>不同的鸭子</strong><small>重量、惯性、群体行为</small></span></button>
+          <button type="button" data-experiment="chain" aria-pressed="false"><span class="experiment-number">E</span><span><strong>连锁救援</strong><small>跨滞留区连续推动</small></span></button>
+          <button type="button" data-experiment="garden" aria-pressed="false"><span class="experiment-number">F</span><span><strong>瀑布花园</strong><small>水潭扩建，新路线生长</small></span></button>
+        </div>
+        <article class="experiment-detail" id="experiment-detail" aria-live="polite">
+          <span class="eyebrow">实验 A / 已实现 V3，效果待验证</span><h3>读得见的水流</h3>
+          <dl><dt>玩家操作</dt><dd>开闸前观察箭头，点水时看到涟漪的作用范围；关闭方向提示再比较。</dd><dt>画面反馈</dt><dd>分流点标出选路时机，箭头解释回程；涟漪范围表示点击瞬间向外推，失败给出具体原因。</dd><dt>要验证的问题</dt><dd>玩家能否在鸭子抵达前预测路线，并解释自己为什么成功或失败？</dd><dt>最小改动</dt><dd>V3 已加入可开关的方向提示、推力范围与失败解释，保持基础挑战的循环规则。</dd></dl>
+          <div class="acceptance"><strong>记录什么</strong><p>首次正确预测次数、失败解释、无意拨错方向的次数。先解决可读性，再提高水速。</p></div>
+        </article>
+      </div>
+      <div class="next-sequence"><span>建议验证顺序</span><strong>看懂水</strong><span>→</span><strong>控制水量</strong><span>→</span><strong>设计水路</strong></div>
+    </section>
+
+    <section class="research-section" id="evidence" aria-labelledby="evidence-title">
+      <div class="section-heading"><div><div class="eyebrow">04 / 研究证据</div><h2 id="evidence-title">保留演进，也保留没有答案的问题</h2></div><span class="label">持续研究</span></div>
+      <div class="history-grid">
+        <article><span class="small-index">起点 / 参考观察</span><h3>像素鸭子瀑布</h3><p>中央瀑布、两侧岩壁和成群小鸭形成了一个丰富的小世界。参考帖只有视频，尚未确认对应的游戏或可玩版本。</p><a href="https://x.com/duck_wtd/status/2106807563073339790" target="_blank" rel="noreferrer">查看原帖</a></article>
+        <article><span class="small-index">V1 / 自由玩水</span><h3>先看反馈有没有趣</h3><p>调水流、放鸭子、产生涟漪；探索瀑布、漩涡与分流。已经能观察变化，但目标和取舍较弱。</p><button type="button" class="text-button" data-open-demo="lab">回看玩水原型</button></article>
+        <article><span class="small-index">V2 / 循环挑战</span><h3>把反馈接到目标上</h3><p>开闸、入圈、蓄水、升级，加入可见回游。已验证一轮四次命中能够正常升级；这不等于已经验证玩家会持续想玩。</p><button type="button" class="text-button" data-open-demo="loop">回看循环原型</button></article>
+        <article><span class="small-index">V3 / 可读水流</span><h3>让因果能被解释</h3><p>给出方向、分流时机、涟漪范围与具体失败原因。已经形成可试玩版本；是否减少误解，需要用实际记录检验。</p><button type="button" class="text-button" data-open-demo="readable">体验可读水流</button></article>
+        <article><span class="small-index">V4 / 蓄水救援</span><h3>让等待与放水有代价</h3><p>把水量、浅湾门槛、溢流和救援时间接进循环，用及时首救与成批连救提供不同收益。每只鸭本轮只计一次，回到安全区后等待新一轮。奖励是否平衡、策略是否有趣，仍需实际试玩检验。</p><button type="button" class="text-button" data-open-demo="reservoir">体验蓄水救援</button></article>
+      </div>
+      <article class="program-checks"><h3>V4 程序检查：两种节奏都能完成回游</h3><p>2026.10.05，在独立页面重置为相同初始水量，依据可见按钮自动操作。两次都救齐六只并回家；这些是运行案例，尚无实际玩家测试。</p><div class="check-table" tabindex="0" role="region" aria-label="可横向滚动的 V4 程序结果"><table><thead><tr><th scope="col">策略</th><th scope="col">放水次数</th><th scope="col">首救</th><th scope="col">救齐</th><th scope="col">得分</th><th scope="col">累计放水</th></tr></thead><tbody><tr><th scope="row">24 格，小量多次</th><td>6</td><td>约 1.2 秒</td><td>约 24.7 秒</td><td>131</td><td>144 格</td></tr><tr><th scope="row">48 格，集中放水</th><td>2</td><td>约 8.7 秒</td><td>约 17.5 秒</td><td>135</td><td>96 格</td></tr></tbody></table></div><p class="note-small">小放争取到了及时首救；集中放水更快救齐。程序轮询和帧率会影响时间，分数不能证明玩法平衡。累计放水可超过 120 格，因为同一批水会循环复用；四仓总量仍为 120 格。模型另行检查了守恒、浅水停鸭、暂停、溢流与收尾。</p></article>
+      <div class="evidence-grid">
+        <article class="evidence-block"><h3>已经确认</h3><ul><li>闸门改变主要分流路线；涟漪推力会影响鸭子移动。</li><li>小鸭沿落水、游动、水柱、上游水道完成回游。</li><li>命中水圈后的水滴可回到蓄水池，四滴触发升级。</li><li>原型提供暂停、失败和重玩；窄屏控件能够换行。</li></ul><span class="label verified">原型运行与交互检查</span></article>
+        <article class="evidence-block"><h3>还没有确认</h3><ul><li>新玩家是否能及时读懂目标，以及涟漪的推动方向。</li><li>失败主要来自误解、反应时间，还是操作精度。</li><li>增加速度和鸭子数量，是否增加乐趣而非只增加压力。</li><li>放水奖励是否平衡，以及自由搭水路是否会产生多种有效解法。</li></ul><span class="label hypothesis">需要实际试玩</span></article>
+      </div>
+      <details class="method-note"><summary>下次实验怎样记录</summary><div><p>每次记录一个假设、一处规则改动、实际操作和结果，再决定保留、调整或暂缓。比较时保持其余条件一致。</p><div class="record-fields"><span>假设</span><span>规则改动</span><span>失败原因</span><span>补救次数</span><span>等待时长</span><span>玩家解释</span><span>下一步</span></div><p>单次试玩保留为案例；没有足够记录时，结论写“证据不足”。此前一次组件状态停在第一轮、三次失误、10 分，只能提示需要检查上手难度，不能作为整体可玩性的统计结果。</p></div></details>
+    </section>
+    <section class="research-section" id="journal" aria-labelledby="journal-title">
+      <div class="section-heading"><div><div class="eyebrow">05 / 实验记录</div><h2 id="journal-title">把下一次试玩留下来</h2></div><span class="label">当前浏览器保存</span></div>
+      <p class="section-lead">每条记录说明试了什么、观察到了什么、下一步怎么改。V3 比较方向提示开关，交换顺序以减少熟悉操作的影响。V4 比较小量多次和集中放水；每次从相同初始水量开始，记录首救时间、等待时长、放水量、溢流与救援结果。</p>
+      <p class="comparison-note">提示开关控制一组辅助信息：路线箭头、推力范围、入圈辅助图与阶段建议；文字失败原因始终保留。两次目标并非完全相同，成绩差异不能全部归因于提示。</p>
+      <div class="journal-grid">
+        <form id="trial-form" class="trial-form">
+          <div class="form-pair"><label>实验方向<select name="experiment"><option value="A">A · 读得见的水流</option><option value="B" selected>B · 蓄水与溢流（V4）</option><option value="C">C · 自己搭循环（待实现）</option><option value="D">D · 不同的鸭子（待实现）</option><option value="E">E · 连锁救援（待实现）</option><option value="F">F · 瀑布花园（待实现）</option></select></label><label>记录来源<select name="source"><option value="self">自己的试玩</option><option value="observed">观察他人试玩</option><option value="automated">程序检查</option></select></label></div>
+          <div class="form-pair"><label>试玩条件<select name="condition"><option value="hints-on">V3 · 方向提示开启</option><option value="hints-off">V3 · 方向提示关闭</option><option value="baseline">V2 · 基础挑战</option><option value="reservoir-pulse">V4 · 小量多次放水</option><option value="reservoir-batch">V4 · 集中放水</option><option value="reservoir-other" selected>V4 · 其他策略</option><option value="other">其他条件（写在观察里）</option></select></label><label>本次判断<select name="decision"><option value="insufficient">证据不足，继续观察</option><option value="adjust">调整规则后再试</option><option value="retain">保留改动，继续复测</option><option value="defer">暂缓这个方向</option></select></label></div>
+          <label>试玩顺序<select name="order"><option value="first">第一次体验</option><option value="on_off">先开提示，再关提示</option><option value="off_on">先关提示，再开提示</option><option value="other">其他顺序（写在观察里）</option></select></label>
+          <label>这次要验证什么<textarea name="hypothesis" maxlength="600" required rows="2" placeholder="例如：小量多次放水能否更早开始救援；或方向提示能否帮助我提前选路。"></textarea></label>
+          <label>操作前的预测（选填）<textarea name="prediction" maxlength="600" rows="2" placeholder="V4：预计等待多久、放多少水、救几次。V3：预计路线与涟漪方向。"></textarea></label>
+          <div class="form-pair"><label>成功入圈 / 救援次数（选填）<input name="hits" type="number" min="0" max="9999" step="1" inputmode="numeric"></label><label>观察到的失误次数（选填）<input name="misses" type="number" min="0" max="9999" step="1" inputmode="numeric"><small>V4 未设失误计数，可留空；未救数量写在观察中。</small></label></div>
+          <label>拨水 / 放水次数（选填）<input name="nudges" type="number" min="0" max="9999" step="1" inputmode="numeric"></label>
+          <label>实际操作、结果与原因<textarea name="observation" maxlength="1400" required rows="4" placeholder="V4：记录首救时间、等待时长、每次放水量、溢流、救援及截止时滞留。V3：记录轮次、选路、失败和推力解释。未知原因就写未知。"></textarea></label>
+          <label>下一步（选填）<textarea name="next" maxlength="600" rows="2" placeholder="例如：换一种提示顺序再试，或把分流点提前提示。"></textarea></label>
+          <div class="form-actions"><button type="submit" class="action-button">保存实验记录</button><span>无需姓名；记录不会上传。</span></div>
+          <p id="journal-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+        <aside class="journal-summary"><h3>判断依据</h3><ul><li>先记操作前的预测，再看结果；不要把“更快”直接当成“更有趣”。</li><li>V4 写明首救时间、等待时长、放水次数与水量、溢流、救援数和分数；没有显示或测量的数值标记未知。</li><li>V4 的首救、连救奖励与输运速度仍可调整；单次高分不能证明某策略总是更好。</li><li>少量记录只用于发现问题。程序检查和实际试玩分别标记；V3 可交换提示顺序或换试玩者复测。</li></ul><div class="journal-toolbar"><strong id="trial-count">还没有实验记录</strong><button type="button" id="export-trials" class="text-button" disabled>导出 JSON</button></div><p class="note-small">每页显示 20 条，导出包含所有记录。记录留在当前浏览器；建议定期导出备份，不同设备不会自动同步。</p></aside>
+      </div>
+      <div id="trial-records" class="trial-records" aria-label="已保存实验记录"><p class="empty-records">保存第一条记录后，它会显示在这里。</p></div>
+      <nav class="record-pagination" aria-label="实验记录翻页" hidden><button type="button" id="newer-trials" class="text-button">较新记录</button><span id="trial-page"></span><button type="button" id="older-trials" class="text-button">较早记录</button></nav>
+      <noscript><p>实验记录需要启用 JavaScript。研究正文和独立原型链接仍可阅读。</p></noscript>
+    </section>
+    <footer><div><strong>水参与规则，鸭子反馈变化，循环保持可见。</strong><p>程序场景与挑战规则为原创研究原型。参考视频、作者编辑器与我们的原型分别留存；A / B 已有 V3 / V4 可试玩，玩法成效仍待验证，C–F 待实现。</p></div><nav aria-label="研究来源"><a href="https://x.com/duck_wtd" target="_blank" rel="noreferrer">参考作者 Duck</a><a href="https://ducklings-maker.web.app/" target="_blank" rel="noreferrer">作者的鸭子编辑器</a><a href="../../">返回研究总目录</a></nav></footer>
+  </main>
+</body>
+</html>
