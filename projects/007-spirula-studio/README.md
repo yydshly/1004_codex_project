@@ -4,7 +4,7 @@
 
 **完整摘要：**Spirula Studio 把同一静态物体或场景的多角度照片、绕拍视频，重建成可自由切换视角的三维高斯场景，并能提取带纹理网格、渲染图片与漫游视频。独立 C++ 桌面程序与 CLI 整合抽帧、AI 掩膜、SfM 相机求解、曝光校正、3DGS 训练、清理编辑和导出。核心是先恢复“照片从哪里拍”，再反复渲染、比较照片、通过梯度调整当前场景的高斯参数；高斯是带位置、大小、方向、透明度与颜色的软椭球，数量与分布会随细节需求变化。量化训练、融合 GPU 核函数和显存复用帮助扩大训练规模；Vulkan/CUDA 提供 GPU 计算，Vulkan覆盖 NVIDIA、AMD、Intel、Apple。网格提取从高斯建立空间占据场，经 Delaunay 四面体化、marching tetrahedra 与表面清理生成三角面，再上色或烘焙纹理。直接价值是把实拍素材变成能保存、展示、编辑与复用的三维资产，适合商品、文物、空间导览、内容制作和重建研究。扩展成完整产品还要加入采集引导、质量检查、交互与资产管理；逼真外观不自动证明尺寸准确、表面完整或达到 CAD/制造标准。**资料与源码研究完成，原版运行待验证。**
 
-[返回总索引](../../README.md) · [详细研究与来源](notes.md) · [图文导览](demo/index.html) · [本次交付验证](verification.md) · [上游仓库](https://github.com/harry7557558/spirula-studio)
+[返回总索引](../../README.md) · [详细研究与来源](notes.md) · [在线研究网页](https://yydshly.github.io/1004_codex_project/demos/007-spirula-studio/) · [导览源码](demo/index.html) · [本次交付验证](verification.md) · [上游仓库](https://github.com/harry7557558/spirula-studio)
 
 本图以原生 HTML 和矢量示意编排，浏览器导出高清 PNG，文字与结构源可编辑。它是资料与源码研究图，非 Spirula 运行截图或重建质量证明。此前鞋子视频实测属于 **Splat.js**，见[历史实验](https://yydshly.github.io/0908_codex_project/demos/008-splat-js/video-test.html#result)；本次没有在 Spirula 中复训，也没有测得其耗时、显存峰值或几何误差。
 

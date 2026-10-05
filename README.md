@@ -2,23 +2,26 @@
 
 这里汇总近期发现的优秀开源项目与产品，记录它们解决的问题、核心设计、体验效果、运行方式与实践结论。每个子项目都有独立的研究文档、截图和实验目录；本页负责摘要介绍、顺序索引和图片预览。
 
-[研究指南](docs/research-guide.md) · [子项目目录](projects/README.md) · [Web 演示与部署](docs/deployment.md) · [本地站点入口](site/index.html)
+[研究指南](docs/research-guide.md) · [子项目目录](projects/README.md) · [Web 演示与部署](docs/deployment.md) · [在线研究目录](https://yydshly.github.io/1004_codex_project/) · [目录网页源码](site/index.html)
 
 ## 项目索引
 
-子项目使用至少三位的固定编号，按 `001`、`002`、`003` 的顺序展示。编号分配后保留，归档不会改变其他项目的顺序。索引由 [projects.json](projects.json) 统一维护。
+子项目使用至少三位的固定编号，按 `001`、`002`、`003` 的顺序展示。编号分配后保留，归档不会改变其他项目的顺序。索引由 [projects.json](projects.json) 统一维护。 表格将状态与标签合并到项目栏，摘要占主要宽度；按 **能力、原理、使用场景、价值、边界** 分行阅读，右侧直接打开对应的在线研究网页。
 
 <!-- PROJECT_INDEX:START -->
 
-| 编号 | 子项目 | 摘要 | 状态 | 标签 | 来源 | Demo |
-| --- | --- | --- | --- | --- | --- | --- |
-| 001 | [TaskView Community](projects/001-taskview-community/README.md) | 可自托管的项目与任务管理平台，提供看板、子任务、依赖图、权限与工时报表。底层采用 Vue、Express 和 PostgreSQL，通过 API、MCP、Webhook 连接人和外部 Agent；可复用为任务入口与进度管理层，自动执行和验收需另行构建。 | 已完成 | 任务管理、MCP、Agent 接入 | [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community) | [Demo](https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/) |
-| 002 | [CodeFlow · 代码结构可视化与轻量分析](projects/002-codeflow/README.md) | 无需后端的代码结构浏览与轻量静态分析工具：输入 GitHub 仓库、PR 或本地源码，另支持 Markdown 笔记；经 Babel/Acorn、Tree-sitter 与正则抽取定义和引用，推断文件关系，输出十种交互视图、源码卡片、指标、潜在影响与可导出报告。可通过 CLI 监听、Card 指标历史和无界面 JSON 接入外部流程。研究页以汇总图引导，包含真实源码原生演示及 Source Insight、Ix、GitNexus 对比；静态线索需经源码和测试核实。 | 已完成 | 代码结构、静态分析、工具对比 | [braedonsaunders/codeflow](https://github.com/braedonsaunders/codeflow) | [Demo](https://yydshly.github.io/1004_codex_project/demos/002-codeflow/) |
-| 004 | [场景与模型风格图谱 · Defilade 视觉研究](projects/004-scene-style-atlas/README.md) | 从 Defilade 公开中景展示出发，研究场景布局、模型比例、材质光影、镜头与动态反馈如何共同形成玩家体感。原创 Three.js 样板完成三场景三风格比较、建筑植被道路车辆细化和人物专项，保留 V1/V2 完整存档与同机位对照。以含原游戏官方画面和实际样板的总览图引导，整理探索过程、效果差距、技术原理、美术选型与团队沟通场景，以及比例、配色、镜头和模块规则的复用价值；区分官方参考、实时结果、AI 概念和待验证判断。扩展方向覆盖风格方案库、场景组合、营地状态，以及故事、玩家行动与游戏系统；人物研究暂停，候选方向尚未实现，当前成果用于研究与原型，不等于完整游戏或正式资产。 | 已完成 | 游戏美术、场景与模型、风格沉淀 | [x.com/nexindie/status/2106723291868373127](https://x.com/nexindie/status/2106723291868373127) | [Demo](https://yydshly.github.io/1004_codex_project/demos/004-scene-style-atlas/) |
-| 005 | [水流与鸭子互动 · 循环玩法研究](projects/005-water-duck-loops/README.md) | 以 Duck 的像素瀑布视频和鸭子编辑器为参考，区分视觉启发、像素鸭配色及 PNG/SVG 导出能力与我们的原创玩法实验。用速度场、涟漪推力、水量转移和状态规则连接玩家操作、水的变化、鸭子响应、目标反馈及可见回程，保留 V1 自由玩水、V2 引流挑战、V3 可读水流和 V4 蓄水救援。以九模块研究总览图引导，汇总搭水路、不同鸭子、跨区域连锁救援和瀑布花园等系列方向，以及水鸭机制、素材、关卡参数、验证流程和团队沟通的后期复用价值；网页支持本地实验记录与 JSON 导出，归档程序检查和两种放水策略案例。原视频的游戏身份、与编辑器的关系及算法未确认，现有规则近似不等于完整流体；C–F 扩展待实现，实际玩家理解、策略平衡、长期可玩性与产品收益仍待验证。 | 研究中 | 水流互动、循环玩法、像素场景 | [x.com/duck\_wtd/status/2106807563073339790](https://x.com/duck_wtd/status/2106807563073339790) | [静态文件](site/demos/005-water-duck-loops/index.html) |
-| 006 | [Claude Code Best Practice · 能力与工作流研究](projects/006-claude-code-best-practice/README.md) | Claude Code 的社区学习资料、配置模板与工作流参考实现：通过项目记忆、Commands / Skills、Subagents、Hooks 与 MCP 组织重复任务和多步骤开发。完整模块总图覆盖 47 项功能主题，按知识与上下文、执行与协作、配置权限与扩展、会话体验、审查与持续工作、外部系统、本库示例和资料导航整理为 8 组 63 个条目，每项说明技术机制与使用入口。适用于代码研究与审查、复杂功能开发、团队交接、资料维护和外部工具接入；价值是沉淀知识、复用流程、减少重复说明与遗漏、明确交接和验收依据。实际推理和工具执行由 Claude Code 与外部服务提供，收益需结合适配、维护和执行成本验证。 | 已完成 | Claude Code、工作流编排、上下文工程 | [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) | [Demo](https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/) |
-| 007 | [Spirula Studio · 实拍三维重建与高斯原理](projects/007-spirula-studio/README.md) | 把同一静态对象的多角度照片、绕拍视频，经抽帧、掩膜、SfM 相机求解和逐场景高斯优化，变成可自由观察、保存和编辑的三维高斯资产，并提取带纹理网格、渲染图片与漫游视频。独立 C++ 桌面与 CLI 整合重建、批处理、编辑和导出；Vulkan/CUDA、训练量化与 GPU 内存优化支撑计算。中文总图和源码研究解释高斯、可微渲染、密度控制与占据场网格提取，覆盖商品/文物展示、空间导览、内容制作及采集管理、跨机调度、质量验收等扩展，并对比 Splat.js、QuerySplat、LichtFeld、SuperSplat、TRELLIS.2、Forge3D 的职责。实拍资产可复用，外观逼真不保证测量或制造精度；资料与源码已审校，Spirula 本机运行与性能待验证。 | 研究中 | 实拍三维重建、3D Gaussian Splatting、输入输出与工具对比 | [harry7557558/spirula-studio](https://github.com/harry7557558/spirula-studio) | [静态文件](site/demos/007-spirula-studio/index.html) |
-| 008 | [Forge3D · 真实数据融合与三维场景渲染](projects/008-forge3d/README.md) | Forge3D 是 Python 驱动、Rust 与 WebGPU 实现的地理三维渲染库，可将准备好的真实高程 DEM、COPC 激光雷达点云和已有 3D 高斯放入同一场景，以统一遮挡、阴影、太阳与雾效输出地形地图、场景图片和飞行镜头序列；影像为地表提供颜色，分块渲染与按需分页帮助控制大场景显存，1080p／4K 输出不自动意味着实时。研究从瑞士劳特布鲁嫩案例出发，解释高程塑造地形、点云描述空间结构、正射影像提供外观，以及三者如何裁剪、配准并统一坐标与高程基准。直接价值是复用公共真实数据构造具体地点，也可用无人机多角度实拍，经外部摄影测量或 3DGS 重建补足局部细节，再接入融合渲染；Forge3D 本身不负责照片重建或高斯训练。全球已有中等分辨率高程与卫星影像，精细点云和厘米级影像的开放覆盖因地区而异，纹理清晰度不能代替几何精度。开源核心、Pro 功能、各数据源与重建工具的授权分别核对，作者完整演示素材包尚未确认公开。可扩展到地点导览、数字场景、路线演示、规划沟通、采集质量与资产管理；当前沉淀技术思路，真正使用时按地点、精度和预算做小样验收。附完整理解引导图与图文导览；资料研究完成，原版渲染及性能未在本机验证。 | 已完成 | 地理三维、数据融合、高程与点云、3DGS、无人机重建、产品复用 | [milos-agathon/forge3d](https://github.com/milos-agathon/forge3d) | [静态文件](site/demos/008-forge3d/index.html) |
+<table width="100%">
+<thead><tr><th align="left" width="20%">项目</th><th align="left" width="68%">摘要</th><th align="left" width="12%">入口</th></tr></thead>
+<tbody>
+<tr><td valign="top"><strong>001 · <a href="projects/001-taskview-community/README.md">TaskView Community</a></strong><br>已完成<br><sub>任务管理、MCP、Agent 接入</sub></td><td valign="top"><strong>能力：</strong>可自托管的项目与任务管理平台，提供看板、子任务、依赖图、成员权限、工时统计与重复任务，并以 API、MCP、Webhook 连接外部系统。<br><strong>原理：</strong>Vue 界面经 Express 鉴权与业务层写入 PostgreSQL；任务、关系和状态共享数据，事件总线与后台队列处理通知和重复事项。<br><strong>使用场景：</strong>内部团队研发、交付管理、Issue 汇总；人或外部 Agent 读取任务、执行工作并回写结果。<br><strong>价值：</strong>复用任务模型、权限、接口和人机共用进度面板；后续可补领取、隔离、重试与验收，集中建设执行层。<br><strong>边界：</strong>本次仅源码与文档研究，未部署原版；平台不内置自主任务执行器。Source-Available 允许内部使用，向第三方开放实例需商业许可。</td><td valign="top"><a href="https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/">研究网页</a><br><a href="projects/001-taskview-community/README.md">研究记录</a><br><a href="https://github.com/Gimanh/taskview-community">上游仓库</a></td></tr>
+<tr><td valign="top"><strong>002 · <a href="projects/002-codeflow/README.md">CodeFlow · 代码结构可视化与轻量分析</a></strong><br>已完成<br><sub>代码结构、静态分析、工具对比</sub></td><td valign="top"><strong>能力：</strong>无需业务后端；输入 GitHub 仓库、PR、本地源码或 Markdown，输出十种交互视图、源码卡片、指标、潜在影响与报告；提供 CLI 监听、Card 历史及无界面 JSON。<br><strong>原理：</strong>Babel / Acorn、Tree-sitter 与后备规则抽取定义和引用，以名称和导入归属推断文件关系，另提取 import、组件及路由架构。<br><strong>使用场景：</strong>接手陌生仓库、审查变更、定位关联、寻找重构线索、展示规模与观察指标趋势。<br><strong>价值：</strong>用可核对的局部关系组织阅读与检查；真实源码原生演示及 Source Insight、Ix、GitNexus 对照帮助按职责选工具。<br><strong>边界：</strong>原生样本已跑出 15 文件、33 函数、42 静态连接；不代表运行轨迹或准确率。解析、抽样与规则提示需源码和测试核验，另三工具未实跑。</td><td valign="top"><a href="https://yydshly.github.io/1004_codex_project/demos/002-codeflow/#understanding">研究网页</a><br><a href="projects/002-codeflow/README.md">研究记录</a><br><a href="https://github.com/braedonsaunders/codeflow">上游仓库</a></td></tr>
+<tr><td valign="top"><strong>004 · <a href="projects/004-scene-style-atlas/README.md">场景与模型风格图谱 · Defilade 视觉研究</a></strong><br>已完成<br><sub>游戏美术、场景与模型、风格沉淀</sub></td><td valign="top"><strong>能力：</strong>从 Defilade 官方中景参考出发，原创 Three.js 样板提供三场景三风格、建筑植被道路车辆细化和人物对照，保留 V1 / V2 及同机位截图。<br><strong>原理：</strong>用程序几何和预设分别改变布局、比例、材质光影、动态反馈与镜头尺度，固定条件比较整体体感与制作差距。<br><strong>使用场景：</strong>美术选型、正式资产前的目标检查、团队沟通、原型演示与回顾；后续可把场景状态连接故事、玩家行动和游戏系统。<br><strong>价值：</strong>沉淀比例、配色、材料、镜头和模块规则及真实证据，为风格方案库、场景组合和营地状态体验准备依据。<br><strong>边界：</strong>区分官方画面、实时结果、AI 概念和设计假设；人物停在 V3。候选扩展未实现，不是完整游戏或正式资产库，玩家偏好与性能尚未验证。</td><td valign="top"><a href="https://yydshly.github.io/1004_codex_project/demos/004-scene-style-atlas/understanding/">研究网页</a><br><a href="projects/004-scene-style-atlas/README.md">研究记录</a><br><a href="https://x.com/nexindie/status/2106723291868373127">研究来源</a></td></tr>
+<tr><td valign="top"><strong>005 · <a href="projects/005-water-duck-loops/README.md">水流与鸭子互动 · 循环玩法研究</a></strong><br>研究中<br><sub>水流互动、循环玩法、像素场景</sub></td><td valign="top"><strong>能力：</strong>参考视频的水鸭视觉与编辑器配色、PNG / SVG 导出；原创 V1 自由玩水、V2 引流、V3 可读水流、V4 蓄水救援可试玩，附九模块总图、本地记录与 JSON 导出。<br><strong>原理：</strong>速度场、涟漪推力、分仓水量和状态规则连接操作、水的变化、鸭子响应、目标反馈与可见回程；V4 检验有限水量下的放水时机。<br><strong>使用场景：</strong>轻度解谜、休闲救援及互动展示原型；后续可研究搭水路、不同鸭子、跨区连锁与瀑布花园。<br><strong>价值：</strong>沉淀水鸭机制、素材、关卡参数和实验案例，用于后续原型复用、方案评审与团队沟通。<br><strong>边界：</strong>已有程序检查和两种放水案例，未证明人类玩家理解、策略平衡或长期可玩性。原视频身份、与编辑器关系及算法未知；规则近似非完整流体，C–F 待实现。</td><td valign="top"><a href="https://yydshly.github.io/1004_codex_project/demos/005-water-duck-loops/">研究网页</a><br><a href="projects/005-water-duck-loops/README.md">研究记录</a><br><a href="https://x.com/duck_wtd/status/2106807563073339790">研究来源</a></td></tr>
+<tr><td valign="top"><strong>006 · <a href="projects/006-claude-code-best-practice/README.md">Claude Code Best Practice · 能力与工作流研究</a></strong><br>已完成<br><sub>Claude Code、工作流编排、上下文工程</sub></td><td valign="top"><strong>能力：</strong>Claude Code 社区资料、配置模板与工作流参考实现；总图覆盖 47 项主题、8 组 63 条目，说明知识、协作、权限、会话、持续工作、外部系统及本库示例。<br><strong>原理：</strong>以项目记忆、Commands / Skills、Subagents、Hooks 和 MCP 组织上下文、交接与工具反馈；实际推理和操作由 Claude Code 运行时及外部服务完成。<br><strong>使用场景：</strong>代码研究与审查、复杂开发、团队交接、资料维护和外部工具接入。<br><strong>价值：</strong>保存项目知识、复用流程、减少重复说明与遗漏，并明确验收；原创选用指南、审查模板和交互图帮助理解分工。<br><strong>边界：</strong>已检查研究网页和下载包，未执行上游天气、RPI 或跨模型流程。文字要求不等于硬性权限；收益需连同适配、维护、模型与协调成本验证。</td><td valign="top"><a href="https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/">研究网页</a><br><a href="projects/006-claude-code-best-practice/README.md">研究记录</a><br><a href="https://github.com/shanraisshan/claude-code-best-practice">上游仓库</a></td></tr>
+<tr><td valign="top"><strong>007 · <a href="projects/007-spirula-studio/README.md">Spirula Studio · 实拍三维重建与高斯原理</a></strong><br>研究中<br><sub>实拍三维重建、3D Gaussian Splatting、输入输出与工具对比</sub></td><td valign="top"><strong>能力：</strong>独立 C++桌面与 CLI 将多角度照片、绕拍视频经抽帧、掩膜和相机求解，生成可编辑高斯、带纹理网格、图片与漫游视频，支持本地批处理。<br><strong>原理：</strong>SfM 恢复观察关系，可微渲染以照片误差优化高斯并控制密度；占据场经四面体化提取网格，Vulkan / CUDA、量化与内存复用支撑计算。<br><strong>使用场景：</strong>商品和文物展示、空间导览、内容制作、实拍留档与重建研究。<br><strong>价值：</strong>把实拍转为可保存、重载和复用的三维资产；结合六类工具分工对照，可继续扩展采集引导、质量验收、跨机调度和资产管理。<br><strong>边界：</strong>资料与源码研究完成，Spirula 未本机运行；历史鞋子实测属于 Splat.js。多视图覆盖影响质量，外观逼真不保证测量、制造精度或容量性能。</td><td valign="top"><a href="https://yydshly.github.io/1004_codex_project/demos/007-spirula-studio/">研究网页</a><br><a href="projects/007-spirula-studio/README.md">研究记录</a><br><a href="https://github.com/harry7557558/spirula-studio">上游仓库</a></td></tr>
+<tr><td valign="top"><strong>008 · <a href="projects/008-forge3d/README.md">Forge3D · 真实数据融合与三维场景渲染</a></strong><br>已完成<br><sub>地理三维、数据融合、高程与点云、3DGS、无人机重建、产品复用</sub></td><td valign="top"><strong>能力：</strong>Python 驱动、Rust / WebGPU 实现的地理渲染库，融合准备好的 DEM、COPC 点云与现成 3DGS，输出地形地图、场景图片和飞行序列；支持太阳、阴影、雾与覆盖层。<br><strong>原理：</strong>数据裁剪、配准并统一坐标及高程基准后，以统一 ReSTIR 路径追踪计算相互遮挡；影像提供颜色，分块与按需分页控制渲染工作集。<br><strong>使用场景：</strong>地点导览、真实数字场景、路线镜头和规划沟通；开放数据做远景，无人机经外部摄影测量或 3DGS 重建补近景。<br><strong>价值：</strong>复用真实数据表达具体地点，区分高程形状、空间点与影像外观；引导图和导览沉淀路线，后续可补采集质量、资产管理与任务发布。<br><strong>边界：</strong>原版未本机运行，不负责照片重建或高斯训练。4K 非实时承诺，纹理不替代几何；全球精细数据覆盖不均，DEM 不含悬挑，高斯可能残留光照。作者完整包未确认公开，公开基准为程序色；核心、Pro 与数据授权分开核对。</td><td valign="top"><a href="https://yydshly.github.io/1004_codex_project/demos/008-forge3d/">研究网页</a><br><a href="projects/008-forge3d/README.md">研究记录</a><br><a href="https://github.com/milos-agathon/forge3d">上游仓库</a></td></tr>
+</tbody>
+</table>
 
 <!-- PROJECT_INDEX:END -->
 
@@ -30,71 +33,113 @@
 
 ### **001 · TaskView Community**
 
-**项目摘要**
+**能力：**可自托管的项目与任务管理平台，提供看板、子任务、依赖图、成员权限、工时统计与重复任务，并以 API、MCP、Webhook 连接外部系统。
 
-可自托管的项目与任务管理平台，提供看板、子任务、依赖图、权限与工时报表。底层采用 Vue、Express 和 PostgreSQL，通过 API、MCP、Webhook 连接人和外部 Agent；可复用为任务入口与进度管理层，自动执行和验收需另行构建。
+**原理：**Vue 界面经 Express 鉴权与业务层写入 PostgreSQL；任务、关系和状态共享数据，事件总线与后台队列处理通知和重复事项。
 
-[研究记录](projects/001-taskview-community/README.md) · [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community)
+**使用场景：**内部团队研发、交付管理、Issue 汇总；人或外部 Agent 读取任务、执行工作并回写结果。
+
+**价值：**复用任务模型、权限、接口和人机共用进度面板；后续可补领取、隔离、重试与验收，集中建设执行层。
+
+**边界：**本次仅源码与文档研究，未部署原版；平台不内置自主任务执行器。Source-Available 允许内部使用，向第三方开放实例需商业许可。
+
+[研究记录](projects/001-taskview-community/README.md) · [研究网页](https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/) · [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community)
 
 ![TaskView Community 研究引导图](projects/001-taskview-community/assets/taskview-overview.png)
 
 ### **002 · CodeFlow · 代码结构可视化与轻量分析**
 
-**项目摘要**
+**能力：**无需业务后端；输入 GitHub 仓库、PR、本地源码或 Markdown，输出十种交互视图、源码卡片、指标、潜在影响与报告；提供 CLI 监听、Card 历史及无界面 JSON。
 
-无需后端的代码结构浏览与轻量静态分析工具：输入 GitHub 仓库、PR 或本地源码，另支持 Markdown 笔记；经 Babel/Acorn、Tree-sitter 与正则抽取定义和引用，推断文件关系，输出十种交互视图、源码卡片、指标、潜在影响与可导出报告。可通过 CLI 监听、Card 指标历史和无界面 JSON 接入外部流程。研究页以汇总图引导，包含真实源码原生演示及 Source Insight、Ix、GitNexus 对比；静态线索需经源码和测试核实。
+**原理：**Babel / Acorn、Tree-sitter 与后备规则抽取定义和引用，以名称和导入归属推断文件关系，另提取 import、组件及路由架构。
 
-[研究记录](projects/002-codeflow/README.md) · [braedonsaunders/codeflow](https://github.com/braedonsaunders/codeflow)
+**使用场景：**接手陌生仓库、审查变更、定位关联、寻找重构线索、展示规模与观察指标趋势。
+
+**价值：**用可核对的局部关系组织阅读与检查；真实源码原生演示及 Source Insight、Ix、GitNexus 对照帮助按职责选工具。
+
+**边界：**原生样本已跑出 15 文件、33 函数、42 静态连接；不代表运行轨迹或准确率。解析、抽样与规则提示需源码和测试核验，另三工具未实跑。
+
+[研究记录](projects/002-codeflow/README.md) · [研究网页](https://yydshly.github.io/1004_codex_project/demos/002-codeflow/#understanding) · [braedonsaunders/codeflow](https://github.com/braedonsaunders/codeflow)
 
 ![CodeFlow · 代码结构可视化与轻量分析 研究引导图](projects/002-codeflow/assets/codeflow-understanding.png)
 
 ### **004 · 场景与模型风格图谱 · Defilade 视觉研究**
 
-**项目摘要**
+**能力：**从 Defilade 官方中景参考出发，原创 Three.js 样板提供三场景三风格、建筑植被道路车辆细化和人物对照，保留 V1 / V2 及同机位截图。
 
-从 Defilade 公开中景展示出发，研究场景布局、模型比例、材质光影、镜头与动态反馈如何共同形成玩家体感。原创 Three.js 样板完成三场景三风格比较、建筑植被道路车辆细化和人物专项，保留 V1/V2 完整存档与同机位对照。以含原游戏官方画面和实际样板的总览图引导，整理探索过程、效果差距、技术原理、美术选型与团队沟通场景，以及比例、配色、镜头和模块规则的复用价值；区分官方参考、实时结果、AI 概念和待验证判断。扩展方向覆盖风格方案库、场景组合、营地状态，以及故事、玩家行动与游戏系统；人物研究暂停，候选方向尚未实现，当前成果用于研究与原型，不等于完整游戏或正式资产。
+**原理：**用程序几何和预设分别改变布局、比例、材质光影、动态反馈与镜头尺度，固定条件比较整体体感与制作差距。
 
-[研究记录](projects/004-scene-style-atlas/README.md) · [x.com/nexindie/status/2106723291868373127](https://x.com/nexindie/status/2106723291868373127)
+**使用场景：**美术选型、正式资产前的目标检查、团队沟通、原型演示与回顾；后续可把场景状态连接故事、玩家行动和游戏系统。
+
+**价值：**沉淀比例、配色、材料、镜头和模块规则及真实证据，为风格方案库、场景组合和营地状态体验准备依据。
+
+**边界：**区分官方画面、实时结果、AI 概念和设计假设；人物停在 V3。候选扩展未实现，不是完整游戏或正式资产库，玩家偏好与性能尚未验证。
+
+[研究记录](projects/004-scene-style-atlas/README.md) · [研究网页](https://yydshly.github.io/1004_codex_project/demos/004-scene-style-atlas/understanding/) · [x.com/nexindie/status/2106723291868373127](https://x.com/nexindie/status/2106723291868373127)
 
 ![场景与模型风格图谱 · Defilade 视觉研究 研究引导图](projects/004-scene-style-atlas/assets/scene-style-understanding.png)
 
 ### **005 · 水流与鸭子互动 · 循环玩法研究**
 
-**项目摘要**
+**能力：**参考视频的水鸭视觉与编辑器配色、PNG / SVG 导出；原创 V1 自由玩水、V2 引流、V3 可读水流、V4 蓄水救援可试玩，附九模块总图、本地记录与 JSON 导出。
 
-以 Duck 的像素瀑布视频和鸭子编辑器为参考，区分视觉启发、像素鸭配色及 PNG/SVG 导出能力与我们的原创玩法实验。用速度场、涟漪推力、水量转移和状态规则连接玩家操作、水的变化、鸭子响应、目标反馈及可见回程，保留 V1 自由玩水、V2 引流挑战、V3 可读水流和 V4 蓄水救援。以九模块研究总览图引导，汇总搭水路、不同鸭子、跨区域连锁救援和瀑布花园等系列方向，以及水鸭机制、素材、关卡参数、验证流程和团队沟通的后期复用价值；网页支持本地实验记录与 JSON 导出，归档程序检查和两种放水策略案例。原视频的游戏身份、与编辑器的关系及算法未确认，现有规则近似不等于完整流体；C–F 扩展待实现，实际玩家理解、策略平衡、长期可玩性与产品收益仍待验证。
+**原理：**速度场、涟漪推力、分仓水量和状态规则连接操作、水的变化、鸭子响应、目标反馈与可见回程；V4 检验有限水量下的放水时机。
 
-[研究记录](projects/005-water-duck-loops/README.md) · [x.com/duck\_wtd/status/2106807563073339790](https://x.com/duck_wtd/status/2106807563073339790)
+**使用场景：**轻度解谜、休闲救援及互动展示原型；后续可研究搭水路、不同鸭子、跨区连锁与瀑布花园。
+
+**价值：**沉淀水鸭机制、素材、关卡参数和实验案例，用于后续原型复用、方案评审与团队沟通。
+
+**边界：**已有程序检查和两种放水案例，未证明人类玩家理解、策略平衡或长期可玩性。原视频身份、与编辑器关系及算法未知；规则近似非完整流体，C–F 待实现。
+
+[研究记录](projects/005-water-duck-loops/README.md) · [研究网页](https://yydshly.github.io/1004_codex_project/demos/005-water-duck-loops/) · [x.com/duck\_wtd/status/2106807563073339790](https://x.com/duck_wtd/status/2106807563073339790)
 
 ![水流与鸭子互动 · 循环玩法研究 研究引导图](projects/005-water-duck-loops/assets/water-duck-series-map-v1.png)
 
 ### **006 · Claude Code Best Practice · 能力与工作流研究**
 
-**项目摘要**
+**能力：**Claude Code 社区资料、配置模板与工作流参考实现；总图覆盖 47 项主题、8 组 63 条目，说明知识、协作、权限、会话、持续工作、外部系统及本库示例。
 
-Claude Code 的社区学习资料、配置模板与工作流参考实现：通过项目记忆、Commands / Skills、Subagents、Hooks 与 MCP 组织重复任务和多步骤开发。完整模块总图覆盖 47 项功能主题，按知识与上下文、执行与协作、配置权限与扩展、会话体验、审查与持续工作、外部系统、本库示例和资料导航整理为 8 组 63 个条目，每项说明技术机制与使用入口。适用于代码研究与审查、复杂功能开发、团队交接、资料维护和外部工具接入；价值是沉淀知识、复用流程、减少重复说明与遗漏、明确交接和验收依据。实际推理和工具执行由 Claude Code 与外部服务提供，收益需结合适配、维护和执行成本验证。
+**原理：**以项目记忆、Commands / Skills、Subagents、Hooks 和 MCP 组织上下文、交接与工具反馈；实际推理和操作由 Claude Code 运行时及外部服务完成。
 
-[研究记录](projects/006-claude-code-best-practice/README.md) · [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice)
+**使用场景：**代码研究与审查、复杂开发、团队交接、资料维护和外部工具接入。
+
+**价值：**保存项目知识、复用流程、减少重复说明与遗漏，并明确验收；原创选用指南、审查模板和交互图帮助理解分工。
+
+**边界：**已检查研究网页和下载包，未执行上游天气、RPI 或跨模型流程。文字要求不等于硬性权限；收益需连同适配、维护、模型与协调成本验证。
+
+[研究记录](projects/006-claude-code-best-practice/README.md) · [研究网页](https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/) · [shanraisshan/claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice)
 
 ![Claude Code Best Practice · 能力与工作流研究 研究引导图](projects/006-claude-code-best-practice/assets/module-map.png)
 
 ### **007 · Spirula Studio · 实拍三维重建与高斯原理**
 
-**项目摘要**
+**能力：**独立 C++桌面与 CLI 将多角度照片、绕拍视频经抽帧、掩膜和相机求解，生成可编辑高斯、带纹理网格、图片与漫游视频，支持本地批处理。
 
-把同一静态对象的多角度照片、绕拍视频，经抽帧、掩膜、SfM 相机求解和逐场景高斯优化，变成可自由观察、保存和编辑的三维高斯资产，并提取带纹理网格、渲染图片与漫游视频。独立 C++ 桌面与 CLI 整合重建、批处理、编辑和导出；Vulkan/CUDA、训练量化与 GPU 内存优化支撑计算。中文总图和源码研究解释高斯、可微渲染、密度控制与占据场网格提取，覆盖商品/文物展示、空间导览、内容制作及采集管理、跨机调度、质量验收等扩展，并对比 Splat.js、QuerySplat、LichtFeld、SuperSplat、TRELLIS.2、Forge3D 的职责。实拍资产可复用，外观逼真不保证测量或制造精度；资料与源码已审校，Spirula 本机运行与性能待验证。
+**原理：**SfM 恢复观察关系，可微渲染以照片误差优化高斯并控制密度；占据场经四面体化提取网格，Vulkan / CUDA、量化与内存复用支撑计算。
 
-[研究记录](projects/007-spirula-studio/README.md) · [harry7557558/spirula-studio](https://github.com/harry7557558/spirula-studio)
+**使用场景：**商品和文物展示、空间导览、内容制作、实拍留档与重建研究。
+
+**价值：**把实拍转为可保存、重载和复用的三维资产；结合六类工具分工对照，可继续扩展采集引导、质量验收、跨机调度和资产管理。
+
+**边界：**资料与源码研究完成，Spirula 未本机运行；历史鞋子实测属于 Splat.js。多视图覆盖影响质量，外观逼真不保证测量、制造精度或容量性能。
+
+[研究记录](projects/007-spirula-studio/README.md) · [研究网页](https://yydshly.github.io/1004_codex_project/demos/007-spirula-studio/) · [harry7557558/spirula-studio](https://github.com/harry7557558/spirula-studio)
 
 ![Spirula Studio · 实拍三维重建与高斯原理 研究引导图](projects/007-spirula-studio/assets/spirula-studio-overview.png)
 
 ### **008 · Forge3D · 真实数据融合与三维场景渲染**
 
-**项目摘要**
+**能力：**Python 驱动、Rust / WebGPU 实现的地理渲染库，融合准备好的 DEM、COPC 点云与现成 3DGS，输出地形地图、场景图片和飞行序列；支持太阳、阴影、雾与覆盖层。
 
-Forge3D 是 Python 驱动、Rust 与 WebGPU 实现的地理三维渲染库，可将准备好的真实高程 DEM、COPC 激光雷达点云和已有 3D 高斯放入同一场景，以统一遮挡、阴影、太阳与雾效输出地形地图、场景图片和飞行镜头序列；影像为地表提供颜色，分块渲染与按需分页帮助控制大场景显存，1080p／4K 输出不自动意味着实时。研究从瑞士劳特布鲁嫩案例出发，解释高程塑造地形、点云描述空间结构、正射影像提供外观，以及三者如何裁剪、配准并统一坐标与高程基准。直接价值是复用公共真实数据构造具体地点，也可用无人机多角度实拍，经外部摄影测量或 3DGS 重建补足局部细节，再接入融合渲染；Forge3D 本身不负责照片重建或高斯训练。全球已有中等分辨率高程与卫星影像，精细点云和厘米级影像的开放覆盖因地区而异，纹理清晰度不能代替几何精度。开源核心、Pro 功能、各数据源与重建工具的授权分别核对，作者完整演示素材包尚未确认公开。可扩展到地点导览、数字场景、路线演示、规划沟通、采集质量与资产管理；当前沉淀技术思路，真正使用时按地点、精度和预算做小样验收。附完整理解引导图与图文导览；资料研究完成，原版渲染及性能未在本机验证。
+**原理：**数据裁剪、配准并统一坐标及高程基准后，以统一 ReSTIR 路径追踪计算相互遮挡；影像提供颜色，分块与按需分页控制渲染工作集。
 
-[研究记录](projects/008-forge3d/README.md) · [milos-agathon/forge3d](https://github.com/milos-agathon/forge3d)
+**使用场景：**地点导览、真实数字场景、路线镜头和规划沟通；开放数据做远景，无人机经外部摄影测量或 3DGS 重建补近景。
+
+**价值：**复用真实数据表达具体地点，区分高程形状、空间点与影像外观；引导图和导览沉淀路线，后续可补采集质量、资产管理与任务发布。
+
+**边界：**原版未本机运行，不负责照片重建或高斯训练。4K 非实时承诺，纹理不替代几何；全球精细数据覆盖不均，DEM 不含悬挑，高斯可能残留光照。作者完整包未确认公开，公开基准为程序色；核心、Pro 与数据授权分开核对。
+
+[研究记录](projects/008-forge3d/README.md) · [研究网页](https://yydshly.github.io/1004_codex_project/demos/008-forge3d/) · [milos-agathon/forge3d](https://github.com/milos-agathon/forge3d)
 
 ![Forge3D · 真实数据融合与三维场景渲染 研究引导图](projects/008-forge3d/assets/forge3d-overview.png)
 
@@ -132,13 +177,13 @@ python scripts/catalog.py check
 | `docs/` | 研究约定和 Web 部署说明 |
 | `scripts/catalog.py` | 新建项目、同步索引和校验 |
 | `site/` | 生成的静态索引及多个子项目 Web 演示 |
-| `.github/workflows/` | 仓库检查及手动 Pages 发布流程 |
+| `.github/workflows/` | 仓库检查及自动 / 手动 Pages 发布流程 |
 
 ## Web 演示
 
 每个子项目可在自己的 `demo/` 目录中放置静态页面。同步时，这些页面会汇总到 `site/demos/NNN-slug/`，通过一个 GitHub Pages 站点访问多个演示。
 
-仓库已准备手动发布工作流。启用方式和路径约定见 [部署说明](docs/deployment.md)。各项目研究网页汇总到同一个 GitHub Pages 站点，使用手动工作流发布与更新。
+仓库已配置提交后自动发布，并保留手动入口。启用方式和路径约定见 [部署说明](docs/deployment.md)。各项目研究网页汇总到同一个 GitHub Pages 站点，目录脚本检查项目和网页是否对应，再由工作流测试、生成、校验并发布。
 
 ## 研究约定
 

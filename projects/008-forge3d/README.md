@@ -4,7 +4,7 @@
 
 **完整摘要：**Forge3D 是用 Python 驱动、以 Rust 与 wgpu/WebGPU 为底层的三维地理渲染工具。它消费已经准备好的高程栅格、点云、颜色图和 3D Gaussian Splats（3DGS），用于地形展示、地图制作、高分辨率图片及相机序列输出。此次重点研究的 SPLAT-FUSED 路径把 DEM、COPC LiDAR 与现成 3DGS 放入同一加速结构，用统一 ReSTIR 路径追踪计算遮挡与阴影：树可以遮住地面，山脊也可以遮住点云和高斯。数据可按需分页，画面可分块输出 1080p/4K；这些能力不等于实时 4K 漫游，也不意味着全球都有高精度点云。实用路线是开放 DEM/影像构成远景，无人机摄影测量或外部 3DGS 重建补充近景，再完成坐标、尺度、方向和高程基准对齐。换影像主要改善纹理；更准的几何需要更好的高程或三维重建。普通 RGB 无人机不自动产生 LiDAR，Forge3D 的融合路径也不是照片重建或 3DGS 训练流程。DEM 不能表达悬挑，实拍高斯可能残留采集光照。官方 Lauterbrunnen 公开基准使用程序性色，不能混同原帖视频中的实拍影像；尚未找到完整、公开、可一键复跑的作者场景包。**资料与源码研究完成，未在本机运行 Forge3D。**
 
-[返回总索引](../../README.md) · [详细研究与证据](notes.md) · [图文导览](demo/index.html) · [在线研究网页](https://yydshly.github.io/1004_codex_project/demos/008-forge3d/) · [本次交付验证](verification.md) · [官方仓库](https://github.com/milos-agathon/forge3d) · [官方文档](https://milos-agathon.github.io/forge3d/)
+[返回总索引](../../README.md) · [详细研究与证据](notes.md) · [在线研究网页](https://yydshly.github.io/1004_codex_project/demos/008-forge3d/) · [导览源码](demo/index.html) · [本次交付验证](verification.md) · [官方仓库](https://github.com/milos-agathon/forge3d) · [官方文档](https://milos-agathon.github.io/forge3d/)
 
 上方为本次制作的研究引导图。图中的山谷、树木、建筑、数据层和应用效果是**概念示意，不是 Forge3D 实际运行截图、Lauterbrunnen 复现结果或测量精度证明**。
 

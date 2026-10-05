@@ -1,6 +1,15 @@
 name: Deploy GitHub Pages
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "projects/**"
+      - "projects.json"
+      - "scripts/catalog.py"
+      - "scripts/test_catalog.py"
+      - "site/**"
+      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -30,6 +39,8 @@ jobs:
           python-version: "3.11"
       - name: Generate static catalog and demos
         run: python scripts/catalog.py sync
+      - name: Test catalog rendering and page associations
+        run: python -B -m unittest discover -s scripts -p 'test_*.py' -v
       - name: Validate catalog
         run: python scripts/catalog.py check
       - name: Configure Pages

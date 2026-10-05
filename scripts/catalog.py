@@ -14,7 +14,9 @@ from urllib.parse import quote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 STATUSES = ("待研究", "研究中", "已复现", "已完成", "已归档")
 FIELDS = {"number", "slug", "name", "summary", "repository", "status", "tags", "cover", "demo_url"}
-OPTIONAL_FIELDS = {"source_url"}
+OPTIONAL_FIELDS = {"source_url", "summary_sections"}
+SUMMARY_LABELS = ("能力", "原理", "使用场景", "价值", "边界")
+PAGES_URL = "https://yydshly.github.io/1004_codex_project/"
 BLOCKS = ("PROJECT_INDEX", "PROJECT_GALLERY")
 MANAGED_DIRS = ("site/demos", "site/covers")
 FORBIDDEN_NAMES = {"node_modules", "__pycache__", "venv"}
@@ -95,6 +97,12 @@ def load_projects(root):
         slugs.add(slug)
         for field in ("name", "summary", "status"):
             valid_text(project[field], field)
+        if "summary_sections" in project:
+            sections = project["summary_sections"]
+            if not isinstance(sections, dict) or set(sections) != set(SUMMARY_LABELS):
+                raise ValueError("summary_sections 必须包含能力、原理、使用场景、价值、边界五个字段")
+            for label in SUMMARY_LABELS:
+                valid_text(sections[label], f"summary_sections.{label}")
         if project["status"] not in STATUSES:
             raise ValueError(f"status 必须为: {', '.join(STATUSES)}")
         validate_source(project)
@@ -134,6 +142,36 @@ def relative_url(value):
     return quote(value, safe="/-._~")
 
 
+def summary_html(project):
+    sections = project.get("summary_sections")
+    if not sections:
+        return html.escape(project["summary"])
+    return "<br>".join(f"<strong>{label}：</strong>{html.escape(sections[label])}" for label in SUMMARY_LABELS)
+
+
+def summary_markdown(project):
+    sections = project.get("summary_sections")
+    if not sections:
+        return markdown(project["summary"])
+    return "\n\n".join(f"**{label}：**{markdown(sections[label])}" for label in SUMMARY_LABELS)
+
+
+def web_reference(project, files):
+    """Link to the published page, and reject cross-project Pages associations."""
+    identifier = project_id(project)
+    prefix = f"{PAGES_URL}demos/{identifier}/"
+    href = project["demo_url"] or (prefix if files else "")
+    if href.startswith(PAGES_URL):
+        if not href.startswith(prefix):
+            raise ValueError(f"{identifier} 的研究网页必须指向本项目的 demos 子路径")
+        parsed = urlsplit(href)
+        relative = parsed.path[len(urlsplit(prefix).path):]
+        entry = (relative + "index.html") if not relative or relative.endswith("/") else relative
+        if entry not in files:
+            raise ValueError(f"{identifier} 的研究网页入口缺少静态文件: {entry}")
+    return href
+
+
 def demo_files(root, project):
     directory = inside(root, f"projects/{project_id(project)}/demo")
     if not directory.exists():
@@ -162,15 +200,13 @@ def render(root, projects):
         static_files = demo_files(root, project)
         for name, content in static_files.items():
             outputs[f"site/demos/{identifier}/{name}"] = content
-        demo = project["demo_url"] or (f"demos/{identifier}/" if static_files else "")
-        readme_demo = project["demo_url"] or (f"site/demos/{identifier}/index.html" if static_files else "")
-        # Repository Markdown links to the checked-in demo source; Pages serves the live demo.
-        demo_label = "Demo" if project["demo_url"] else "静态文件"
-        readme_demo_href = url(readme_demo) if project["demo_url"] else relative_url(readme_demo)
-        demo_link = f"[{demo_label}]({readme_demo_href})" if readme_demo else "—"
+        demo = web_reference(project, static_files)
         tags = "、".join(project["tags"]) or "—"
-        rows.append(f"| {project['number']:03d} | [{markdown(project['name'])}]({project_path}/README.md) | {markdown(project['summary'])} | {markdown(project['status'])} | {markdown(tags)} | [{markdown(source_name)}]({url(source_href)}) | {demo_link} |")
-        gallery.append(f"### **{project['number']:03d} · {markdown(project['name'])}**\n\n**项目摘要**\n\n{markdown(project['summary'])}\n\n[研究记录]({project_path}/README.md) · [{markdown(source_name)}]({url(source_href)})")
+        webpage = f'<a href="{html.escape(url(demo), quote=True)}">研究网页</a><br>' if demo else "网页待准备<br>"
+        source_label = "上游仓库" if project["repository"] else "研究来源"
+        rows.append(f'<tr><td valign="top"><strong>{project["number"]:03d} · <a href="{project_path}/README.md">{html.escape(project["name"])}</a></strong><br>{html.escape(project["status"])}<br><sub>{html.escape(tags)}</sub></td><td valign="top">{summary_html(project)}</td><td valign="top">{webpage}<a href="{project_path}/README.md">研究记录</a><br><a href="{html.escape(url(source_href), quote=True)}">{source_label}</a></td></tr>')
+        web_markdown = f" · [研究网页]({url(demo)})" if demo else ""
+        gallery.append(f"### **{project['number']:03d} · {markdown(project['name'])}**\n\n{summary_markdown(project)}\n\n[研究记录]({project_path}/README.md){web_markdown} · [{markdown(source_name)}]({url(source_href)})")
         cover_html = "<div class=\"cover empty\">截图待补充</div>"
         if project["cover"]:
             cover = project["cover"]
@@ -181,11 +217,9 @@ def render(root, projects):
         else:
             gallery[-1] += "\n\n截图：待补充。"
         research_url = f"https://github.com/yydshly/1004_codex_project/blob/main/{project_path}/README.md"
-        demo_href = url(demo) if project["demo_url"] else relative_url(demo)
-        demo_html = f'<a href="{html.escape(demo_href, quote=True)}">打开 Demo ↗</a>' if demo else '<span class="muted">Demo 待补充</span>'
-        cards.append(f'<article>{cover_html}<div class="content"><div class="meta">{project["number"]:03d} · {html.escape(project["status"])}</div><h2><strong>{html.escape(project["name"])}</strong></h2><p class="summary-label">项目摘要</p><p>{html.escape(project["summary"])}</p><p class="tags">{html.escape(tags)}</p><nav><a href="{research_url}">研究记录</a><a href="{html.escape(url(source_href), quote=True)}">{html.escape(source_name)} ↗</a>{demo_html}</nav></div></article>')
-    index = ("| 编号 | 子项目 | 摘要 | 状态 | 标签 | 来源 | Demo |\n"
-             "| --- | --- | --- | --- | --- | --- | --- |\n" + "\n".join(rows)) if rows else "目前尚未录入研究项目。首个项目将从 **001** 开始，按编号升序展示。"
+        demo_html = f'<a href="{html.escape(url(demo), quote=True)}">研究网页 ↗</a>' if demo else '<span class="muted">研究网页待准备</span>'
+        cards.append(f'<article>{cover_html}<div class="content"><div class="meta">{project["number"]:03d} · {html.escape(project["status"])}</div><h2><strong>{html.escape(project["name"])}</strong></h2><div class="summary">{summary_html(project)}</div><p class="tags">{html.escape(tags)}</p><nav>{demo_html}<a href="{research_url}">研究记录</a><a href="{html.escape(url(source_href), quote=True)}">{source_label} ↗</a></nav></div></article>')
+    index = ('<table width="100%">\n<thead><tr><th align="left" width="20%">项目</th><th align="left" width="68%">摘要</th><th align="left" width="12%">入口</th></tr></thead>\n<tbody>\n' + "\n".join(rows) + '\n</tbody>\n</table>') if rows else "目前尚未录入研究项目。首个项目将从 **001** 开始，按编号升序展示。"
     gallery_text = "\n\n".join(gallery) if gallery else "录入子项目并添加真实截图后，这里会按编号展示项目摘要与图片。"
     readme = inside(root, "README.md").read_text(encoding="utf-8")
     for block, content in zip(BLOCKS, (index, gallery_text)):
@@ -199,11 +233,11 @@ def render(root, projects):
     body = "\n".join(cards) or '<div class="empty-state"><h2>从 001 开始记录</h2><p>研究目录已就绪。录入首个项目后，这里会展示摘要、截图与 Demo。</p></div>'
     page = f'''<!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="优秀开源项目与产品的研究记录、复现过程与 Web Demo 索引"><title>项目与产品研究目录</title>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="优秀项目与产品研究：能力、原理、使用场景、价值与边界，附对应的在线研究网页"><title>项目与产品研究目录</title>
 <style>
-:root{{color-scheme:light;--ink:#172a3a;--muted:#607080;--line:#dce4eb;--accent:#075c65}}*{{box-sizing:border-box}}body{{margin:0;background:#f4f7fa;color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}}main{{max-width:1120px;margin:auto;padding:64px 24px}}a{{color:var(--accent);text-underline-offset:4px}}a:focus-visible{{outline:3px solid #de8c34;outline-offset:4px}}header{{margin-bottom:36px}}.eyebrow,.meta{{font-size:13px;letter-spacing:.08em;color:var(--accent)}}h1{{font-size:clamp(30px,5vw,46px);line-height:1.2;margin:16px 0}}header p{{max-width:680px;color:var(--muted)}}.grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px}}article{{border:1px solid var(--line);border-radius:16px;background:white;overflow:hidden}}.cover{{display:block;width:100%;height:190px;object-fit:contain;background:#e8eef3}}.empty{{display:grid;place-items:center;color:var(--muted);font-size:14px}}.content{{padding:24px}}h2{{font-size:22px;margin:8px 0}}.content p{{margin:12px 0}}.summary-label{{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:0}}.tags,.muted{{color:var(--muted);font-size:13px}}nav{{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;margin-top:24px}}.empty-state{{padding:48px 28px;background:white;border:1px dashed var(--line);border-radius:16px}}.empty-state p,footer{{color:var(--muted)}}footer{{margin-top:40px;font-size:13px}}@media(max-width:600px){{main{{padding:36px 18px}}}}
+:root{{color-scheme:light;--ink:#172a3a;--muted:#607080;--line:#dce4eb;--accent:#075c65}}*{{box-sizing:border-box}}body{{margin:0;background:#f4f7fa;color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}}main{{max-width:1120px;margin:auto;padding:64px 24px}}a{{color:var(--accent);text-underline-offset:4px}}a:focus-visible{{outline:3px solid #de8c34;outline-offset:4px}}header{{margin-bottom:36px}}.eyebrow,.meta{{font-size:13px;letter-spacing:.08em;color:var(--accent)}}h1{{font-size:clamp(30px,5vw,46px);line-height:1.2;margin:16px 0}}header p{{max-width:680px;color:var(--muted)}}.grid{{display:grid;gap:24px}}article{{display:grid;grid-template-columns:minmax(220px,28%) minmax(0,1fr);border:1px solid var(--line);border-radius:16px;background:white;overflow:hidden}}.cover{{display:block;width:100%;height:100%;max-height:420px;object-fit:contain;background:#e8eef3;align-self:center}}.empty{{display:grid;place-items:center;color:var(--muted);font-size:14px}}.content{{padding:24px}}h2{{font-size:22px;margin:8px 0}}.content p{{margin:12px 0}}.summary{{font-size:15px;line-height:1.9;overflow-wrap:anywhere}}.summary strong{{color:var(--accent)}}.tags,.muted{{color:var(--muted);font-size:13px}}nav{{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;margin-top:24px}}.empty-state{{padding:48px 28px;background:white;border:1px dashed var(--line);border-radius:16px}}.empty-state p,footer{{color:var(--muted)}}footer{{margin-top:40px;font-size:13px}}@media(max-width:760px){{article{{grid-template-columns:1fr}}.cover{{height:auto;max-height:320px}}.content{{padding:20px}}}}@media(max-width:600px){{main{{padding:36px 18px}}}}
 </style></head>
-<body><main><header><div class="eyebrow">PROJECT RESEARCH / 有序记录 · 持续复现</div><h1>优秀项目，逐个研究。</h1><p>记录值得学习的开源项目与产品，从源码阅读、产品观察到本地复现，沉淀截图、结论与可体验的 Web Demo。</p><a href="https://github.com/yydshly/1004_codex_project">查看研究总仓库 ↗</a></header><section class="grid" aria-label="按编号升序排列的研究项目">{body}</section><footer>共 {len(projects)} 个研究项目 · 编号固定，按升序展示。</footer></main></body></html>
+<body><main><header><div class="eyebrow">PROJECT RESEARCH / 有序记录 · 持续复现</div><h1>优秀项目，逐个研究。</h1><p>按能力、原理、使用场景、价值与边界阅读每个项目；研究网页、源码记录和上游来源分别提供直接入口。</p><a href="https://github.com/yydshly/1004_codex_project">查看研究总仓库 ↗</a></header><section class="grid" aria-label="按编号升序排列的研究项目">{body}</section><footer>共 {len(projects)} 个研究项目 · 编号固定，按升序展示。</footer></main></body></html>
 '''
     outputs["site/index.html"] = page.encode("utf-8")
     outputs["site/.nojekyll"] = b""

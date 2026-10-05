@@ -51,7 +51,9 @@ V4 的总水量为 120，初始上池 24、下池 96，上池容量为 60。玩�
 
 上图是原创研究结构示意，不是原视频截图或真实流体计算结果。
 
-[研究网页源码](demo/index.html) · [蓄水救援 V4](demo/prototypes/reservoir/index.html) · [可读水流 V3](demo/prototypes/readable/index.html) · [基础挑战 V2](demo/prototypes/loop/index.html) · [自由玩水](demo/prototypes/lab/index.html) · [验证记录](verification.md)
+[在线研究网页](https://yydshly.github.io/1004_codex_project/demos/005-water-duck-loops/) · [试玩 V4 蓄水救援](https://yydshly.github.io/1004_codex_project/demos/005-water-duck-loops/prototypes/reservoir/) · [试玩 V3 可读水流](https://yydshly.github.io/1004_codex_project/demos/005-water-duck-loops/prototypes/readable/) · [试玩 V2 引流挑战](https://yydshly.github.io/1004_codex_project/demos/005-water-duck-loops/prototypes/loop/) · [试玩 V1 自由玩水](https://yydshly.github.io/1004_codex_project/demos/005-water-duck-loops/prototypes/lab/)
+
+[研究网页源码](demo/index.html) · [V4 源码](demo/prototypes/reservoir/index.html) · [V3 源码](demo/prototypes/readable/index.html) · [V2 源码](demo/prototypes/loop/index.html) · [V1 源码](demo/prototypes/lab/index.html) · [验证记录](verification.md)
 
 网页汇总研究问题、三条玩法方向、原型演进、可见循环、六个扩展实验及证据边界。V4 默认展示，前三版本可切换体验并按需加载。挑战在切换原型、离开原型区域或隐藏浏览器页面时自动暂停。V2 / V3 保存当前浏览器进度；V4 本轮在内存中运行，刷新后从初始状态开始。实验记录另行存入当前浏览器，不包含服务端同步。
 
