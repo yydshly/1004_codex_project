@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/braedonsaunders/codeflow",
+  "commit": "b0e82d127fc4990f571ebc6da6c5d9af2591aaa1",
+  "archive": "https://codeload.github.com/braedonsaunders/codeflow/zip/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1",
+  "upstream_index_sha256": "8d8a3b83430da8f487a16b39fe239d0fcd46716a6dee2ea061425a5dc968e39d",
+  "copied": ["index.html", "vendor/", "LICENSE"],
+  "vendor_file_count": 51,
+  "vendor_total_bytes": 39439109,
+  "adaptations": ["Load demo-bridge.js", "Call CodeflowDemoBridge.useBridge inside native App"],
+  "fixture_manifest": "../fixtures/manifest.json",
+  "analysis": "Actual fixture source files processed by native Parser.extract and runAnalysisData",
+  "rendering": "Native upstream visualization implementations"
+}

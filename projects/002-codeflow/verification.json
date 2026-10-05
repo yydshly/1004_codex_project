@@ -1,0 +1,592 @@
+{
+  "date": "2026-10-05",
+  "timezone": "Asia/Shanghai",
+  "scope": "Historical teaching interactions plus pinned CodeFlow native analyzer/renderers on 15 known TS/TSX fixture files, and the new understanding figure/page; Source Insight, Ix and GitNexus are documentation/source comparisons only, with no accuracy, performance or production task benchmark.",
+  "preview": "http://127.0.0.1:8000/demos/002-codeflow/",
+  "upstreamSnapshot": "b0e82d127fc4990f571ebc6da6c5d9af2591aaa1",
+  "passed": true,
+  "screenshots": [
+    "assets/research-web-desktop.jpg",
+    "assets/research-web-mobile.jpg",
+    "assets/research-web-impact.jpg"
+  ],
+  "historicalTeachingChecks": [
+    {
+      "check": "initial-three-level",
+      "status": "pricing.ts：最多追踪 3 层，找到 3 个潜在影响文件。app.ts 在第 4 层，不计入。",
+      "passed": true
+    },
+    {
+      "check": "direct-only",
+      "status": "pricing.ts：仅查看直接使用者，找到 1 个潜在影响文件。另有 3 个间接使用者，当前不计入。",
+      "items": [
+        "1checkout.ts直接使用者"
+      ],
+      "passed": true
+    },
+    {
+      "check": "checkout-three-level",
+      "status": "checkout.ts：最多追踪 3 层，找到 3 个潜在影响文件。",
+      "items": [
+        "1orders.ts直接使用者",
+        "2routes.ts间接使用者",
+        "3app.ts间接使用者"
+      ],
+      "passed": true
+    },
+    {
+      "check": "terminal-node",
+      "status": "app.ts：最多追踪 3 层，找到 0 个潜在影响文件。此教学图中没有使用该文件的后续节点。",
+      "items": 0,
+      "passed": true
+    },
+    {
+      "check": "reset",
+      "status": "选择一个文件，查看它的直接或最多 3 层潜在影响候选。箭头从提供者指向使用者。",
+      "pressed": 0,
+      "passed": true
+    },
+    {
+      "check": "agent-scenario",
+      "visible": true,
+      "selected": "true",
+      "passed": true
+    },
+    {
+      "check": "tabs-keyboard-home",
+      "visible": true,
+      "selected": "true",
+      "passed": true
+    },
+    {
+      "check": "tabs-keyboard-end-left",
+      "visible": true,
+      "selected": "true",
+      "passed": true
+    },
+    {
+      "check": "mobile-390",
+      "layout": {
+        "graphWidth": 826,
+        "hasOverflow": false,
+        "height": 844,
+        "pageWidth": 375,
+        "width": 390
+      },
+      "passed": true
+    },
+    {
+      "check": "mobile-interaction",
+      "status": "checkout.ts：最多追踪 3 层，找到 3 个潜在影响文件。",
+      "layout": {
+        "hasOverflow": false,
+        "pageWidth": 375,
+        "width": 390
+      },
+      "passed": true
+    },
+    {
+      "check": "mobile-320",
+      "layout": {
+        "hasOverflow": false,
+        "pageWidth": 305,
+        "width": 320
+      },
+      "passed": true
+    },
+    {
+      "check": "tablet-768",
+      "layout": {
+        "hasOverflow": false,
+        "pageWidth": 753,
+        "width": 768
+      },
+      "passed": true
+    },
+    {
+      "check": "desktop-default",
+      "layout": {
+        "hasOverflow": false,
+        "height": 720,
+        "pageWidth": 1265,
+        "width": 1280
+      },
+      "passed": true
+    }
+  ],
+  "nativeSummary": {
+    "files": 15,
+    "functions": 33,
+    "connections": 42,
+    "architectureBlocks": 6,
+    "architectureDependencies": 10,
+    "routes": 1
+  },
+  "nativeViews": [
+    {
+      "architectureBlocks": 0,
+      "bundleNodes": 0,
+      "canvas3d": 0,
+      "clusterNodes": 0,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 0,
+      "flowNodes": 0,
+      "functions": 33,
+      "matrixCells": 0,
+      "nodeLabels": 15,
+      "ready": "true",
+      "sourceLines": 0,
+      "treeNodes": 0,
+      "treemapRects": 0,
+      "view": "graph"
+    },
+    {
+      "architectureBlocks": 0,
+      "bundleNodes": 0,
+      "canvas3d": 0,
+      "clusterNodes": 0,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 0,
+      "flowNodes": 0,
+      "functions": 33,
+      "matrixCells": 0,
+      "nodeLabels": 15,
+      "ready": "true",
+      "sourceLines": 21,
+      "treeNodes": 0,
+      "treemapRects": 0,
+      "view": "code"
+    },
+    {
+      "architectureBlocks": 0,
+      "bundleNodes": 0,
+      "canvas3d": 1,
+      "clusterNodes": 0,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 0,
+      "flowNodes": 0,
+      "functions": 33,
+      "matrixCells": 0,
+      "nodeLabels": 0,
+      "ready": "true",
+      "sourceLines": 0,
+      "treeNodes": 0,
+      "treemapRects": 0,
+      "view": "graph3d"
+    },
+    {
+      "architectureBlocks": 0,
+      "bundleNodes": 0,
+      "canvas3d": 0,
+      "clusterNodes": 0,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 0,
+      "flowNodes": 0,
+      "functions": 33,
+      "matrixCells": 0,
+      "nodeLabels": 0,
+      "ready": "true",
+      "sourceLines": 0,
+      "treeNodes": 0,
+      "treemapRects": 15,
+      "view": "treemap"
+    },
+    {
+      "architectureBlocks": 0,
+      "bundleNodes": 0,
+      "canvas3d": 0,
+      "clusterNodes": 0,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 0,
+      "flowNodes": 0,
+      "functions": 33,
+      "matrixCells": 225,
+      "nodeLabels": 0,
+      "ready": "true",
+      "sourceLines": 0,
+      "treeNodes": 0,
+      "treemapRects": 0,
+      "view": "matrix"
+    },
+    {
+      "architectureBlocks": 0,
+      "bundleNodes": 0,
+      "canvas3d": 0,
+      "clusterNodes": 0,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 0,
+      "flowNodes": 0,
+      "functions": 33,
+      "matrixCells": 0,
+      "nodeLabels": 0,
+      "ready": "true",
+      "sourceLines": 0,
+      "treeNodes": 22,
+      "treemapRects": 0,
+      "view": "dendro"
+    },
+    {
+      "architectureBlocks": 0,
+      "bundleNodes": 0,
+      "canvas3d": 0,
+      "clusterNodes": 0,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 8,
+      "flowNodes": 6,
+      "functions": 33,
+      "matrixCells": 0,
+      "nodeLabels": 0,
+      "ready": "true",
+      "sourceLines": 0,
+      "treeNodes": 0,
+      "treemapRects": 0,
+      "view": "sankey"
+    },
+    {
+      "architectureBlocks": 0,
+      "bundleNodes": 0,
+      "canvas3d": 0,
+      "clusterNodes": 15,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 0,
+      "flowNodes": 0,
+      "functions": 33,
+      "matrixCells": 0,
+      "nodeLabels": 0,
+      "ready": "true",
+      "sourceLines": 0,
+      "treeNodes": 0,
+      "treemapRects": 0,
+      "view": "disjoint"
+    },
+    {
+      "architectureBlocks": 0,
+      "bundleNodes": 15,
+      "canvas3d": 0,
+      "clusterNodes": 0,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 0,
+      "flowNodes": 0,
+      "functions": 33,
+      "matrixCells": 0,
+      "nodeLabels": 0,
+      "ready": "true",
+      "sourceLines": 0,
+      "treeNodes": 0,
+      "treemapRects": 0,
+      "view": "bundle"
+    },
+    {
+      "architectureBlocks": 6,
+      "bundleNodes": 0,
+      "canvas3d": 0,
+      "clusterNodes": 0,
+      "connections": 42,
+      "error": "",
+      "files": 15,
+      "flowLinks": 0,
+      "flowNodes": 0,
+      "functions": 33,
+      "matrixCells": 0,
+      "nodeLabels": 0,
+      "ready": "true",
+      "sourceLines": 0,
+      "treeNodes": 0,
+      "treemapRects": 0,
+      "view": "architecture"
+    }
+  ],
+  "nativeScreenshots": [
+    "demo/assets/native-graph.jpg",
+    "demo/assets/native-code.jpg",
+    "demo/assets/native-graph3d.jpg",
+    "demo/assets/native-treemap.jpg",
+    "demo/assets/native-matrix.jpg",
+    "demo/assets/native-dendro.jpg",
+    "demo/assets/native-sankey.jpg",
+    "demo/assets/native-disjoint.jpg",
+    "demo/assets/native-bundle.jpg",
+    "demo/assets/native-architecture.jpg"
+  ],
+  "knownDisplayIssue": "Pinned upstream Code syntax highlighting leaks span class markup; native renderer retained, clean source viewer linked.",
+  "historicalTeachingConsoleErrors": [],
+  "galleryChecks": [
+    {
+      "colorDisabled": false,
+      "description": "节点是文件，连线表示分析器提取的调用或引用关系。用整体分布识别中心文件与关联模块。",
+      "layoutDisabled": false,
+      "state": "ready",
+      "view": "graph",
+      "rechecked": "Final desktop gallery status and native iframe were ready."
+    },
+    {
+      "colorDisabled": false,
+      "description": "将文件关系图与代码卡片放在同一画布里，同时阅读结构位置、函数内容与关联线索。根层文件超过原生加载阈值时，可先选择目录或文件。",
+      "layoutDisabled": false,
+      "state": "ready",
+      "view": "code"
+    },
+    {
+      "colorDisabled": false,
+      "description": "将文件和关系放进三维空间，观察二维投影里相互遮挡的节点及连线。",
+      "layoutDisabled": true,
+      "state": "ready",
+      "view": "graph3d"
+    },
+    {
+      "colorDisabled": true,
+      "description": "嵌套矩形组织目录与文件，面积按源码行数（至少 1 行）编码，帮助比较不同目录及文件的相对占比。",
+      "layoutDisabled": true,
+      "state": "ready",
+      "view": "treemap"
+    },
+    {
+      "colorDisabled": true,
+      "description": "前 40 个文件排成矩阵：行是提供者，列是使用者；格子深浅表示关系 count 的累加，便于观察密集关联区域。",
+      "layoutDisabled": true,
+      "state": "ready",
+      "view": "matrix"
+    },
+    {
+      "colorDisabled": true,
+      "description": "将前 80 个文件排成根节点 → 目录组 → 文件的树状层级，突出文件的目录归属。",
+      "layoutDisabled": true,
+      "state": "ready",
+      "view": "dendro"
+    },
+    {
+      "colorDisabled": true,
+      "description": "最多展示 15 个目录的关联流向。双向引用通常取差值形成带宽，它不等于总调用量；剩余循环可能导致无法布局。",
+      "layoutDisabled": true,
+      "state": "ready",
+      "view": "sankey"
+    },
+    {
+      "colorDisabled": true,
+      "description": "前 100 个文件按目录分组，力导向布局将节点聚向预设的目录中心，同时保留跨目录关系。",
+      "layoutDisabled": true,
+      "state": "ready",
+      "view": "disjoint"
+    },
+    {
+      "colorDisabled": true,
+      "description": "前 70 个文件按目录沿圆周排列，二次 Bézier 曲线呈现引用关系，方便观察目录内与跨目录连接。",
+      "layoutDisabled": true,
+      "state": "ready",
+      "view": "bundle"
+    },
+    {
+      "colorDisabled": true,
+      "description": "独立的 Architecture 规则结合导入、目录和代码特征，生成模块方块、角色与架构关联。",
+      "layoutDisabled": true,
+      "state": "ready",
+      "view": "architecture"
+    },
+    {
+      "layout": "force",
+      "nativeActive": "Force"
+    },
+    {
+      "layout": "radial",
+      "nativeActive": "Radial"
+    },
+    {
+      "layout": "hierarchical",
+      "nativeActive": "Layers"
+    },
+    {
+      "layout": "grid",
+      "nativeActive": "Grid"
+    },
+    {
+      "layout": "metro",
+      "nativeActive": "Metro"
+    },
+    {
+      "color": "layer",
+      "parentValue": "layer"
+    }
+  ],
+  "responsiveChecks": [
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "documentWidth": 1265,
+      "loadedNativeThumbnails": 10,
+      "status": "Graph 原生视图已就绪",
+      "passed": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 375,
+      "iframeWidth": 331.3333435058594,
+      "view": "sankey",
+      "nativeReady": true,
+      "files": 15,
+      "error": "",
+      "nativeBottomCanvasNavigationVisible": true,
+      "passed": true
+    }
+  ],
+  "fullscreenCheck": {
+    "entered": true,
+    "exitControlVisible": true,
+    "exited": true,
+    "passed": true
+  },
+  "galleryScreenshots": [
+    "assets/native-gallery-desktop.jpg",
+    "assets/native-gallery-mobile.jpg"
+  ],
+  "nativeConsoleNotes": [
+    {
+      "level": "warn",
+      "message": "Upstream in-browser Babel transformer advises precompilation for production."
+    },
+    {
+      "level": "error",
+      "message": "Babel generator reports formatting deoptimization for the upstream inline script larger than 500KB; all ten native views completed rendering."
+    },
+    {
+      "level": "error",
+      "message": "Browser logs included navigation-time MutationObserver.observe entries without a source URL. No MutationObserver is present in the local adapter, teaching app, gallery, or upstream index; origin was not established. View readiness and interaction checks passed."
+    }
+  ],
+  "understandingUpdate": {
+    "date": "2026-10-05",
+    "preview": "http://127.0.0.1:8000/demos/002-codeflow/#understanding",
+    "figure": {
+      "svg": "demo/assets/codeflow-understanding.svg",
+      "png": "assets/codeflow-understanding.png",
+      "width": 1600,
+      "height": 1880,
+      "visuallyChecked": true
+    },
+    "screenshots": [
+      "assets/understanding-web-desktop.jpg",
+      "assets/understanding-web-mobile.jpg"
+    ],
+    "checks": [
+      {
+        "check": "desktop-summary-image",
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        },
+        "documentWidth": 1265,
+        "naturalImageWidth": 1600,
+        "passed": true
+      },
+      {
+        "check": "dialog-modal",
+        "modal": true,
+        "originalWidth": 1600,
+        "passed": true
+      },
+      {
+        "check": "dialog-zoom-in-out-original",
+        "observedScales": [
+          "125%",
+          "100%",
+          "100%"
+        ],
+        "passed": true
+      },
+      {
+        "check": "dialog-fit-desktop",
+        "viewportWidth": 784,
+        "imageWidth": 752,
+        "passed": true
+      },
+      {
+        "check": "dialog-close-restores-focus",
+        "activeElement": "open-understanding-map",
+        "bodyClassRemoved": true,
+        "passed": true
+      },
+      {
+        "check": "mobile-summary",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "documentWidth": 375,
+        "textColumns": 1,
+        "tableScrollWidth": 1040,
+        "tableViewportWidth": 331,
+        "passed": true
+      },
+      {
+        "check": "mobile-dialog",
+        "dialogWidth": 382.2,
+        "closeButtonWithinViewport": true,
+        "fitImageWidth": 334,
+        "escapeClosedDialog": true,
+        "focusRestored": true,
+        "passed": true
+      },
+      {
+        "check": "viewport-override-reset",
+        "restored": {
+          "width": 1280,
+          "height": 720
+        },
+        "userTabUnchanged": {
+          "width": 834,
+          "height": 871
+        },
+        "passed": true
+      },
+      {
+        "check": "native-graph-regression",
+        "status": "Graph 原生视图已就绪",
+        "files": 15,
+        "functions": 33,
+        "connections": 42,
+        "passed": true
+      },
+      {
+        "check": "native-architecture-regression",
+        "status": "Block Diagram 原生视图已就绪",
+        "ready": "true",
+        "view": "architecture",
+        "error": "",
+        "passed": true
+      },
+      {
+        "check": "four-tool-content-review",
+        "issuesResolved": [
+          "Cluster preserves file nodes and groups by directory centers",
+          "New figure/preview linked in README and sources"
+        ],
+        "scope": "Static documentation/source review; no accuracy or runtime comparison",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "limits": "Only the new summary layout/dialog and Graph/Architecture regression were rechecked in this update. The other native view checks above belong to the earlier native gallery verification; renderer code is unchanged."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "mini-shop-codeflow-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Original research source fixture: executable TypeScript business modules and React/Next-shaped UI source. Dependencies are declared for the JSX UI; no packages are installed by the research viewer.",
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "next": ">=14"
+  },
+  "license": "MIT"
+}

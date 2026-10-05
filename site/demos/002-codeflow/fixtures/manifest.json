@@ -1,0 +1,66 @@
+{
+  "name": "Mini Shop",
+  "description": "小型商店：12个核心业务TypeScript模块加3个真实React/Next形态页面、布局、组件，共15个源码文件；含商品、库存、定价、配送、结算、订单、服务路由和JSX展示。用于运行CodeFlow原生解析和十种视图，不是用户仓库。",
+  "files": [
+    {
+      "path": "src/utils/ids.ts",
+      "url": "./sample-project/src/utils/ids.ts"
+    },
+    {
+      "path": "src/utils/money.ts",
+      "url": "./sample-project/src/utils/money.ts"
+    },
+    {
+      "path": "src/server/services/catalog.ts",
+      "url": "./sample-project/src/server/services/catalog.ts"
+    },
+    {
+      "path": "src/server/services/inventory.ts",
+      "url": "./sample-project/src/server/services/inventory.ts"
+    },
+    {
+      "path": "src/server/services/pricing.ts",
+      "url": "./sample-project/src/server/services/pricing.ts"
+    },
+    {
+      "path": "src/server/services/shipping.ts",
+      "url": "./sample-project/src/server/services/shipping.ts"
+    },
+    {
+      "path": "src/server/services/checkout.ts",
+      "url": "./sample-project/src/server/services/checkout.ts"
+    },
+    {
+      "path": "src/server/services/orders.ts",
+      "url": "./sample-project/src/server/services/orders.ts"
+    },
+    {
+      "path": "src/server/routes/products.ts",
+      "url": "./sample-project/src/server/routes/products.ts"
+    },
+    {
+      "path": "src/server/routes/orders.ts",
+      "url": "./sample-project/src/server/routes/orders.ts"
+    },
+    {
+      "path": "src/ui/components.ts",
+      "url": "./sample-project/src/ui/components.ts"
+    },
+    {
+      "path": "src/ui/app.ts",
+      "url": "./sample-project/src/ui/app.ts"
+    },
+    {
+      "path": "src/app/page.tsx",
+      "url": "./sample-project/src/app/page.tsx"
+    },
+    {
+      "path": "src/app/layout.tsx",
+      "url": "./sample-project/src/app/layout.tsx"
+    },
+    {
+      "path": "src/components/ShopSummary.tsx",
+      "url": "./sample-project/src/components/ShopSummary.tsx"
+    }
+  ]
+}

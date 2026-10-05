@@ -15,6 +15,21 @@
       ],
       "cover": "assets/taskview-overview.png",
       "demo_url": "https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/"
+    },
+    {
+      "number": 2,
+      "slug": "codeflow",
+      "name": "CodeFlow · 代码结构可视化与轻量分析",
+      "summary": "无需后端的代码结构浏览与轻量静态分析工具：输入 GitHub 仓库、PR 或本地源码，另支持 Markdown 笔记；经 Babel/Acorn、Tree-sitter 与正则抽取定义和引用，推断文件关系，输出十种交互视图、源码卡片、指标、潜在影响与可导出报告。可通过 CLI 监听、Card 指标历史和无界面 JSON 接入外部流程。研究页以汇总图引导，包含真实源码原生演示及 Source Insight、Ix、GitNexus 对比；静态线索需经源码和测试核实。",
+      "repository": "https://github.com/braedonsaunders/codeflow",
+      "status": "已完成",
+      "tags": [
+        "代码结构",
+        "静态分析",
+        "工具对比"
+      ],
+      "cover": "assets/codeflow-understanding.png",
+      "demo_url": "https://yydshly.github.io/1004_codex_project/demos/002-codeflow/"
     }
   ]
 }

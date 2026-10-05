@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1880" viewBox="0 0 1600 1880" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">CodeFlow：从代码关系到展示与分析，一张图理解原理、十种视图、工具差异、用途和边界</title>
+  <desc id="diagram-desc">共同底座是解析源码、提取实体与引用、推断静态关系，再提供查询和展示。CodeFlow 的主图以文件为节点，十种视图分别涉及文件关系、目录和体量、聚合关系及架构规则，并非全部只是同一张图重排。与 Source Insight、Ix、GitNexus 的差异还在索引粒度、关系分析、持久化和任务接口。GitNexus 包含符号、候选流程和可选 PDG。实用价值应以定位关联、修改准备和核实证据衡量。静态关系不能证明实际执行和业务正确性。本页 CodeFlow 示例实测 15 文件、33 函数、42 静态链接和 10 种视图，其他工具是官方资料对比，未做准确率或性能实验。</desc>
+  <defs>
+    <style>
+      text{font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;fill:#172429;font-size:18px}
+      .h1{font-size:38px;font-weight:700;letter-spacing:-1px}.h2{font-size:25px;font-weight:700}.h3{font-size:22px;font-weight:650}
+      .label{font-size:20px;font-weight:650}.small{font-size:17px}.muted{fill:#59686d}.teal{fill:#176d72}.purple{fill:#6755aa}
+      .white{fill:#fffefb}.mono{font-family:Consolas,"Cascadia Mono",monospace;font-size:17px}.bold{font-weight:650}
+      .panel{fill:#fffefb;stroke:#dedfd8;stroke-width:1.5}.line{stroke:#dedfd8;stroke-width:1.5;fill:none}
+      .edge{stroke:#176d72;stroke-width:2;fill:none}.pedge{stroke:#6755aa;stroke-width:2;fill:none}
+      .node{fill:#e4f1ef;stroke:#176d72;stroke-width:1.5}.pnode{fill:#eeeaf7;stroke:#6755aa;stroke-width:1.5}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#176d72"/></marker>
+    <marker id="parrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#6755aa"/></marker>
+  </defs>
+  <rect width="1600" height="1880" fill="#f7f6f1"/>
+  <text x="64" y="55" class="small teal bold" letter-spacing="2">代码分析工具 · 共同理解</text>
+  <text x="64" y="109" class="h1">CodeFlow：从代码关系到展示与分析</text>
+  <text x="65" y="141" class="muted">知识图谱是关系的组织方式；展示效果只是其中一层。</text>
+  <rect x="1228" y="41" width="308" height="104" rx="14" fill="#e4f1ef" stroke="#c5dcd6"/>
+  <text x="1250" y="73" class="small teal bold">本页同一份真实源码 · 原生效果</text>
+  <text x="1250" y="105" class="h3 teal">15 文件 · 33 函数</text>
+  <text x="1250" y="132" class="small teal">42 静态链接 · 10 种视图</text>
+
+  <rect x="64" y="168" width="1472" height="94" rx="14" fill="#172429"/>
+  <text x="88" y="205" class="h3 white">我们的判断：关系数据的不同展示，不会自动增加代码分析能力。</text>
+  <text x="88" y="237" class="white">共同底座相似；工具差异也在抽取、关系推断、分析粒度、持久化和任务接口，不能只比较图的样式。</text>
+
+  <rect x="64" y="288" width="1472" height="268" rx="14" class="panel"/>
+  <text x="88" y="326" class="h2">01  原理：把源码变成可查询、可显示的静态结构</text>
+  <rect x="88" y="348" width="250" height="132" rx="10" fill="#e4f1ef"/>
+  <text x="106" y="379" class="label teal">① 输入源码</text>
+  <text x="106" y="410">文件、目录、语言</text>
+  <text x="106" y="438">函数、类型、模块</text>
+  <text x="106" y="465" class="small muted">分析时的源码快照</text>
+  <path d="M344 414 H362" class="edge" marker-end="url(#arrow)"/>
+  <rect x="370" y="348" width="266" height="132" rx="10" fill="#e4f1ef"/>
+  <text x="388" y="379" class="label teal">② 解析与回退</text>
+  <text x="388" y="410" class="small">JS / TS：Babel、Acorn</text>
+  <text x="388" y="438" class="small">Python：Tree-sitter / 正则</text>
+  <text x="388" y="465" class="small muted">其他路径可用启发式回退</text>
+  <path d="M642 414 H660" class="edge" marker-end="url(#arrow)"/>
+  <rect x="668" y="348" width="250" height="132" rx="10" fill="#e4f1ef"/>
+  <text x="686" y="379" class="label teal">③ 抽取结构</text>
+  <text x="686" y="410">定义、引用、import</text>
+  <text x="686" y="438">位置、目录、代码量</text>
+  <text x="686" y="465" class="small muted">识别范围因语言而异</text>
+  <path d="M924 414 H942" class="edge" marker-end="url(#arrow)"/>
+  <rect x="950" y="348" width="266" height="132" rx="10" fill="#eeeaf7"/>
+  <text x="968" y="379" class="label purple">④ 建关系与规则</text>
+  <text x="968" y="410">关联定义者与使用者</text>
+  <text x="968" y="438">聚合、架构分类、指标</text>
+  <text x="968" y="465" class="small muted">规则推断不是运行观测</text>
+  <path d="M1222 414 H1240" class="edge" marker-end="url(#arrow)"/>
+  <rect x="1248" y="348" width="264" height="132" rx="10" fill="#eeeaf7"/>
+  <text x="1266" y="379" class="label purple">⑤ 提供结果</text>
+  <text x="1266" y="410">图、源码卡片、报告</text>
+  <text x="1266" y="438">或符号与影响查询接口</text>
+  <text x="1266" y="465" class="small muted">具体能力依工具实现</text>
+  <path d="M88 499 H1512" class="line"/>
+  <text x="88" y="530" class="small"><tspan class="bold teal">CodeFlow 主关系图：</tspan>节点主要是文件；箭头表示定义者 → 使用者的静态关联。图谱关系、候选影响与实际执行路径需要区分。</text>
+
+  <text x="64" y="600" class="h2">02  展示：十种原生视图涉及不同数据与组织方式</text>
+  <rect x="64" y="620" width="350" height="282" rx="14" class="panel"/>
+  <text x="86" y="654" class="h3 teal">文件关系与源码</text>
+  <path d="M132 696 L237 688 L334 734 M132 696 L203 745 L334 734 M237 688 L203 745" class="edge"/>
+  <circle cx="132" cy="696" r="15" class="node"/><circle cx="237" cy="688" r="17" class="pnode"/><circle cx="203" cy="745" r="12" class="node"/><circle cx="334" cy="734" r="14" class="node"/>
+  <text x="86" y="787" class="mono bold">Graph · Code · 3D</text>
+  <text x="86" y="815" class="mono bold">Matrix · Cluster · Bundle</text>
+  <text x="86" y="850" class="small muted">以不同布局、矩阵与分组看关联；</text>
+  <text x="86" y="876" class="small muted">Code 还把源码片段放到文件卡片中。</text>
+
+  <rect x="438" y="620" width="350" height="282" rx="14" class="panel"/>
+  <text x="460" y="654" class="h3 teal">目录层级与代码体量</text>
+  <path d="M496 690 V736 M496 704 H541 M496 735 H541" class="edge"/>
+  <rect x="480" y="678" width="31" height="20" rx="4" class="node"/><rect x="542" y="694" width="34" height="20" rx="4" class="node"/><rect x="542" y="725" width="34" height="20" rx="4" class="pnode"/>
+  <rect x="614" y="678" width="132" height="72" rx="4" fill="#e4f1ef" stroke="#176d72"/>
+  <path d="M669 678 V750 M669 720 H746" class="edge"/>
+  <rect x="673" y="723" width="70" height="23" rx="2" fill="#eeeaf7"/>
+  <text x="460" y="787" class="mono bold">Tree · Treemap</text>
+  <text x="460" y="815" class="small">层级树 / 矩形面积</text>
+  <text x="460" y="850" class="small muted">观察目录结构与源码规模分布；</text>
+  <text x="460" y="876" class="small muted">面积大不等于风险高或业务重要。</text>
+
+  <rect x="812" y="620" width="350" height="282" rx="14" class="panel"/>
+  <text x="834" y="654" class="h3 teal">聚合后的目录关系</text>
+  <path d="M867 695 C913 695 937 691 982 691" stroke="#b9d8d2" stroke-width="20" fill="none"/>
+  <path d="M867 695 C913 695 937 738 982 738" stroke="#d8cff0" stroke-width="10" fill="none"/>
+  <path d="M1008 691 C1044 691 1072 720 1108 720" stroke="#b9d8d2" stroke-width="16" fill="none"/>
+  <path d="M1008 738 C1044 738 1072 720 1108 720" stroke="#d8cff0" stroke-width="9" fill="none"/>
+  <rect x="846" y="680" width="22" height="63" rx="4" class="node"/><rect x="983" y="676" width="24" height="31" rx="4" class="node"/><rect x="983" y="728" width="24" height="23" rx="4" class="pnode"/><rect x="1108" y="699" width="23" height="45" rx="4" class="node"/>
+  <text x="834" y="787" class="mono bold">Flow / Sankey</text>
+  <text x="834" y="815" class="small">把文件链接按目录聚合</text>
+  <text x="834" y="850" class="small muted">看分组之间静态关联的数量；</text>
+  <text x="834" y="876" class="small muted">粗线不代表运行流量或请求次数。</text>
+
+  <rect x="1186" y="620" width="350" height="282" rx="14" class="panel"/>
+  <text x="1208" y="654" class="h3 purple">独立架构规则视图</text>
+  <rect x="1214" y="680" width="92" height="31" rx="6" class="node"/><rect x="1327" y="680" width="90" height="31" rx="6" class="pnode"/><rect x="1327" y="730" width="90" height="31" rx="6" class="node"/><rect x="1434" y="704" width="70" height="34" rx="6" class="node"/>
+  <text x="1235" y="702" class="small teal">页面</text><text x="1348" y="702" class="small purple">服务</text><text x="1348" y="752" class="small teal">工具</text><text x="1448" y="727" class="small teal">数据</text>
+  <path d="M1306 695 H1320 M1372 711 V724 M1417 695 L1430 712 M1417 744 L1430 732" class="edge" marker-end="url(#arrow)"/>
+  <text x="1208" y="787" class="mono bold">Architecture / Block</text>
+  <text x="1208" y="815" class="small">由路径、角色与源码规则归类</text>
+  <text x="1208" y="850" class="small muted">帮助解释候选模块、路由与依赖；</text>
+  <text x="1208" y="876" class="small muted">名称与分类需回到源码核实。</text>
+  <text x="64" y="933" class="small muted">这十种形式用于观察与导航：拖动、缩放、点选、读源码 ≠ 重组业务流程后执行。全景更漂亮，也不意味着抽取关系更准确。</text>
+
+  <text x="64" y="978" class="h2">03  分析价值：让一个问题得到可核实的答案</text>
+  <rect x="64" y="998" width="475" height="142" rx="12" fill="#e4f1ef"/>
+  <text x="86" y="1031" class="h3 teal">定位关联：谁依赖这里？</text>
+  <text x="86" y="1063">选一个文件或符号 → 展开局部关系</text>
+  <text x="86" y="1090">返回定义、引用、调用与源码位置</text>
+  <text x="86" y="1119" class="small muted">图的作用：解释一段链路或循环依赖。</text>
+  <rect x="563" y="998" width="475" height="142" rx="12" fill="#e4f1ef"/>
+  <text x="585" y="1031" class="h3 teal">修改准备：可能影响谁？</text>
+  <text x="585" y="1063">定位改动实体 → 查询候选影响路径</text>
+  <text x="585" y="1090">形成关联代码与回归检查清单</text>
+  <text x="585" y="1119" class="small muted">关联只是线索；风险还取决于具体语义。</text>
+  <rect x="1062" y="998" width="474" height="142" rx="12" fill="#eeeaf7"/>
+  <text x="1084" y="1031" class="h3 purple">核实证据：结论可信吗？</text>
+  <text x="1084" y="1063">查询结果 → 原始源码 → 运行或测试</text>
+  <text x="1084" y="1090">确认关系存在、业务行为与覆盖范围</text>
+  <text x="1084" y="1119" class="small muted">收益应看减少了什么遗漏和排查成本。</text>
+
+  <text x="64" y="1187" class="h2">04  工具对比：相似底座，不同粒度、分析与接入方式</text>
+  <rect x="64" y="1208" width="1472" height="264" rx="12" class="panel"/>
+  <path d="M64 1250 H1536 M64 1305 H1536 M64 1360 H1536 M64 1415 H1536" class="line"/>
+  <rect x="65" y="1209" width="1470" height="40" rx="10" fill="#eceee7"/>
+  <text x="86" y="1237" class="small bold">工具</text><text x="306" y="1237" class="small bold">索引与关系层</text><text x="711" y="1237" class="small bold">结果与接口</text><text x="1159" y="1237" class="small bold">主要使用重心</text>
+  <text x="86" y="1285" class="label">Source Insight</text>
+  <text x="306" y="1285">符号数据库 / 编辑器上下文</text>
+  <text x="711" y="1285">定义、引用、调用树；宏 / 外部工具</text>
+  <text x="1159" y="1285">开发者阅读、导航与编辑</text>
+  <text x="86" y="1340" class="label teal">CodeFlow</text>
+  <text x="306" y="1340">文件主图 / 浏览器会话分析</text>
+  <text x="711" y="1340">十视图、源码卡片、轻量规则提示</text>
+  <text x="1159" y="1340">接手结构、局部依赖、讲解</text>
+  <text x="86" y="1395" class="label">Ix</text>
+  <text x="306" y="1395">持久符号图 / ArangoDB</text>
+  <text x="711" y="1395">CLI / MCP 查询与跨会话图谱</text>
+  <text x="1159" y="1395">长期结构查询、Agent 上下文</text>
+  <text x="86" y="1450" class="label purple">GitNexus</text>
+  <text x="306" y="1450">符号 / 候选流程 / 可选 PDG</text>
+  <text x="711" y="1450">CLI / MCP；影响、diff、route / shape</text>
+  <text x="1159" y="1450">AI 修改准备与关联检查</text>
+  <text x="64" y="1501" class="small muted">GitNexus 可选 PDG（当前 TS/JS，默认关闭）：语句级控制 / 数据依赖与静态 source → sink 线索。未做同案例准确率比较。</text>
+
+  <text x="64" y="1541" class="h2">05  使用场景：围绕任务选择最少、最有解释力的结果</text>
+  <rect x="64" y="1562" width="280" height="119" rx="11" class="panel"/>
+  <text x="82" y="1594" class="label teal">快速接手</text><text x="82" y="1625" class="small">先看目录、模块边界与</text><text x="82" y="1653" class="small">少量关键依赖，定位阅读入口。</text>
+  <rect x="362" y="1562" width="280" height="119" rx="11" class="panel"/>
+  <text x="380" y="1594" class="label teal">问题定位</text><text x="380" y="1625" class="small">围绕报错位置展开局部链；</text><text x="380" y="1653" class="small">用日志与运行信息继续验证。</text>
+  <rect x="660" y="1562" width="280" height="119" rx="11" class="panel"/>
+  <text x="678" y="1594" class="label teal">修改准备</text><text x="678" y="1625" class="small">查询潜在影响与相关代码；</text><text x="678" y="1653" class="small">补齐契约核对和回归检查。</text>
+  <rect x="958" y="1562" width="280" height="119" rx="11" class="panel"/>
+  <text x="976" y="1594" class="label purple">AI 持续查询</text><text x="976" y="1625" class="small">持久索引配合任务接口；</text><text x="976" y="1653" class="small">按工具支持返回结构上下文。</text>
+  <rect x="1256" y="1562" width="280" height="119" rx="11" class="panel"/>
+  <text x="1274" y="1594" class="label purple">结构讲解</text><text x="1274" y="1625" class="small">用小图解释一个循环、接口</text><text x="1274" y="1653" class="small">或模块边界，链接到真实源码。</text>
+
+  <rect x="64" y="1705" width="1472" height="106" rx="14" fill="#eceee7" stroke="#d9ded3"/>
+  <text x="88" y="1739" class="h3">边界：静态知识图谱提供结构证据，业务正确性仍需要额外验证</text>
+  <text x="88" y="1770">它不能证明真实执行路径、完整业务语义、权限策略或修改正确性，也不会直接变成业务执行引擎。</text>
+  <text x="88" y="1798" class="small muted">继续依靠契约与类型、测试、运行日志 / Trace、业务验收和权限验证。全景花图通常增益有限；围绕明确问题的局部图更有用。</text>
+
+  <text x="64" y="1847" class="small muted">证据：CodeFlow 原生分析与渲染实测（固定示例）；Source Insight / Ix / GitNexus 官方文档与实现比对。未验证所有语言与动态调用。</text>
+  <text x="64" y="1872" class="small muted">来源标签：CodeFlow Parser / runAnalysisData / views · Source Insight feature docs · Ix README · GitNexus architecture / MCP / PDG</text>
+  <text x="1536" y="1872" text-anchor="end" class="small teal">2026-10-05</text>
+</svg>

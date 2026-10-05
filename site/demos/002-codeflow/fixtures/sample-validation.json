@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-05",
+  "timezone": "Asia/Shanghai",
+  "sample": "Mini Shop",
+  "environment": {
+    "platform": "Windows",
+    "node": "v22.15.0",
+    "execution": "--experimental-strip-types; bundled Babel standalone for TSX syntax"
+  },
+  "scope": "原创样本核心业务执行与输入结构检查；3个TSX仅语法转换，不启动React/Next应用。未在本检查运行CodeFlow或Ix，不证明图边准确率。",
+  "business_checks": {
+    "count": 10,
+    "passed": true,
+    "checks": [
+      "totalCents",
+      "discountCents",
+      "shippingCents",
+      "deliveryDays",
+      "confirmed",
+      "teaStock",
+      "mugStock",
+      "receipt",
+      "zeroQuantity",
+      "shortage"
+    ],
+    "observed": {
+      "totalCents": 13500,
+      "discountCents": 500,
+      "shippingCents": 800,
+      "deliveryDays": 2,
+      "status": "confirmed",
+      "teaStock": 18,
+      "mugStock": 7
+    },
+    "other_checks": [
+      "收据含Order confirmed",
+      "数量0抛出Quantity错误",
+      "库存不足抛出inventory错误"
+    ]
+  },
+  "structural_checks": {
+    "files": 15,
+    "typescriptFiles": 12,
+    "tsxFiles": 3,
+    "directories": 6,
+    "directoryPaths": [
+      "src/utils",
+      "src/server/services",
+      "src/server/routes",
+      "src/ui",
+      "src/app",
+      "src/components"
+    ],
+    "uniqueExportedFunctions": 33,
+    "relativeImportStatements": 34,
+    "relativeImportsResolve": true,
+    "directoryDAG": true,
+    "directoryEdges": [
+      "src/server/services -> src/utils",
+      "src/server/routes -> src/server/services",
+      "src/ui -> src/utils",
+      "src/ui -> src/server/routes",
+      "src/app -> src/server/routes",
+      "src/app -> src/components",
+      "src/components -> src/server/services",
+      "src/components -> src/utils"
+    ],
+    "externalImports": [
+      "node:crypto",
+      "react"
+    ],
+    "sourceBytesRange": [
+      438,
+      1519
+    ]
+  },
+  "tsx_syntax_checks": {
+    "tool": "demo/runtime/vendor/babel/babel.min.js",
+    "babelVersion": "7.23.5",
+    "presets": [
+      "typescript",
+      "react"
+    ],
+    "passed": true,
+    "files": [
+      {
+        "file": "src/app/page.tsx",
+        "transformed": true
+      },
+      {
+        "file": "src/app/layout.tsx",
+        "transformed": true
+      },
+      {
+        "file": "src/components/ShopSummary.tsx",
+        "transformed": true
+      }
+    ],
+    "applicationExecuted": false
+  },
+  "upstream_view_qa": "由总项目浏览器验证另行记录；本文件不代替原生视图QA。"
+}

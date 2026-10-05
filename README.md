@@ -13,12 +13,13 @@
 | 编号 | 子项目 | 摘要 | 状态 | 标签 | 原仓库 | Demo |
 | --- | --- | --- | --- | --- | --- | --- |
 | 001 | [TaskView Community](projects/001-taskview-community/README.md) | 可自托管的项目与任务管理平台，提供看板、子任务、依赖图、权限与工时报表。底层采用 Vue、Express 和 PostgreSQL，通过 API、MCP、Webhook 连接人和外部 Agent；可复用为任务入口与进度管理层，自动执行和验收需另行构建。 | 已完成 | 任务管理、MCP、Agent 接入 | [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community) | [Demo](https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/) |
+| 002 | [CodeFlow · 代码结构可视化与轻量分析](projects/002-codeflow/README.md) | 无需后端的代码结构浏览与轻量静态分析工具：输入 GitHub 仓库、PR 或本地源码，另支持 Markdown 笔记；经 Babel/Acorn、Tree-sitter 与正则抽取定义和引用，推断文件关系，输出十种交互视图、源码卡片、指标、潜在影响与可导出报告。可通过 CLI 监听、Card 指标历史和无界面 JSON 接入外部流程。研究页以汇总图引导，包含真实源码原生演示及 Source Insight、Ix、GitNexus 对比；静态线索需经源码和测试核实。 | 已完成 | 代码结构、静态分析、工具对比 | [braedonsaunders/codeflow](https://github.com/braedonsaunders/codeflow) | [Demo](https://yydshly.github.io/1004_codex_project/demos/002-codeflow/) |
 
 <!-- PROJECT_INDEX:END -->
 
 ## 图片预览
 
-每个子项目可提供真实截图作为封面，并配上简短说明；更多图片和研究内容放在该项目的 README 中。封面添加后会同步到这里和 Web 索引页。
+每个子项目以理解汇总图或真实运行截图作为引导图，配上能力、原理、输入输出和使用场景摘要；图的性质与验证范围在研究文档中说明。引导图会同步到这里和 Web 索引页。
 
 <!-- PROJECT_GALLERY:START -->
 
@@ -31,6 +32,16 @@
 [研究记录](projects/001-taskview-community/README.md) · [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community)
 
 ![TaskView Community 研究引导图](projects/001-taskview-community/assets/taskview-overview.png)
+
+### **002 · CodeFlow · 代码结构可视化与轻量分析**
+
+**项目摘要**
+
+无需后端的代码结构浏览与轻量静态分析工具：输入 GitHub 仓库、PR 或本地源码，另支持 Markdown 笔记；经 Babel/Acorn、Tree-sitter 与正则抽取定义和引用，推断文件关系，输出十种交互视图、源码卡片、指标、潜在影响与可导出报告。可通过 CLI 监听、Card 指标历史和无界面 JSON 接入外部流程。研究页以汇总图引导，包含真实源码原生演示及 Source Insight、Ix、GitNexus 对比；静态线索需经源码和测试核实。
+
+[研究记录](projects/002-codeflow/README.md) · [braedonsaunders/codeflow](https://github.com/braedonsaunders/codeflow)
+
+![CodeFlow · 代码结构可视化与轻量分析 研究引导图](projects/002-codeflow/assets/codeflow-understanding.png)
 
 <!-- PROJECT_GALLERY:END -->
 

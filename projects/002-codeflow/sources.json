@@ -1,0 +1,389 @@
+{
+  "version": 1,
+  "project": "002-codeflow",
+  "repository": "https://github.com/braedonsaunders/codeflow",
+  "research_date": "2026-10-05",
+  "timezone": "Asia/Shanghai",
+  "source_snapshot_verified_date": "2026-10-04",
+  "snapshot_commit": "b0e82d127fc4990f571ebc6da6c5d9af2591aaa1",
+  "scope": "固定提交CodeFlow文档、源码与原生浏览器样本运行；2026-10-05新增Source Insight v4、Ix及GitNexus官方文档/源码只读核查和任务价值分析。只有CodeFlow运行15文件真实样本；另三工具未安装/运行，未进行四工具关系准确率、生产性能或任务收益实测。此前教学材料与原生运行证据分开。",
+  "sources": [
+    {
+      "id": "codeflow-readme",
+      "type": "upstream-documentation",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/README.md",
+      "supports": [
+        "定位与输入",
+        "功能声明",
+        "导出",
+        "本地与离线入口",
+        "启发式分析边界"
+      ],
+      "limit": "功能文档不等于运行质量验证；性能与隐私宣传未独立实测。"
+    },
+    {
+      "id": "codeflow-license",
+      "type": "upstream-license",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/LICENSE",
+      "supports": [
+        "MIT许可",
+        "Braedon Saunders署名"
+      ]
+    },
+    {
+      "id": "parser-routes",
+      "type": "source-code",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L998",
+      "related_urls": [
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L1954",
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L3277"
+      ],
+      "supports": [
+        "JS/TS Babel与Acorn AST正常路径",
+        "Python Tree-sitter非定义标识符引用计数",
+        "grammar available不代表主路径已启用"
+      ]
+    },
+    {
+      "id": "main-file-graph",
+      "type": "source-code",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L5215",
+      "related_urls": [
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L5270"
+      ],
+      "supports": [
+        "函数名称和导入消歧",
+        "定义文件指向引用文件的边",
+        "歧义调用可能不连边"
+      ],
+      "limit": "不是完整类型分析、纯import图或运行时调用轨迹。"
+    },
+    {
+      "id": "architecture-graph",
+      "type": "source-code",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L4819",
+      "related_urls": [
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L4240",
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L4846"
+      ],
+      "supports": [
+        "独立import架构管线",
+        "组件和角色推断"
+      ]
+    },
+    {
+      "id": "blast-health",
+      "type": "source-code",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L5574",
+      "related_urls": [
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L5660"
+      ],
+      "supports": [
+        "最多3层BFS",
+        "深度衰减影响分",
+        "自定义健康扣分和等级规则"
+      ],
+      "limit": "潜在关联不是故障概率；健康分不是业务正确性或安全认证。"
+    },
+    {
+      "id": "coverage-limits",
+      "type": "source-code",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L789",
+      "related_urls": [
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L995",
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L10527"
+      ],
+      "supports": [
+        "GitHub API入口750文件样本上限",
+        "单文件超过2MiB跳过内容"
+      ]
+    },
+    {
+      "id": "git-history",
+      "type": "source-code",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L3664",
+      "related_urls": [
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L10546"
+      ],
+      "supports": [
+        "churn扫描取最多10条提交",
+        "ownership按最多50条提交作者统计"
+      ],
+      "limit": "不是完整历史、逐行blame、实际调用频率或性能采样。"
+    },
+    {
+      "id": "browser-cache",
+      "type": "source-code",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L9128",
+      "related_urls": [
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L9161"
+      ],
+      "supports": [
+        "IndexedDB近期分析摘要",
+        "缓存删除content与snippet"
+      ],
+      "limit": "去源码不是不持久化分析元数据，也不是完整版本化代码图数据库。"
+    },
+    {
+      "id": "cli-watch",
+      "type": "source-code",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/cli/codeflow.mjs",
+      "supports": [
+        "loopback HTTP服务",
+        "文件监听",
+        "SSE事件",
+        "复用网页UI"
+      ]
+    },
+    {
+      "id": "card-headless",
+      "type": "documentation-and-source",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/card/README.md",
+      "related_urls": [
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/card/analyze.js",
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/card/lib/analyzer.js"
+      ],
+      "supports": [
+        "README SVG与历史JSON",
+        "可选合并PR评论",
+        "无界面JSON输出",
+        "Node VM的解析器设为undefined"
+      ],
+      "limit": "同源分析代码不能保证浏览器与无界面解析结果一致。"
+    },
+    {
+      "id": "ix-local-research",
+      "type": "prior-local-research",
+      "upstream_repository": "https://github.com/ix-infrastructure/Ix",
+      "upstream_snapshot": "公开main文档与源码，未锁定commit；既有研究日期2026-10-04",
+      "supports": [
+        "持久结构图定位",
+        "实体查询和MCP上下文",
+        "增量图维护",
+        "私有后端、Pro和云边界"
+      ],
+      "limit": "未运行Ix后端，未进行两工具准确率或任务收益对照。",
+      "url": "https://github.com/ix-infrastructure/Ix",
+      "provenance": "曾参考既有本地 Ix 研究；此发布记录列出公开可复核上游，不链接本机路径。"
+    },
+    {
+      "id": "ix-upstream",
+      "type": "upstream-evidence-rechecked",
+      "verified_date": "2026-10-05",
+      "url": "https://github.com/ix-infrastructure/Ix/blob/main/ix-cli/src/mcp/server.ts",
+      "related_urls": [
+        "https://github.com/ix-infrastructure/Ix/blob/main/ix-cli/src/cli/commands/ingest.ts",
+        "https://github.com/ix-infrastructure/Ix/blob/main/docker-compose.standalone.yml",
+        "https://github.com/ix-infrastructure/Ix/blob/main/CONTRIBUTING.md"
+      ],
+      "supports": [
+        "MCP工具和上下文预算",
+        "mtime/hash摄取与图补丁",
+        "ArangoDB与memory-layer部署",
+        "后端公开范围"
+      ],
+      "limit": "Ix链接指向会变化的main，2026-10-05只读核查公开README、MCP和部署文件；未运行后端，采用前需核对所安装版本。"
+    },
+    {
+      "id": "native-view-selector",
+      "type": "source-code",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L14568",
+      "supports": [
+        "十种原生视图的key与名称",
+        "区分图类型和着色/布局维度"
+      ],
+      "limit": "入口存在不证明所有图在任意环境均运行成功，具体浏览器检查单独记录。"
+    },
+    {
+      "id": "local-native-runtime",
+      "type": "vendored-upstream-with-adapter",
+      "local_paths": [
+        "demo/runtime/index.html",
+        "demo/runtime/UPSTREAM.md",
+        "demo/runtime/upstream.json",
+        "demo/runtime/LICENSE"
+      ],
+      "upstream_commit": "b0e82d127fc4990f571ebc6da6c5d9af2591aaa1",
+      "upstream_index_sha256": "8d8a3b83430da8f487a16b39fe239d0fcd46716a6dee2ea061425a5dc968e39d",
+      "vendor_file_count": 51,
+      "vendor_total_bytes": 39439109,
+      "supports": [
+        "锁定提交原生index与vendor",
+        "真实Parser.extract/runAnalysisData",
+        "十种原生renderer",
+        "源码卡恢复实际fetch文本",
+        "上游MIT与vendor原有许可保留"
+      ],
+      "adaptations": [
+        "加入demo-bridge.js引用",
+        "App增加桥接hook",
+        "桥接器读取manifest并将真实样本分析送入原生state"
+      ],
+      "limit": "原生分析输入仅为原创小型样本，非生产仓库benchmark；无Git历史，QA由总项目另记。",
+      "browser_observations": {
+        "date": "2026-10-05",
+        "files": 15,
+        "functions": 33,
+        "static_connections": 42,
+        "limit": "数量不等于图边准确率验证，十视图与交互检查由总项目记录。",
+        "architecture_blocks": 6,
+        "architecture_dependencies": 10,
+        "architecture_routes": 1,
+        "framework_inference": "Next.js由页面/布局文件形态启发式识别；未运行或部署Next应用"
+      }
+    },
+    {
+      "id": "mini-shop-fixture",
+      "type": "original-executable-example",
+      "local_paths": [
+        "demo/fixtures/manifest.json",
+        "demo/fixtures/index.html",
+        "demo/fixtures/README.md",
+        "demo/fixtures/sample-validation.json",
+        "demo/fixtures/LICENSE"
+      ],
+      "supports": [
+        "15个真实源码文件：12TS与3TSX",
+        "6目录33唯一export函数",
+        "34条完整相对import和目录DAG",
+        "Node22.15.0核心业务10项断言通过",
+        "已有vendor Babel7.23.5成功转换3TSX语法",
+        "textContent源码显示",
+        "MIT样本许可"
+      ],
+      "limit": "不是用户仓库或上游自带样本；核心业务验证不证明CodeFlow图边准确率。TSX仅语法转换，未执行或部署React/Next应用，没有真实Git活跃度/贡献者记录。"
+    },
+    {
+      "id": "native-code-highlighting-defect",
+      "type": "source-code-and-browser-observation",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L11236",
+      "supports": [
+        "Code原生着色标签残留",
+        "span插入后关键词class再次替换",
+        "原生highlightSyntax未被本地修改"
+      ],
+      "local_reference": "demo/fixtures/index.html",
+      "limit": "保留原生显示缺陷，用textContent查看实际源码；不据此推断解析准确率或任意项目中的影响范围。"
+    },
+    {
+      "id": "native-view-data-projections",
+      "type": "source-code-review",
+      "verified_date": "2026-10-05",
+      "url": "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L12731",
+      "related_urls": [
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L12876",
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L13003",
+        "https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html#L4819"
+      ],
+      "supports": [
+        "Treemap面积按代码行数",
+        "Tree按目录与文件分组而非调用树",
+        "Flow聚合主图文件边到目录并净额合并双向关系",
+        "Cluster按目录中心布置文件而非业务社区检测",
+        "独立架构抽取管线与主图分开",
+        "Matrix40文件、Tree80文件、Cluster100文件、Flow15目录的显示上限"
+      ],
+      "limit": "十视图并非十套独立分析，也不是十份完全相同的数据；布局变化不证明新增源码事实。"
+    },
+    {
+      "id": "source-insight-symbols-and-relations",
+      "type": "official-product-documentation",
+      "verified_date": "2026-10-05",
+      "url": "https://www.sourceinsight.com/feature-details/",
+      "supports": [
+        "项目符号数据库",
+        "定义引用导航",
+        "调用树与继承关系窗",
+        "编辑时与项目同步更新",
+        "符号重命名"
+      ],
+      "limit": "Source Insight v4官方能力说明；未安装运行，也未验证对目标语言/仓库的关系质量。"
+    },
+    {
+      "id": "source-insight-command-and-macro",
+      "type": "official-user-guide",
+      "verified_date": "2026-10-05",
+      "url": "https://www.sourceinsight.com/doc/v4/userguide/Manual/Concepts/Command_Line_Options.htm",
+      "supports": [
+        "命令行可调用内建、自定义或宏命令",
+        "命令行同步项目文件与批处理同步",
+        "旧编辑器也有自动化入口"
+      ],
+      "limit": "没有核查其原生MCP实现；不能据此声称与Ix/GitNexus的接口等价。"
+    },
+    {
+      "id": "gitnexus-architecture",
+      "type": "upstream-documentation",
+      "verified_date": "2026-10-05",
+      "url": "https://github.com/abhigyanpatwari/GitNexus/blob/main/ARCHITECTURE.md",
+      "snapshot": "公开main材料，未锁定commit，未运行",
+      "supports": [
+        "本地LadybugDB保存符号关系索引",
+        "CLI/MCP/HTTP使用同一后端",
+        "解析缓存与索引过期状态",
+        "符号、跨文件关系、社区及候选流程"
+      ],
+      "limit": "main可变化；后端、缓存和接口描述不等于图边准确率、任务收益或运行轨迹验证。"
+    },
+    {
+      "id": "gitnexus-task-tools",
+      "type": "upstream-source-code",
+      "verified_date": "2026-10-05",
+      "url": "https://github.com/abhigyanpatwari/GitNexus/blob/main/gitnexus/src/mcp/tools.ts",
+      "related_urls": [
+        "https://github.com/abhigyanpatwari/GitNexus/blob/main/ARCHITECTURE.md#optional-cfgpdg-emission---pdg-20812086"
+      ],
+      "supports": [
+        "context符号上下文",
+        "impact潜在改动影响",
+        "detect_changes映射Git差异到符号和流程",
+        "可选--pdg的控制/数据依赖与污点线索查询"
+      ],
+      "limit": "PDG默认关闭、当前TS/JS，受索引选项及有限额约束；工具结果仍是静态线索，未运行或验证业务正确性。"
+    },
+    {
+      "id": "gitnexus-static-processes",
+      "type": "upstream-source-code",
+      "verified_date": "2026-10-05",
+      "url": "https://github.com/abhigyanpatwari/GitNexus/blob/main/gitnexus/src/core/ingestion/process-processor.ts",
+      "supports": [
+        "候选流程沿静态调用关系遍历",
+        "深度和分支预算影响结果"
+      ],
+      "limit": "不是实际运行trace，不证明该路径已被执行或覆盖全部动态行为。"
+    }
+  ],
+  "interpretations": {
+    "nature": "作者对工具价值的原创分析，不是上游效果保证。",
+    "shared_basis": "源码解析、结构索引和关系模型，广义上可称代码知识图谱。",
+    "substantive_differences": [
+      "解析与消歧",
+      "实体和关系粒度",
+      "保存与更新",
+      "任务查询及证据组织",
+      "UI/CLI/MCP接入",
+      "运行成本"
+    ],
+    "display_judgment": "换布局不增加源码事实；适合具体问题的局部图可帮助核对；增加可靠关系或任务查询则可能增加分析价值。",
+    "validation_boundary": "只有CodeFlow原生样本运行，15文件33函数42静态连接不能充当四工具对比或准确率验证。"
+  },
+  "artifacts": {
+    "overview_svg": "assets/codeflow-overview.svg",
+    "overview_png": "assets/codeflow-overview.png",
+    "teaching_page": "demo/index.html",
+    "desktop_preview": "assets/research-web-desktop.jpg",
+    "mobile_preview": "assets/research-web-mobile.jpg",
+    "nature": "原理图为原创说明；历史教学截图为固定示意数据。新运行器用锁定提交的真实CodeFlow解析/渲染分析原创Mini Shop源码，新视图QA与旧教学检查分开记录。",
+    "native_runtime": "demo/runtime/index.html",
+    "fixture_manifest": "demo/fixtures/manifest.json",
+    "source_browser": "demo/fixtures/index.html",
+    "fixture_validation": "demo/fixtures/sample-validation.json",
+    "understanding_svg": "demo/assets/codeflow-understanding.svg",
+    "understanding_png": "assets/codeflow-understanding.png",
+    "understanding_desktop_preview": "assets/understanding-web-desktop.jpg",
+    "understanding_mobile_preview": "assets/understanding-web-mobile.jpg",
+    "understanding_nature": "原创理解图：基于锁定 CodeFlow 源码、真实样本展示，以及另外三工具官方文档与公开源码；非四工具同案例准确率/性能比较。",
+    "guide_image": "assets/codeflow-understanding.png",
+    "public_page": "https://yydshly.github.io/1004_codex_project/demos/002-codeflow/#understanding"
+  }
+}

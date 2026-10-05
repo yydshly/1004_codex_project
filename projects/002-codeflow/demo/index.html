@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CodeFlow 能力与原理研究：输入 GitHub 仓库、PR、本地源码或笔记，经混合解析与关系推断生成十种视图、源码卡片、指标、影响候选和报告；展示 CLI、Card 与 JSON 扩展入口，以及和 Source Insight、Ix、GitNexus 的对比。">
+  <title>CodeFlow · 从代码到关系图</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./understanding.css">
+  <script src="./app.js" defer></script>
+  <script src="./gallery.js" defer></script>
+  <script src="./understanding.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="masthead" id="top">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">C<span>↗</span></span><span>代码库研究集 <b>/ 002</b></span></a>
+    <nav aria-label="页面章节"><a href="#understanding">理解汇总</a><a href="#views">原生效果</a><a href="#pipeline">原理</a><a href="#compare">四库对比</a></nav>
+    <a id="catalog-link" class="catalog-link" href="../../index.html">返回研究集 <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="tiny-dot"></span> CODEFLOW / 代码结构可视化</p>
+        <h1 id="hero-title">先问代码问题，<br>再看<span class="hero-accent">关系。</span></h1>
+        <p class="hero-description">输入 GitHub 仓库、PR 或本地源码，经混合解析与关系推断，得到十种视图、源码卡片、指标、影响候选和报告。用汇总图理解它的能力、原理、实际效果、CLI / Card / JSON 扩展入口，以及与 Source Insight、Ix、GitNexus 的区别。</p>
+        <div class="hero-actions"><a class="button button-primary" href="#understanding">查看理解汇总 <span aria-hidden="true">↓</span></a><a class="button button-quiet" href="#views">体验十种原生视图</a><a class="button button-quiet" href="#impact">理解改动影响</a></div>
+        <p class="research-meta">资料核查 2026.10.04 <span>·</span> 整理 2026.10.05<br>源码快照 <code>b0e82d127fc4</code> <span>·</span> 源码研究与原生视图体验</p>
+      </div>
+      <aside class="hero-note" aria-label="核心定位">
+        <div class="note-header"><span>01 / 核心理解</span><span aria-hidden="true">↗</span></div>
+        <div class="mini-graph" aria-hidden="true"><span class="mini-file">src/</span><i></i><span class="mini-hub">图</span><i></i><span class="mini-file">线索</span></div>
+        <h2>代码结构索引，<br>支撑阅读与查询。</h2>
+        <p>共同底座是源码解析与关系模型。展示变化、分析深度和查询接口，需要分别判断。</p>
+        <dl class="hero-facts"><div><dt>主要交付</dt><dd>关系图 · 指标 · 排查线索</dd></div><div><dt>适合工作</dt><dd>接手项目 · 审查 · 重构准备</dd></div><div><dt>分析性质</dt><dd>静态推断，需结合源码确认</dd></div></dl>
+      </aside>
+    </section>
+
+    <section class="section understanding-section" id="understanding" aria-labelledby="understanding-title">
+      <div class="section-heading"><div><p class="eyebrow">我们的理解 / 从原理到实际价值</p><h2 id="understanding-title">一张图，分清分析、索引、接口与展示。</h2></div><p class="section-description">四种工具的共同底座与差异<br>整理与补充核查：2026.10.05</p></div>
+      <p class="section-lead"><strong>共同底座：代码库 → 结构索引与关系模型 → 查询、诊断与不同交付方式。</strong> 可以把这类模型广义称作“代码知识图谱”；CodeFlow 的主图以文件关系为主，不能因此把它等同于完整、持久的符号图数据库。</p>
+      <div class="understanding-takeaway"><strong>换一种布局，不会自动增加分析事实。增加解析覆盖、关系类型、推断规则或任务查询，才可能增加分析能力。</strong><small>我们的判断：多数全景图对日常分析增益有限。围绕一个问题的局部调用链、循环依赖和改动影响路径，更容易用于源码核对与回归准备。</small></div>
+      <figure class="understanding-figure" aria-labelledby="understanding-map-caption">
+        <div class="understanding-figure-head"><div><strong>CodeFlow 与代码结构工具 · 理解全图</strong><span>原理 → 十视图分组 → 任务价值 → 四库对比 → 场景与验收</span></div><button type="button" class="button button-quiet" id="open-understanding-map" aria-haspopup="dialog">放大阅读汇总图 ⛶</button></div>
+        <img src="./assets/codeflow-understanding.svg" width="1600" height="1880" alt="理解汇总图：源码经混合解析和关系推断形成文件图与指标；十视图分为关系投影、目录体量和独立架构抽取；与 Source Insight、Ix、GitNexus 的差异涉及索引粒度、持久化、分析和查询接口；适用接手项目、局部定位、修改准备与 Agent 查询；正确性需要源码、测试和运行证据。">
+        <figcaption id="understanding-map-caption">这是根据官方文档、实现及本页实测整理的理解图。缩略图适合看结构，点“放大阅读”可按原尺寸查看；窄屏也可阅读下方文字版。<a href="./assets/codeflow-understanding.svg" target="_blank" rel="noopener noreferrer">单独打开 SVG ↗</a> · <a href="./assets/codeflow-understanding.svg" download="codeflow-understanding.svg">保存汇总图</a></figcaption>
+      </figure>
+      <details class="understanding-reading" open><summary>文字版：四个层次，分别判断价值</summary><div class="understanding-layers">
+        <article><span>01 / 解析与推断</span><h3>从源码得到哪些事实？</h3><p>识别定义、引用、导入与代码特征，再推断关系归属。语言支持、类型与作用域解析、动态调用处理、遗漏和误连，决定分析基础的质量。</p></article>
+        <article><span>02 / 索引与保存</span><h3>以什么单位组织和更新？</h3><p>文件、函数、类、语句的粒度不同；当前结果、摘要缓存和持久实体图也不同。代码改变后，索引是否及时更新、结果能否追溯到源码，直接影响可用性。</p></article>
+        <article><span>03 / 分析与接口</span><h3>能回答什么具体问题？</h3><p>查调用者、查依赖、展开影响候选、映射 Git 差异，或增加数据/控制依赖分析。CLI、MCP、JSON 是交付接口，分析能力来自其背后的模型与算法。</p></article>
+        <article><span>04 / 展示与操作</span><h3>怎样让结果更容易核对？</h3><p>文件列表、源码跳转、局部路径与图形都是呈现方式。增加布局、颜色或三维视角，通常改变阅读方式；关系数据的正确性需要单独验证。</p></article>
+      </div></details>
+      <div class="view-taxonomy" aria-label="十种原生视图的数据区别">
+        <article><h3>关系数据的投影与聚合</h3><p class="view-types">Graph · Code · 3D · Matrix · Flow · Cluster · Bundle</p><p>主要来自文件关系。Code 加源码卡片；Matrix 转为行列；Flow 聚合到目录并合并双向关系；Cluster 按目录布置；三维和圆周布局改变观察方式。</p></article>
+        <article><h3>目录结构与代码体量</h3><p class="view-types">Tree · Treemap</p><p>Tree 展示目录归属，不是函数调用树。Treemap 面积按源码行数编码，不代表复杂度、性能或业务重要性。</p></article>
+        <article><h3>独立的架构抽取</h3><p class="view-types">Block Diagram / Architecture</p><p>另一路提取 import、路由、组件与角色特征，再生成架构块。它增加了不同事实和规则推断，不应笼统说成主图换一种布局。</p></article>
+      </div>
+      <div class="understanding-task" aria-label="用真实问题判断分析价值">
+        <article><span>任务 A / 定位与阅读</span><h3>这个入口如何走到目标函数？</h3><p>先查定义、引用和局部关系，再核对每个调用点。路径缺失时回到搜索、框架约定及源码；静态链条需与真实运行区分。</p><p class="task-output">有效结果：源码位置 + 关系依据 + 一段可解释的路径。</p></article>
+        <article><span>任务 B / 修改准备</span><h3>修改价格逻辑，要检查哪些使用者？</h3><p>CodeFlow 的文件级影响候选用于安排阅读；GitNexus / Ix 的符号查询可进一步组织关联。候选清单要结合接口含义和测试选择。</p><p class="task-output">有效结果：受影响候选 + 修改理由 + 回归检查范围。</p></article>
+        <article><span>任务 C / 变更与验收</span><h3>这次改动是否保持预期行为？</h3><p>把差异关联到符号和路径，复核源码，执行编译、测试，并查日志或 trace。关系图用于缩小调查范围，行为验收依靠执行证据。</p><p class="task-output">有效结果：差异说明 + 测试结果 + 实际行为证据。</p></article>
+      </div>
+      <div class="evidence-strip"><div><strong>本页已经验证什么</strong><p>固定 CodeFlow 快照真实解析同一份 Mini Shop 源码，得到 15 文件、33 函数、42 条静态连接；十种原生视图、五种布局及窄屏交互已检查。数量与截图证明运行和展示，不能证明每条边都正确。</p></div><div><strong>比较结论的依据与范围</strong><p>Source Insight、Ix、GitNexus 为官方文档与实现比较，未在同一数据集上运行，也未对比准确率或生产收益。场景取舍属于基于能力的研究判断。</p></div></div>
+      <p class="source-note">原理与视图依据：<a href="https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html" target="_blank" rel="noopener noreferrer">CodeFlow 固定分析器与渲染器</a>；工具模型与接口依据见<a href="#compare">四库对比</a>。<a href="#views">查看同一源码的实际效果 ↓</a></p>
+    </section>
+
+    <section class="section" id="capabilities" aria-labelledby="capabilities-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / 能力地图</p><h2 id="capabilities-title">八类能力，围绕一次代码阅读。</h2></div><p class="section-description">从认识结构到发现值得追查的问题。<br>以下依据上游文档和源码整理。</p></div>
+      <div class="capability-grid">
+        <article class="capability-card"><span class="card-number">01</span><h3>交互关系图</h3><p>浏览文件关联、按目录或布局查看结构，选中文件进入代码与关系细节。</p><span class="card-purpose">找到阅读入口</span></article>
+        <article class="capability-card"><span class="card-number">02</span><h3>改动与 PR 影响</h3><p>沿提供者到使用者的关系，查找直接和间接关联，辅助确定检查范围。</p><span class="card-purpose">安排回归检查</span></article>
+        <article class="capability-card"><span class="card-number">03</span><h3>结构与技术债提示</h3><p>循环依赖、高耦合、过大文件、重复代码、疑似死代码与分层线索。</p><span class="card-purpose">选择重构候选</span></article>
+        <article class="capability-card"><span class="card-number">04</span><h3>安全与模式规则</h3><p>提示硬编码密钥、危险调用、SQL 拼接，以及部分设计模式；结果需人工核实。</p><span class="card-purpose">发现排查线索</span></article>
+        <article class="capability-card"><span class="card-number">05</span><h3>Git 历史视角</h3><p>结合提交记录查看文件活跃度和主要贡献者，辅助理解维护热点。</p><span class="card-purpose">找到活跃模块</span></article>
+        <article class="capability-card"><span class="card-number">06</span><h3>Markdown 与 Wiki 图</h3><p>将 Markdown 相对链接与 Obsidian 双链组织成关联图，也可阅读笔记结构。</p><span class="card-purpose">梳理知识链接</span></article>
+        <article class="capability-card"><span class="card-number">07</span><h3>分析报告与指标</h3><p>导出分析结果，浏览健康评分和指标历史；评分来自规则扣分与结构统计。</p><span class="card-purpose">沉淀研究结果</span></article>
+        <article class="capability-card"><span class="card-number">08</span><h3>CLI 与 Action Card</h3><p>CLI 提供本地服务和文件监听；GitHub Action 可更新 README 中的项目指标卡片。</p><span class="card-purpose">融入日常阅读</span></article>
+      </div>
+      <p class="source-note">依据：<a href="https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/README.md" target="_blank" rel="noopener noreferrer">README</a> · <a href="https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html" target="_blank" rel="noopener noreferrer">分析器与界面源码</a> · <a href="https://github.com/braedonsaunders/codeflow/tree/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/card" target="_blank" rel="noopener noreferrer">Card</a></p>
+    </section>
+
+    <section class="section native-gallery" id="views" aria-labelledby="views-title">
+      <div class="section-heading"><div><p class="eyebrow">原生效果 / 同一份示例源码</p><h2 id="views-title">十种视图，直接比较实际效果。</h2></div><a class="fixture-link" href="./fixtures/index.html" target="_blank" rel="noopener noreferrer">查看示例源码 ↗</a></div>
+      <p class="native-intro">下方运行 CodeFlow 的<strong>原生分析器与渲染器</strong>，将同一份 Mini Shop 演示项目切换成十种视图。卡片是原生效果截图；点击卡片后，可在运行器里继续操作。用这些效果比较阅读方式，分析价值需围绕具体问题判断；各视图的数据区别见<a href="#understanding">理解汇总</a>。</p>
+      <div class="native-view-tabs" role="tablist" aria-label="十种 CodeFlow 原生视图">
+        <button type="button" id="view-graph" role="tab" data-native-view="graph" aria-controls="native-view-panel" aria-selected="true"><img src="./assets/native-graph.jpg" alt="文件关系图的原生效果截图" loading="lazy"><span><strong>文件关系图</strong><small>Graph</small></span></button>
+        <button type="button" id="view-code" role="tab" data-native-view="code" aria-controls="native-view-panel" aria-selected="false" tabindex="-1"><img src="./assets/native-code.jpg" alt="代码关联图的原生效果截图" loading="lazy"><span><strong>代码关联图</strong><small>Code</small></span></button>
+        <button type="button" id="view-graph3d" role="tab" data-native-view="graph3d" aria-controls="native-view-panel" aria-selected="false" tabindex="-1"><img src="./assets/native-graph3d.jpg" alt="三维关系图的原生效果截图" loading="lazy"><span><strong>三维关系图</strong><small>3D Graph</small></span></button>
+        <button type="button" id="view-treemap" role="tab" data-native-view="treemap" aria-controls="native-view-panel" aria-selected="false" tabindex="-1"><img src="./assets/native-treemap.jpg" alt="矩形树图的原生效果截图" loading="lazy"><span><strong>矩形树图</strong><small>Treemap</small></span></button>
+        <button type="button" id="view-matrix" role="tab" data-native-view="matrix" aria-controls="native-view-panel" aria-selected="false" tabindex="-1"><img src="./assets/native-matrix.jpg" alt="依赖矩阵的原生效果截图" loading="lazy"><span><strong>依赖矩阵</strong><small>Matrix</small></span></button>
+        <button type="button" id="view-dendro" role="tab" data-native-view="dendro" aria-controls="native-view-panel" aria-selected="false" tabindex="-1"><img src="./assets/native-dendro.jpg" alt="目录树的原生效果截图" loading="lazy"><span><strong>目录树</strong><small>Tree</small></span></button>
+        <button type="button" id="view-sankey" role="tab" data-native-view="sankey" aria-controls="native-view-panel" aria-selected="false" tabindex="-1"><img src="./assets/native-sankey.jpg" alt="关系流图的原生效果截图" loading="lazy"><span><strong>关系流图</strong><small>Flow</small></span></button>
+        <button type="button" id="view-disjoint" role="tab" data-native-view="disjoint" aria-controls="native-view-panel" aria-selected="false" tabindex="-1"><img src="./assets/native-disjoint.jpg" alt="目录簇图的原生效果截图" loading="lazy"><span><strong>目录簇图</strong><small>Cluster</small></span></button>
+        <button type="button" id="view-bundle" role="tab" data-native-view="bundle" aria-controls="native-view-panel" aria-selected="false" tabindex="-1"><img src="./assets/native-bundle.jpg" alt="环形连线图的原生效果截图" loading="lazy"><span><strong>环形连线图</strong><small>Bundle</small></span></button>
+        <button type="button" id="view-architecture" role="tab" data-native-view="architecture" aria-controls="native-view-panel" aria-selected="false" tabindex="-1"><img src="./assets/native-architecture.jpg" alt="架构方块图的原生效果截图" loading="lazy"><span><strong>架构方块图</strong><small>Block Diagram</small></span></button>
+      </div>
+      <div id="native-view-panel" role="tabpanel" aria-labelledby="view-graph">
+        <div class="native-view-summary"><h3 id="native-view-name">文件关系图 <span>Graph</span></h3><p id="native-status" class="native-status" role="status" aria-live="polite" aria-atomic="true" data-state="loading"><i aria-hidden="true"></i><span>正在加载原生分析器与示例项目…</span></p></div>
+        <div class="native-stage" id="native-stage">
+          <div class="native-toolbar"><div class="native-options"><label>布局 <select id="native-layout"><option value="force">力导向 Force</option><option value="radial">放射 Radial</option><option value="hierarchical">分层 Hierarchical</option><option value="grid">网格 Grid</option><option value="metro">地铁 Metro</option></select></label><label>着色 <select id="native-color"><option value="folder">目录 Folder</option><option value="layer">分层 Layer</option></select></label></div><div class="native-actions"><button type="button" id="native-fullscreen" aria-pressed="false">大屏模式 ⛶</button><a href="./runtime/index.html?view=graph&amp;theme=dark" id="native-open" target="_blank" rel="noopener noreferrer">单独打开 ↗</a></div></div>
+          <div class="native-frame-viewport"><iframe id="native-viewer" src="./runtime/index.html?view=graph&amp;theme=dark" title="CodeFlow 原生运行器：Mini Shop 示例源码的十种结构视图" loading="lazy" allow="fullscreen"></iframe></div>
+        </div>
+        <div class="native-runtime-meta"><p id="native-counts">分析数量由原生运行器返回。</p><p>窄屏可通过原生底部导航切换画布与详情</p></div>
+        <p id="native-action-note" class="native-action-note" role="status" aria-live="polite"></p>
+        <div class="view-explanations"><article><span>01 / 图里看什么</span><p id="view-see">节点是文件，连线表示分析器提取的调用或引用关系。用整体分布识别中心文件与关联模块。</p></article><article><span>02 / 怎么操作</span><p id="view-operate">在原生画布中拖动节点、缩放与平移；点击文件节点查看细节，也可试试力导向、放射、分层、网格和地铁布局。</p></article><article><span>03 / 适合场景</span><p id="view-scenario">第一次阅读项目，寻找关键模块、强关联文件与下一步的源码阅读入口。</p></article></div>
+      </div>
+      <p class="boundary-note"><strong>结果怎样理解</strong> 这是示例项目的实际原生运行效果；示例没有 Git 提交历史，因此未提供活跃度着色。静态关系依旧是待确认的线索，准确率与 Ix 对比未做测试。下方五文件影响图用于单独讲解 BFS 原理。</p>
+      <p class="source-note">运行器对应：<a href="https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html" target="_blank" rel="noopener noreferrer">固定快照原生分析与十种渲染视图</a> · <a href="./fixtures/manifest.json" target="_blank" rel="noopener noreferrer">示例文件清单</a>。嵌入层负责选择示例和切换视图。</p>
+    </section>
+
+    <section class="section impact-section" id="impact" aria-labelledby="impact-title">
+      <div class="section-heading"><div><p class="eyebrow">02 / 可交互的教学示例</p><h2 id="impact-title">改一个文件，哪些使用者值得检查？</h2></div><span class="example-label">教学示例，非真实仓库分析</span></div>
+      <p class="section-lead">假设下方文件形成一条依赖链。箭头从<strong>提供者 → 使用者</strong>。点选文件，观察直接关系或最多三层的广度优先遍历（BFS）。</p>
+      <div class="impact-workbench">
+        <div class="impact-toolbar"><div class="depth-controls" role="group" aria-label="影响追踪深度"><button type="button" data-depth="1" aria-pressed="false">直接使用者</button><button type="button" data-depth="3" aria-pressed="true">最多 3 层</button></div><button type="button" id="reset-impact" class="reset-button">重置选择 <span aria-hidden="true">↺</span></button></div>
+        <div class="graph-scroll" tabindex="0" aria-label="文件关系教学图；窄屏可横向滚动">
+          <div class="impact-graph">
+            <svg class="graph-edges" viewBox="0 0 1000 184" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="arrowhead" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 Z" fill="currentColor"/></marker></defs><line data-edge="pricing:checkout" x1="151" y1="78" x2="222" y2="78" marker-end="url(#arrowhead)"/><line data-edge="checkout:orders" x1="361" y1="78" x2="432" y2="78" marker-end="url(#arrowhead)"/><line data-edge="orders:routes" x1="571" y1="78" x2="642" y2="78" marker-end="url(#arrowhead)"/><line data-edge="routes:app" x1="781" y1="78" x2="852" y2="78" marker-end="url(#arrowhead)"/></svg>
+            <button type="button" class="graph-node is-source" data-node="pricing" style="--position:8%" aria-pressed="true"><span class="file-icon" aria-hidden="true">TS</span><strong>pricing.ts</strong><small>价格计算</small><span class="node-depth">选中源文件</span></button>
+            <button type="button" class="graph-node is-direct" data-node="checkout" style="--position:29%" aria-pressed="false"><span class="file-icon" aria-hidden="true">TS</span><strong>checkout.ts</strong><small>结账逻辑</small><span class="node-depth">第 1 层</span></button>
+            <button type="button" class="graph-node is-indirect" data-node="orders" style="--position:50%" aria-pressed="false"><span class="file-icon" aria-hidden="true">TS</span><strong>orders.ts</strong><small>订单服务</small><span class="node-depth">第 2 层</span></button>
+            <button type="button" class="graph-node is-indirect" data-node="routes" style="--position:71%" aria-pressed="false"><span class="file-icon" aria-hidden="true">TS</span><strong>routes.ts</strong><small>路由入口</small><span class="node-depth">第 3 层</span></button>
+            <button type="button" class="graph-node is-outside" data-node="app" style="--position:92%" aria-pressed="false"><span class="file-icon" aria-hidden="true">TS</span><strong>app.ts</strong><small>应用入口</small><span class="node-depth">第 4 层 · 不计入</span></button>
+          </div>
+        </div>
+        <div class="graph-legend" aria-label="图例"><span><i class="legend-dot source"></i>源文件</span><span><i class="legend-dot direct"></i>直接使用者</span><span><i class="legend-dot indirect"></i>间接使用者</span><span><i class="legend-dot outside"></i>超出追踪深度</span></div>
+        <div class="impact-result"><div><p class="result-label">潜在影响候选</p><p id="impact-status" role="status" aria-live="polite" aria-atomic="true">pricing.ts：最多追踪 3 层，找到 3 个潜在影响文件；app.ts 在第 4 层，不计入。</p></div><ol id="impact-list" aria-label="潜在影响候选列表"><li><span>1</span><code>checkout.ts</code><small>直接使用者</small></li><li><span>2</span><code>orders.ts</code><small>间接使用者</small></li><li><span>3</span><code>routes.ts</code><small>间接使用者</small></li></ol></div>
+      </div>
+      <p class="boundary-note"><strong>如何读这个结果</strong> “潜在影响”表示值得阅读与测试的候选。超过三层不计入；关系存在不等于修改必然导致错误。此交互只计算预设示例，不读取你的仓库或源码。</p>
+    </section>
+
+    <section class="section" id="io" aria-labelledby="io-title">
+      <div class="section-heading"><div><p class="eyebrow">03 / 入口与出口</p><h2 id="io-title">进入的是源码，得到的是阅读线索。</h2></div><p class="section-description">网页、离线阅读与持续展示，<br>共享代码结构分析思路。</p></div>
+      <div class="io-layout">
+        <article class="io-panel"><p class="panel-kicker">INPUT / 获取材料</p><h3>四种入口</h3><dl><div><dt>GitHub 地址</dt><dd>浏览器调用 GitHub API，获取文件树、源码和提交记录。</dd></div><div><dt>本地目录 / ZIP</dt><dd>选择项目文件或压缩包；完整下载应用后可在浏览器离线分析本地材料。</dd></div><div><dt>CLI</dt><dd>启动本地 HTTP 服务，使用网页界面浏览项目，并监听文件变化。</dd></div><div><dt>Action Card</dt><dd>GitHub Action 生成 README 指标卡片；复用分析源码，但无界面入口使用回退规则，结果可能与浏览器不同。</dd></div></dl></article>
+        <div class="io-center" aria-hidden="true"><span>读取</span><i>→</i><b>分析</b><i>→</i><span>呈现</span></div>
+        <article class="io-panel output-panel"><p class="panel-kicker">OUTPUT / 辅助判断</p><h3>图、指标与报告</h3><dl><div><dt>交互关系图</dt><dd>文件关联、结构视图、源码定位与改动影响候选。</dd></div><div><dt>风险与结构提示</dt><dd>循环、高耦合、安全规则提示、健康评分与历史视角。</dd></div><div><dt>报告与分析摘要</dt><dd>可导出分析结果，并使用摘要缓存或指标历史辅助后续阅读。</dd></div><div><dt>README 指标卡片</dt><dd>定期展示项目指标，便于观察结构变化和维护状态。</dd></div></dl></article>
+      </div>
+      <h3>复用与扩展：现有入口和需要开发的能力。</h3>
+      <div class="view-taxonomy" aria-label="可扩展入口与开发边界">
+        <article><h3>复用 CLI、Card 和导出</h3><p>CLI 监听本地目录，复用网页分析；Card 在 CI 生成 SVG 与指标历史；无界面 JSON、Markdown 及图形报告可供外部工具读取。浏览器与无界面的解析条件不同，接入前应核对结果。</p></article>
+        <article><h3>扩展解析、规则和视图</h3><p>新增语言支持要扩充解析与符号归属逻辑；新增风险规则要验证覆盖和误报；新增视图可消费现有文件关系或独立提取事实。画法变化本身不提高关系准确性。</p></article>
+        <article><h3>组织 Agent 与持续查询</h3><p>Agent 可消费导出结果；若需要持续符号索引、MCP 工具、上下文预算及差异查询，需要另行设计服务，或评估 Ix / GitNexus。CodeFlow 的近期摘要和指标历史不能直接替代完整实体图。</p></article>
+      </div>
+      <p class="source-note">依据：<a href="https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/cli/codeflow.mjs" target="_blank" rel="noopener noreferrer">CLI 源码</a> · <a href="https://github.com/braedonsaunders/codeflow/tree/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/card" target="_blank" rel="noopener noreferrer">Card 源码与文档</a>；新增服务与规则为扩展建议，未在本页实现。</p>
+    </section>
+
+    <section class="section pipeline-section" id="pipeline" aria-labelledby="pipeline-title">
+      <div class="section-heading"><div><p class="eyebrow">04 / 底层原理 · 主要浏览器路径</p><h2 id="pipeline-title">混合解析，分五步生成关系图。</h2></div><p class="section-description">各语言解析精度不同。<br>图关系还包含启发式归属推断。</p></div>
+      <ol class="pipeline"><li><span class="step-number">01</span><div><h3>读取与筛选</h3><p>从 GitHub API 或本地读取文件，识别扩展名、过滤不适合解析的内容，整理文件路径与元信息。</p><span class="step-detail">文件树 + 源码 + Git 记录</span></div></li><li><span class="step-number">02</span><div><h3>按语言混合解析</h3><p>JS / TS 主要使用 Babel 转换后交给 Acorn 生成 AST。Python 引用识别可用 Tree-sitter WASM；函数定义仍使用正则与缩进规则，其他语言主要依靠正则。</p><span class="step-detail">AST / Tree-sitter / 正则规则</span></div></li><li><span class="step-number">03</span><div><h3>抽取定义与引用</h3><p>建立函数定义索引，扫描调用和引用，结合函数名、同文件定义和显式导入，推断符号属于哪个文件。</p><span class="step-detail">重名函数借助 import 消歧</span></div></li><li><span class="step-number">04</span><div><h3>构图与计算指标</h3><p>由符号归属推断文件关系，执行影响遍历与结构规则。独立的 Architecture 视图还按导入、目录与代码特征生成架构方块图。</p><span class="step-detail">关系图 + BFS + 规则统计</span></div></li><li><span class="step-number">05</span><div><h3>交互呈现与导出</h3><p>在网页中布局文件图与架构视图，联动代码、影响候选、健康分和提示，并提供分析结果导出。</p><span class="step-detail">可视化 + 报告 + Card</span></div></li></ol>
+      <div class="overview-link"><div><p class="eyebrow">理解汇总图</p><h3>把原理、效果、任务与工具差异串起来。</h3><p>同一张图说明分析和展示的区别，覆盖四库对比、适用场景及验证边界。</p></div><a class="button button-quiet" href="#understanding">回到完整理解汇总 ↑</a></div>
+      <p class="source-note">依据：<a href="https://github.com/braedonsaunders/codeflow/blob/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1/index.html" target="_blank" rel="noopener noreferrer">源码快照 · 解析器、关系构建与评分</a></p>
+    </section>
+
+    <section class="section" id="scenarios" aria-labelledby="scenarios-title">
+      <div class="section-heading"><div><p class="eyebrow">05 / 使用场景</p><h2 id="scenarios-title">把工具放进具体工作，选择就更清楚。</h2></div></div>
+      <div class="scenario-tabs" role="tablist" aria-label="阅读与索引场景"><button type="button" id="tab-browse" role="tab" data-scenario="browse" aria-controls="panel-browse" aria-selected="true">临时浏览开源项目</button><button type="button" id="tab-local" role="tab" data-scenario="local" aria-controls="panel-local" aria-selected="false" tabindex="-1">本地阅读与重构</button><button type="button" id="tab-agent" role="tab" data-scenario="agent" aria-controls="panel-agent" aria-selected="false" tabindex="-1">Agent 长期索引</button></div>
+      <article class="scenario-panel" id="panel-browse" role="tabpanel" aria-labelledby="tab-browse" tabindex="0"><div><span class="scenario-tag">CodeFlow 更轻便</span><h3>先找到模块关系，再读关键文件。</h3><p>输入 GitHub 仓库地址，浏览文件图、目录结构和维护热点，确定接手项目的阅读顺序。图上的异常和高耦合位置，可作为进一步阅读的起点。</p></div><dl><div><dt>材料</dt><dd>GitHub 文件树、源码、提交历史</dd></div><div><dt>工作</dt><dd>理解项目 · 找入口 · 识别热点</dd></div><div><dt>结果</dt><dd>阅读路线与需要验证的结构线索</dd></div></dl></article>
+      <article class="scenario-panel" id="panel-local" role="tabpanel" aria-labelledby="tab-local" tabindex="0" hidden><div><span class="scenario-tag">CodeFlow 本地入口</span><h3>修改公共模块前，列出检查候选。</h3><p>选择本地项目或经 CLI 打开，查看公共工具文件的使用者、循环和高耦合提示。CLI 监听变化后可更新分析；再结合源码、测试和运行行为确认真实影响。</p></div><dl><div><dt>材料</dt><dd>本地目录 / ZIP / CLI 工作目录</dd></div><div><dt>工作</dt><dd>重构准备 · PR 阅读 · 回归规划</dd></div><div><dt>结果</dt><dd>关联文件列表与人工检查清单</dd></div></dl></article>
+      <article class="scenario-panel" id="panel-agent" role="tabpanel" aria-labelledby="tab-agent" tabindex="0" hidden><div><span class="scenario-tag ix-tag">Ix / GitNexus 的查询工作流</span><h3>让实体与关系成为长期可查询的上下文。</h3><p>Ix 提供持久符号图与 CLI / MCP；GitNexus 组织符号上下文、候选流程与改动影响。代码变化后需更新索引，并核对源码证据。CodeFlow 的摘要缓存与监听也服务于阅读，但交付模型不同。</p></div><dl><div><dt>材料</dt><dd>持续变化的代码库</dd></div><div><dt>工作</dt><dd>定位符号 · 追踪调用 · 组织 Agent 上下文</dd></div><div><dt>结果</dt><dd>可持续查询的结构索引；业务契约仍需补充</dd></div></dl></article>
+    </section>
+
+    <section class="section comparison-section tool-comparison" id="compare" aria-labelledby="compare-title">
+      <div class="section-heading"><div><p class="eyebrow">06 / 与其他代码结构工具对比</p><h2 id="compare-title">共同底座相似，差异也在分析与查询层。</h2></div><p class="section-description">CodeFlow / Source Insight / Ix / GitNexus<br>文档与实现对照，准确率尚未同场验证</p></div>
+      <p class="section-lead">Source Insight 已有符号数据库、引用查找、调用树与继承图。这些能力不是新库独有。比较重点是：抽取什么、以什么粒度保存、如何更新、怎样查询，以及结果能否帮助完成具体任务。</p>
+      <p class="comparison-scroll-hint">四库完整对照；窄屏可在表格区域横向滚动。</p>
+      <div class="table-wrap" tabindex="0" aria-label="四种代码结构工具对比表，窄屏可横向滚动"><table><caption class="sr-only">CodeFlow、Source Insight、Ix、GitNexus 的能力、架构与使用场景对比</caption><thead><tr><th scope="col">比较维度</th><th scope="col"><a href="https://github.com/braedonsaunders/codeflow/tree/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1" target="_blank" rel="noopener noreferrer">CodeFlow</a></th><th scope="col"><a href="https://www.sourceinsight.com/feature-details/" target="_blank" rel="noopener noreferrer">Source Insight</a></th><th scope="col"><a href="https://github.com/ix-infrastructure/Ix#how-it-works" target="_blank" rel="noopener noreferrer">Ix</a></th><th scope="col"><a href="https://github.com/abhigyanpatwari/GitNexus/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">GitNexus</a></th></tr></thead><tbody>
+        <tr><th scope="row">核心交付</th><td>文件关系图、指标与规则提示，辅助人阅读。</td><td>编辑器内导航、引用查找、关系窗口与代码编辑。</td><td>持久系统结构图，供人和 Agent 持续查询。</td><td>符号关系图与面向任务的 Agent 查询工具。</td></tr>
+        <tr><th scope="row">粒度与模型</th><td>主图以文件为节点；附带函数信息；架构另建模型。</td><td>函数、变量、类等符号及引用、调用、成员关系。</td><td>符号、调用、导入、包含关系与图谱修订。</td><td>符号、关系、聚类、候选流程；可选语句级 PDG（当前 TS/JS）。</td></tr>
+        <tr><th scope="row">解析与分析</th><td>JS/TS 用 Babel + Acorn；部分 Tree-sitter 与正则；BFS 影响、结构和安全规则。</td><td>自有解析与符号数据库；类型/作用域导航、调用和引用查询。</td><td>Tree-sitter 提取结构，再解析引用并支持结构查询。</td><td>Tree-sitter、作用域/引用解析；可选控制、数据依赖与 source→sink 静态线索（需 --pdg，默认关闭）。</td></tr>
+        <tr><th scope="row">保存与更新</th><td>当前分析、去源码摘要缓存、指标历史；CLI 监听文件变化。</td><td>项目符号数据库；随编辑或同步更新。</td><td>ArangoDB + memory layer 后端；持久图、map / watch。</td><td>LadybugDB 本地索引；重新分析更新，提供过期状态提示。</td></tr>
+        <tr><th scope="row">查询与自动化</th><td>网页与导出；CLI 为网页服务；headless JSON 可另行集成。</td><td>编辑器查询、宏、命令行及外部工具集成。</td><td>CLI / MCP / Compass；定位、解释、调用、影响等查询。</td><td>MCP / CLI 的 query、context、impact、trace、detect_changes 等。</td></tr>
+        <tr><th scope="row">结果组织</th><td>文件级关系与最多三层潜在使用者；图、提示和报告。</td><td>当前符号的定义、引用、调用树及上下文预览。</td><td>围绕目标符号或范围返回结构化关系与上下文。</td><td>围绕符号、候选流程和 Git diff 返回位置、关联与影响摘要。</td></tr>
+        <tr><th scope="row">展示形式</th><td>十种原生视图，覆盖关系投影、目录/体量和架构块。</td><td>源码与关系窗口联动；图形或树状阅读。</td><td>CLI 结果与 Compass 结构浏览。</td><td>图谱浏览配合查询与聊天入口；核心还包括工具输出。</td></tr>
+        <tr><th scope="row">适配工作</th><td>临时接手项目、结构讲解、安排阅读与检查。</td><td>日常手工阅读、调用/引用导航与代码编辑。</td><td>持续维护代码结构索引，跨会话为 Agent 提供上下文。</td><td>AI 查找实现、排错、重构准备与变更审查。</td></tr>
+        <tr><th scope="row">验证边界</th><td>本页实测 15 文件与十视图；未测图边准确率。</td><td>本页未运行。已有数据库和关系图不等于完整运行语义。</td><td>本页未运行后端，未进行准确率或性能对照。</td><td>本页未运行；execution flows 为静态候选链，PDG 等能力需对应索引。</td></tr>
+      </tbody></table></div>
+      <p class="comparison-insight"><strong>展示、接口和分析，需要分别评价。</strong> 颜色、布局和三维视角主要改变阅读；MCP 提供程序接入；符号粒度、解析覆盖、关系推断和数据/控制依赖，可能带来分析增量。是否查得更准、更全、更有助于修改，需要同一案例的实测。</p>
+      <p class="source-note">表头链接为对应官方模型与功能来源。补充实现：<a href="https://github.com/abhigyanpatwari/GitNexus/blob/main/gitnexus/src/mcp/tools.ts" target="_blank" rel="noopener noreferrer">GitNexus 任务工具</a> · <a href="https://github.com/abhigyanpatwari/GitNexus/blob/main/gitnexus/src/core/ingestion/process-processor.ts" target="_blank" rel="noopener noreferrer">静态候选流程</a>；Source Insight 自动化依据：<a href="https://www.sourceinsight.com/doc/v4/userguide/Manual/Concepts/Command_Line_Options.htm" target="_blank" rel="noopener noreferrer">命令行</a> · <a href="https://www.sourceinsight.com/doc/v4/userguide/Manual/Macro_Language/Macro_Language.htm" target="_blank" rel="noopener noreferrer">宏语言</a>。适配工作为研究判断。</p>
+    </section>
+
+    <section class="section boundaries-section" id="boundaries" aria-labelledby="boundaries-title">
+      <div class="section-heading"><div><p class="eyebrow">07 / 分析边界</p><h2 id="boundaries-title">图是线索，结论需要源码与运行证据。</h2></div></div>
+      <div class="boundary-grid"><article><span>解析精度</span><h3>语言与入口有差异</h3><p>动态调用、别名和重名符号可能误判。浏览器解析器失败可回退；该快照 Card / headless 的 VM 未提供 Babel、Acorn 或 Tree-sitter，使用回退规则，结果可能不同。</p></article><article><span>关系语义</span><h3>关联不等于一定出错</h3><p>影响候选来自已有静态关系；疑似死代码、安全提示与健康评分需要人工核实，不能替代测试。</p></article><article><span>规模限制</span><h3>留意分析是否完整</h3><p>该快照的 GitHub API 模式最多分析 750 个文件；超过 2 MB 的单文件不解析内容。大项目可能只覆盖部分材料。</p></article><article><span>研究范围</span><h3>明确版本与证据性质</h3><p>本页基于固定源码快照整理，并运行十种原生视图展示示例项目。其他工具只做官方资料比较；未测试图边准确率、生产性能或四工具运行对比，未读取用户仓库进行分析。</p></article></div>
+    </section>
+  </main>
+  <dialog id="understanding-reader" class="understanding-dialog" aria-labelledby="map-reader-title" aria-describedby="map-reader-help">
+    <div class="map-reader-toolbar"><h2 id="map-reader-title">CodeFlow · 理解汇总图</h2><button type="button" id="map-reader-out" aria-label="缩小汇总图">− 缩小</button><output id="map-reader-scale" aria-live="polite">100%</output><button type="button" id="map-reader-in" aria-label="放大汇总图">＋ 放大</button><button type="button" id="map-reader-fit">适合宽度</button><button type="button" id="map-reader-original">原尺寸</button><a href="./assets/codeflow-understanding.svg" download="codeflow-understanding.svg">保存 SVG</a><button type="button" id="map-reader-close" aria-label="关闭汇总图">关闭 ×</button></div>
+    <p class="map-reader-help" id="map-reader-help">滚动或触摸移动画面；聚焦图区后可用方向键滚动。按 Esc 或“关闭”返回网页。</p>
+    <div class="map-reader-viewport" id="map-reader-viewport" tabindex="0" role="region" aria-label="可缩放的理解汇总图"><img id="map-reader-image" src="./assets/codeflow-understanding.svg" width="1600" height="1880" alt="CodeFlow 原理、十视图数据分组、任务价值、四库对比、场景与证据边界的完整汇总图"></div>
+  </dialog>
+  <footer class="footer"><div><strong>CodeFlow / 002</strong><p>原创研究展示 · 上游作者 braedonsaunders<br>资料核查 2026.10.04 / 整理 2026.10.05</p></div><a href="https://github.com/braedonsaunders/codeflow/tree/b0e82d127fc4990f571ebc6da6c5d9af2591aaa1" target="_blank" rel="noopener noreferrer">查看研究对应源码 ↗</a><a href="#top">回到顶部 ↑</a></footer>
+</body>
+</html>

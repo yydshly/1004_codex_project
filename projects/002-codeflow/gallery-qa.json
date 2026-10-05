@@ -1,0 +1,97 @@
+[
+  {
+    "colorDisabled": false,
+    "description": "节点是文件，连线表示分析器提取的调用或引用关系。用整体分布识别中心文件与关联模块。",
+    "layoutDisabled": false,
+    "state": "ready",
+    "view": "graph",
+    "rechecked": "Final desktop gallery status and native iframe were ready."
+  },
+  {
+    "colorDisabled": false,
+    "description": "将文件关系图与代码卡片放在同一画布里，同时阅读结构位置、函数内容与关联线索。根层文件超过原生加载阈值时，可先选择目录或文件。",
+    "layoutDisabled": false,
+    "state": "ready",
+    "view": "code"
+  },
+  {
+    "colorDisabled": false,
+    "description": "将文件和关系放进三维空间，观察二维投影里相互遮挡的节点及连线。",
+    "layoutDisabled": true,
+    "state": "ready",
+    "view": "graph3d"
+  },
+  {
+    "colorDisabled": true,
+    "description": "嵌套矩形组织目录与文件，面积按源码行数（至少 1 行）编码，帮助比较不同目录及文件的相对占比。",
+    "layoutDisabled": true,
+    "state": "ready",
+    "view": "treemap"
+  },
+  {
+    "colorDisabled": true,
+    "description": "前 40 个文件排成矩阵：行是提供者，列是使用者；格子深浅表示关系 count 的累加，便于观察密集关联区域。",
+    "layoutDisabled": true,
+    "state": "ready",
+    "view": "matrix"
+  },
+  {
+    "colorDisabled": true,
+    "description": "将前 80 个文件排成根节点 → 目录组 → 文件的树状层级，突出文件的目录归属。",
+    "layoutDisabled": true,
+    "state": "ready",
+    "view": "dendro"
+  },
+  {
+    "colorDisabled": true,
+    "description": "最多展示 15 个目录的关联流向。双向引用通常取差值形成带宽，它不等于总调用量；剩余循环可能导致无法布局。",
+    "layoutDisabled": true,
+    "state": "ready",
+    "view": "sankey"
+  },
+  {
+    "colorDisabled": true,
+    "description": "前 100 个文件按目录分组，力导向布局将节点聚向预设的目录中心，同时保留跨目录关系。",
+    "layoutDisabled": true,
+    "state": "ready",
+    "view": "disjoint"
+  },
+  {
+    "colorDisabled": true,
+    "description": "前 70 个文件按目录沿圆周排列，二次 Bézier 曲线呈现引用关系，方便观察目录内与跨目录连接。",
+    "layoutDisabled": true,
+    "state": "ready",
+    "view": "bundle"
+  },
+  {
+    "colorDisabled": true,
+    "description": "独立的 Architecture 规则结合导入、目录和代码特征，生成模块方块、角色与架构关联。",
+    "layoutDisabled": true,
+    "state": "ready",
+    "view": "architecture"
+  },
+  {
+    "layout": "force",
+    "nativeActive": "Force"
+  },
+  {
+    "layout": "radial",
+    "nativeActive": "Radial"
+  },
+  {
+    "layout": "hierarchical",
+    "nativeActive": "Layers"
+  },
+  {
+    "layout": "grid",
+    "nativeActive": "Grid"
+  },
+  {
+    "layout": "metro",
+    "nativeActive": "Metro"
+  },
+  {
+    "color": "layer",
+    "parentValue": "layer"
+  }
+]

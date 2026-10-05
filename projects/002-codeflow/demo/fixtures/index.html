@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>小型商店源码 · CodeFlow 研究</title>
+  <style>
+    :root{color-scheme:light;--ink:#20362f;--muted:#66786f;--line:#d7e3db;--paper:#f3f6f1;--green:#205d48;--mint:#e5eee6}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+    a{color:var(--green);text-underline-offset:4px}a:focus-visible,button:focus-visible{outline:3px solid #d7a947;outline-offset:3px}
+    main{max-width:1240px;margin:0 auto;padding:38px 24px 50px}.eyebrow{font:700 12px/1.4 ui-monospace,monospace;letter-spacing:.12em;color:var(--green);margin:0 0 12px}h1{font-size:clamp(28px,4vw,42px);line-height:1.2;letter-spacing:-.04em;margin:0 0 16px}.intro{max-width:780px;margin:0 0 22px;color:var(--muted)}
+    nav{display:flex;flex-wrap:wrap;gap:12px 22px;margin:20px 0 30px}.notice{background:var(--mint);border-left:4px solid var(--green);padding:13px 17px;margin:0 0 24px;font-size:14px}.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:20px;align-items:start}.tree,.viewer{min-width:0;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}.tree{padding:18px 12px}.tree h2{font-size:16px;margin:0 8px 8px}.tree h3{font:600 12px/1.5 ui-monospace,monospace;color:var(--muted);margin:18px 8px 7px}.tree ul{list-style:none;padding:0;margin:0}.file-button{width:100%;text-align:left;border:0;border-radius:7px;background:transparent;padding:9px 12px;font:14px/1.4 ui-monospace,monospace;color:var(--ink);cursor:pointer;overflow-wrap:anywhere}.file-button:hover{background:#f3f6f1}.file-button[aria-pressed="true"]{background:var(--green);color:#fff}.source-header{padding:18px 22px;border-bottom:1px solid var(--line)}.source-header h2{font:600 14px/1.5 ui-monospace,monospace;margin:0;overflow-wrap:anywhere}.source-meta{font-size:12px;color:var(--muted);margin:7px 0 0}.source-body{padding:22px;max-width:100%;overflow:auto;background:#fcfdfb;max-height:680px}.source-body pre{margin:0;font:13px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2;white-space:pre}.source-body code{display:block}#status{font-size:13px;color:var(--muted);margin:16px 0 0}.detail{font-size:14px;color:var(--muted);margin:28px 0 0;max-width:900px}.detail code{font:12px/1.4 ui-monospace,monospace;background:var(--mint);padding:2px 4px;border-radius:3px}
+    @media(max-width:760px){main{padding:28px 16px}.layout{grid-template-columns:1fr}.tree{max-height:300px;overflow:auto}.tree ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}.source-body{padding:16px;max-height:580px}.source-header{padding:16px}.file-button{font-size:12px;padding:9px 7px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">CODEFLOW RESEARCH / SOURCE FILES</p>
+  <h1>小型商店的真实源码</h1>
+  <p class="intro">原生运行器读取这些 TypeScript 文件，由 CodeFlow 自己解析并绘图。这里可以逐个查看文件，核对图上的关系是从哪些 import 和函数使用产生的。</p>
+  <nav aria-label="研究页面导航"><a href="../runtime/index.html">打开 CodeFlow 原生运行器</a><a href="../index.html">返回十种图展示</a><a href="./manifest.json">查看文件清单</a></nav>
+  <p class="notice">这是本研究编写的 Mini Shop 示例，共 15 个源码模块，含页面、布局、组件与后端业务；不是你的仓库。查看器只显示文本，不执行源码。样本没有真实 Git 贡献历史。</p>
+  <section class="layout" aria-label="源码浏览">
+    <aside class="tree"><h2>文件树</h2><div id="file-tree"></div></aside>
+    <article class="viewer"><header class="source-header"><h2 id="source-path">正在读取文件清单…</h2><p id="source-meta" class="source-meta">本地示例 · TypeScript</p></header><div class="source-body"><pre><code id="source-code">加载中…</code></pre></div></article>
+  </section>
+  <p id="status" role="status" aria-live="polite">正在加载实际文件内容。</p>
+  <p class="detail">主文件图以“函数提供者 → 使用者”连接文件，源码中的 import 方向相反。主链为 <code>money → pricing → checkout → orders → server/routes/orders → ui/app</code>，同时有商品、库存、配送和展示分支。页面/组件与 UI 调用后端 routes/services 和工具；源码目录依赖单向，避免循环。<a href="./README.md">样本说明与业务运行方法</a></p>
+</main>
+<script type="module">
+  const tree = document.getElementById('file-tree');
+  const code = document.getElementById('source-code');
+  const pathLabel = document.getElementById('source-path');
+  const meta = document.getElementById('source-meta');
+  const status = document.getElementById('status');
+  const buttons = new Map();
+  const texts = new Map();
+  const manifestUrl = new URL('./manifest.json', location.href);
+  const sampleRoot = new URL('./sample-project/', manifestUrl);
+
+  function validatedSourceUrl(file) {
+    if (!file || typeof file.path !== 'string' || typeof file.url !== 'string') throw new Error('文件清单格式不正确');
+    if (file.path.split('/').includes('..') || !/^src\/[a-zA-Z0-9_./-]+\.tsx?$/.test(file.path)) throw new Error('不允许的文件路径');
+    const url = new URL(file.url, manifestUrl);
+    if (url.origin !== location.origin || !url.pathname.startsWith(sampleRoot.pathname)) throw new Error('源码必须在本地样本目录');
+    return url;
+  }
+
+  function selectSource(file) {
+    for (const [path, button] of buttons) button.setAttribute('aria-pressed', String(path === file.path));
+    const text = texts.get(file.path) ?? '';
+    pathLabel.textContent = file.path;
+    code.textContent = text;
+    const lines = text.trimEnd().split('\n').length;
+    meta.textContent = lines + ' 行 · ' + new TextEncoder().encode(text).length + ' 字节 · 实际文本文件';
+    status.textContent = '当前文件：' + file.path + '。选择左侧文件可继续核对。';
+  }
+
+  async function loadSources() {
+    const response = await fetch(manifestUrl, { cache: 'no-store' });
+    if (!response.ok) throw new Error('文件清单读取失败：' + response.status);
+    const manifest = await response.json();
+    if (!Array.isArray(manifest.files) || manifest.files.length !== 15) throw new Error('预期清单包含 15 个源码文件');
+    const groups = new Map();
+    for (const file of manifest.files) {
+      const sourceUrl = validatedSourceUrl(file);
+      const sourceResponse = await fetch(sourceUrl, { cache: 'no-store' });
+      if (!sourceResponse.ok) throw new Error('文件读取失败：' + file.path);
+      texts.set(file.path, await sourceResponse.text());
+      const folder = file.path.slice(0, file.path.lastIndexOf('/'));
+      if (!groups.has(folder)) groups.set(folder, []);
+      groups.get(folder).push(file);
+    }
+    for (const [folder, files] of groups) {
+      const heading = document.createElement('h3');
+      heading.textContent = folder + '/';
+      tree.append(heading);
+      const list = document.createElement('ul');
+      for (const file of files) {
+        const item = document.createElement('li');
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'file-button';
+        button.textContent = file.path.split('/').pop();
+        button.title = file.path;
+        button.setAttribute('aria-pressed', 'false');
+        button.addEventListener('click', () => selectSource(file));
+        buttons.set(file.path, button);
+        item.append(button);
+        list.append(item);
+      }
+      tree.append(list);
+    }
+    selectSource(manifest.files.find(file => file.path === 'src/app/page.tsx') ?? manifest.files[0]);
+  }
+
+  loadSources().catch(error => {
+    pathLabel.textContent = '源码暂时无法加载';
+    code.textContent = '请通过本地 HTTP 服务打开此页面。\n' + error.message;
+    status.textContent = '加载失败：' + error.message;
+  });
+</script>
+</body>
+</html>
+
