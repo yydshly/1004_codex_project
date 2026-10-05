@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5ed"><title>原型计划 · 一隅</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./research.css"></head>
+<body><a class="skip" href="#document">跳到正文</a>
+<header class="research-header"><a class="research-brand" href="./README.html">一隅 <span>自然空间研究</span></a><a class="return-demo" href="../index.html">试玩原型 <span aria-hidden="true">↗</span></a></header>
+<div class="research-layout"><aside class="documents"><div class="nav-label">关联文档</div><nav aria-label="项目文档"><a href="./expansion-plan.html">扩展计划</a>
+<a href="./README.html">理解导览</a>
+<a href="./objectives.html">目标与验收</a>
+<a href="./notes.html">过程记录</a>
+<a href="./implementation.html">实现方式</a>
+<a href="./verification.html">验证报告</a>
+<a href="./prototype-plan.html" aria-current="page">原型计划</a>
+<a href="./visual-analysis.html">视觉研究</a>
+<a href="./technical-research.html">技术研究</a>
+<a href="./product-research.html">产品研究</a></nav><a class="original" href="./source/prototype-plan.md" target="_blank" rel="noopener">查看原始文档 ↗</a></aside>
+<main id="document"><div class="document-status">研究与开发记录</div><article><h1 id="首个原型与验证计划">首个原型与验证计划</h1>
+<p><a href="./README.html">项目摘要</a> · <a href="./objectives.html">目标与验收</a> · <a href="./implementation.html">实现记录</a> · <a href="./verification.html">验证报告</a> · <a href="./product-research.html">产品研究</a> · <a href="./technical-research.html">技术研究</a></p>
+<h2 id="目标与假设">目标与假设</h2>
+<p>拟议产品暂称“可进入的个人风景”：打开小型自然空间，做出喜欢的改变，走进去停留，保存后继续。名称仅为定位草案。</p>
+<p>阶段 A 的原型代码已经实现，2026-10-06 收尾核验。G01–G08 是功能交付目标，实际运行检查及覆盖限制写入 <a href="./verification.html">verification.md</a>；以下用户实验仍是计划，没有招募、访谈或测出行为指标。时间和比例是可调整的探索性门槛，未作为行业基准或预测。</p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>假设</th>
+<th>要观察的行为</th>
+<th>主要反例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>少量动作足以产生表达感</td>
+<td>主动选择布置位置，描述自己的偏好</td>
+<td>仅沿用默认场景，编辑没有价值</td>
+</tr>
+<tr>
+<td>进入自己的成果有吸引力</td>
+<td>自发进入探索，找到改过的位置</td>
+<td>只想截图，走进去无意义</td>
+</tr>
+<tr>
+<td>流水反馈是体验亮点</td>
+<td>阶段 A 观察重新放置水源与路径变化；阶段 B 再预测挖沟／抬地结果</td>
+<td>用户读不懂变化，操作像调试</td>
+</tr>
+<tr>
+<td>保存能促成回访</td>
+<td>无奖励和提醒也重新打开场景</td>
+<td>新鲜感过后没有继续的理由</td>
+</tr>
+</tbody></table>
+</div><h2 id="范围与顺序">范围与顺序</h2>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>内容</th>
+<th>完成条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A · 功能底座（实现与主要功能检查完成）</td>
+<td>小型地形；Kenney CC0 自然模型；树、草、花笔刷；擦除、撤销；水源换位与路径流水；创作／探索；本地存取、JSON 往返；环境与减少动态</td>
+<td>按 G01–G08 检查，能编辑、进入、返回、保存并恢复同一作品；实际结果与缺口见验证报告，用户要求的自然感尚未达到</td>
+</tr>
+<tr>
+<td>A1 · 视觉样板（下一轮优先）</td>
+<td>固定林间小溪；植被层次、溪岸材质、水流落差、光影与动态</td>
+<td>固定四个视角与行走路线进行视觉检查；画面仍不认可时保持未通过，不用功能结果替代</td>
+</tr>
+<tr>
+<td>A2 · 元素与组合（样板通过后）</td>
+<td>统一资源清单；建议首批 37 个条目；六种组合笔刷；三个场景模板</td>
+<td>用同一套资源完成溪流、林下空地、溪边花地；比例、材质、碰撞、许可与存档兼容得到实际检查</td>
+</tr>
+<tr>
+<td>B · 水的反馈</td>
+<td>地形雕刻；积水、溢流与改流；简化水深网格</td>
+<td>坡面、盆地、出口、拦水等案例稳定，水量非负并可核对守恒</td>
+</tr>
+<tr>
+<td>C · 扩展</td>
+<td>分层声音、拍照；按反馈增加少量物件或主题</td>
+<td>产生明确价值，不显著延长首次理解时间</td>
+</tr>
+</tbody></table>
+</div><p>阶段 A 使用参数化中心曲线与匹配的河谷，水源换位会重算路径及地形，流水视觉与路径数据分离。它没有积水或拦水模拟，也没有验证原作河流算法。初始范围是一处可恢复场景；优先完成 A1 与 A2，再根据用户对水流编辑的实际反馈决定阶段 B 的投入。</p>
+<p>2026-10-06 用户明确“效果可靠”先于“元素够用”。当前执行建议以 A1→A2 优先，积水模拟保留为后续实验；详细范围、资源登记、存档迁移与设备验收见 <a href="./expansion-plan.html">扩展计划</a>。上述首批数量与性能门槛均为规划，尚未取得资源或完成测量。</p>
+<h2 id="平台">平台</h2>
+<p>本轮确定采用桌面浏览器 Three.js 0.186.1，精确版本及 MIT 许可保存在 demo/vendor/three/；GLB 来自 Kenney Nature Kit，出处与 CC0 原始许可见 <a href="../assets/ASSET-LICENSES.md">素材记录</a>。界面与交互是本项目原创实现，用于验证概念，不是 Cozy Country 的复刻。</p>
+<p>在子项目根目录执行 <code>npm run dev</code>，打开 <a href="http://127.0.0.1:8033" target="_blank" rel="noopener noreferrer">http://127.0.0.1:8033</a>；同目录的 <code>npm test</code> 执行原型检查。定制端口直接使用 <code>node dev-server.mjs --host 127.0.0.1 --port 8033</code>。完整命令见 <a href="./README.html#本地运行与检查">README.md</a>，实际结果及测试条件由 <a href="./verification.html">verification.md</a>记录。Unity 作为较完整游戏路线的备选，长期平台仍按进入成本、画面稳定性与开发成本决定。<a href="./technical-research.html">技术比较</a></p>
+<h2 id="首轮流程">首轮流程</h2>
+<p>招募 8 位探索性参与者：4 位偏好轻度创作，4 位偏好自然探索或休闲停留。样本用于发现问题，不足以估算市场或得出显著性结论。后续再扩大样本与时间跨度。</p>
+<ol>
+<li><strong>自由进入</strong>：只说“看看这里可以做什么”，记录首个动作、发现工具的时间与提示。</li>
+<li><strong>布置喜欢的一角</strong>：不指定风格，记录首次有意义改变与撤销。</li>
+<li><strong>自由继续</strong>：先不提示探索，记录是否自发进入；再给探索任务，区分发现问题与价值问题。</li>
+<li><strong>观察溪流变化</strong>：阶段 A 记录水源换位是否易懂；不把地形与河谷共同生成称为水量模拟。阶段 B 再询问挖沟／抬地的预期、结果与解释。</li>
+<li><strong>保存恢复</strong>：退出再打开，检查是否找回自己的地方。</li>
+<li><strong>访谈与回访</strong>：问喜欢／不喜欢的具体瞬间、想再改什么和替代选择；48 小时观察自愿返回，被提醒的访问单独记录。</li>
+</ol>
+<p>可比较“仅观看”和“可编辑并进入”的同一场景，控制美术、光照与加载条件，对调顺序。测试后让参与者解释差异，避免只问“是不是更放松”。</p>
+<h2 id="记录与验收">记录与验收</h2>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原型目标／记录方式</th>
+<th>决策用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>首次有意义改变</td>
+<td>目标 90 秒内，记录提示与帮助</td>
+<td>工具是否难发现或难理解</td>
+</tr>
+<tr>
+<td>完成循环</td>
+<td>目标至少 6/8 无操作帮助完成编辑→探索→恢复</td>
+<td>是否值得继续扩充</td>
+</tr>
+<tr>
+<td>主动探索</td>
+<td>记录人数与触发原因，不混算指定任务</td>
+<td>进入作品是否有独特价值</td>
+</tr>
+<tr>
+<td>水流理解</td>
+<td>比较预期、结果和解释，记录失败案例</td>
+<td>应改提示还是算法</td>
+</tr>
+<tr>
+<td>回访</td>
+<td>记录 48 小时内自发返回及行为</td>
+<td>应做持续创造、停留还是输出工具</td>
+</tr>
+<tr>
+<td>稳定性</td>
+<td>记录设备、浏览器、配置、帧耗时与笔刷反馈；性能结论只填写实测结果</td>
+<td>降复杂度或换技术路线</td>
+</tr>
+<tr>
+<td>存档</td>
+<td>恢复后地形、资产位置、水源一致</td>
+<td>用户能否信任作品会保留</td>
+</tr>
+</tbody></table>
+</div><p>具体帧率不在未测量时承诺；镜头舒适还需实际观察。G01–G08 的功能验收见目标文档与验证报告。下一轮 12–20 人、7 天观察可以测试更长期的方向，见产品报告；与计划中的首轮 8 人、48 小时试验分开记录。</p>
+<h2 id="结果如何改变方向">结果如何改变方向</h2>
+<ul>
+<li>喜欢编辑与探索：继续打磨表现力、保存与少量主题变化。</li>
+<li>主要喜欢停留：减少工具复杂度，强化快速进入、光照与声音偏好。</li>
+<li>主要用来取景／构思：另做专业用途访谈，再决定精确布局与导出。</li>
+<li>只欣赏宣传画面：调查进入成本与交互反馈，暂缓扩大素材和世界。</li>
+</ul>
+<p>首轮结束交付逐人观察、问题排序、设备与性能记录、回访证据和范围取舍。得到数据后再研究付费与内容扩充，本项目不预测收入。</p>
+</article><footer>一隅 · 自然氛围与可探索造景研究</footer></main>
+<aside class="contents"><div class="nav-label">本页内容</div><nav aria-label="本页目录"><a href="#目标与假设">目标与假设</a>
+<a href="#范围与顺序">范围与顺序</a>
+<a href="#平台">平台</a>
+<a href="#首轮流程">首轮流程</a>
+<a href="#记录与验收">记录与验收</a>
+<a href="#结果如何改变方向">结果如何改变方向</a></nav></aside></div>
+</body></html>

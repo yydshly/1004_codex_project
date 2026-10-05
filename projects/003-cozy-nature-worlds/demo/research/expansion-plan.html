@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5ed"><title>扩展计划 · 一隅</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./research.css"></head>
+<body><a class="skip" href="#document">跳到正文</a>
+<header class="research-header"><a class="research-brand" href="./README.html">一隅 <span>自然空间研究</span></a><a class="return-demo" href="../index.html">试玩原型 <span aria-hidden="true">↗</span></a></header>
+<div class="research-layout"><aside class="documents"><div class="nav-label">关联文档</div><nav aria-label="项目文档"><a href="./expansion-plan.html" aria-current="page">扩展计划</a>
+<a href="./README.html">理解导览</a>
+<a href="./objectives.html">目标与验收</a>
+<a href="./notes.html">过程记录</a>
+<a href="./implementation.html">实现方式</a>
+<a href="./verification.html">验证报告</a>
+<a href="./prototype-plan.html">原型计划</a>
+<a href="./visual-analysis.html">视觉研究</a>
+<a href="./technical-research.html">技术研究</a>
+<a href="./product-research.html">产品研究</a></nav><a class="original" href="./source/expansion-plan.md" target="_blank" rel="noopener">查看原始文档 ↗</a></aside>
+<main id="document"><div class="document-status">下一轮扩展方案 · 尚未实施</div><article><h1 id="一隅视觉效果与元素扩展计划">一隅视觉效果与元素扩展计划</h1>
+<p>用户在 2026-10-06 明确了两个优先级：第一，效果可靠；第二，元素够用。扩展顺序调整为先完成一处自然场景样板，再把它的素材、环境设置和组合规则扩展为可编辑的内容库。当前版本完成了主要交互流程，仍未达到参考画面的自然感；本文件规定下一轮的目标与验收，所列内容尚未实现或验收。</p>
+<p><a href="./README.html">项目入口</a> · <a href="./objectives.html">历史交付目标</a> · <a href="./notes.html">过程记录</a> · <a href="./implementation.html">已有实现</a> · <a href="./verification.html">已有验证</a></p>
+<h2 id="效果可靠的含义">效果可靠的含义</h2>
+<p>效果可靠同时要求画面质量和运行稳定。默认场景应有吸引力，走近植物与溪岸时仍成立；换视角、做常见编辑、保存和恢复后，风格与空间关系应保持连贯。能运行、功能测试通过或截图好看，分别只能覆盖其中一部分。</p>
+<p>本轮建议采用柔和、偏自然的林地溪流方向，以已归档的<a href="./assets/scene-cover.jpg">作者参考画面</a>为观察依据。借鉴植被层次、溪岸过渡、水流落差和光影关系，不要求逐像素复制或使用原作者资产。现有 Kenney 模型适合证明交互，扩大同一素材包不能自动消除当前的轮廓与细节差距。</p>
+<h2 id="先完成林间小溪样板">先完成林间小溪样板</h2>
+<p>以约 20 米见方的局部场景为工作范围，保留可行走路线。尺寸是建议的制作范围，不是已完成规模。先固定一种白天光照，在小范围中解决下列问题，再扩展环境和面积。</p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>部分</th>
+<th>下一轮应做的改变</th>
+<th>检查方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>植被</td>
+<td>使用能近看枝叶的树木；增加灌木、草丛、蕨类；按簇分布并留出空隙</td>
+<td>林下站立视角检查树冠、灌木、地被三层关系，避免均匀撒点和大片无意裸地</td>
+</tr>
+<tr>
+<td>地面与溪岸</td>
+<td>补草土、碎石和湿岸过渡；岩石部分嵌入地面，植被衔接边缘</td>
+<td>溪岸近景检查悬空、穿插、水陆裂缝和明显色带</td>
+</tr>
+<tr>
+<td>水流</td>
+<td>表现浅深与流向差异；在岩石与落差处有局部泡沫，避免整条河同一种条纹</td>
+<td>静态近景与连续动态分别检查，缓流和落差可辨认；视觉流水仍与水量模拟分开</td>
+</tr>
+<tr>
+<td>光影</td>
+<td>统一曝光、阴影、雾与材质；保留明暗层次和植物色差</td>
+<td>固定入口、溪岸、林下、俯视四个视角对照，不能仅在一个取景点成立</td>
+</tr>
+<tr>
+<td>动态与声音</td>
+<td>加入克制的枝叶摆动、流水和环境声，提供关闭和减少动态选项</td>
+<td>走动时观察抖动、闪烁、跳变；静音与减少动态后仍能辨认场景层次</td>
+</tr>
+</tbody></table>
+</div><p>先取少量候选素材，在同一场景、同一光照下试放树、草、石、水岸。确认方向与运行成本后再扩充完整资产包。优先选择风格统一且许可允许预期使用和交付的素材；本地浏览器原型需要交付资源文件，不能把“允许用于游戏”自动理解为允许分发原始素材。</p>
+<h2 id="元素够用的范围">元素够用的范围</h2>
+<p>第一批建议覆盖八组，共 37 个可选择条目。条目包含不同模型和具有明显轮廓差异的变体；同一模型仅改颜色不计为新的基础模型。数量是规划预算，可以在样板制作后调整，并非采购清单或已获得素材。</p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>元素组</th>
+<th align="right">建议条目数</th>
+<th>需要支持的用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>树木</td>
+<td align="right">6</td>
+<td>两类树形的大小与轮廓变化，构成树冠和林缘</td>
+</tr>
+<tr>
+<td>灌木</td>
+<td align="right">4</td>
+<td>补中层空间、遮接地面与树干</td>
+</tr>
+<tr>
+<td>草丛与蕨类</td>
+<td align="right">6</td>
+<td>林下、空地和湿岸的地被变化</td>
+</tr>
+<tr>
+<td>花草</td>
+<td align="right">4</td>
+<td>小范围点缀和花地，保持同一美术方向</td>
+</tr>
+<tr>
+<td>岩石与卵石</td>
+<td align="right">8</td>
+<td>大石、岸石、碎石、石滩，建立溪流尺度</td>
+</tr>
+<tr>
+<td>枯木与木段</td>
+<td align="right">3</td>
+<td>林下细节与局部构图焦点</td>
+</tr>
+<tr>
+<td>水景模块</td>
+<td align="right">3</td>
+<td>浅溪、缓水与小落差的视觉模块</td>
+</tr>
+<tr>
+<td>小径与木桥</td>
+<td align="right">3</td>
+<td>连接行走路线与取景位置</td>
+</tr>
+<tr>
+<td>合计</td>
+<td align="right">37</td>
+<td>首批扩展目标，尚未导入</td>
+</tr>
+</tbody></table>
+</div><p>地面材质、水景模块、环境声和模型属于不同资源类型，素材记录分别登记。还需一套协调的草土、石、湿岸材质与基础环境声，不能只计算模型数量。</p>
+<p>元素够用最终按场景覆盖验收：用同一套资源，独立完成林间溪流、林下空地和溪边花地三个场景，每个场景都能进入、编辑、保存和恢复。记录为了完成场景而临时补的资源；频繁缺失的部分决定下一批扩展。</p>
+<h2 id="让用户少量操作也能成景">让用户少量操作也能成景</h2>
+<p>单件物品用于精细调整；组合笔刷用于快速搭建。第一批建议提供六种组合：林缘树丛、林下灌木、湿岸草丛、花地、溪岸石群和浅滩。组合笔刷带有尺寸、间距与位置规则，允许调整密度和变体。</p>
+<p>例如“溪岸草丛”同时放置几种地被和少量岸石，依据离水距离控制范围；“林下灌木”保持与树干、路线的间距。组合使用固定随机种子，并将实际放置结果写进世界数据，保存后恢复同一布置。植被密度、坡度、大小和环境参数使用经样板检查的默认范围；规则减少常见问题，但不保证任何用户组合都好看。</p>
+<h2 id="在现有底座上的实现方式">在现有底座上的实现方式</h2>
+<p>暂时保留 Three.js 功能底座，通过样板实测判断它能否达到目标。引擎选择、资产质量和场景制作分别记录；换引擎不会自动完成美术方向。若样板经过优化仍无法满足约定的画面和设备要求，再依据具体瓶颈比较技术路线。</p>
+<p>当前 scene.js 硬编码七个 GLB，world.js 只有 tree、grass、flower、rock 四类对象。扩展时先建立资源清单，给每件资产稳定的 assetId，登记类型、路径、单位比例、落点、材质、碰撞、摆放规则、远近细节和许可。场景对象引用 assetId，界面从同一清单生成分类和预览，避免每加一个模型就分别修改多个模块。</p>
+<p>旧存档使用 type 与 variant；改变资产选择方式时需要显式迁移与版本校验。保留旧世界读取能力，迁移后保存为新版本；遇到缺失资产时给出具体反馈，不能静默删除用户作品。地面材质、河段和组合笔刷的配置与单件模型分开保存。</p>
+<p>密集植被继续按几何和材质分组实例化，以减少绘制调用；远处资源可使用较简化的模型。Three.js 的 <a href="https://threejs.org/docs/pages/InstancedMesh.html" target="_blank" rel="noopener noreferrer">InstancedMesh</a> 与 <a href="https://threejs.org/docs/pages/LOD.html" target="_blank" rel="noopener noreferrer">LOD</a> 分别支持这两类机制。这些机制提供优化手段，实际速度和视觉质量仍需在本项目中测量。当前已有实例化，还没有完整的远近细节系统。</p>
+<p>水景先升级流向、岸边过渡、局部泡沫与落差的视觉表现。积水、筑坝和守恒模拟保持为后续独立阶段，避免把模拟复杂度作为首个视觉样板的前置条件。</p>
+<h2 id="扩展顺序与验收门槛">扩展顺序与验收门槛</h2>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>交付</th>
+<th>进入下一步的条件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一</td>
+<td>自然场景样板与候选素材比较</td>
+<td>四个固定视角和一段行走路线都能看清层次；溪岸、植物和光影达到共同确认的视觉目标，记录仍有的差距</td>
+</tr>
+<tr>
+<td>二</td>
+<td>可复用的环境预设与首批元素库</td>
+<td>首批资源完成统一比例、材质、落点、碰撞与许可记录；新旧存档往返无丢失</td>
+</tr>
+<tr>
+<td>三</td>
+<td>六种组合笔刷与三个场景模板</td>
+<td>常用编辑能形成协调的结果；用同一套资源完成三种完整场景，不依赖未登记的临时素材</td>
+</tr>
+<tr>
+<td>四</td>
+<td>画面与设备回归记录</td>
+<td>固定样板和重度编辑场景分别测量；画质设置、保存恢复、减少动态和资源失败有实际结果</td>
+</tr>
+</tbody></table>
+</div><p>视觉验收保留参考图与当前版本对照，记录相机、随机种子、环境、资源版本和取景时间。静态对照固定动画时刻；动态观感另外记录。用户对画面仍不认可时，样板保持未通过，不能用功能测试代替这一判断。</p>
+<p>常见编辑用预先登记的种子、密度和环境组合重放，检查水陆接缝、浮空、不可见碰撞、路线阻塞与过度重复。长时间运行建议先检查 20 分钟的编辑和漫游，记录加载失败、资源增长和操作峰值，时间是本轮建议检查范围。</p>
+<p>性能建议先以约定的一台主力 Windows 设备和一台较弱设备为测试范围，登记浏览器、GPU、视口和内部渲染分辨率。稳定漫游暂以 30 FPS 作为讨论中的最低目标，报告帧耗时分布、长帧、首次加载与编辑响应；具体门槛在设备确定后调整。该目标未经本轮实测，不是当前性能结论或对所有设备的承诺。</p>
+<h2 id="每轮需要留下的记录">每轮需要留下的记录</h2>
+<p>每轮保存目标、素材来源与许可、实现改动、固定视角对照、动态观察、设备测量、常见编辑回归和未解决问题。更新 notes.md 的过程，implementation.md 的实际实现与 verification.md 的实际结果。扩展计划已接入演示和总目录网页，关联目标、过程、实现与验证文档；场景画面、元素库和组合笔刷的扩展仍待实施。</p>
+</article><footer>一隅 · 自然氛围与可探索造景研究</footer></main>
+<aside class="contents"><div class="nav-label">本页内容</div><nav aria-label="本页目录"><a href="#效果可靠的含义">效果可靠的含义</a>
+<a href="#先完成林间小溪样板">先完成林间小溪样板</a>
+<a href="#元素够用的范围">元素够用的范围</a>
+<a href="#让用户少量操作也能成景">让用户少量操作也能成景</a>
+<a href="#在现有底座上的实现方式">在现有底座上的实现方式</a>
+<a href="#扩展顺序与验收门槛">扩展顺序与验收门槛</a>
+<a href="#每轮需要留下的记录">每轮需要留下的记录</a></nav></aside></div>
+</body></html>

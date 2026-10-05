@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5ed"><title>视觉研究 · 一隅</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./research.css"></head>
+<body><a class="skip" href="#document">跳到正文</a>
+<header class="research-header"><a class="research-brand" href="./README.html">一隅 <span>自然空间研究</span></a><a class="return-demo" href="../index.html">试玩原型 <span aria-hidden="true">↗</span></a></header>
+<div class="research-layout"><aside class="documents"><div class="nav-label">关联文档</div><nav aria-label="项目文档"><a href="./expansion-plan.html">扩展计划</a>
+<a href="./README.html">理解导览</a>
+<a href="./objectives.html">目标与验收</a>
+<a href="./notes.html">过程记录</a>
+<a href="./implementation.html">实现方式</a>
+<a href="./verification.html">验证报告</a>
+<a href="./prototype-plan.html">原型计划</a>
+<a href="./visual-analysis.html" aria-current="page">视觉研究</a>
+<a href="./technical-research.html">技术研究</a>
+<a href="./product-research.html">产品研究</a></nav><a class="original" href="./source/visual-analysis.md" target="_blank" rel="noopener">查看原始文档 ↗</a></aside>
+<main id="document"><div class="document-status">研究与开发记录</div><article><h1 id="视觉效果与体验分析">视觉效果与体验分析</h1>
+<p><a href="./README.html">项目摘要</a> · <a href="./technical-research.html">技术实现</a> · <a href="./prototype-plan.html">原型验证</a></p>
+<h2 id="观察范围">观察范围</h2>
+<p>截图采集于 2026-10-05，分析对象是作者公开演示与商店宣传图，没有进入游戏执行编辑操作。下列“观察”针对画面，“机制”是候选实现手段，“验证”是后续实验，三者不互相替代。</p>
+<h2 id="1--溪流场景动态与构图">1 · 溪流场景：动态与构图</h2>
+<p><img src="./assets/01-source-post.jpg" alt="X 原帖的完整网页上下文" loading="lazy"></p>
+<p><a href="https://x.com/protopop/status/2106768374239752625" target="_blank" rel="noopener noreferrer">原帖</a>以溪流为主线：水面从右上向左下延伸，岩石形成落差，树木提供竖向节奏，草花把岸边接回绿色地面。视频播放时可见水面纹理与水花变化；截图只记录一帧。</p>
+<p><strong>优势判断</strong>：有限的自然元素形成前景、中景和远景；关注点明确，动态集中在水面，周边植被提供相对稳定的背景。</p>
+<p><strong>待验证风险</strong>：近处白色泡沫与亮部较多，若水花持续高强度，可能影响安静感或遮住河床。实际动态强度、声音、帧率和镜头舒适程度需在运行场景中检查。</p>
+<h2 id="2--商店画面作品整体性">2 · 商店画面：作品整体性</h2>
+<p><img src="./assets/02-store-overview.jpg" alt="官方商店的自然场景与定位" loading="lazy"></p>
+<p><a href="https://store.steampowered.com/app/4690240/Cozy_Country/" target="_blank" rel="noopener noreferrer">商店</a>展示水流、树木、桥梁与远山组成的整体空间，与其创作并探索的产品承诺一致。建筑可作为尺度参照与目的地，自然元素依然主导画面。</p>
+<p><strong>待验证问题</strong>：宣传图没有展示完整操作流程，无法判断新手需要多少步骤才能达到这一效果。</p>
+<h2 id="可复用的视觉原则">可复用的视觉原则</h2>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>层面</th>
+<th>观察或设计目标</th>
+<th>候选机制／措施</th>
+<th>后续验证</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>配色</td>
+<td>草、石、树形成连贯色域</td>
+<td>统一素材色彩、粗糙度与光照响应</td>
+<td>同一光照下并排检查素材</td>
+</tr>
+<tr>
+<td>光照</td>
+<td>亮地面、树荫、远处淡背景建立层次</td>
+<td>环境光、太阳阴影、雾和适度色彩处理</td>
+<td>固定机位比较时间预设，保留暗处细节</td>
+</tr>
+<tr>
+<td>地面连接</td>
+<td>草花连接岩石与地表</td>
+<td>按坡度、河岸距离、遮罩布置植被</td>
+<td>检查陡坡、河边、建筑下的悬浮与穿插</td>
+</tr>
+<tr>
+<td>动态</td>
+<td>水是主要活动来源</td>
+<td>控制水速、泡沫、水花与植被摆幅</td>
+<td>固定机位观察，再试减少动态模式</td>
+</tr>
+<tr>
+<td>尺度</td>
+<td>小物、岩石、树木提供参照</td>
+<td>以角色视角检查树高和路宽</td>
+<td>从创作进入探索，核对尺度是否舒适</td>
+</tr>
+<tr>
+<td>声音</td>
+<td>截图不能验证</td>
+<td>水、风、鸟鸣分层并可独立调整</td>
+<td>对比有声与无声，记录偏好</td>
+</tr>
+</tbody></table>
+</div><p>这些机制是复现候选，未确认作者实际采用了哪种 Shader、雾或声音实现。</p>
+<h2 id="让氛围进入交互">让氛围进入交互</h2>
+<p>拟议产品先提供少量动作：刷树、刷草花、挖地、放水源、进入探索。操作后出现可理解的局部结果，并支持撤销；初次体验无需调大量参数。</p>
+<p>相机应独立设计：创作时看清范围，探索时保持合理速度、转向和高度；进入前保留方向感，退出时回到附近创作位置。是否需要第一和第三人称同时提供，需实际任务验证。</p>
+<p>这些是拟议产品建议，不是已确认的原作缺陷。2.6 的镜头速度、植物响应与雾参数调整说明这些细节也在作者维护范围内。<a href="https://steamcommunity.com/games/4690240/announcements/detail/678511227668791476" target="_blank" rel="noopener noreferrer">官方公告</a></p>
+<h2 id="舒适度与可访问性待测">舒适度与可访问性待测</h2>
+<p>截图不能确认键盘支持、焦点顺序、界面对比度或完整可访问性。原型需测试工具文字标签、选中状态、不仅依赖颜色的笔刷提示、撤销、静音、减少动态、相机灵敏度与低画质模式。避免用一张漂亮截图代替这些验收。</p>
+<p>阶段判断：先保证小场景在编辑与探索视角都连贯，再扩充素材。整体风格、自然反馈与舒适运动需要一起验收。</p>
+</article><footer>一隅 · 自然氛围与可探索造景研究</footer></main>
+<aside class="contents"><div class="nav-label">本页内容</div><nav aria-label="本页目录"><a href="#观察范围">观察范围</a>
+<a href="#1--溪流场景动态与构图">1 · 溪流场景：动态与构图</a>
+<a href="#2--商店画面作品整体性">2 · 商店画面：作品整体性</a>
+<a href="#可复用的视觉原则">可复用的视觉原则</a>
+<a href="#让氛围进入交互">让氛围进入交互</a>
+<a href="#舒适度与可访问性待测">舒适度与可访问性待测</a></nav></aside></div>
+</body></html>

@@ -1,0 +1,353 @@
+{
+  "research_date": "2026-10-05",
+  "timezone": "Asia/Shanghai",
+  "case_version": "Cozy Country 2.6 (2026-10-01)",
+  "scope": "原游戏的公开资料与宣传画面研究；原游戏未实际试玩、未读取作者源码、未做用户或性能实测；已新增独立 Web 原型 Stage A，待浏览器验证",
+  "evidence_policy": "官方陈述、社区个体线索、画面观察与本项目方案分开记录；不从营销材料推断市场或心理效果",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Protopop Games 作者主页",
+      "url": "https://x.com/protopop",
+      "kind": "作者公开主页",
+      "accessed_on": "2026-10-05",
+      "access_method": "in-app-browser",
+      "supports": "作者与作品背景",
+      "limits": "不推断全部作品具有相同玩法"
+    },
+    {
+      "id": "S02",
+      "title": "Cozy Country 溪流演示",
+      "url": "https://x.com/protopop/status/2106768374239752625",
+      "kind": "作者演示",
+      "accessed_on": "2026-10-05",
+      "access_method": "in-app-browser; fresh screenshots",
+      "supports": "可见画面、构图、流水演示",
+      "limits": "单帧不证明交互、算法、声音或性能"
+    },
+    {
+      "id": "S03",
+      "title": "Cozy Country 官方商店",
+      "url": "https://store.steampowered.com/app/4690240/Cozy_Country/",
+      "kind": "官方产品说明",
+      "accessed_on": "2026-10-05",
+      "access_method": "web; in-app-browser",
+      "supports": "定位、创作探索能力、平台与付费本体",
+      "limits": "营销描述未由实际游玩验证；页面可变"
+    },
+    {
+      "id": "S04",
+      "title": "Cozy Country 2.6 官方更新",
+      "url": "https://steamcommunity.com/games/4690240/announcements/detail/678511227668791476",
+      "kind": "作者官方公告",
+      "accessed_on": "2026-10-05",
+      "access_method": "in-app-browser; web fetch unavailable",
+      "supports": "2026-10-01 河流、地形、相机及存档更新",
+      "limits": "说明行为，不披露数值算法"
+    },
+    {
+      "id": "S05",
+      "title": "Cozy Country 2.6 公告镜像",
+      "url": "https://steamdb.info/patchnotes/25641435/",
+      "kind": "官方公告的第三方镜像",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "交叉核对公告文本",
+      "limits": "镜像不是独立技术证据"
+    },
+    {
+      "id": "S06",
+      "title": "作者与 CozyGamers 用户交流",
+      "url": "https://www.reddit.com/r/CozyGamers/comments/1whzx5w/cozy_country_lets_you_create_fantasy_landscapes/",
+      "kind": "作者陈述与社区个体评论",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "素材来源、产品意图、个体用途及历史请求",
+      "limits": "少量自选样本；部分回复早于2.6，不代表当前缺陷或频率"
+    },
+    {
+      "id": "S07",
+      "title": "Wilderless 官方商店",
+      "url": "https://store.steampowered.com/app/2230220/Wilderless/",
+      "kind": "官方产品说明",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "种子世界、探索与摄影、当前发行形态",
+      "limits": "未试玩；不将旧路线图当成已实现功能"
+    },
+    {
+      "id": "S08",
+      "title": "Tiny Glade 官方商店",
+      "url": "https://store.steampowered.com/app/2198150/Tiny_Glade/",
+      "kind": "官方产品说明",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "建筑自动适配、Demo与Workshop入口",
+      "limits": "按访问日状态记录；不证明增长因果"
+    },
+    {
+      "id": "S09",
+      "title": "Townscaper 官方商店",
+      "url": "https://store.steampowered.com/app/1291340/Townscaper/",
+      "kind": "官方产品说明",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "不规则网格与建筑组合生成",
+      "limits": "未验证运行手感或原始算法"
+    },
+    {
+      "id": "S10",
+      "title": "Townscaper Raw Fury 产品页",
+      "url": "https://rawfury.com/games/townscaper/",
+      "kind": "官方发行商说明",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "产品平台目录",
+      "limits": "列出平台不等于所有平台已逐一实测"
+    },
+    {
+      "id": "S11",
+      "title": "Meadow 官方商店",
+      "url": "https://store.steampowered.com/app/486310/Meadow/",
+      "kind": "官方产品说明",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "动物探索、非文字交流、多人及扩展形态",
+      "limits": "未实测在线体验或社区表现"
+    },
+    {
+      "id": "S12",
+      "title": "Unity 6 TerrainData.SetHeights",
+      "url": "https://docs.unity3d.com/6000.0/Documentation/ScriptReference/TerrainData.SetHeights.html",
+      "kind": "官方API文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "地形高度修改及交互更新成本",
+      "limits": "引擎能力不是原作调用证据"
+    },
+    {
+      "id": "S13",
+      "title": "Unity 6 GPU Instancing",
+      "url": "https://docs.unity.com/en-us/engine/6000.0/manual/analysis/graphics-performance-profiling/reduce-draw-calls/gpuinstancing",
+      "kind": "官方引擎文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "实例化减少绘制调用",
+      "limits": "不能推断整个场景的性能收益"
+    },
+    {
+      "id": "S14",
+      "title": "Unity 6 WindZone",
+      "url": "https://docs.unity3d.com/6000.0/Documentation/Manual/class-WindZone.html",
+      "kind": "官方引擎文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "树木风区与Terrain草的区别",
+      "limits": "未验证所选素材的实际风实现"
+    },
+    {
+      "id": "S15",
+      "title": "Unity 6 Audio",
+      "url": "https://docs.unity3d.com/6000.0/Documentation/Manual/Audio.html",
+      "kind": "官方引擎文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "空间声音与混音能力",
+      "limits": "不证明原作的声音设计"
+    },
+    {
+      "id": "S16",
+      "title": "Three.js Raycaster",
+      "url": "https://threejs.org/docs/pages/Raycaster.html",
+      "kind": "官方API文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "鼠标拾取与交点",
+      "limits": "运行时编辑需另行实现"
+    },
+    {
+      "id": "S17",
+      "title": "Three.js InstancedMesh",
+      "url": "https://threejs.org/docs/pages/InstancedMesh.html",
+      "kind": "官方API文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "同种几何材质的实例绘制",
+      "limits": "仍需管理裁剪、阴影与几何成本"
+    },
+    {
+      "id": "S18",
+      "title": "Three.js LOD",
+      "url": "https://threejs.org/docs/pages/LOD.html",
+      "kind": "官方API文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "距离细节切换",
+      "limits": "实际质量档和距离需测试"
+    },
+    {
+      "id": "S19",
+      "title": "Three.js Fog",
+      "url": "https://threejs.org/manual/pages/fog.html",
+      "kind": "官方教程",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "距离雾表现",
+      "limits": "不证明原作采用同一技术"
+    },
+    {
+      "id": "S20",
+      "title": "Three.js Transparency",
+      "url": "https://threejs.org/manual/pages/transparency.html",
+      "kind": "官方教程",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "透明物体排序限制",
+      "limits": "交叠水面与叶片需具体场景验证"
+    },
+    {
+      "id": "S21",
+      "title": "Three.js Water2 source",
+      "url": "https://github.com/mrdoob/three.js/blob/master/examples/jsm/objects/Water2.js",
+      "kind": "官方示例源码",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "流向、反射折射示例与能力边界",
+      "limits": "master可变，未锁定提交；不承担河道或蓄水模拟"
+    },
+    {
+      "id": "S22",
+      "title": "Three.js ShaderMaterial",
+      "url": "https://threejs.org/docs/pages/ShaderMaterial.html",
+      "kind": "官方API文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "WebGL自定义着色器路线",
+      "limits": "不假设与WebGPU材质直接兼容"
+    },
+    {
+      "id": "S23",
+      "title": "Kenney Nature Kit 官方素材页",
+      "url": "https://kenney.nl/assets/nature-kit",
+      "kind": "作者官方素材与许可说明",
+      "accessed_on": "2026-10-05",
+      "access_method": "web; official ZIP download",
+      "supports": "独立原型中树、草、花与岩石模型的出处及 CC0 许可",
+      "limits": "仅说明 Kenney 素材授权，不是原游戏素材来源证据；风格效果需实际场景验证"
+    },
+    {
+      "id": "S24",
+      "title": "Kenney Nature Kit 官方下载包",
+      "url": "https://kenney.nl/media/pages/assets/nature-kit/37ac38a37b-1677698939/kenney_nature-kit.zip",
+      "kind": "官方原始素材 ZIP",
+      "accessed_on": "2026-10-05",
+      "access_method": "official shell download; ZIP and GLB structure/hash checks",
+      "supports": "7 个独立 GLB、原始 License.txt、导入文件字节一致性；详见 demo/assets/ASSET-LICENSES.md",
+      "limits": "结构校验不等于浏览器加载或渲染验证；原始模型配色与尺度需要在原型中适配"
+    },
+    {
+      "id": "S25",
+      "title": "Three.js 0.186.1 官方 npm 包",
+      "url": "https://registry.npmjs.org/three/-/three-0.186.1.tgz",
+      "kind": "官方固定版本 npm tarball",
+      "accessed_on": "2026-10-05",
+      "access_method": "official package download; package.json and selected-file byte/hash checks",
+      "supports": "本地渲染依赖版本 0.186.1、MIT 许可、来源路径与完整性；详见 demo/vendor/three/DEPENDENCIES.md",
+      "limits": "上游依赖校验不等于当前原型运行成功；不证明原游戏技术栈"
+    },
+    {
+      "id": "S26",
+      "title": "Three.js 官方源码与 MIT 许可",
+      "url": "https://github.com/mrdoob/three.js/blob/dev/LICENSE",
+      "kind": "官方仓库许可",
+      "accessed_on": "2026-10-05",
+      "access_method": "web; compared with original npm package LICENSE",
+      "supports": "Three.js MIT 授权与版权声明；本地发布保留完整原始 LICENSE",
+      "limits": "dev 分支会变化；实际导入内容以 three@0.186.1 包和哈希为准"
+    },
+    {
+      "id": "S27",
+      "title": "Three.js GLTFLoader",
+      "url": "https://threejs.org/docs/pages/GLTFLoader.html",
+      "kind": "官方 API 文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "独立原型加载 glTF 2.0 / GLB 的接口参考",
+      "limits": "文档描述引擎能力，不证明模型实际加载和场景表现"
+    },
+    {
+      "id": "S28",
+      "title": "Three.js OrbitControls",
+      "url": "https://threejs.org/docs/pages/OrbitControls.html",
+      "kind": "官方 API 文档",
+      "accessed_on": "2026-10-05",
+      "access_method": "web",
+      "supports": "独立原型的相机环绕、缩放与平移接口参考",
+      "limits": "交互冲突、触屏操作与相机手感需要浏览器验证"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "assets/01-source-post.jpg",
+      "source_id": "S02",
+      "captured_on": "2026-10-05",
+      "kind": "完整网页截图",
+      "verified": true
+    },
+    {
+      "file": "assets/scene-cover.jpg",
+      "source_id": "S02",
+      "captured_on": "2026-10-05",
+      "kind": "视频区域截图",
+      "verified": true
+    },
+    {
+      "file": "assets/02-store-overview.jpg",
+      "source_id": "S03",
+      "captured_on": "2026-10-05",
+      "kind": "商店顶部截图",
+      "verified": true
+    }
+  ],
+  "not_performed": [
+    "游戏实际操作或安装",
+    "原游戏源码与插件确认",
+    "原游戏算法和性能实测",
+    "用户访谈或回访实验",
+    "销量、收入或医疗效果验证",
+    "独立原型的正式设备性能基准与真实触屏验证",
+    "浏览器下载文件落盘确认（完成事件未回传）"
+  ],
+  "prototype": {
+    "stage": "Stage A",
+    "kind": "独立 Three.js Web 原型",
+    "entry": "demo/index.html",
+    "verification_status": "核心浏览器流程完成；下载落盘与真实设备性能仍未验证",
+    "dependency_provenance": "demo/vendor/three/DEPENDENCIES.md",
+    "asset_provenance": "demo/assets/ASSET-LICENSES.md",
+    "boundary": "原型用于验证自然氛围与创作体验思路，不代表已复现原游戏源码、河流算法、声音、性能或用户效果",
+    "verified_on": "2026-10-06",
+    "verification_report": "verification.md",
+    "automated_tests": 16,
+    "screenshots": [
+      {
+        "file": "assets/03-prototype-editor.jpg",
+        "captured_on": "2026-10-06",
+        "kind": "本地原创原型编辑画面",
+        "verified": true
+      },
+      {
+        "file": "assets/04-prototype-explore.jpg",
+        "captured_on": "2026-10-06",
+        "kind": "本地原创原型探索画面",
+        "verified": true
+      },
+      {
+        "file": "assets/05-prototype-narrow.jpg",
+        "captured_on": "2026-10-06",
+        "kind": "本地原创原型390×844布局检查",
+        "verified": true
+      }
+    ]
+  }
+}

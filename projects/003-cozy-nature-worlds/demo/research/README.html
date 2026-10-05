@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5ed"><title>理解导览 · 一隅</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./research.css"></head>
+<body><a class="skip" href="#document">跳到正文</a>
+<header class="research-header"><a class="research-brand" href="./README.html">一隅 <span>自然空间研究</span></a><a class="return-demo" href="../index.html">试玩原型 <span aria-hidden="true">↗</span></a></header>
+<div class="research-layout"><aside class="documents"><div class="nav-label">关联文档</div><nav aria-label="项目文档"><a href="./expansion-plan.html">扩展计划</a>
+<a href="./README.html" aria-current="page">理解导览</a>
+<a href="./objectives.html">目标与验收</a>
+<a href="./notes.html">过程记录</a>
+<a href="./implementation.html">实现方式</a>
+<a href="./verification.html">验证报告</a>
+<a href="./prototype-plan.html">原型计划</a>
+<a href="./visual-analysis.html">视觉研究</a>
+<a href="./technical-research.html">技术研究</a>
+<a href="./product-research.html">产品研究</a></nav><a class="original" href="./source/README.md" target="_blank" rel="noopener">查看原始文档 ↗</a></aside>
+<main id="document"><div class="document-status">首轮研究已交付 · 功能底座 · 扩展暂停</div><article><h1 id="003--自然氛围与可探索造景--理解总览">003 · 自然氛围与可探索造景 · 理解总览</h1>
+<p><strong>一个可以亲手布置、走进去、保存并继续修改的小型自然空间。</strong> 本项目以 Protopop 的 Cozy Country 为参考，研究柔和自然氛围如何与造景、探索结合，并制作原创 Three.js 原型「一隅」。当前交付首轮研究与功能底座，视觉提升及元素扩充保留为后续计划。</p>
+<p><a href="./assets/07-understanding-overview.png"><img src="./assets/07-understanding-overview.png" alt="自然造景与探索：原作与原型对照、能力、原理、用途和扩展总览" loading="lazy"></a></p>
+<p>点击引导图可查看大图。它依据原作者画面与本项目实际截图生成排版；画面对照经过合成，实际运行证据见<a href="./assets/03-prototype-editor.jpg">编辑截图</a>、<a href="./assets/04-prototype-explore.jpg">探索截图</a>与<a href="./verification.html">验证报告</a>。<a href="./assets/07-understanding-overview.md">图像制作与来源记录</a></p>
+<p><a href="../index.html">打开可交互原型</a> · <a href="./expansion-plan.html">查看扩展计划</a> · <a href="./objectives.html">目标与验收</a> · <a href="./implementation.html">实现方式</a> · <a href="./notes.html">过程记录</a></p>
+<h2 id="能力原理与使用价值">能力、原理与使用价值</h2>
+<p><strong>能力：</strong> 以 Cozy Country 为参考研究造景与探索；原创 Three.js 原型「一隅」已连接树草花布置、擦除撤销、泉眼重排、进入漫游、环境切换和保存恢复。研究网页关联目标、过程、实现、验证及扩展计划。</p>
+<p><strong>原理：</strong> Three.js 提供场景、相机、材质与浏览器渲染；自然氛围由美术资产、配色、光影、水流和构图共同形成。一隅采用高度场、实例化植被、参数曲线河流与共同生成的河谷，流水 Shader 表现动态，世界数据支持编辑、探索和恢复。</p>
+<p><strong>使用场景：</strong> 个人自然空间、轻度造景与休闲探索，以及团队评审和技术验证；绘画、故事布景、拍照与分享是后续候选用途。</p>
+<p><strong>价值：</strong> 将观赏连接到亲手创造、进入成果和继续修改；保留原作与原型对照、可试玩底座和验收依据。扩展先验证林间溪流的整体效果，再规划八组 37 个可选条目、六种组合笔刷与三个场景模板。</p>
+<p><strong>边界：</strong> 功能底座已交付，视觉尚未达到参考效果；37／6／3 扩展均未实现，当前暂停深入开发。未试玩或复现原游戏，也未确认其算法；一隅没有积水、水量守恒、声音或植被风。16 项自动检查及核心浏览器流程通过；真实设备性能、下载落盘和用户回访仍待验证。</p>
+<p><strong>研究判断：这个方向值得验证的核心，是让人用简单操作改变自然世界，并能走进自己的成果。柔和的自然氛围负责吸引与陪伴，编辑反馈、探索和保存共同构成产品体验。</strong> 这是基于公开资料提出的产品判断，尚未经过用户测试或商业验证。</p>
+<p><a href="https://github.com/yydshly/1004_codex_project/blob/main/README.md" target="_blank" rel="noopener noreferrer">返回总索引</a> · <a href="./notes.html">研究记录</a> · <a href="./product-research.html">产品与竞品</a> · <a href="./visual-analysis.html">视觉效果</a> · <a href="./technical-research.html">技术研究</a> · <a href="./objectives.html">目标与验收</a> · <a href="./implementation.html">实现记录</a> · <a href="./prototype-plan.html">原型验证计划</a> · <a href="./expansion-plan.html">扩展计划</a> · <a href="./verification.html">验证报告</a> · <a href="./files/sources.json">证据清单</a></p>
+<p>本项目已实现原创的 Three.js 自然空间原型「一隅」，把简单造景、进入探索和保存恢复接成一条体验。Cozy Country 提供研究参考；本原型使用独立代码、原创界面和 Kenney CC0 自然素材。实际检查及尚未覆盖的条件见 <a href="./verification.html">验证报告</a>。</p>
+<p>当前版本主要验证交互底座，画面尚未达到用户期望的自然感。用户在 2026-10-06 明确“第一效果可靠，第二元素够用”；下一轮先制作林间小溪视觉样板，再扩展统一素材与组合笔刷。<a href="./expansion-plan.html">扩展计划</a>记录顺序、元素范围、实现方式和验收门槛，方案尚未实施。</p>
+<p>在线入口为<a href="https://yydshly.github.io/1004_codex_project/demos/003-cozy-nature-worlds/research/README.html" target="_blank" rel="noopener noreferrer">理解导览</a>、<a href="https://yydshly.github.io/1004_codex_project/demos/003-cozy-nature-worlds/" target="_blank" rel="noopener noreferrer">可交互原型</a>与<a href="https://yydshly.github.io/1004_codex_project/demos/003-cozy-nature-worlds/research/expansion-plan.html" target="_blank" rel="noopener noreferrer">扩展计划</a>。演示顶部“扩展计划”单独打开阅读页，关联目标、过程、实现、验证与研究文档。网页正文由本项目 Markdown 生成，计划、已有实现与实际验证分别保留各自状态。</p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>记录</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>固定编号与目录</td>
+<td><code>003</code> · <code>003-cozy-nature-worlds</code></td>
+</tr>
+<tr>
+<td>研究日期</td>
+<td>2026-10-05，Asia/Shanghai</td>
+</tr>
+<tr>
+<td>原型收尾日期</td>
+<td>2026-10-06，Asia/Shanghai</td>
+</tr>
+<tr>
+<td>主案例</td>
+<td><a href="https://x.com/protopop" target="_blank" rel="noopener noreferrer">Protopop Games</a> 的 <a href="https://store.steampowered.com/app/4690240/Cozy_Country/" target="_blank" rel="noopener noreferrer">Cozy Country</a></td>
+</tr>
+<tr>
+<td>功能快照</td>
+<td>Cozy Country 2.6，2026-10-01 官方更新说明；商店页面与作者公开帖子按研究日期核查</td>
+</tr>
+<tr>
+<td>核心问题</td>
+<td>自然氛围怎样转成可持续的交互体验；哪些效果必须实现；有什么可切入的产品方向</td>
+</tr>
+<tr>
+<td>验证范围</td>
+<td>公开资料研究、宣传演示观察、竞品比较，以及阶段 A 原型的实现与功能检查</td>
+</tr>
+<tr>
+<td>当前阶段</td>
+<td>首轮研究与阶段 A 功能底座已交付；视觉目标仍待完成，扩展方案已记录，用户实验尚未开展</td>
+</tr>
+</tbody></table>
+</div><h2 id="从作者作品中确认了什么">从作者作品中确认了什么</h2>
+<p>Cozy Country 将景观创作与第一／第三人称探索放进同一产品。<a href="https://store.steampowered.com/app/4690240/Cozy_Country/" target="_blank" rel="noopener noreferrer">官方商店</a></p>
+<p>2.6 特别加强了水源、低洼积水与地形改流之间的关系，自然系统的反馈进入了创作操作本身。<a href="https://steamcommunity.com/games/4690240/announcements/detail/678511227668791476" target="_blank" rel="noopener noreferrer">官方公告</a></p>
+<p>作者说明自己会调整 Unity 商店素材以统一美术方向，并明确否认使用生成式 AI。素材来源不能证明具体引擎版本、渲染管线或河流算法。<a href="https://www.reddit.com/r/CozyGamers/comments/1whzx5w/cozy_country_lets_you_create_fantasy_landscapes/" target="_blank" rel="noopener noreferrer">作者问答</a></p>
+<h2 id="思路让自然氛围变成可参与的体验">思路：让自然氛围变成可参与的体验</h2>
+<p>体验循环：<strong>看到自然空间 → 做一次简单编辑 → 获得自然反馈 → 进入自己的场景漫游 → 保存并留下继续修改的地方 → 再次编辑。</strong></p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>层次</th>
+<th>对用户的价值假设</th>
+<th>产品应交付什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>自然氛围</td>
+<td>愿意看、听、停留</td>
+<td>连贯的光照、植被、水流、空间层次与声音</td>
+</tr>
+<tr>
+<td>自由创造</td>
+<td>能表达自己的偏好</td>
+<td>少量易理解的笔刷、自动补细节、撤销与保存</td>
+</tr>
+<tr>
+<td>沉浸探索</td>
+<td>对自己的成果产生归属感</td>
+<td>明确的进入入口、舒适相机与能走通的小空间</td>
+</tr>
+<tr>
+<td>再次回来</td>
+<td>保留想继续修改或停留的地方</td>
+<td>可恢复的世界、命名、少量风景收藏与继续编辑</td>
+</tr>
+</tbody></table>
+</div><p>前三个环节应让新用户很快做出喜欢的东西；后两个环节需要验证是否真的带来回访。热帖、宣传观感和竞品存在不能代替留存与付费证据。</p>
+<h2 id="效果先验证整体再选择技术细节">效果：先验证整体，再选择技术细节</h2>
+<p><img src="./assets/scene-cover.jpg" alt="作者原帖中的溪流、岩石与植被画面" loading="lazy"></p>
+<p>这是本轮从<a href="https://x.com/protopop/status/2106768374239752625" target="_blank" rel="noopener noreferrer">作者演示</a>截取的真实场景，完整网页上下文见 <a href="./assets/01-source-post.jpg">01-source-post.jpg</a>。原作者保有画面权利；它不是本研究原型。</p>
+<p>画面支持对配色、构图与空间层次的观察：水流贯穿场景，岩石提供尺度与落差，树木建立高度，草花连接岸边与地面。仅凭图像无法判断具体 Shader、实际帧率或交互难度。<a href="./visual-analysis.html">逐项视觉分析</a></p>
+<p>技术上分别验证“氛围是否让人愿意停留”和“操作是否产生可理解的自然响应”。技术报告比较高度场、植被实例化、曲线河流、水深传播、存档和 Unity / Three.js；复现设计均标为方案，未认定为作者源码。<a href="./technical-research.html">技术研究</a></p>
+<h2 id="产品优先验证可进入的个人风景">产品：优先验证可进入的个人风景</h2>
+<p>建议定位草案是：<strong>一个可以亲手布置、随时进入、持续保存的小型自然空间。</strong> 初始受众假设为轻度创作与休闲探索用户。</p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>候选方向</th>
+<th>优势假设</th>
+<th>首轮重点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>自然造景游戏</td>
+<td>创作结果明确，符合现有案例</td>
+<td>操作反馈、作品完成感与探索循环</td>
+</tr>
+<tr>
+<td>个人自然空间</td>
+<td>快速进入，适合短时间停留</td>
+<td>一小块空间是否支持自愿回访</td>
+</tr>
+<tr>
+<td>绘画／故事场景辅助</td>
+<td>输出目的具体</td>
+<td>相机、导出与布局精度，需另访谈专业用户</td>
+</tr>
+</tbody></table>
+</div><p><a href="./product-research.html">产品研究</a>比较 Wilderless、Tiny Glade、Townscaper 和 Meadow，并讨论个体用途、买断与发行路径。第一轮只验证一条完整体验循环，避免同时承担游戏、环境陪伴工具和专业编辑器的完成标准。</p>
+<h2 id="本轮原型阶段-a">本轮原型：阶段 A</h2>
+<p>本轮交付一块小型自然空间，树、草、花笔刷、擦除与撤销，水源重新放置，创作／探索切换，本地保存／加载、JSON 导入／导出，以及三种环境预设和减少动态设置。<a href="./objectives.html">objectives.md</a>以 G01–G08 定义验收，<a href="./implementation.html">implementation.md</a>记录模块、存档和河流实现。</p>
+<p>实际浏览器检查已覆盖植物笔刷、擦除与撤销、泉眼重排、进入漫游与返回布置、环境与减少动态、本地存档刷新恢复，以及 JSON 内容和文件的导入往返。JSON 导出支持查看、复制和发起下载；下载文件是否真正落盘仍待验证。开发者功能检查没有验证用户是否喜欢、回访或愿意付费。</p>
+<p><img src="./assets/04-prototype-explore.jpg" alt="本项目原型的探索视角" loading="lazy"></p>
+<p>阶段 A 的溪流使用参数化中心曲线与共同生成的河谷，重新放置水源会重新生成路径与地形。流水 Shader 负责外观，当前没有积水、蓄水溢流或水量守恒模拟。阶段 B 才验证地形雕刻与积水改流。</p>
+<p>最需要通过用户观察回答：能否很快做出喜欢的东西；是否主动走进去；是否愿意再次打开。功能检查与实际浏览器结果集中写入 <a href="./verification.html">verification.md</a>，用户测试方案见 <a href="./prototype-plan.html">prototype-plan.md</a>。原型交付不会自动证明产品假设成立。</p>
+<h2 id="本地运行与检查">本地运行与检查</h2>
+<p>在子项目根目录运行：</p>
+<pre><code class="language-powershell">Set-Location F:\codex_project\1004_codex_project\projects\003-cozy-nature-worlds
+npm run dev
+</code></pre>
+<p>然后打开 <a href="http://127.0.0.1:8033" target="_blank" rel="noopener noreferrer">http://127.0.0.1:8033</a>。这是本地预览地址，需保持服务运行。测试命令在同一目录单独执行：</p>
+<p><code>npm run dev</code> 会先生成十份关联文档网页。文档修改后可在本地服务运行期间执行 <code>npm run build:research</code>，再刷新文档页；<code>npm run check:research</code> 检查派生网页与正文一致。生成网站目录前，先构建文档网页，再在总仓库执行 <code>python scripts/catalog.py sync</code>。GitHub Pages 工作流使用同一构建步骤，提交检查会拒绝过期文档页；发布过程与线上验证见<a href="./notes.html">过程记录</a>。</p>
+<p>网页和原型均以静态文件发布，浏览器直接加载随项目保存的 Three.js 与模型，无需另行部署业务后端。本地保存属于当前浏览器与站点地址；本地预览中的存档不会自动迁移到线上站点，可通过 JSON 内容导出再导入。</p>
+<pre><code class="language-powershell">npm test
+</code></pre>
+<p>需要自定义监听地址或端口时，直接调用服务脚本，避免 Windows 上 npm 参数透传的差异：</p>
+<pre><code class="language-powershell">node dev-server.mjs --host 127.0.0.1 --port 8033
+</code></pre>
+<p>浏览器运行时使用项目内的 <a href="../vendor/three/VERSION.txt">Three.js 0.186.1</a>，许可保存在 <a href="../vendor/three/LICENSE">vendor/three/LICENSE</a>。它无需从 CDN 加载 Three.js。树、草、花与岩石使用 <a href="https://kenney.nl/assets/nature-kit" target="_blank" rel="noopener noreferrer">Kenney Nature Kit</a>的七个 GLB；下载凭据、模型清单和 CC0 许可见 <a href="../assets/ASSET-LICENSES.md">素材记录</a>。</p>
+<p>最终测试数量、浏览器操作、性能观测条件和限制以 <a href="./verification.html">验证报告</a>为准。原型包含世界数据、存储异常和漫游规则的回归检查；本项目没有对所有设备作帧率承诺。</p>
+<h2 id="证据与边界">证据与边界</h2>
+<ul>
+<li><strong>资料确认</strong>：商店、作者问答与公告中的定位和功能。</li>
+<li><strong>视觉观察</strong>：本轮采集的真实宣传画面。</li>
+<li><strong>研究判断／方案</strong>：受众、体验循环、路线建议和实验门槛。</li>
+<li><strong>原型证据</strong>：本项目代码与实际功能检查，结果记录在验证报告。</li>
+<li><strong>未验证</strong>：原游戏实际操作、源码与性能，以及本项目的需求规模、用户回访、盈利与情绪改善效果。</li>
+</ul>
+<p>本项目是商业产品案例研究，未取得或分发游戏程序、完整素材包或源码。<a href="./files/sources.json">证据清单</a>记录访问方法与每个来源的用途，<a href="./notes.html">研究记录</a>保留验证边界与后续事项。</p>
+</article><footer>一隅 · 自然氛围与可探索造景研究</footer></main>
+<aside class="contents"><div class="nav-label">本页内容</div><nav aria-label="本页目录"><a href="#能力原理与使用价值">能力、原理与使用价值</a>
+<a href="#从作者作品中确认了什么">从作者作品中确认了什么</a>
+<a href="#思路让自然氛围变成可参与的体验">思路：让自然氛围变成可参与的体验</a>
+<a href="#效果先验证整体再选择技术细节">效果：先验证整体，再选择技术细节</a>
+<a href="#产品优先验证可进入的个人风景">产品：优先验证可进入的个人风景</a>
+<a href="#本轮原型阶段-a">本轮原型：阶段 A</a>
+<a href="#本地运行与检查">本地运行与检查</a>
+<a href="#证据与边界">证据与边界</a></nav></aside></div>
+</body></html>

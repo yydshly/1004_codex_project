@@ -1,0 +1,56 @@
+{
+  "captured_on": "2026-10-06",
+  "method": "Observed DOM attributes, controls and screenshots via Codex in-app browser; no simulated participants",
+  "checks": [
+    {
+      "check": "export visible JSON",
+      "length": 158421,
+      "name": "一隅 · 溪谷",
+      "objects": 745
+    },
+    {
+      "check": "JSON paste round trip",
+      "expected": "fdd7409a",
+      "actual": "fdd7409a"
+    },
+    {
+      "check": "invalid paste preserved",
+      "message": "这不是有效的风景存档，当前风景已保留。",
+      "expected": "fdd7409a",
+      "actual": "fdd7409a"
+    },
+    {
+      "check": "file import round trip",
+      "expected": "fdd7409a",
+      "actual": "fdd7409a"
+    },
+    {
+      "check": "walk after safe spawn fix",
+      "before": "[6.64,6.19,10.33]",
+      "after": "[6.46,5.95,8.54]",
+      "mode": "explore"
+    },
+    {
+      "check": "look and Escape return",
+      "mode": "edit",
+      "camera": "[32,38,49]"
+    },
+    {
+      "check": "full exported text equality after file round trip",
+      "equal": false
+    },
+    {
+      "check": "full exported text equality after viewport settled",
+      "equal": true,
+      "length": 158421
+    },
+    {
+      "check": "download completion",
+      "result": {
+        "failed": true,
+        "message": "Timed out after 10000ms waiting for download."
+      }
+    }
+  ],
+  "console": []
+}

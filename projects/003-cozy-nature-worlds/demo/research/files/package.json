@@ -1,0 +1,13 @@
+{
+  "name": "cozy-nature-worlds-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:research": "node build-research.mjs",
+    "check:research": "node build-research.mjs --check",
+    "predev": "npm run build:research",
+    "dev": "node dev-server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  }
+}

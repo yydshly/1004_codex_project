@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5ed"><title>目标与验收 · 一隅</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./research.css"></head>
+<body><a class="skip" href="#document">跳到正文</a>
+<header class="research-header"><a class="research-brand" href="./README.html">一隅 <span>自然空间研究</span></a><a class="return-demo" href="../index.html">试玩原型 <span aria-hidden="true">↗</span></a></header>
+<div class="research-layout"><aside class="documents"><div class="nav-label">关联文档</div><nav aria-label="项目文档"><a href="./expansion-plan.html">扩展计划</a>
+<a href="./README.html">理解导览</a>
+<a href="./objectives.html" aria-current="page">目标与验收</a>
+<a href="./notes.html">过程记录</a>
+<a href="./implementation.html">实现方式</a>
+<a href="./verification.html">验证报告</a>
+<a href="./prototype-plan.html">原型计划</a>
+<a href="./visual-analysis.html">视觉研究</a>
+<a href="./technical-research.html">技术研究</a>
+<a href="./product-research.html">产品研究</a></nav><a class="original" href="./source/objectives.md" target="_blank" rel="noopener">查看原始文档 ↗</a></aside>
+<main id="document"><div class="document-status">研究与开发记录</div><article><h1 id="原型目标与验收">原型目标与验收</h1>
+<p>目标制定于 2026-10-05，收尾更新于 2026-10-06（Asia/Shanghai）。用户已同意制作小原型，并要求明确目标、过程和实现记录。本文件规定交付范围与验收方式；<a href="./implementation.html">实现记录</a>解释实际代码，<a href="./verification.html">验证报告</a>记录检查结果，具体事件按时间写入 <a href="./notes.html">研究记录</a>。</p>
+<h2 id="本轮定位">本轮定位</h2>
+<p>制作一个原创的桌面浏览器自然空间：用户刷树、草、花，放置溪流水源，走进自己的布置，并把作品保存下来。Three.js 运行时和素材在项目内提供，页面经本地 HTTP 服务访问。参考作品用于研究自然氛围与体验循环；界面与原型由本项目设计。</p>
+<p>本轮对应 <a href="./prototype-plan.html">原型计划</a>的阶段 A：验证氛围、编辑反馈、进入作品与恢复作品。溪流采用下坡路径与流水视觉；点击重新放置水源会重算路径。积水、蓄水溢流、筑坝改流的体积传播属于阶段 B，需要单独实现与验收。原作河流源码和算法没有公开，本轮方案不作为其真实实现证据。</p>
+<h2 id="交付目标-g01g08">交付目标 G01–G08</h2>
+<p>2026-10-06 追加范围澄清：以下是阶段 A 的历史功能目标。用户已指出当前画面未达到参考的自然感；G02 的基础可辨认场景不能等同于新的视觉目标通过。下一轮按 <a href="./expansion-plan.html">扩展计划</a>先验收视觉样板，再扩充元素与组合规则；新增要求仍未实现或验收。</p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>交付目标</th>
+<th>可操作验收条件</th>
+<th>对应证据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>G01</td>
+<td>可从本地打开的完整原型</td>
+<td>通过文档中的 HTTP 启动方式打开页面；首屏场景与工具可用；Three.js 和模型请求来自本地项目；依赖固定精确版本并保留来源、许可记录</td>
+<td>启动命令、浏览器与视口、网络请求和控制台记录；依赖清单</td>
+</tr>
+<tr>
+<td>G02</td>
+<td>连贯、可辨认的自然空间</td>
+<td>地形、溪流、树、草、花形成能进入的小场景；使用实际获取的 CC0 Kenney 自然 GLB，并记录原始来源与许可；截图可看清地面、植被与河岸层次</td>
+<td>默认场景截图、模型清单与许可文件；视觉观察说明</td>
+</tr>
+<tr>
+<td>G03</td>
+<td>三类植物笔刷、擦除与撤销</td>
+<td>树、草、花工具均能修改世界；擦除能移除范围内对象；撤销恢复最近一次编辑前的对象或水源状态；编辑过程保持可继续操作</td>
+<td>各工具的浏览器操作记录；编辑前后与撤销后的数据比较</td>
+</tr>
+<tr>
+<td>G04</td>
+<td>有方向感的阶段 A 溪流</td>
+<td>点击水源工具放置或移动泉眼后，重算有限采样的中心曲线与匹配河谷，并更新河面；普通模式有流水视觉；河流路径与水的动画分别可验证</td>
+<td>已登记种子/泉眼的路径检查、重放水源的截图或操作记录；视觉观察</td>
+</tr>
+<tr>
+<td>G05</td>
+<td>创作与探索循环</td>
+<td>能从创作模式进入场景，沿地面移动，再返回创作继续编辑；进入时落点有效；探索输入不会误刷植被，模式状态清楚</td>
+<td>编辑→探索→返回→继续编辑的完整浏览器记录</td>
+</tr>
+<tr>
+<td>G06</td>
+<td>本地作品保存与恢复</td>
+<td>编辑对象、水源和环境后保存；改动或刷新页面再加载，恢复保存的世界数据；存储受限或没有存档时页面仍可操作，并给出明确反馈</td>
+<td>保存前后序列化数据比较；刷新恢复和异常分支记录</td>
+</tr>
+<tr>
+<td>G07</td>
+<td>JSON 导出与导入</td>
+<td>导出为用户可保留的 JSON；导入后恢复相同世界；检查格式版本、字段和数量边界；错误文件给出反馈，保留当前有效世界</td>
+<td>JSON 往返检查；无效 JSON、未知版本和越界数据案例</td>
+</tr>
+<tr>
+<td>G08</td>
+<td>环境选择、减少动态与运行记录</td>
+<td>环境预设产生可见变化；减少动态设置能减少持续视觉动画；完成整套操作后无阻断错误；在登记的设备、浏览器和场景规模下记录帧耗时与加载情况</td>
+<td>环境对比截图、设置检查、控制台与性能记录</td>
+</tr>
+</tbody></table>
+</div><p>G04 的路径检查关注固定采样数、边界、连续性和有效坐标；漂亮的动画不是水量计算证据。G08 需报告具体设备和测量条件。未测量时不填写估算帧率或作帧率承诺，也不把单台设备结果外推到其他设备。</p>
+<h2 id="产品假设-h01h04">产品假设 H01–H04</h2>
+<p>功能验收只说明原型能工作。以下假设需要目标用户参与，浏览器自动检查和开发者体验不能代替用户证据。</p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>待验证的产品假设</th>
+<th>观察方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H01</td>
+<td>少量笔刷能让新手表达个人偏好</td>
+<td>不指导地让用户布置喜欢的一角，记录首次有意义改变、求助和撤销</td>
+</tr>
+<tr>
+<td>H02</td>
+<td>走进自己布置的场景有独特价值</td>
+<td>先观察是否自发进入；再区分探索发现、返回修改与仅截图的行为</td>
+</tr>
+<tr>
+<td>H03</td>
+<td>重新布置溪流让人愿意试验</td>
+<td>请用户预测重新放置水源的结果并解释实际路径；地形改流与积水理解在阶段 B 另测</td>
+</tr>
+<tr>
+<td>H04</td>
+<td>可恢复的个人作品有回访理由</td>
+<td>保存后观察自愿回访及其行为，提醒后的访问单独记录</td>
+</tr>
+</tbody></table>
+</div><p>首轮 8 人、48 小时流程沿用 <a href="./prototype-plan.html">原型验证计划</a>。它用于发现问题；后续扩大样本与跨度的计划见 <a href="./product-research.html">产品研究</a>。阶段 A 的代码已经实现，G01–G08 的实际覆盖条件与限制需逐项阅读 <a href="./verification.html">验证报告</a>，不能把代码完成当作每一验收条件均已验证。H01–H04 则需在实际访谈与观察后更新。</p>
+<h2 id="证据与完成标准">证据与完成标准</h2>
+<p>每个 G 编号都应在实现文档中对应实际结果、检查方法和证据位置。发现问题后记录修复与复测；未覆盖的条件列为具体限制。正式记录应包含日期、浏览器、视口、设备、依赖版本与场景规模，以区分可重复检查和主观视觉判断。</p>
+<p>验收时先完成 G01 的启动，再跑 G03–G07 的编辑与数据循环，最后评估 G02、G04、G08 的画面与运行表现。达到这些交付目标后，使用原型开展产品假设验证，而不是直接宣称需求、留存或商业可行性已经成立。</p>
+</article><footer>一隅 · 自然氛围与可探索造景研究</footer></main>
+<aside class="contents"><div class="nav-label">本页内容</div><nav aria-label="本页目录"><a href="#本轮定位">本轮定位</a>
+<a href="#交付目标-g01g08">交付目标 G01–G08</a>
+<a href="#产品假设-h01h04">产品假设 H01–H04</a>
+<a href="#证据与完成标准">证据与完成标准</a></nav></aside></div>
+</body></html>

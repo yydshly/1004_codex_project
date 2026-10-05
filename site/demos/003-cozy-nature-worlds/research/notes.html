@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5ed"><title>过程记录 · 一隅</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./research.css"></head>
+<body><a class="skip" href="#document">跳到正文</a>
+<header class="research-header"><a class="research-brand" href="./README.html">一隅 <span>自然空间研究</span></a><a class="return-demo" href="../index.html">试玩原型 <span aria-hidden="true">↗</span></a></header>
+<div class="research-layout"><aside class="documents"><div class="nav-label">关联文档</div><nav aria-label="项目文档"><a href="./expansion-plan.html">扩展计划</a>
+<a href="./README.html">理解导览</a>
+<a href="./objectives.html">目标与验收</a>
+<a href="./notes.html" aria-current="page">过程记录</a>
+<a href="./implementation.html">实现方式</a>
+<a href="./verification.html">验证报告</a>
+<a href="./prototype-plan.html">原型计划</a>
+<a href="./visual-analysis.html">视觉研究</a>
+<a href="./technical-research.html">技术研究</a>
+<a href="./product-research.html">产品研究</a></nav><a class="original" href="./source/notes.md" target="_blank" rel="noopener">查看原始文档 ↗</a></aside>
+<main id="document"><div class="document-status">研究与开发记录</div><article><h1 id="003--研究记录与证据边界">003 · 研究记录与证据边界</h1>
+<p><a href="./README.html">项目摘要</a> · <a href="./files/sources.json">证据清单</a></p>
+<h2 id="研究任务">研究任务</h2>
+<p>2026-10-05，Asia/Shanghai。由用户提供的 <a href="https://x.com/protopop" target="_blank" rel="noopener noreferrer">Protopop 主页</a>与<a href="https://x.com/protopop/status/2106768374239752625" target="_blank" rel="noopener noreferrer">溪流演示</a>出发，研究自然氛围、自由创作与探索如何形成产品。先假设受众为休闲创作与自然探索用户，功能基线为 Cozy Country 2.6。</p>
+<h2 id="执行与观察">执行与观察</h2>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>方法与结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>作者主页与原帖</td>
+<td>X 的 web 抓取失败，Codex 内置浏览器成功展示正文和视频</td>
+</tr>
+<tr>
+<td>视频证据</td>
+<td>媒体加载后观察播放；保存网页与局部场景截图，没有下载完整视频</td>
+</tr>
+<tr>
+<td>官方商店</td>
+<td>核对产品定位；保存商店顶部场景展示</td>
+</tr>
+<tr>
+<td>2.6 公告</td>
+<td>web 抓取受限，内置浏览器直接读取成功；SteamDB 镜像交叉核对</td>
+</tr>
+<tr>
+<td>用户线索</td>
+<td>读取作者 Reddit 帖与评论；少数用途和请求作为访谈线索，不估算需求规模</td>
+</tr>
+<tr>
+<td>竞品</td>
+<td>查看五个产品官方说明，未安装或试玩</td>
+</tr>
+<tr>
+<td>技术资料阶段</td>
+<td>核对作者声明、Unity 和 Three.js 文档；当时提出方案，随后独立原型的实现与检查另记于下文</td>
+</tr>
+<tr>
+<td>项目登记</td>
+<td>编号 003；登记工具新增公开来源入口，使用真实产品来源，不虚构上游仓库</td>
+</tr>
+</tbody></table>
+</div><h2 id="本轮截图">本轮截图</h2>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>文件</th>
+<th>表面与用途</th>
+<th>判断边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="./assets/01-source-post.jpg">01-source-post.jpg</a></td>
+<td>X 原帖与视频画面</td>
+<td>来源、构图；不是实际编辑界面</td>
+</tr>
+<tr>
+<td><a href="./assets/scene-cover.jpg">scene-cover.jpg</a></td>
+<td>原帖视频区域的截图，首轮目录封面；后续保留为原作参考</td>
+<td>植被、水流与空间层次；单帧不证明动态质量</td>
+</tr>
+<tr>
+<td><a href="./assets/02-store-overview.jpg">02-store-overview.jpg</a></td>
+<td>商店顶部展示</td>
+<td>定位与宣传画面；不是性能证据</td>
+</tr>
+</tbody></table>
+</div><p>所有截图本轮采集、保存后打开核对。画面中的促销和评论数仅为当时页面内容，不用于商业判断。原作者与平台保有对应内容权利。</p>
+<h2 id="研究修正">研究修正</h2>
+<p>最初讨论的“下坡路径→河面网格→流动 Shader”是简化复现方案。核对 2.6 后，技术报告增加水位／水量传播来解释积水和改流，但未认定原作采用该算法。</p>
+<p>柔和、想停留、归属感属于描述或体验假设，不是已测的心理效应。没有进入 Cozy Country 本体完成编辑→探索→存档，不声称完成原游戏 UX 或可访问性审计。独立原型后来完成了核心流程检查；它与原作观察、用户研究分别记录。</p>
+<h2 id="原型目标与实现过程">原型目标与实现过程</h2>
+<p>用户确认制作小场景原型，并要求同时保留目标描述、过程、实现方式。按桌面浏览器、一个自然空间、创造→探索→保存的范围推进；目标与验收编号写入 <a href="./objectives.html">objectives.md</a>，最终实现写入 <a href="./implementation.html">implementation.md</a>。不把宣传素材用作原型背景，使用独立代码与 CC0 模型。</p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>阶段与日期</th>
+<th>动作、发现及决定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>目标确定 · 2026-10-05</td>
+<td>采用阶段 A 的路径流水，先做三种自然笔刷、擦除、撤销、泉眼重排、探索和存档；积水模拟留到阶段 B</td>
+</tr>
+<tr>
+<td>数据模块 · 2026-10-05</td>
+<td>world.js 将地形、96 点中心曲线、散布与导入验证拆为纯模块；6 项模型测试通过</td>
+</tr>
+<tr>
+<td>依赖与素材 · 2026-10-05</td>
+<td>固定 Three.js 0.186.1，保留 npm 包精确来源、哈希及 MIT；从 Kenney 官方 CC0 包选择七个自含 GLB，逐字节与来源校验</td>
+</tr>
+<tr>
+<td>可视实现 · 2026-10-05</td>
+<td>地形顶点、实例化模型、河面网格及时间 Shader 接入原创中文工具面板。统一树叶／草／树干材质配色与非金属参数，保留模型原始文件</td>
+</tr>
+<tr>
+<td>渲染修正 · 2026-10-05</td>
+<td>r186 对 PCFSoftShadowMap 给出已移除告警；改用 PCFShadowMap。河面另加到岸边的过渡点；调整默认相机与光照</td>
+</tr>
+<tr>
+<td>存档检查 · 2026-10-05</td>
+<td>单次写入经过验证的 envelope，损坏、未知版本、配额和权限错误不清除旧存档；加五项检查，共 11 项通过</td>
+</tr>
+<tr>
+<td>会话续作 · 2026-10-06</td>
+<td>先前的临时本地服务已停止；按项目脚本重新启动，浏览器恢复已有保存。文档区分运行服务与静态项目文件</td>
+</tr>
+<tr>
+<td>漫游回归 · 2026-10-06</td>
+<td>发现默认点 [7,10] 在岩石阻挡范围内；泉眼重排后不可见物件仍参与碰撞。抽出 walk.js 共用可见对象与安全出生点；无落点时保持编辑模式并给提示；增加五项回归检查</td>
+</tr>
+<tr>
+<td>按钮输入 · 2026-10-06</td>
+<td>方向按钮支持点按迈步、按住行走及键盘激活；实测三次点按相机位置变化，Esc 恢复原编辑视角</td>
+</tr>
+<tr>
+<td>导出兼容 · 2026-10-06</td>
+<td>内置浏览器两次未回传下载完成事件。增加导出内容窗口、复制与下载入口，提示只说“下载已发起”；粘贴和文件导入成功，完整文本往返相等</td>
+</tr>
+<tr>
+<td>窄屏检查 · 2026-10-06</td>
+<td>390×844 面板可展开/收起，页面无水平溢出；提示改为单指布置、双指缩放／平移。视口恢复过程中一次观察读取到未打开窗口，检查当前界面并重新打开后完整文本一致；未把这次自动操作竞态当作产品数据丢失</td>
+</tr>
+<tr>
+<td>收尾验收 · 2026-10-06</td>
+<td>16 项测试通过；浏览器核心流程、设置和保存检查通过；保存编辑、探索、窄屏截图与 <a href="./assets/ui-verification.json">观察记录</a>。未招募用户，未做硬件基准</td>
+</tr>
+</tbody></table>
+</div><p>编辑历史最多保留 30 个世界快照，一次连续笔刷操作只占一次撤销。存档不携带历史、GPU 对象与运行时间。实现范围、失败反馈及已知限制以 <a href="./verification.html">验收报告</a>为准。</p>
+<h2 id="交付与后续事项">交付与后续事项</h2>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 建立独立子项目、来源登记与研究入口。</li>
+<li><input checked="" disabled="" type="checkbox"> 整理产品、竞品、视觉、技术和原型验证材料。</li>
+<li><input checked="" disabled="" type="checkbox"> 保存并核对画面证据。</li>
+<li><input checked="" disabled="" type="checkbox"> 制作阶段 A 独立原型，检查布置→探索→保存→重新打开。</li>
+<li><input checked="" disabled="" type="checkbox"> 建立目标、实现、过程、许可与验收记录。</li>
+<li><input disabled="" type="checkbox"> 实际试玩 Cozy Country 本体并记录交互流程。</li>
+<li><input disabled="" type="checkbox"> 在真实设备与用户测试中验证性能和相机舒适度。</li>
+<li><input disabled="" type="checkbox"> 招募目标用户，记录首次成景、主动探索和自愿回访。</li>
+<li><input disabled="" type="checkbox"> 得到实测数据后更新产品定位与路线。</li>
+</ul>
+<p>首轮资料研究与阶段 A 原型已交付；项目保留“研究中”，后续继续产品假设、真实设备及阶段 B 实验。</p>
+<h2 id="首轮资料交付校验--2026-10-05">首轮资料交付校验 · 2026-10-05</h2>
+<ul>
+<li><code>python -B -m unittest discover -s scripts -p &#39;test_*.py&#39; -v</code>：5 项目录兼容性测试通过。</li>
+<li><code>python scripts/catalog.py sync</code> 与 <code>check</code>：3 个项目的编号、链接、封面和生成结果一致。</li>
+<li>文档检查：6 份 Markdown、22 条来源、3 张截图；相对文件链接和来源登记齐全，无未填模板或编码替换字符。</li>
+<li><code>git diff --check</code>：通过。上述检查仅针对研究材料与登记工具，不代表游戏或原型实测。</li>
+</ul>
+<h2 id="原型交付校验--2026-10-06">原型交付校验 · 2026-10-06</h2>
+<ul>
+<li><code>npm test</code>：16 项通过；<code>node --check</code> 覆盖 app.js、scene.js。</li>
+<li>最终浏览器 error/warn 为空；模型与流水已实际渲染，不能仅凭 HTTP 成功代替该检查。</li>
+<li>3 张新增原型截图、28 条外部来源、固定依赖与素材凭据已归档。目录同步和最终链接检查在收尾时执行；详细功能与下载限制见 <a href="./verification.html">verification.md</a>。</li>
+<li>当前总目录校验通过：8 个项目；登记工具 15 项兼容测试通过。9 份项目 Markdown 的本地链接、28 条外部来源与 6 张截图存在检查通过；<code>git diff --check</code> 无格式错误。</li>
+</ul>
+<h2 id="视觉目标澄清与扩展计划">视觉目标澄清与扩展计划</h2>
+<p>2026-10-06 用户对照原作者效果，指出当前版本更像功能底座，随后明确扩展要求为“第一要效果可靠，第二要元素够用”。当前植被轮廓、地面细节、溪岸过渡、水流落差和光影层次仍有明显差距；阶段 A 的功能核验不能代表视觉目标完成。</p>
+<p>新增 <a href="./expansion-plan.html">扩展计划</a>，把后续顺序调整为林间小溪样板、统一元素库与环境预设、组合笔刷与场景覆盖、设备回归。规划首批八组 37 个条目、六种组合笔刷和三个场景模板；数量和性能目标均为建议，未采购、导入或测量。保留既有功能底座，记录资源清单、存档迁移、实例化与远近细节的实现路径，暂缓把水量模拟作为视觉样板的前置工作。</p>
+<p>本次仅更新目标、计划与过程记录，没有更改演示代码、素材或已有验证结果。README 与原型阶段表同步澄清“功能底座已完成，视觉目标仍待完成”。</p>
+<h2 id="扩展计划接入网页">扩展计划接入网页</h2>
+<p>2026-10-06 用户要求把扩展计划接入网页并建立关联。演示顶部新增“扩展计划”入口；十份项目文档生成静态阅读页，互相关联，并提供章节目录、原文与返回演示入口。网页正文来自项目 Markdown，npm run dev 前自动构建；Pages 构建流程同步生成，提交检查验证派生页面未过期。总目录按计划网页是否存在自动显示入口，保留现有项目关联。</p>
+<p>浏览器已逐项打开目标、过程、实现、验证与扩展计划，确认标题和正文对应；返回演示成功。390×844 检查中演示顶部三个入口右端均在视口内，文档页无页面水平溢出，十个文档入口可见。保留已有未保存的演示标签页，没有刷新它；另用预览页完成验证。实际计划网页截图保存在 <a href="./assets/06-expansion-web.png">06-expansion-web.png</a>。</p>
+<p>十份文档的本地引用与章节锚点检查通过，既有原型测试 16 项和目录测试 17 项通过。静态总目录已同步，在这次关联检查时尚未执行线上部署；后续发布见文末记录。文档关联不代表视觉样板、37 个条目或六种组合笔刷已经实现。</p>
+<h2 id="当前理解单图汇总">当前理解单图汇总</h2>
+<p>2026-10-06 用户要求暂时不再深入，将当前理解汇总为一张图，并带原作者与本项目效果。使用内置 image_gen 制作<a href="./assets/07-understanding-overview.png">自然造景与探索总览</a>，以三张已归档画面作合成输入，说明参考产品、底层库与原创原型的区别，汇总能力、原理、使用场景、价值、扩展路线和未验证事项。<a href="./assets/07-understanding-overview.md">制作记录</a>保留输入出处与完整提示词。</p>
+<p>当前暂停场景和元素的进一步实现。本次仅制作、保存与关联理解总览，不新增高品质场景、元素库或组合笔刷。合成海报不替代原始截图和原型运行证据。</p>
+<p>总览关键事实与文字校对通过。对页脚来源表述的单次图像修订遇到网络错误，保留首版完整总图，并在制作记录中注明截图合成与原始证据的区别；没有切换到需单独 API 密钥的 CLI 路径。</p>
+<h2 id="整理与-web-发布--2026-10-06">整理与 Web 发布 · 2026-10-06</h2>
+<p>用户明确要求整理、提交并 Web 部署，以本阶段总览图作为引导。目录封面改为 <a href="./assets/07-understanding-overview.png">07-understanding-overview.png</a>，研究网页从图文导览开始，原型根路径和扩展计划继续单独关联。总目录和项目说明同步五项摘要：能力、原理、使用场景、价值、边界；区分 Three.js 渲染库、参考产品和一隅的实际实现。</p>
+<p>本次整理保留功能底座的验证结论，暂停进一步场景与元素开发。将规划的 37 个条目、六种笔刷和三个模板明确列为未实现；海报旁补充合成说明和原始截图入口。十份文档由规范源文件生成，目录同步后随 GitHub Pages 工作流发布，线上检查另记于下文。</p>
+<p>发布前校验：原型自动检查 16／16、目录兼容测试 17／17 通过，八个项目的目录与生成内容一致，十份关联文档与源文件一致，Git 格式检查通过。本地浏览器确认导览正文、指定总览图（1024×1536）和原作参考图正常加载；采用单独预览页，保留用户已有未保存的本地世界。</p>
+</article><footer>一隅 · 自然氛围与可探索造景研究</footer></main>
+<aside class="contents"><div class="nav-label">本页内容</div><nav aria-label="本页目录"><a href="#研究任务">研究任务</a>
+<a href="#执行与观察">执行与观察</a>
+<a href="#本轮截图">本轮截图</a>
+<a href="#研究修正">研究修正</a>
+<a href="#原型目标与实现过程">原型目标与实现过程</a>
+<a href="#交付与后续事项">交付与后续事项</a>
+<a href="#首轮资料交付校验--2026-10-05">首轮资料交付校验 · 2026-10-05</a>
+<a href="#原型交付校验--2026-10-06">原型交付校验 · 2026-10-06</a>
+<a href="#视觉目标澄清与扩展计划">视觉目标澄清与扩展计划</a>
+<a href="#扩展计划接入网页">扩展计划接入网页</a>
+<a href="#当前理解单图汇总">当前理解单图汇总</a>
+<a href="#整理与-web-发布--2026-10-06">整理与 Web 发布 · 2026-10-06</a></nav></aside></div>
+</body></html>

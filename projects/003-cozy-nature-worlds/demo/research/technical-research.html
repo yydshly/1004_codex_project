@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5ed"><title>技术研究 · 一隅</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./research.css"></head>
+<body><a class="skip" href="#document">跳到正文</a>
+<header class="research-header"><a class="research-brand" href="./README.html">一隅 <span>自然空间研究</span></a><a class="return-demo" href="../index.html">试玩原型 <span aria-hidden="true">↗</span></a></header>
+<div class="research-layout"><aside class="documents"><div class="nav-label">关联文档</div><nav aria-label="项目文档"><a href="./expansion-plan.html">扩展计划</a>
+<a href="./README.html">理解导览</a>
+<a href="./objectives.html">目标与验收</a>
+<a href="./notes.html">过程记录</a>
+<a href="./implementation.html">实现方式</a>
+<a href="./verification.html">验证报告</a>
+<a href="./prototype-plan.html">原型计划</a>
+<a href="./visual-analysis.html">视觉研究</a>
+<a href="./technical-research.html" aria-current="page">技术研究</a>
+<a href="./product-research.html">产品研究</a></nav><a class="original" href="./source/technical-research.md" target="_blank" rel="noopener">查看原始文档 ↗</a></aside>
+<main id="document"><div class="document-status">研究与开发记录</div><article><h1 id="柔和自然世界视觉与技术研究">柔和自然世界：视觉与技术研究</h1>
+<p>研究日期：2026-10-05（Asia/Shanghai）。本报告区分公开产品行为、引擎提供的能力与本项目的实现提案；没有读取作者源码，也没有做引擎性能实测。</p>
+<h2 id="1-证据与判断边界">1. 证据与判断边界</h2>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>事项</th>
+<th>已确认的公开信息</th>
+<th>技术判断边界</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>创作与进入世界</td>
+<td><a href="https://store.steampowered.com/app/4690240/Cozy_Country/" target="_blank" rel="noopener noreferrer">Steam 官方商店</a>介绍散布笔刷、地形塑形、第一/第三人称探索、时间天气和拍照</td>
+<td>可以分析交互闭环；具体编辑器架构未知</td>
+</tr>
+<tr>
+<td>美术素材</td>
+<td><a href="https://www.reddit.com/r/CozyGamers/comments/1whzx5w/cozy_country_lets_you_create_fantasy_landscapes/" target="_blank" rel="noopener noreferrer">作者本人回复</a>确认使用许多 Unity 商店素材并统一美术方向</td>
+<td>不能由此确定 Unity 版本、渲染管线或插件</td>
+</tr>
+<tr>
+<td>2.6 河流</td>
+<td><a href="https://steamcommunity.com/games/4690240/announcements/detail/678511227668791476" target="_blank" rel="noopener noreferrer">官方更新</a>描述下坡、填洼、绕山、地形改变流向、编辑泉眼及保留旧河流</td>
+<td>行为不等于公开算法；不能宣称作者采用浅水方程或网格水深传播</td>
+</tr>
+<tr>
+<td>柔和氛围</td>
+<td>作者说明追求平静自然体验；2.6 增加雾参数并调整镜头、角色转向</td>
+<td>光照、着色和声音的具体实现仍需实机验证</td>
+</tr>
+</tbody></table>
+</div><p>2.6 官方正文已在项目研究过程中通过浏览器读取；本轮搜索工具直读该页失败。<a href="https://steamdb.info/patchnotes/25641435/" target="_blank" rel="noopener noreferrer">SteamDB 的更新镜像</a>用于交叉核对文本，不作为作者技术实现的证据。</p>
+<h2 id="2-效果怎样组成">2. 效果怎样组成</h2>
+<p>产品效果来自统一素材、持续微动和即时创作反馈的组合。美术上先约束树形、色域、材质粗糙度与尺度，再调阳光、天空环境光和阴影；过强高光、纯黑阴影及密集植被会破坏舒缓感。这是本项目的设计判断，尚非用户测试结论。</p>
+<p>实现提案：远处采用与天空协调的距离雾，近处保持可见度；风只轻微移动叶片和草的上部，根部固定；流水、鸟鸣、风声按距离混音，并提供独立音量。不要让所有植物同时摆动，也避免镜头快速加速。<a href="https://threejs.org/manual/pages/fog.html" target="_blank" rel="noopener noreferrer">Three.js 官方雾教程</a>提供距离雾；<a href="https://docs.unity3d.com/6000.0/Documentation/Manual/Audio.html" target="_blank" rel="noopener noreferrer">Unity 音频系统</a>支持空间声音与实时混音。<a href="https://docs.unity3d.com/6000.0/Documentation/Manual/class-WindZone.html" target="_blank" rel="noopener noreferrer">Unity 风区文档</a>明确 WindZone 不作用于 Terrain 草，草须使用地形风设置或自定义 Shader。</p>
+<h2 id="3-地形植被与交互">3. 地形、植被与交互</h2>
+<p>地形提案使用高度场 <code>b(x,z)</code>：射线拾取鼠标落点，笔刷按中心距离衰减修改高度，提供抬高、降低、平滑与撤销。只更新受影响区块及邻接法线；高度场本身不能表达悬崖下的洞穴或悬挑。Unity 的 <a href="https://docs.unity3d.com/6000.0/Documentation/ScriptReference/TerrainData.SetHeights.html" target="_blank" rel="noopener noreferrer">SetHeights</a>每次会重算地形 LOD 和植被，官方建议交互编辑使用延迟更新并在笔画结束同步。浏览器可用 <a href="https://threejs.org/docs/pages/Raycaster.html" target="_blank" rel="noopener noreferrer">Raycaster</a>拾取自建地形网格。</p>
+<p>植被散布按坡度、水深、最小间距筛选，并随机缩放和旋转。同种几何与材质合并实例绘制，再按区块裁剪、距离降低细节和密度。实例化减少绘制调用，仍需控制三角形、透明叶片重叠及阴影成本；把整个森林放进一个实例批次也会降低裁剪粒度。<a href="https://docs.unity.com/en-us/engine/6000.0/manual/analysis/graphics-performance-profiling/reduce-draw-calls/gpuinstancing" target="_blank" rel="noopener noreferrer">Unity 实例化</a>、<a href="https://threejs.org/docs/pages/InstancedMesh.html" target="_blank" rel="noopener noreferrer">Three.js InstancedMesh</a>和 <a href="https://threejs.org/docs/pages/LOD.html" target="_blank" rel="noopener noreferrer">LOD</a>提供相应基础能力。</p>
+<p>创作模式使用俯视/自由镜头和笔刷；探索模式沿用同一世界数据，启用地面碰撞与慢速移动。切换时保留视角，并将角色放在安全落点。镜头手感和切换成功率应与画质一起验收。</p>
+<h2 id="4-河流必须拆成两个问题">4. 河流必须拆成两个问题</h2>
+<p><strong>路径河流</strong>：从泉眼寻找较低邻点，平滑成曲线，沿曲线生成带宽度的河面。它容易实现漂亮溪流，但可能停在洼地、重复访问节点或切穿曲线拐角；限步数、记录已访问节点、检查河宽与地面交叉只能处理部分问题。单独的下坡路径不能解释蓄水后溢流。</p>
+<p><strong>水深传播</strong>：若挖沟、筑坝、填洼是主要玩法，需要维护水量与水面高度。本项目可先验证以下简化算法，不声称与 Cozy Country 源码一致，也不声称完整物理模拟。</p>
+<ol>
+<li>用等面积网格记录地高 <code>b_i</code>、水深 <code>d_i ≥ 0</code>，水面 <code>s_i=b_i+d_i</code>；泉眼每固定步长注入体积 <code>Q×Δt</code>。</li>
+<li>对每格四邻点计算候选外流体积 <code>f_ij=K×Δt×max(0,s_i-s_j)</code>。<code>K</code> 是调节传播速率的导流系数，单位须与体积公式一致。</li>
+<li>若候选总外流大于现有体积 <code>A×d_i</code>，按比例缩小全部外流。双缓冲同时结算流入、流出，保持非负水深，避免遍历顺序影响。</li>
+<li>明确定义地图边界为排水口或封闭墙。封闭盆地持续积水，水面高过出口后向外传播；流量向量只用于视觉纹理方向。</li>
+<li>地形编辑后保留各格水体积，再让水重新分布；抬地可能暂时抬高水面，需小步推进与阻尼。低分辨率水网格可独立于渲染地形，建议先试 128²–256²，以实测决定规模。</li>
+</ol>
+<p>这是基于水面差的扩散近似，缺少真实惯性、压力冲击与垂直水柱。网格会使细沟消失、流向显露四轴偏好，也可能发生振荡；大流量、陡坡和频繁雕刻需限制步长与注水量。瀑布可单独生成落差网格和粒子。不能通过每步直接截断负值掩盖守恒错误。</p>
+<p>水的<strong>外观</strong>另行渲染：两层不同尺度的法线沿局部流向移动，浅处透明、深处着色，岸边依据水深/场景深度生成泡沫，落差增加白水与水花。<a href="https://github.com/mrdoob/three.js/blob/master/examples/jsm/objects/Water2.js" target="_blank" rel="noopener noreferrer">Three.js 官方 Water2 源码</a>示范流向图、反射和折射，但不负责河道或蓄水计算；它的平面反射方式也不能直接覆盖任意起伏河面。<a href="https://threejs.org/manual/pages/transparency.html" target="_blank" rel="noopener noreferrer">透明排序</a>可能导致水与叶片显示错误。原型优先环境反射与简化透明，实时反射留待性能允许时启用。</p>
+<h2 id="5-提议的数据架构">5. 提议的数据架构</h2>
+<pre><code class="language-mermaid">flowchart LR
+    I[鼠标输入与模式切换] --&gt; C[编辑命令与撤销]
+    C --&gt; W[世界数据]
+    W --&gt; T[高度场与碰撞]
+    W --&gt; V[植被与建筑实例]
+    T --&gt; F[河流路径或水深传播]
+    W --&gt; F
+    F --&gt; R[水面与流向数据]
+    T --&gt; G[渲染]
+    V --&gt; G
+    R --&gt; G
+    E[光照 雾 风 声音参数] --&gt; G
+    W --&gt; S[版本化存档]
+    F --&gt; S
+    E --&gt; S
+    S --&gt; W
+</code></pre>
+<p>存档提案保存基础场景版本、随机种子、高度差、资产 ID 与变换、泉眼位置/流量、环境参数、相机书签。若要求载入时水面完全一致，还应保存水深快照与模拟版本；仅存泉眼会重新经历填充。种子不能保证跨算法版本复现，玩家手动布置的最终变换须保存。路径河流与传播河流使用独立类型，避免升级后静默改变旧作品。</p>
+<h2 id="6-路线与可验收原型">6. 路线与可验收原型</h2>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>路线</th>
+<th>适用目标</th>
+<th>质量与成本取舍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Unity 桌面原生</td>
+<td>较完整的自然创作游戏，长期扩充地形、角色、动物</td>
+<td>地形、碰撞、音频和资源工作流较完整；仍需整合运行时编辑、统一素材与优化</td>
+</tr>
+<tr>
+<td>Three.js 浏览器</td>
+<td>链接即开的概念验证、作品分享与轻量体验</td>
+<td>分享方便，但编辑器、碰撞、存档和性能分档需自行搭建；需控制首屏资源、内存和植被规模</td>
+</tr>
+</tbody></table>
+</div><p>建议先做一张小地图、三类植被、一种水、昼夜参数、撤销、创作/漫游与保存载入。若首要验证氛围和创作意愿，路径河流即可；若首要验证改地改变水，应直接做水深试验。当前 <a href="https://threejs.org/docs/pages/ShaderMaterial.html" target="_blank" rel="noopener noreferrer">ShaderMaterial</a>及 Water2 属 WebGL 路线；改用 WebGPU 时须选对应节点材质实现，不能假设直接兼容。</p>
+<p>以下是验收提案，均未完成实测：</p>
+<ul>
+<li>同一场景能刷树、塑形、撤销、切换漫游并返回；载入后手动资产变换和地形恢复。</li>
+<li>水实验通过“坡面—盆地—溢流口”、筑坝、挖出口及双泉眼案例；水深不为负。无蒸发时，体积误差相对累计初始水量与注入量不超过 <code>10⁻⁴</code>，排水须计入账本。</li>
+<li>在预先登记的测试设备、浏览器、1080p 与默认质量下，以帧时间中位数不超过 33.3 ms、笔刷反馈 p95 不超过 150 ms 为首轮目标；录制五分钟探索并记录内存。不能据此推断其他设备帧率。</li>
+<li>邀请体验者完成五分钟创造与五分钟漫游，记录操作卡点、眩晕、声音重复及是否愿意再次停留；据此决定扩展内容还是调整体验。</li>
+</ul>
+</article><footer>一隅 · 自然氛围与可探索造景研究</footer></main>
+<aside class="contents"><div class="nav-label">本页内容</div><nav aria-label="本页目录"><a href="#1-证据与判断边界">1. 证据与判断边界</a>
+<a href="#2-效果怎样组成">2. 效果怎样组成</a>
+<a href="#3-地形植被与交互">3. 地形、植被与交互</a>
+<a href="#4-河流必须拆成两个问题">4. 河流必须拆成两个问题</a>
+<a href="#5-提议的数据架构">5. 提议的数据架构</a>
+<a href="#6-路线与可验收原型">6. 路线与可验收原型</a></nav></aside></div>
+</body></html>

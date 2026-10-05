@@ -1,0 +1,90 @@
+Use case: infographic-diagram with screenshot compositing.
+Create ONE polished, comprehensive Simplified Chinese infographic poster, portrait 2:3 composition, high resolution approximately 2048×3072 or higher, suitable for zooming and sharing as a single image. Audience: a Chinese project owner reviewing our current understanding; not a marketing advertisement. Very readable and accurate Chinese typesetting, generous margins, clear hierarchy, cream paper background, restrained forest-green typography, pale sage panels. All substantial text must be typeset cleanly and spelled exactly. Use thin icons and arrows, not decorative illustrations that take space from information.
+
+Input images are supporting screenshot inserts, NOT invitations to invent or improve the scenes.
+Image 1: actual original-author reference screenshot (Cozy Country by Protopop Games), detailed natural creek, grass, pine trees, rocks and white water. Preserve this scene faithfully.
+Image 2: actual original "一隅" prototype editor screenshot, chunky low-poly trees and simple river, cream tool panel at left. Preserve its coarse current fidelity and recognizable UI; DO NOT beautify it to match Image 1.
+Image 3: actual "一隅" prototype exploration screenshot, low-poly trees and simple turquoise river, walking controls. Use as a smaller inset associated with our prototype.
+Place the original and our prototype as two prominent, approximately equally sized side-by-side photo panels in the upper third. Use the screenshots as the panels' backgrounds, allowing only subtle dark/cream caption strips. Do not replace the screenshots with newly imagined scenery. Both compared effects must be easy to distinguish. Original photograph remains clearly labeled as reference, prototype remains clearly labeled as current functional prototype. Image 3 can be a small thumbnail below/within our prototype panel with label "进入探索". Keep the provided images' scene structures and materials unchanged.
+
+The poster should contain all the copy below, grouped into an easy-to-scan coherent layout. Exact text, no invented claims, no fake progress bars, no arbitrary percent scores, no new statistics. All future work must remain labeled "规划". Main design: title band, screenshot comparison, a compact core experience loop, two-column cards for capability/principle and use cases/value, full-width expansion route, bottom boundaries and source attribution. Use green tag "已实现", pale orange tag "规划", gray tag "待验证".
+
+TITLE:
+"自然造景与探索"
+"我们的理解总览"
+SUBTITLE:
+"参考产品 Cozy Country · 底层库 Three.js · 原创原型 一隅"
+"核心：以游戏交互为入口，创造可编辑、可进入、可保存的个人自然风景。"
+
+PHOTO LABEL LEFT:
+"原作者效果｜Cozy Country"
+"细腻植被 · 自然溪岸 · 水流落差 · 柔和光影"
+PHOTO LABEL RIGHT:
+"我们的效果｜一隅"
+"低多边形场景 · 功能底座已跑通"
+"视觉自然感仍未达到参考目标"
+
+CORE LOOP HEADER:
+"体验如何成立"
+FLOW:
+"看见自然 → 简单布置 → 进入探索 → 保存恢复 → 再次修改"
+CAPTION:
+"氛围吸引停留，创作表达偏好，探索连接成果，保存支持继续。"
+
+CARD 1:
+"能力是什么"
+"底层库 Three.js"
+"提供三维渲染、模型加载、相机、拾取、材质、光照、雾和实例化。"
+"我们的产品层｜已实现"
+"树／草／花笔刷、擦除与撤销；移动泉眼；编辑与漫游切换；晨光／暮色／薄雾；减少动态；本地存档与 JSON 导入导出。"
+"当前资源：7 个 GLB 模型，4 类场景对象。"
+"编辑器、碰撞和存档需要自行实现与整合。"
+
+CARD 2:
+"原理是什么｜我们的实现"
+"输入 → 编辑命令 → 世界数据 → 场景渲染"
+"世界数据：随机种子、地形参数、物件变换、泉眼与环境。"
+"表现系统：模型与材质＋阳光阴影＋距离雾＋流水动画。"
+"大量同类物件通过实例化绘制；漫游沿高度场移动，并使用简化碰撞。"
+"存档保存世界数据；载入后重建场景。"
+EMPHASIZED SMALL BOX:
+"水的外观 ≠ 水的模拟"
+"当前曲线河流与河谷共同重算，没有积水、筑坝或守恒模拟。"
+"原作者源码与河流算法未确认。"
+
+CARD 3:
+"使用场景｜潜在用途"
+"轻度造景游戏：布置溪流、林地、花地，进入自己的作品。"
+"个人自然空间：短时间观看、漫游与环境陪伴。"
+"场景构思与取景：辅助绘画、故事和空间创意。"
+"作品展示：保存风景，后续扩展拍照和分享。"
+"这些用途仍需真实用户验证。"
+
+CARD 4:
+"价值与效果差距"
+"价值：让用户少量操作，也能获得有表达感的风景。"
+"当前证明了编辑、探索与保存的功能流程。"
+"仍需补足：枝叶细节、植被层次、地面材质、溪岸过渡、水流变化、光影与声景。"
+"好画面来自统一素材、自然布置和表现系统共同作用。"
+
+FULL-WIDTH EXPANSION:
+"可扩展方向｜规划"
+"优先一：效果可靠"
+"先完成一处林间小溪样板，检查四个视角、行走观感、常见编辑与设备运行。"
+"优先二：元素够用"
+"八类约 37 个条目：树木、灌木、草蕨、花草、岩石、枯木、水景、小径与木桥。"
+"六种组合笔刷＋三个场景模板；以能搭出完整场景判断是否够用。"
+"后续：地形雕刻、积水改流、风与环境声、拍照、主题资源包与作品分享。"
+"顺序：视觉样板 → 统一元素库 → 组合造景 → 场景与设备验收"
+
+BOTTOM BOUNDARY BAND:
+"当前阶段与边界"
+"功能原型已实现；高品质画面、完整元素库与组合笔刷仍待完成。"
+"尚未验证多设备稳定帧率、用户回访或商业价值。"
+"部署负责让程序运行；场景质量依赖素材、设计与持续打磨。"
+
+FOOTER:
+"参考画面：Protopop Games / Cozy Country，X 原帖；原作画面仅用于研究。"
+"原型画面：本项目实际截图。研究与规划状态截至 2026-10-06。"
+
+Make the composition comprehensive but legible. No omitted sections, no repeated large paragraphs, no blank placeholder boxes. Minimum readable body text relative to page width; avoid tiny footnotes. Preserve factual status distinctions. No extra pseudo-code, no invented engine pipeline, no invented author algorithm, no medical efficacy claims, no high-quality artwork masquerading as the current prototype.

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf0e3">
+  <title>一隅 · 可进入的自然风景</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/":"./vendor/three/addons/"}}</script>
+</head>
+<body>
+  <canvas id="landscape" aria-label="可布置和漫游的三维自然风景" tabindex="0"></canvas>
+  <div class="loading" id="loading" role="status"><span class="loading-mark">一隅</span><p>正在打开你的风景…</p></div>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">一隅</span><span class="brand-caption">留一片风景，给自己。</span></div>
+    <div class="top-actions"><a class="button quiet research-entry" href="./research/expansion-plan.html" target="_blank" rel="noopener">扩展计划</a><button id="save" class="button quiet">保存风景</button><button id="explore" class="button primary" disabled>进入风景 <span aria-hidden="true">↗</span></button></div>
+  </header>
+  <button id="panel-toggle" class="button panel-toggle" aria-controls="editor-panel" aria-expanded="false">布置工具</button>
+  <aside class="panel" id="editor-panel" aria-label="风景布置工具">
+    <div class="eyebrow">属于你的自然小世界</div>
+    <label class="name-label" for="world-name">风景名称</label>
+    <input id="world-name" class="name" maxlength="80" value="我的自然小世界" autocomplete="off">
+    <div class="panel-intro">添几棵树，种一片花。<br>然后走进去，慢慢看看。</div>
+    <div class="section-label">在这里生长 <span>选择笔刷</span></div>
+    <div class="brushes" role="group" aria-label="笔刷">
+      <button class="brush selected" data-brush="tree" aria-pressed="true"><span aria-hidden="true">♧</span>树木</button>
+      <button class="brush" data-brush="grass" aria-pressed="false"><span aria-hidden="true">〰</span>草地</button>
+      <button class="brush" data-brush="flower" aria-pressed="false"><span aria-hidden="true">✿</span>野花</button>
+      <button class="brush" data-brush="erase" aria-pressed="false"><span aria-hidden="true">−</span>擦除</button>
+      <button class="brush spring" data-brush="spring" aria-pressed="false"><span aria-hidden="true">≈</span>移动泉眼<span class="brush-note">点击地面，溪流沿河谷重排</span></button>
+    </div>
+    <label class="slider-label" for="radius">笔刷范围 <output id="radius-value">3 米</output></label>
+    <input type="range" id="radius" min="1" max="7" step="0.5" value="3">
+    <button id="undo" class="undo" disabled>↶ 撤销上一步</button>
+    <div class="divider"></div>
+    <div class="section-label">让时间慢下来 <span>光与天气</span></div>
+    <div class="atmospheres" role="group" aria-label="环境">
+      <button data-atmosphere="morning" class="active" aria-pressed="true">晨光</button><button data-atmosphere="sunset" aria-pressed="false">暮色</button><button data-atmosphere="mist" aria-pressed="false">薄雾</button>
+    </div>
+    <label class="check"><input id="reduced-motion" type="checkbox"> 减少动态效果</label>
+    <label class="quality-label" for="quality">画面质量 <select id="quality"><option value="low">轻量</option><option value="medium" selected>标准</option><option value="high">精细</option><option value="auto">自适应</option></select></label>
+    <div class="divider"></div>
+    <div class="save-state" id="save-state">尚未保存 · 仅保存在这台浏览器</div>
+    <div class="file-actions"><button id="restore">恢复保存</button><button id="export">导出文件</button><button id="import">导入文件</button></div>
+    <input type="file" id="import-file" accept=".json,application/json" hidden>
+    <p class="count" id="object-count">一片溪谷，等待你来布置。</p>
+    <a class="about" href="./assets/ASSET-LICENSES.md" target="_blank" rel="noopener">自然素材 · Kenney CC0 <span aria-hidden="true">↗</span></a>
+  </aside>
+  <div class="scene-label"><span class="live-dot"></span><span id="scene-label">晨光中的溪谷</span><span class="scene-meta">自然造景 · 概念原型</span></div>
+  <div class="hint" id="hint"><span>拖动地面布置</span><span>右键转动视角</span><span>滚轮缩放</span></div>
+  <div class="walk-controls" id="walk-controls" hidden aria-label="漫游方向"><button data-walk="forward" aria-label="向前">↑</button><div><button data-walk="left" aria-label="向左">←</button><button data-walk="backward" aria-label="向后">↓</button><button data-walk="right" aria-label="向右">→</button></div></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="file-dialog" aria-labelledby="file-title">
+    <div class="dialog-header"><h2 id="file-title">带走这片风景</h2><button id="close-file" aria-label="关闭存档窗口">×</button></div>
+    <p id="file-description">下载文件，或复制内容留存。</p>
+    <label for="file-content">风景文件内容</label><textarea id="file-content" spellcheck="false"></textarea>
+    <p id="file-message" role="status" aria-live="polite"></p>
+    <div class="dialog-actions"><button id="choose-file" class="button">选择 JSON 文件</button><button id="copy-file" class="button">复制内容</button><a id="download-file" class="button primary" download>下载 JSON 文件</a><button id="apply-import" class="button primary">导入这片风景</button></div>
+  </dialog>
+  <div class="error" id="error" role="alert" hidden><h1>风景暂时没有打开</h1><p id="error-message"></p><button class="button primary" onclick="location.reload()">重新打开</button></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

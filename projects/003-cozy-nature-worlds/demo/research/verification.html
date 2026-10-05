@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5ed"><title>验证报告 · 一隅</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./research.css"></head>
+<body><a class="skip" href="#document">跳到正文</a>
+<header class="research-header"><a class="research-brand" href="./README.html">一隅 <span>自然空间研究</span></a><a class="return-demo" href="../index.html">试玩原型 <span aria-hidden="true">↗</span></a></header>
+<div class="research-layout"><aside class="documents"><div class="nav-label">关联文档</div><nav aria-label="项目文档"><a href="./expansion-plan.html">扩展计划</a>
+<a href="./README.html">理解导览</a>
+<a href="./objectives.html">目标与验收</a>
+<a href="./notes.html">过程记录</a>
+<a href="./implementation.html">实现方式</a>
+<a href="./verification.html" aria-current="page">验证报告</a>
+<a href="./prototype-plan.html">原型计划</a>
+<a href="./visual-analysis.html">视觉研究</a>
+<a href="./technical-research.html">技术研究</a>
+<a href="./product-research.html">产品研究</a></nav><a class="original" href="./source/verification.md" target="_blank" rel="noopener">查看原始文档 ↗</a></aside>
+<main id="document"><div class="document-status">研究与开发记录</div><article><h1 id="阶段-a--原型验收报告">阶段 A · 原型验收报告</h1>
+<p>研究与首次实现：2026-10-05；本轮收尾验收：2026-10-06（Asia/Shanghai）。验收对象是本项目原创的“一隅”Web 原型，不是 Cozy Country 本体。</p>
+<p><strong>已验证布置→进入风景→返回布置→保存→重新打开的核心流程。</strong> 自动检查 16 项通过。JSON 内容导出、粘贴导入与文件导入通过；内置浏览器没有回传下载完成事件，因此没有把下载文件落盘记为通过。产品假设仍需真实用户实验。</p>
+<p><a href="./objectives.html">目标</a> · <a href="./implementation.html">实现</a> · <a href="./notes.html">过程</a> · <a href="./assets/ui-verification.json">浏览器观察记录</a></p>
+<h2 id="环境与方法">环境与方法</h2>
+<ul>
+<li>Windows 工作区；Node.js 22.15.0、npm 10.9.2；从子项目根执行 <code>npm run dev</code>，访问 <code>http://127.0.0.1:8033/</code>。</li>
+<li>Codex 内置 Chromium 浏览器；默认视口 1280×720，另检查 390×844 窄屏后恢复默认尺寸。</li>
+<li>使用真实界面操作、DOM 中的状态与观察用签名、截图、浏览器控制台及 Node 数据测试交叉检查。没有调用页面内部对象来直接伪造编辑结果。</li>
+<li>默认种子 20261005，世界 64×64，745 个保存对象。Three.js 0.186.1 与七个 GLB 从本地服务加载；依赖与素材凭据单列保存。</li>
+</ul>
+<p>观察签名是序列化数据的 FNV-1a 32 位摘要，只用于对比，不是加密校验。JSON 文件往返后还重新读取界面导出的全部 158,421 字符，确认与原文严格相等。</p>
+<h2 id="功能结果">功能结果</h2>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>目标</th>
+<th>实际操作与结果</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>G01 · 本地启动</td>
+<td>HTTP 服务启动；实际地形、GLB、流水 Shader 和控制面板显示；最终标签页控制台 error/warn 均为空</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>G02 · 自然画面</td>
+<td>树、草、花、岩石为七个真实 Kenney 模型；统一材质与配色，晨光／暮色／薄雾切换可见</td>
+<td>通过，截图见下</td>
+</tr>
+<tr>
+<td>G03 · 编辑与撤销</td>
+<td>树木点击：745→749，撤销回 745；草地：745→763；野花：763→776；擦除后 740，撤销恢复 776，再逐步撤销回初始世界</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>G04 · 泉眼与路径</td>
+<td>点击移动泉眼，地形和河面重新生成；撤销恢复原泉眼。96 点数据路径下降与地形匹配由测试覆盖；渲染增加到岸边的两点过渡</td>
+<td>通过阶段 A；没有积水模拟</td>
+</tr>
+<tr>
+<td>G05 · 创作／探索</td>
+<td>实际进入安全落点；连续点击向前三次，相机从 [6.64, 6.19, 10.33] 到 [6.46, 5.95, 8.54]；拖动环顾，Esc 返回编辑，相机恢复 [32, 38, 49]</td>
+<td>通过；舒适度未做用户测评</td>
+</tr>
+<tr>
+<td>G06 · 保存／恢复</td>
+<td>保存后改变环境，恢复旧世界；刷新页面自动恢复。世界签名均为 fdd7409a</td>
+<td>通过</td>
+</tr>
+<tr>
+<td>G07 · JSON</td>
+<td>导出窗口提供完整 JSON；粘贴和真实文件导入均恢复同签名、745 对象。再次导出的完整文本相等；version 99 坏输入显示错误并保留当前世界</td>
+<td>内容与导入通过；下载落盘未确认</td>
+</tr>
+<tr>
+<td>G08 · 环境与运行</td>
+<td>减少动态后水纹时间连续两次观察均为 92.447；轻量质量关闭阴影并降低地形细分；三种环境可切换；窄屏工具可收起、无水平溢出</td>
+<td>本轮检查通过；真实设备性能未测</td>
+</tr>
+</tbody></table>
+</div><p>保存失败、恶意存档、越界数值与对象过量由数据测试检查；未在浏览器中人为填满用户磁盘或清空浏览器数据。连续键盘按住及手机双指手势未单独完成硬件测试，不能从按钮行走与窄屏截图推导出这些结果。</p>
+<h2 id="自动检查">自动检查</h2>
+<p>在子项目根运行 <code>npm test</code>：<strong>16 / 16 通过</strong>。</p>
+<div class="table-scroll" role="region" aria-label="文档表格" tabindex="0"><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>检查重点</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>world</td>
+<td>同种子确定性、河道与河谷匹配、地形有限范围、笔刷上限与 ID、非法导入与访问器／原型键拒绝</td>
+<td>6</td>
+</tr>
+<tr>
+<td>storage</td>
+<td>保存与加载往返、先校验后写入、Quota/SecurityError、损坏 envelope／日期／版本、恶意字段</td>
+<td>5</td>
+</tr>
+<tr>
+<td>walk</td>
+<td>隐藏物件不碰撞、岸边与碰撞范围、默认出生点石头回归、全岛备用落点／无落点失败、斜向速度归一</td>
+<td>5</td>
+</tr>
+</tbody></table>
+</div><p><code>node --check demo/app.js</code> 与 <code>node --check demo/scene.js</code> 通过。浏览器实际编译并呈现水 Shader；最终无 Shader 编译错误。目录登记与文档链接检查结果由 <a href="./notes.html">过程记录</a>补充。</p>
+<h2 id="实际画面">实际画面</h2>
+<p><img src="./assets/03-prototype-editor.jpg" alt="本地原型的编辑模式" loading="lazy"></p>
+<p><img src="./assets/04-prototype-explore.jpg" alt="本地原型进入风景后的第一人称画面" loading="lazy"></p>
+<p><a href="./assets/05-prototype-narrow.jpg">390×844 窄屏截图</a>。这些都是本轮浏览器实际捕获的原创原型画面。它采用低多边形模型、有限岛屿和路径流水；与参考产品的草木密度、河流细节及世界尺度存在预期差异，没有声称像素级复刻。</p>
+<h2 id="运行观察与限制">运行观察与限制</h2>
+<p>默认质量的一次界面检查记录：745 个保存对象，29 个 draw calls、244,692 个渲染三角形；轻量模式观察为 16 个 draw calls、120,140 个三角形。三角形计数包含阴影等渲染通道，不等于独立模型几何数量。</p>
+<p>最终一次混合操作记录有 2,670 个样本，平均 requestAnimationFrame 间隔约 13.66 ms、最大约 295.60 ms。该记录混入视口调整与界面操作，未隔离 GPU 耗时、未采集设备硬件、未做重复基准，所以只是诊断，不能据此宣称稳定帧率、低端设备性能或移动端可用性。此前泉眼重建也观察到瞬时停顿，后续应分块更新地形。</p>
+<p>两个下载完成事件检查均在 10 秒超时；界面因此提供可查看／复制的完整内容及明确的下载发起提示。没有证据断言所有浏览器都会下载失败，也没有证据断言文件已成功落盘。普通浏览器文件下载需另行复查。</p>
+<p>当前相机贴合高度场，用树干与岩石的简化圆形范围阻挡；没有完整物理碰撞、坡度限制、游泳或水深阻挡。原型没有声音、植被风、拍照系统、账号或云同步。上述范围与阶段 B 的积水改流实验及用户验证分开记录。</p>
+<p>H01–H04（快速成景、主动探索、停留、回访）均为待验证假设。功能验收不是留存或付费证明。</p>
+<h2 id="扩展计划网页关联检查">扩展计划网页关联检查</h2>
+<p>2026-10-06 新增演示顶部“扩展计划”入口，关联十份文档的静态阅读页面。本节验证文档入口与网页一致性，不改变阶段 A 的视觉质量结论，扩展方案仍未实施。</p>
+<ul>
+<li>浏览器实际打开目标与验收、过程记录、实现方式、验证报告、扩展计划，页面标题与正文对应；返回演示入口可用。</li>
+<li>演示计划链接使用新窗口目标，点击后演示 URL 保持不变；已有未保存演示标签页未刷新、未改写存档。</li>
+<li>390×844 视口下，演示三个顶部入口的右端分别约 179、254、372 像素，均在视口内；文档页面内容宽度 375 像素，未超过视口，十个文档导航入口可见。此项为桌面浏览器窄视口检查，不代表真实手机性能验证。</li>
+<li>十份生成文档的本地文件引用与章节锚点检查通过，check:research 报告与源文档一致；总目录包含计划链接和对应静态页面。</li>
+<li>既有原型测试 16 项、总目录测试 17 项通过。Pages 与提交检查流程加入文档构建／一致性校验；在这次文档关联检查时没有运行线上部署，后续发布见<a href="./notes.html">过程记录</a>。</li>
+</ul>
+<p><img src="./assets/06-expansion-web.png" alt="扩展计划网页及关联文档入口" loading="lazy"></p>
+</article><footer>一隅 · 自然氛围与可探索造景研究</footer></main>
+<aside class="contents"><div class="nav-label">本页内容</div><nav aria-label="本页目录"><a href="#环境与方法">环境与方法</a>
+<a href="#功能结果">功能结果</a>
+<a href="#自动检查">自动检查</a>
+<a href="#实际画面">实际画面</a>
+<a href="#运行观察与限制">运行观察与限制</a>
+<a href="#扩展计划网页关联检查">扩展计划网页关联检查</a></nav></aside></div>
+</body></html>

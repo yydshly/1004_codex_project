@@ -208,11 +208,17 @@ def render(root, projects):
         for name, content in static_files.items():
             outputs[f"site/demos/{identifier}/{name}"] = content
         demo = web_reference(project, static_files)
+        expansion_path = f"demos/{identifier}/research/expansion-plan.html" if "research/expansion-plan.html" in static_files else ""
+        expansion_url = f"{PAGES_URL}{expansion_path}" if expansion_path else ""
         tags = "、".join(project["tags"]) or "—"
         webpage = f'<a href="{html.escape(url(demo), quote=True)}">研究网页</a><br>' if demo else "网页待准备<br>"
+        if expansion_url:
+            webpage += f'<a href="{html.escape(url(expansion_url), quote=True)}">扩展计划</a><br>'
         source_label = html.escape(source_name)
         rows.append(f'<tr><td valign="top"><strong>{project["number"]:03d} · <a href="{project_path}/README.md">{html.escape(project["name"])}</a></strong><br>{html.escape(project["status"])}<br><sub>{html.escape(tags)}</sub></td><td valign="top">{summary_html(project)}</td><td valign="top">{webpage}<a href="{project_path}/README.md">研究记录</a><br><a href="{html.escape(url(source_href), quote=True)}">{source_label}</a></td></tr>')
         web_markdown = f" · [研究网页]({url(demo)})" if demo else ""
+        if expansion_url:
+            web_markdown += f" · [扩展计划]({url(expansion_url)})"
         gallery.append(f"### **{project['number']:03d} · {markdown(project['name'])}**\n\n{summary_markdown(project)}\n\n[研究记录]({project_path}/README.md){web_markdown} · [{markdown(source_name)}]({url(source_href)})")
         cover_html = "<div class=\"cover empty\">截图待补充</div>"
         if project["cover"]:
@@ -225,6 +231,8 @@ def render(root, projects):
             gallery[-1] += "\n\n截图：待补充。"
         research_url = f"https://github.com/yydshly/1004_codex_project/blob/main/{project_path}/README.md"
         demo_html = f'<a href="{html.escape(url(demo), quote=True)}">研究网页 ↗</a>' if demo else '<span class="muted">研究网页待准备</span>'
+        if expansion_path:
+            demo_html += f'<a href="{html.escape(relative_url(expansion_path), quote=True)}">扩展计划</a>'
         cards.append(f'<article>{cover_html}<div class="content"><div class="meta">{project["number"]:03d} · {html.escape(project["status"])}</div><h2><strong>{html.escape(project["name"])}</strong></h2><div class="summary">{summary_html(project)}</div><p class="tags">{html.escape(tags)}</p><nav>{demo_html}<a href="{research_url}">研究记录</a><a href="{html.escape(url(source_href), quote=True)}">{source_label} ↗</a></nav></div></article>')
     index = ('<table width="100%">\n<thead><tr><th align="left" width="20%">项目</th><th align="left" width="68%">摘要</th><th align="left" width="12%">入口</th></tr></thead>\n<tbody>\n' + "\n".join(rows) + '\n</tbody>\n</table>') if rows else "目前尚未录入研究项目。首个项目将从 **001** 开始，按编号升序展示。"
     gallery_text = "\n\n".join(gallery) if gallery else "录入子项目并添加真实截图后，这里会按编号展示项目摘要与图片。"

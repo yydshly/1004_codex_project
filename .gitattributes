@@ -27,3 +27,11 @@
 # Keep frozen 004 snapshots byte-identical to their SHA-256 manifests.
 projects/004-scene-style-atlas/demo/versions/** -text
 site/demos/004-scene-style-atlas/versions/** -text
+
+# Preserve fixed 003 dependencies and original CC0 license bytes.
+projects/003-cozy-nature-worlds/demo/vendor/three/** -text whitespace=-blank-at-eol,-space-before-tab
+site/demos/003-cozy-nature-worlds/vendor/three/** -text whitespace=-blank-at-eol,-space-before-tab
+projects/003-cozy-nature-worlds/tools/vendor/marked/marked.esm.js -text
+projects/003-cozy-nature-worlds/tools/vendor/marked/LICENSE -text
+projects/003-cozy-nature-worlds/demo/assets/models/KENNEY-LICENSE.txt -text whitespace=-blank-at-eol,-blank-at-eof
+site/demos/003-cozy-nature-worlds/assets/models/KENNEY-LICENSE.txt -text whitespace=-blank-at-eol,-blank-at-eof

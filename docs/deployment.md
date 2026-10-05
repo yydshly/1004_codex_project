@@ -7,6 +7,7 @@
 - [项目研究总索引](https://yydshly.github.io/1004_codex_project/)
 - [001 · TaskView Community 研究网页](https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/)，整理 [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community) 的能力、原理、场景、输入输出与 Agent 扩展价值。
 - [002 · CodeFlow 研究网页](https://yydshly.github.io/1004_codex_project/demos/002-codeflow/#understanding)，以理解汇总图引导，说明能力、混合解析与关系推断、十种实际效果、输入输出、CLI / Card / JSON 扩展、使用场景，以及 Source Insight、Ix、GitNexus 的差异。页面包含锁定快照分析 15 个真实源码文件的原生运行器。
+- [003 · 自然氛围与可探索造景理解导览](https://yydshly.github.io/1004_codex_project/demos/003-cozy-nature-worlds/research/README.html)，以指定总览图展示 Cozy Country 与原创一隅原型的效果对照，完整说明能力、原理、场景、价值与边界；关联[可交互原型](https://yydshly.github.io/1004_codex_project/demos/003-cozy-nature-worlds/)、[扩展计划](https://yydshly.github.io/1004_codex_project/demos/003-cozy-nature-worlds/research/expansion-plan.html)及十份研究文档。当前功能底座已交付，视觉提升、37 个条目、六种组合笔刷和三个模板仍为规划，暂停深入实现。
 - [004 · 场景与模型风格图谱](https://yydshly.github.io/1004_codex_project/demos/004-scene-style-atlas/)，以[完整理解总览](https://yydshly.github.io/1004_codex_project/demos/004-scene-style-atlas/understanding/)串起原游戏官方画面、三轮原创实时样板、体感原理、使用价值和产品扩展；保留 V1/V2 完整存档及人物专项记录。人物研究暂停，故事、行动和游戏系统仍为候选。
 - [005 · 水流与鸭子互动研究](https://yydshly.github.io/1004_codex_project/demos/005-water-duck-loops/)，使用九模块总览图，说明水鸭循环、四版原创原型、系列扩展与证据边界；[V4 蓄水救援](https://yydshly.github.io/1004_codex_project/demos/005-water-duck-loops/prototypes/reservoir/)及前三版均可从研究主页进入。
 - [006 · Claude Code Best Practice 研究网页](https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/)，以[完整模块总图](https://yydshly.github.io/1004_codex_project/demos/006-claude-code-best-practice/module-map.html)引导，覆盖 47 项功能主题、8 组 63 个条目，说明资料与模板的能力、技术机制、使用入口、开发与审查场景，以及知识沉淀、流程复用和验收价值。网页包含机制选择、执行链路说明和原创审查模板；交互不调用 Claude Code 或外部服务。
@@ -32,7 +33,7 @@ projects/001-example-project/demo/
 
 `demo_url` 非空时，目录优先使用该在线地址，支持本项目的研究子页面或锚点；为空时，有 `demo/index.html` 的项目自动关联本项目 Pages 在线地址。总 README、图片预览与网站的“研究网页”都直接打开实际网页。HTML 源码仍可从项目 `demo/` 查看，并明确标为源码。
 
-同站的网页入口会检查项目编号、目录和静态文件是否对应。002 从理解汇总锚点开始，004 的目录阅读入口指向 `understanding/`，其工作台与实时样板保留在根页面；005、007、008 均有独立研究主页。具体入口以[总 README](../README.md#项目索引)的生成索引为准。
+同站的网页入口会检查项目编号、目录和静态文件是否对应。002 从理解汇总锚点开始，003 从 `research/README.html` 开始，004 的目录阅读入口指向 `understanding/`，其工作台与实时样板保留在根页面；005、007、008 均有独立研究主页。003 原型由浏览器执行，无需单独部署业务后端；它的本地存档按站点地址隔离，本地与线上之间可通过 JSON 导出和导入迁移。具体入口以[总 README](../README.md#项目索引)的生成索引为准。
 
 ## 子路径与本地预览
 
