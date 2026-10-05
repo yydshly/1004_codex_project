@@ -14,7 +14,7 @@ from urllib.parse import quote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 STATUSES = ("待研究", "研究中", "已复现", "已完成", "已归档")
 FIELDS = {"number", "slug", "name", "summary", "repository", "status", "tags", "cover", "demo_url"}
-OPTIONAL_FIELDS = {"source_url", "summary_sections"}
+OPTIONAL_FIELDS = {"source_url", "source_name", "summary_sections"}
 SUMMARY_LABELS = ("能力", "原理", "使用场景", "价值", "边界")
 PAGES_URL = "https://yydshly.github.io/1004_codex_project/"
 BLOCKS = ("PROJECT_INDEX", "PROJECT_GALLERY")
@@ -70,12 +70,16 @@ def validate_source(project):
 
 
 def source_reference(project):
-    """Preserve repository labels while providing a readable source fallback."""
+    """Name the actual repository, product, or author behind the source link."""
     if project["repository"]:
-        return project["repository"], urlsplit(project["repository"]).path.strip("/")
+        source = project["repository"]
+        fallback = urlsplit(source).path.rsplit("/", 1)[-1]
+        return source, project.get("source_name", fallback)
     source = project["source_url"]
     parsed = urlsplit(source)
-    return source, parsed.netloc + parsed.path.rstrip("/")
+    parts = parsed.path.strip("/").split("/")
+    fallback = f"@{parts[0]}" if parsed.hostname in ("x.com", "twitter.com") and parts[0] else parsed.netloc
+    return source, project.get("source_name", fallback)
 
 
 def load_projects(root):
@@ -97,6 +101,8 @@ def load_projects(root):
         slugs.add(slug)
         for field in ("name", "summary", "status"):
             valid_text(project[field], field)
+        if "source_name" in project:
+            valid_text(project["source_name"], "source_name")
         if "summary_sections" in project:
             sections = project["summary_sections"]
             if not isinstance(sections, dict) or set(sections) != set(SUMMARY_LABELS):
@@ -153,7 +159,8 @@ def summary_markdown(project):
     sections = project.get("summary_sections")
     if not sections:
         return markdown(project["summary"])
-    return "\n\n".join(f"**{label}：**{markdown(sections[label])}" for label in SUMMARY_LABELS)
+    # A separator lets GFM close emphasis after punctuation before Chinese text.
+    return "\n\n".join(f"**{label}：** {markdown(sections[label])}" for label in SUMMARY_LABELS)
 
 
 def web_reference(project, files):
@@ -203,7 +210,7 @@ def render(root, projects):
         demo = web_reference(project, static_files)
         tags = "、".join(project["tags"]) or "—"
         webpage = f'<a href="{html.escape(url(demo), quote=True)}">研究网页</a><br>' if demo else "网页待准备<br>"
-        source_label = "上游仓库" if project["repository"] else "研究来源"
+        source_label = html.escape(source_name)
         rows.append(f'<tr><td valign="top"><strong>{project["number"]:03d} · <a href="{project_path}/README.md">{html.escape(project["name"])}</a></strong><br>{html.escape(project["status"])}<br><sub>{html.escape(tags)}</sub></td><td valign="top">{summary_html(project)}</td><td valign="top">{webpage}<a href="{project_path}/README.md">研究记录</a><br><a href="{html.escape(url(source_href), quote=True)}">{source_label}</a></td></tr>')
         web_markdown = f" · [研究网页]({url(demo)})" if demo else ""
         gallery.append(f"### **{project['number']:03d} · {markdown(project['name'])}**\n\n{summary_markdown(project)}\n\n[研究记录]({project_path}/README.md){web_markdown} · [{markdown(source_name)}]({url(source_href)})")

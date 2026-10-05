@@ -45,6 +45,7 @@ projects/001-example-project/
 | `summary_sections` | 可选的结构化摘要，固定五键：`能力`、`原理`、`使用场景`、`价值`、`边界`，每项为一段非空文本；有此字段时目录按五类加粗展示，旧记录仍显示完整 `summary` |
 | `repository` | 上游 GitHub 仓库链接；无公开仓库时填 `""`，并提供 `source_url` |
 | `source_url` | 可选，产品官网、作者主页或其他公开研究来源的 HTTP(S) 链接；`repository` 为空时必须填写 |
+| `source_name` | 可选，来源链接显示的真实库名、产品名或作者名，例如 `Forge3D`、`Defilade · @nexindie`；只改变显示名称，不改变来源地址 |
 | `status` | `待研究`、`研究中`、`已复现`、`已完成`、`已归档`，新增默认 `待研究` |
 | `tags` | 主题标签数组，例如 `["可视化", "前端"]` |
 | `cover` | 相对子项目目录的图片路径，例如 `assets/cover.png`；暂缺图片时填 `""` |
@@ -54,7 +55,7 @@ projects/001-example-project/
 
 新增时可用 `--status "研究中"` 指定状态，并通过重复的 `--tag "标签"` 添加多个标签。
 
-旧的 GitHub 项目记录无需添加 `source_url`。索引优先展示仓库链接；仓库为空时展示 `source_url`，并以域名与页面路径作为来源名称。
+旧的 GitHub 项目记录无需添加 `source_url`。索引优先关联仓库链接；仓库为空时关联 `source_url`。来源名称使用 `source_name`；未填写时，GitHub 仓库显示库名，X / Twitter 显示作者账号，其他来源显示域名。根 README 的索引、图文区和在线目录统一使用这个名称；帖子来源应标注产品或作者，不能冒充源代码仓库。
 
 `sync` 更新根 README 的 `PROJECT_INDEX`、`PROJECT_GALLERY` 标记区，生成 `site/index.html`、`site/covers/` 和 `site/demos/`。不要手改这些生成内容；自制网页放在项目的 `demo/` 中，根 README 标记区之外的介绍可以直接编辑。`check` 检查登记信息、项目文件、排序和生成内容的一致性；失败时先修正报告的问题，再同步。
 

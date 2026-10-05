@@ -154,8 +154,8 @@ class CatalogSourceTests(unittest.TestCase):
         self.assertEqual(project["repository"], "https://github.com/owner/repo")
         self.assertNotIn("source_url", project)
         readme = (self.root / "README.md").read_text(encoding="utf-8")
-        self.assertIn("[owner/repo](https://github.com/owner/repo)", readme)
-        self.assertIn({"href": "https://github.com/owner/repo", "text": "上游仓库"},
+        self.assertIn("[repo](https://github.com/owner/repo)", readme)
+        self.assertIn({"href": "https://github.com/owner/repo", "text": "repo"},
                       self.index(readme).rows[1][2]["links"])
         result = self.cli("check")
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -167,11 +167,11 @@ class CatalogSourceTests(unittest.TestCase):
         self.assertEqual(project["repository"], "")
         self.assertEqual(project["source_url"], "https://x.com/protopop")
         readme = (self.root / "README.md").read_text(encoding="utf-8")
-        self.assertIn("[x.com/protopop](https://x.com/protopop)", readme)
-        self.assertIn({"href": "https://x.com/protopop", "text": "研究来源"},
+        self.assertIn("[@protopop](https://x.com/protopop)", readme)
+        self.assertIn({"href": "https://x.com/protopop", "text": "@protopop"},
                       self.index(readme).rows[2][2]["links"])
         page = (self.root / "site/index.html").read_text(encoding="utf-8")
-        self.assertIn('href="https://x.com/protopop">研究来源 ↗', page)
+        self.assertIn('href="https://x.com/protopop">@protopop ↗', page)
         for name in ("README.md", "notes.md"):
             content = (self.root / "projects/002-product-project" / name).read_text(encoding="utf-8")
             self.assertIn("[研究来源](https://x.com/protopop)", content)
@@ -244,7 +244,34 @@ class CatalogSourceTests(unittest.TestCase):
             self.assertNotIn("https://", row[2]["text"])
             self.assertIn("网页待准备", row[2]["text"])
         self.assertEqual(parser.rows[2][2]["links"][1],
-                         {"href": source["source_url"], "text": "研究来源"})
+                         {"href": source["source_url"], "text": "example.org"})
+
+    def test_named_source_is_consistent_escaped_and_preserves_repository_priority(self):
+        source_name = 'Source <b>name</b> & [作者] *文字*'
+        source_url = "https://example.org/original-post"
+        for repository in ("", "https://github.com/owner/repo"):
+            with self.subTest(repository=repository):
+                project = self.project(repository=repository, source_url=source_url,
+                                       source_name=source_name)
+                self.write_project(project)
+                readme = self.sync()
+                parser = self.index(readme)
+                href = repository or source_url
+                self.assertIn({"href": href, "text": source_name}, parser.rows[1][2]["links"])
+                self.assertNotIn("b", parser.tags)
+                gallery = self.block(readme, "PROJECT_GALLERY")
+                self.assertIn(f"[{catalog.markdown(source_name)}]({href})", gallery)
+                page = (self.root / "site/index.html").read_text(encoding="utf-8")
+                self.assertIn(f'href="{href}">Source &lt;b&gt;name&lt;/b&gt; &amp; [作者] *文字* ↗', page)
+                result = self.cli("check")
+                self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_source_name_rejects_empty_non_text_and_multiline_values(self):
+        for value in ("", None, [], " Name", "Name ", "Name\nAuthor"):
+            with self.subTest(value=value):
+                self.write_project(self.project(source_name=value))
+                with self.assertRaisesRegex(ValueError, "source_name"):
+                    catalog.load_projects(self.root)
 
     def test_structured_summary_keeps_order_and_escapes_all_text_and_hrefs(self):
         labels = ("能力", "原理", "使用场景", "价值", "边界")
@@ -277,14 +304,14 @@ class CatalogSourceTests(unittest.TestCase):
         self.assertNotIn("img", parser.tags)
         self.assertNotIn("b", parser.tags)
         self.assertIn({"href": webpage, "text": "研究网页"}, parser.rows[1][2]["links"])
-        self.assertIn({"href": source, "text": "研究来源"}, parser.rows[1][2]["links"])
+        self.assertIn({"href": source, "text": "example.org"}, parser.rows[1][2]["links"])
         index = self.block(readme, "PROJECT_INDEX")
         self.assertIn('href="https://example.net/view?theme=light&amp;item=1"', index)
         self.assertIn('href="https://example.org/research?lang=zh&amp;version=2"', index)
         self.assertIn("&lt;/td&gt;&lt;script&gt;", index)
         gallery = self.block(readme, "PROJECT_GALLERY")
-        self.assertEqual([gallery.index(f"**{label}：**") for label in labels],
-                         sorted(gallery.index(f"**{label}：**") for label in labels))
+        self.assertEqual([gallery.index(f"**{label}：** ") for label in labels],
+                         sorted(gallery.index(f"**{label}：** ") for label in labels))
         self.assertIn('输入 \\<DEM\\> & \\</td\\>\\<script\\>alert("x")\\</script\\> \\| 完整\\*正文', gallery)
         self.assertIn("未测量；\\<img src='x'\\> 是文字，不是图片。", gallery)
 
