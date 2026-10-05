@@ -30,6 +30,21 @@
       ],
       "cover": "assets/codeflow-understanding.png",
       "demo_url": "https://yydshly.github.io/1004_codex_project/demos/002-codeflow/"
+    },
+    {
+      "number": 7,
+      "slug": "spirula-studio",
+      "name": "Spirula Studio · 实拍三维重建与高斯原理",
+      "summary": "把同一静态对象的多角度照片、绕拍视频，经抽帧、掩膜、SfM 相机求解和逐场景高斯优化，变成可自由观察、保存和编辑的三维高斯资产，并提取带纹理网格、渲染图片与漫游视频。独立 C++ 桌面与 CLI 整合重建、批处理、编辑和导出；Vulkan/CUDA、训练量化与 GPU 内存优化支撑计算。中文总图和源码研究解释高斯、可微渲染、密度控制与占据场网格提取，覆盖商品/文物展示、空间导览、内容制作及采集管理、跨机调度、质量验收等扩展，并对比 Splat.js、QuerySplat、LichtFeld、SuperSplat、TRELLIS.2、Forge3D 的职责。实拍资产可复用，外观逼真不保证测量或制造精度；资料与源码已审校，Spirula 本机运行与性能待验证。",
+      "repository": "https://github.com/harry7557558/spirula-studio",
+      "status": "研究中",
+      "tags": [
+        "实拍三维重建",
+        "3D Gaussian Splatting",
+        "输入输出与工具对比"
+      ],
+      "cover": "assets/spirula-studio-overview.png",
+      "demo_url": ""
     }
   ]
 }

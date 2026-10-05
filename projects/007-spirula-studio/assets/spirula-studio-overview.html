@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spirula Studio · 实拍三维重建完整信息图</title>
+<style>
+  *{box-sizing:border-box}html,body{margin:0;padding:0;background:#e9edf1}body{font-family:"Microsoft YaHei","PingFang SC","Segoe UI",sans-serif;color:#172d43}a{color:inherit;text-decoration:none}
+  .canvas{width:1920px;height:2092px;padding:42px 52px;background:#f7f9fb;overflow:hidden;position:relative}
+  .top{height:152px;position:relative}.eyebrow{font-size:22px;font-weight:700;letter-spacing:3px;color:#27776f;margin:0 0 10px}.top h1{font-size:53px;line-height:1.25;letter-spacing:-1.2px;margin:0 0 13px}.subtitle{font-size:25px;color:#546679;margin:0}.badge{position:absolute;right:0;top:0;border:1px solid #bdd2d7;border-radius:30px;background:#edf5f4;padding:12px 21px;font-size:22px;color:#23635c}
+  .section-head{height:45px;display:flex;align-items:baseline;gap:17px}.index{color:#d46829;font-size:23px;font-weight:800;letter-spacing:1px}.section-head h2{font-size:30px;margin:0;line-height:1.25}.section-head .hint{margin-left:auto;font-size:21px;color:#627381}
+  .flow{height:354px;margin-top:4px}.flow-grid{height:300px;display:grid;grid-template-columns:500px 285px 385px 568px;gap:26px}.flow-card{background:#fff;border:1px solid #d6e1e8;border-radius:18px;padding:20px 23px;position:relative}.flow-card:not(:last-child)::after{content:"→";position:absolute;right:-27px;top:120px;font-size:36px;color:#b46029;z-index:2;font-weight:600}.flow-card h3{font-size:26px;margin:0 0 8px;line-height:1.3}.step-label{font-size:19px;font-weight:800;letter-spacing:1.5px;color:#218479;margin-bottom:5px}.flow-card p{font-size:22px;line-height:1.5;color:#536879;margin:0}.capture-svg{height:176px;width:100%;display:block}.sfm-svg{height:153px;width:100%;display:block}.splat-svg{height:155px;width:100%;display:block}.tiny-note{font-size:20px!important;color:#72808c!important}.flow-card.output{padding:17px 22px}.output-row{display:flex;align-items:center;gap:16px;height:74px;border-bottom:1px solid #e5ebef}.output-row:last-child{border:0}.output-row svg{width:124px;height:69px;flex-shrink:0}.output-row strong{font-size:23px;display:block;line-height:1.25}.output-row span{font-size:20px;color:#61717d;display:block;margin-top:3px}
+  .mechanisms{height:500px;margin-top:19px;display:grid;grid-template-columns:530px 720px 526px;gap:20px}.card{border:1px solid #d5dfe8;background:white;border-radius:18px;padding:22px 26px;overflow:hidden}.card-head{font-size:29px;line-height:1.3;margin:0 0 14px;display:flex;align-items:center;gap:13px}.chip{border-radius:7px;padding:3px 9px;font-size:20px;background:#edf4f3;color:#277d70;font-weight:700}.card p{font-size:23px;line-height:1.5;margin:0 0 9px;color:#53677a}.card b{color:#172d43}.math-visual{display:flex;align-items:center;height:112px;gap:12px;margin-top:4px}.math-visual svg{height:110px;width:210px}.formula{font-size:22px;font-family:"Cascadia Code","Segoe UI",sans-serif;background:#eff5f4;border-radius:9px;padding:10px 14px;color:#287267;margin:10px 0 12px;white-space:nowrap}.math-caption{font-size:21px!important;color:#286f68!important}.loop{background:#fef9f2;border-color:#e8d6bd}.loop .chip{background:#f9e3cd;color:#b45c22}.loop-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:20px;position:relative}.loop-box{background:#fff;border:1px solid #e8cdae;border-radius:12px;height:120px;padding:15px 12px;text-align:center;position:relative}.loop-box:not(:last-child)::after{content:"→";font-size:28px;position:absolute;right:-18px;top:33px;color:#c36b2c;z-index:2}.loop-box strong{font-size:25px;display:block;margin-bottom:9px}.loop-box span{font-size:21px;color:#745e46;display:block;line-height:1.4}.loop-return{height:36px;margin:5px 0 6px;width:100%}.loop-caption{text-align:center;font-size:22px;color:#a85421;margin-bottom:13px}.train-distinction{border-top:1px solid #ead8c4;padding-top:13px;font-size:22px!important}.tech{background:#182f47;border-color:#182f47;color:#fff}.tech .card-head{color:#fff}.tech .chip{color:#8cdbce;background:#294b60}.tech p{color:#c6d4e1;font-size:22px}.tech b{color:#fff}.tech h4{font-size:24px;margin:14px 0 8px;color:#97e0d1}.tech-rule{height:1px;background:#395065;margin:17px 0}.tech .small{font-size:20px;line-height:1.35;color:#9fb9ce}
+  .applications{height:330px;margin-top:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}.application{padding:21px 26px}.application h3{font-size:28px;margin:0 0 13px}.application ul{margin:0;padding:0;list-style:none}.application li{font-size:23px;line-height:1.48;margin:7px 0;color:#52687a}.application li::before{content:"·";color:#258272;font-size:27px;font-weight:900;margin-right:12px}.application .bottom{border-top:1px solid #dbe4e8;padding-top:11px;margin-top:11px;font-size:21px;color:#286f68;font-weight:600}.extension{background:#fff9f1;border-color:#ead3b4}.extension .card-head{justify-content:space-between}.extension .chip{background:#fae2c8;color:#ad5820;font-size:19px}.extension li::before{color:#ce6c2a}.extension .bottom{color:#92541e;border-color:#edddc8}.use-icon{float:right;font-size:23px;color:#aac6cb;font-weight:500}
+  .comparison{height:424px;margin-top:24px;display:grid;grid-template-columns:1272px 524px;gap:20px}.comparison-table{overflow:hidden;border:1px solid #d4dfe7;border-radius:16px;background:#fff}.comparison-table .table-title{height:51px;display:flex;align-items:center;padding:0 24px;background:#e9f1f3;font-size:28px;font-weight:700;gap:14px}.comparison-table table{width:100%;border-collapse:collapse;table-layout:fixed}.comparison-table th,.comparison-table td{text-align:left;vertical-align:middle;padding:9px 21px;line-height:1.24;border-bottom:1px solid #e3e9ee;font-size:22px}.comparison-table thead th{font-size:20px;color:#617483;background:#f7fafb;padding:9px 21px;font-weight:600}.comparison-table tbody th{font-weight:650;width:225px}.comparison-table tbody tr{height:43px}.comparison-table tbody tr:first-child{background:#eef7f4}.comparison-table tbody tr:last-child th,.comparison-table tbody tr:last-child td{border:0}.comparison-table col:nth-child(1){width:240px}.comparison-table col:nth-child(2){width:490px}.comparison-table col:nth-child(3){width:540px}.meaning{background:#eaf3f0;border-color:#c9ddd6;padding:24px 28px}.meaning h3{font-size:29px;margin:0 0 14px}.meaning .big{font-size:30px;font-weight:700;line-height:1.38;color:#195952;margin:0 0 14px}.meaning p{font-size:22px;color:#477066;margin:0 0 12px;line-height:1.38}.meaning .rule{height:1px;background:#bfd4cb;margin:12px 0}.meaning .bottom{font-size:23px;color:#1f5d54;font-weight:700;line-height:1.38;margin:0}
+  .footer{height:134px;margin-top:23px;border-top:2px solid #cbd7e0;padding-top:15px;display:grid;grid-template-columns:1fr 575px;column-gap:28px;align-items:start}.footer p{font-size:22px;line-height:1.48;margin:0 0 7px;color:#526678}.footer strong{color:#18334a}.evidence{background:#1d354b;color:#fff;border-radius:12px;padding:14px 20px}.evidence p{color:#dce8f0;font-size:21px;line-height:1.42;margin:0 0 4px}.evidence strong{color:#fff}.source{font-size:19px!important;color:#708391!important}.date{font-size:19px!important;color:#afc9d9!important}
+</style>
+</head>
+<body>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+<defs>
+  <linearGradient id="shoeBody" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#a7bbc9"/></linearGradient>
+  <linearGradient id="shoePanel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3c6d87"/><stop offset="1" stop-color="#183e59"/></linearGradient>
+  <radialGradient id="ellipsoid"><stop stop-color="#0c7e75" stop-opacity=".95"/><stop offset=".35" stop-color="#23a391" stop-opacity=".7"/><stop offset=".7" stop-color="#45bca8" stop-opacity=".28"/><stop offset="1" stop-color="#60cdb4" stop-opacity="0"/></radialGradient>
+  <radialGradient id="softBlue"><stop stop-color="#285e9a" stop-opacity=".9"/><stop offset="1" stop-color="#619ac2" stop-opacity="0"/></radialGradient>
+  <pattern id="splats" width="40" height="28" patternUnits="userSpaceOnUse"><rect width="40" height="28" fill="#a7d6d5"/><ellipse cx="7" cy="5" rx="16" ry="8" fill="url(#ellipsoid)" transform="rotate(-19 7 5)"/><ellipse cx="27" cy="18" rx="19" ry="12" fill="url(#softBlue)" transform="rotate(27 27 18)"/><ellipse cx="32" cy="2" rx="14" ry="5" fill="#d08442" opacity=".65"/><ellipse cx="4" cy="26" rx="11" ry="7" fill="#376b99" opacity=".75"/></pattern>
+  <pattern id="triangles" width="62" height="42" patternUnits="userSpaceOnUse"><path d="M0 0H62V42H0Z M0 0L31 42L62 0 M0 42L31 0L62 42" fill="none" stroke="#257b78" stroke-width="1.5"/></pattern>
+  <marker id="arrowTeal" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0L7 3L0 6" fill="none" stroke="#278579" stroke-width="1.6"/></marker>
+  <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0 0L7 3L0 6" fill="none" stroke="#c96c2c" stroke-width="1.6"/></marker>
+  <symbol id="shoe" viewBox="0 0 430 210">
+    <ellipse cx="220" cy="183" rx="180" ry="15" fill="#274b64" opacity=".12"/>
+    <path d="M40 152L50 92Q54 82 64 86L99 107L128 67Q138 53 156 59L194 105Q214 119 250 122L337 137Q383 140 397 159L399 177Q356 193 233 186L66 180Q37 178 40 152Z" fill="url(#shoeBody)" stroke="#557487" stroke-width="2.5"/>
+    <path d="M53 93L93 118L127 79L155 75L180 107L137 144L49 155Z" fill="url(#shoePanel)"/>
+    <path d="M137 145L185 108L252 124L305 151L184 161Z" fill="#e7edf1" stroke="#8ca6b6" stroke-width="1.5"/>
+    <path d="M41 155Q187 176 398 160L398 177Q258 194 59 181L40 177Z" fill="#fafafb" stroke="#7894a6" stroke-width="2"/>
+    <path d="M50 169Q210 185 389 171" fill="none" stroke="#c8d7df" stroke-width="2"/>
+    <path d="M199 129Q236 152 281 144" fill="none" stroke="#c96c2c" stroke-width="8" stroke-linecap="round"/>
+    <path d="M136 83L162 79M144 94L173 89M153 105L182 101M165 116L193 113" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+    <path d="M118 77Q130 55 144 64" fill="none" stroke="#254d66" stroke-width="8" stroke-linecap="round"/>
+    <path d="M319 140L328 152M339 143L347 153M358 147L366 154" stroke="#6a8a9d" stroke-width="2"/>
+  </symbol>
+  <symbol id="splatShoe" viewBox="0 0 430 210">
+    <ellipse cx="220" cy="183" rx="180" ry="15" fill="#274b64" opacity=".09"/>
+    <path d="M40 152L50 92Q54 82 64 86L99 107L128 67Q138 53 156 59L194 105Q214 119 250 122L337 137Q383 140 397 159L399 177Q356 193 233 186L66 180Q37 178 40 152Z" fill="url(#splats)"/>
+    <path d="M41 155Q187 176 398 160L398 177Q258 194 59 181L40 177Z" fill="url(#splats)" opacity=".65"/>
+    <ellipse cx="128" cy="73" rx="21" ry="8" fill="url(#ellipsoid)" transform="rotate(-35 128 73)"/><ellipse cx="180" cy="111" rx="29" ry="9" fill="url(#softBlue)" transform="rotate(34 180 111)"/><ellipse cx="317" cy="143" rx="32" ry="9" fill="url(#ellipsoid)" transform="rotate(9 317 143)"/>
+  </symbol>
+  <symbol id="meshShoe" viewBox="0 0 430 210">
+    <ellipse cx="220" cy="183" rx="180" ry="15" fill="#274b64" opacity=".09"/>
+    <path d="M40 152L50 92Q54 82 64 86L99 107L128 67Q138 53 156 59L194 105Q214 119 250 122L337 137Q383 140 397 159L399 177Q356 193 233 186L66 180Q37 178 40 152Z" fill="#dcece8" stroke="#257b78" stroke-width="2"/>
+    <path d="M40 152L50 92Q54 82 64 86L99 107L128 67Q138 53 156 59L194 105Q214 119 250 122L337 137Q383 140 397 159L399 177Q356 193 233 186L66 180Q37 178 40 152Z" fill="url(#triangles)"/>
+  </symbol>
+</defs>
+</svg>
+<main class="canvas" id="poster" aria-label="Spirula Studio 完整中文信息图，概念示意而非原版运行截图">
+  <header class="top">
+    <p class="eyebrow">007 / 技术理解与工具分工</p>
+    <div class="badge">独立 C++ 桌面应用 + 命令行</div>
+    <h1>Spirula Studio｜实拍 → 三维场景 → 可复用资产</h1>
+    <p class="subtitle">把同一静态物体或场景的多角度照片、绕拍视频，重建成可自由观察的三维外观。</p>
+  </header>
+
+  <section class="flow" aria-label="输入、相机定位、场景训练与输出">
+    <div class="section-head"><span class="index">01</span><h2>从一次拍摄，到能换视角的三维结果</h2><span class="hint">所有鞋子与操作画面均为概念示意</span></div>
+    <div class="flow-grid">
+      <article class="flow-card">
+        <div class="step-label">INPUT / 输入</div><h3>多角度照片 / 绕拍视频</h3>
+        <svg class="capture-svg" viewBox="0 0 460 178" aria-label="手机绕静止鞋子移动拍摄示意">
+          <ellipse cx="224" cy="120" rx="173" ry="40" fill="#edf3f5"/>
+          <path d="M47 108C41 54 372 34 406 106" fill="none" stroke="#d17a35" stroke-width="2.5" stroke-dasharray="6 7" marker-end="url(#arrowOrange)"/>
+          <path d="M410 125C386 180 70 184 41 124" fill="none" stroke="#d17a35" stroke-width="2.5" stroke-dasharray="6 7"/>
+          <use href="#shoe" x="95" y="22" width="286" height="140"/>
+          <g transform="translate(30 52) rotate(-17)"><rect width="43" height="78" rx="8" fill="#18364d"/><rect x="5" y="9" width="33" height="58" rx="3" fill="#d3e8eb"/><circle cx="22" cy="5" r="2" fill="#83aabc"/><use href="#shoe" x="5" y="23" width="34" height="24"/><circle cx="21" cy="71" r="3" fill="#779bb1"/></g>
+          <g transform="translate(370 65) rotate(16)"><rect width="44" height="79" rx="8" fill="#18364d"/><rect x="5" y="9" width="34" height="58" rx="3" fill="#d3e8eb"/><circle cx="22" cy="5" r="2" fill="#83aabc"/><use href="#shoe" x="5" y="23" width="35" height="24"/><circle cx="22" cy="72" r="3" fill="#779bb1"/></g>
+          <path d="M92 78L152 93M362 89L329 108" stroke="#64a297" stroke-width="1.5" stroke-dasharray="3 4"/>
+        </svg>
+        <p>相机要移动 · 画面要重叠 · 主体静止</p>
+      </article>
+      <article class="flow-card">
+        <div class="step-label">GEOMETRY / 几何</div><h3>SfM 相机定位</h3>
+        <svg class="sfm-svg" viewBox="0 0 230 150" aria-label="相机匹配特征与三角测量示意">
+          <path d="M24 25L111 113L211 24M24 25L142 69L211 24M24 25L81 87L211 24" fill="none" stroke="#c7d8e2" stroke-width="2"/>
+          <g fill="#257c76"><circle cx="111" cy="113" r="6"/><circle cx="142" cy="69" r="5"/><circle cx="81" cy="87" r="5"/><circle cx="126" cy="94" r="3"/><circle cx="155" cy="106" r="4"/><circle cx="88" cy="117" r="3"/><circle cx="111" cy="55" r="3"/><circle cx="172" cy="80" r="4"/></g>
+          <g fill="#173c55"><rect x="9" y="13" width="33" height="25" rx="4"/><path d="M41 19L54 13V38L41 31Z"/><rect x="186" y="13" width="33" height="25" rx="4"/><path d="M185 19L173 13V38L185 31Z"/></g>
+          <circle cx="26" cy="26" r="7" fill="#95beca"/><circle cx="202" cy="26" r="7" fill="#95beca"/>
+          <path d="M71 141H171" stroke="#b8c9d5" stroke-width="2"/>
+        </svg>
+        <p>匹配共同特征<br>求相机与稀疏点</p>
+      </article>
+      <article class="flow-card">
+        <div class="step-label">3DGS / 场景拟合</div><h3>三维高斯训练</h3>
+        <svg class="splat-svg" viewBox="0 0 340 153" aria-label="椭圆高斯元素构成同一鞋子的示意"><use href="#splatShoe" x="0" y="-12" width="340" height="165"/></svg>
+        <p>可转动、放大、换视角</p>
+        <p class="tiny-note">逐场景优化，不是通用生成模型</p>
+      </article>
+      <article class="flow-card output">
+        <div class="step-label">OUTPUT / 三类交付</div>
+        <div class="output-row"><svg viewBox="0 0 130 74" aria-hidden="true"><rect x="9" y="5" width="108" height="60" rx="5" fill="#e6f0f2" stroke="#426879" stroke-width="2"/><use href="#splatShoe" x="14" y="4" width="99" height="59"/><path d="M2 66H125L117 72H10Z" fill="#7898a8"/></svg><div><strong>Splat：高斯 PLY</strong><span>软椭球与外观参数</span></div></div>
+        <div class="output-row"><svg viewBox="0 0 130 74" aria-hidden="true"><use href="#meshShoe" x="-4" y="-5" width="134" height="81"/></svg><div><strong>可选 Mesh：三角表面</strong><span>GLB / OBJ / PLY / STL 等</span></div></div>
+        <div class="output-row"><svg viewBox="0 0 130 74" aria-hidden="true"><rect x="22" y="17" width="74" height="45" rx="6" fill="#dfeaf0" stroke="#557589" stroke-width="2"/><path d="M38 17L43 8H65L69 17" fill="#557589"/><circle cx="60" cy="39" r="15" fill="#32677f"/><circle cx="60" cy="39" r="9" fill="#b1d7dd"/><path d="M104 25L121 16V59L104 49Z" fill="#d28243"/></svg><div><strong>图片 / 漫游视频</strong><span>新视角渲染与镜头输出</span></div></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="mechanisms" aria-label="高斯数学、训练迭代、GPU与网格技术">
+    <article class="card">
+      <h3 class="card-head"><span class="chip">02</span>高斯究竟是什么？</h3>
+      <p><b>中心强、边缘平滑减弱的数学函数。</b><br>柔边椭球是影响范围，不是实体烟雾。</p>
+      <div class="math-visual">
+        <svg viewBox="0 0 210 110" aria-label="中心浓边缘淡的旋转椭球"><path d="M20 89L194 26M105 8V100" stroke="#a1c0c2" stroke-width="1.5" stroke-dasharray="4 4"/><ellipse cx="105" cy="53" rx="86" ry="32" fill="url(#ellipsoid)" transform="rotate(-21 105 53)"/><ellipse cx="105" cy="53" rx="56" ry="21" fill="none" stroke="#21887b" stroke-width="1" opacity=".6" transform="rotate(-21 105 53)"/><circle cx="105" cy="53" r="4" fill="#08695f"/><text x="119" y="54" font-size="19" fill="#195f5a">μ</text></svg>
+        <svg viewBox="0 0 210 110" aria-label="高斯单峰曲线"><path d="M12 93H202M26 99V12" stroke="#a6bbc9" stroke-width="1.5"/><path d="M29 91C64 91 76 81 89 49C95 25 102 13 111 13C120 13 127 25 133 49C146 81 158 91 194 91" fill="none" stroke="#258377" stroke-width="4"/><path d="M29 91C64 91 76 81 89 49C95 25 102 13 111 13C120 13 127 25 133 49C146 81 158 91 194 91V93H29Z" fill="#278d7c" opacity=".1"/><path d="M111 16V94" stroke="#d28b4b" stroke-dasharray="4 4" stroke-width="1.5"/></svg>
+      </div>
+      <div class="formula">G(x) = exp[−½ (x−μ)ᵀ Σ⁻¹ (x−μ)]</div>
+      <p class="math-caption">位置 · 大小 · 方向；颜色与透明度另存。<br>投影成椭圆，按深度透明混合成画面。</p>
+    </article>
+    <article class="card loop">
+      <h3 class="card-head"><span class="chip">03</span>渲染 → 比较 → 更新，反复拟合</h3>
+      <p>相机先定位，再从稀疏点或随机点初始化高斯。</p>
+      <div class="loop-steps">
+        <div class="loop-box"><strong>① 渲染视角</strong><span>从拍摄位置<br>生成训练图</span></div>
+        <div class="loop-box"><strong>② 计算误差</strong><span>与实拍照片比较<br>L1 / SSIM 等</span></div>
+        <div class="loop-box"><strong>③ 梯度更新</strong><span>位置、形状、外观<br>拆分 / 重定位</span></div>
+      </div>
+      <svg class="loop-return" viewBox="0 0 660 36" aria-label="更新后返回渲染继续迭代"><path d="M554 3V21Q554 29 544 29H113Q103 29 103 21V3" fill="none" stroke="#c96c2c" stroke-width="2.4" marker-end="url(#arrowOrange)"/></svg>
+      <div class="loop-caption">反复迭代，逐渐接近原照片</div>
+      <p class="train-distinction"><b>训练的是当前场景的一份资产。</b><br>预训练模型可辅助掩膜、匹配、深度与法线。</p>
+    </article>
+    <article class="card tech">
+      <h3 class="card-head"><span class="chip">04</span>GPU 与网格，负责什么？</h3>
+      <h4>Vulkan / CUDA：加速与省显存</h4>
+      <p>量化训练、融合核函数、显存复用。<br>Vulkan：NVIDIA / AMD / Intel / Apple<br>CUDA：NVIDIA；容量与速度需实测。</p>
+      <div class="tech-rule"></div>
+      <h4>Mesh：从占据场提取三角面</h4>
+      <p>保留高斯 7 点 → Delaunay 四面体<br>默认阈值 0.5 → marching tetrahedra<br>清理表面 → 顶点色 / UV 纹理</p>
+      <p class="small">主路径不是 TSDF；同为 PLY，<br>高斯、点云与网格字段仍不同。</p>
+    </article>
+  </section>
+
+  <section class="applications" aria-label="已有能力、用途与待开发扩展">
+    <article class="card application">
+      <h3>已具备的能力 <span class="use-icon">CAPABILITIES</span></h3>
+      <ul><li>视频抽帧 · AI 掩膜 · 内置 SfM</li><li>鱼眼 / 360° · 曝光 / 白平衡校正</li><li>深度 / 法线约束 · 大场景分块</li><li>清理编辑 · 轨迹 · 网格与纹理导出</li></ul>
+      <div class="bottom">已有本地 Batch：数据集 → 训练 → mesh</div>
+    </article>
+    <article class="card application">
+      <h3>用在什么场景 <span class="use-icon">APPLICATIONS</span></h3>
+      <ul><li>商品 / 工艺品：近看、环绕与细节展示</li><li>房间 / 展厅：空间浏览与虚拟导览</li><li>建筑 / 环境：现场外观留档</li><li>影视 / 三维制作：实景素材与镜头</li></ul>
+      <div class="bottom">先验证一个物体，再推进房间或大场景</div>
+    </article>
+    <article class="card application extension">
+      <h3 class="card-head">可以怎样扩展 <span class="chip">需开发 / 验证</span></h3>
+      <ul><li>商品热点、说明与快捷视角</li><li>房源导航、路线讲解与空间切换</li><li>采集管理、跨机调度与资产版本</li><li>网页交互 / 发布与游戏接入</li></ul>
+      <div class="bottom">现有重建能力 + 业务交互 + 资产处理</div>
+    </article>
+  </section>
+
+  <section class="comparison" aria-label="七种工具职责比较与意义">
+    <div class="comparison-table">
+      <div class="table-title"><span class="index">05</span>其他库各负责哪一层？</div>
+      <table>
+        <colgroup><col><col><col></colgroup>
+        <thead><tr><th>工具</th><th>主要职责</th><th>核心路线</th></tr></thead>
+        <tbody>
+          <tr><th>Spirula Studio</th><td>采集处理 → 训练 → 编辑 → 网格</td><td>逐场景优化 · Vulkan / CUDA</td></tr>
+          <tr><th>Splat.js</th><td>浏览器里的照片 / 视频重建</td><td>SfM + WebGPU 高斯训练</td></tr>
+          <tr><th>QuerySplat</th><td>根据多视图预测高斯场景</td><td>预训练 Query / VGGT-Omega + 可选 TTO</td></tr>
+          <tr><th>LichtFeld Studio</th><td>原生高斯训练、编辑与自动化</td><td>CUDA / NVIDIA · Python / MCP</td></tr>
+          <tr><th>SuperSplat</th><td>已有高斯的编辑、优化与发布</td><td>生成之后的资产编辑 / 展示层</td></tr>
+          <tr><th>TRELLIS.2</th><td>单张图片生成带 PBR 材质的网格</td><td>预训练图生三维，推测未见结构</td></tr>
+          <tr><th>Forge3D</th><td>地形 / 点云 / 现成高斯融合渲染</td><td>Rust / wgpu + Python，不训练高斯</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <aside class="card meaning">
+      <h3>意义与价值</h3>
+      <p class="big">把一次拍摄变成<br>可交互、可保存、<br>可复用的三维资产。</p>
+      <p>串起数据准备、重建、编辑与交付；<br>让多种显卡参与三维高斯训练。</p>
+      <div class="rule"></div>
+      <p class="bottom">实拍重建、模型生成、<br>资产编辑与渲染，是不同分工。</p>
+    </aside>
+  </section>
+
+  <footer class="footer">
+    <div>
+      <p><strong>使用边界：</strong>拍摄覆盖与相机定位决定质量；逼真外观不保证精密尺寸、完整表面或制造可用。</p>
+      <p>动态、骨骼与物理重光照需要额外能力；没有实拍约束的背面仍有不确定性。</p>
+      <p class="source">来源：Spirula 官方 README / docs / 源码（7801c3ca）及各对比项目官方说明。</p>
+    </div>
+    <div class="evidence">
+      <p><strong>文档与源码研究完成 · Spirula 原版待实测</strong></p>
+      <p>本图为概念示意，非原版截图或质量证明。<br>旧鞋子视频实测属于 Splat.js，不属于 Spirula。</p>
+      <p class="date">2026-10-05 · 已源码审校 · 7801c3c · 未本机实测</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

@@ -14,6 +14,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | 001 | [TaskView Community](projects/001-taskview-community/README.md) | 可自托管的项目与任务管理平台，提供看板、子任务、依赖图、权限与工时报表。底层采用 Vue、Express 和 PostgreSQL，通过 API、MCP、Webhook 连接人和外部 Agent；可复用为任务入口与进度管理层，自动执行和验收需另行构建。 | 已完成 | 任务管理、MCP、Agent 接入 | [Gimanh/taskview-community](https://github.com/Gimanh/taskview-community) | [Demo](https://yydshly.github.io/1004_codex_project/demos/001-taskview-community/) |
 | 002 | [CodeFlow · 代码结构可视化与轻量分析](projects/002-codeflow/README.md) | 无需后端的代码结构浏览与轻量静态分析工具：输入 GitHub 仓库、PR 或本地源码，另支持 Markdown 笔记；经 Babel/Acorn、Tree-sitter 与正则抽取定义和引用，推断文件关系，输出十种交互视图、源码卡片、指标、潜在影响与可导出报告。可通过 CLI 监听、Card 指标历史和无界面 JSON 接入外部流程。研究页以汇总图引导，包含真实源码原生演示及 Source Insight、Ix、GitNexus 对比；静态线索需经源码和测试核实。 | 已完成 | 代码结构、静态分析、工具对比 | [braedonsaunders/codeflow](https://github.com/braedonsaunders/codeflow) | [Demo](https://yydshly.github.io/1004_codex_project/demos/002-codeflow/) |
+| 007 | [Spirula Studio · 实拍三维重建与高斯原理](projects/007-spirula-studio/README.md) | 把同一静态对象的多角度照片、绕拍视频，经抽帧、掩膜、SfM 相机求解和逐场景高斯优化，变成可自由观察、保存和编辑的三维高斯资产，并提取带纹理网格、渲染图片与漫游视频。独立 C++ 桌面与 CLI 整合重建、批处理、编辑和导出；Vulkan/CUDA、训练量化与 GPU 内存优化支撑计算。中文总图和源码研究解释高斯、可微渲染、密度控制与占据场网格提取，覆盖商品/文物展示、空间导览、内容制作及采集管理、跨机调度、质量验收等扩展，并对比 Splat.js、QuerySplat、LichtFeld、SuperSplat、TRELLIS.2、Forge3D 的职责。实拍资产可复用，外观逼真不保证测量或制造精度；资料与源码已审校，Spirula 本机运行与性能待验证。 | 研究中 | 实拍三维重建、3D Gaussian Splatting、输入输出与工具对比 | [harry7557558/spirula-studio](https://github.com/harry7557558/spirula-studio) | [静态文件](site/demos/007-spirula-studio/index.html) |
 
 <!-- PROJECT_INDEX:END -->
 
@@ -42,6 +43,16 @@
 [研究记录](projects/002-codeflow/README.md) · [braedonsaunders/codeflow](https://github.com/braedonsaunders/codeflow)
 
 ![CodeFlow · 代码结构可视化与轻量分析 研究引导图](projects/002-codeflow/assets/codeflow-understanding.png)
+
+### **007 · Spirula Studio · 实拍三维重建与高斯原理**
+
+**项目摘要**
+
+把同一静态对象的多角度照片、绕拍视频，经抽帧、掩膜、SfM 相机求解和逐场景高斯优化，变成可自由观察、保存和编辑的三维高斯资产，并提取带纹理网格、渲染图片与漫游视频。独立 C++ 桌面与 CLI 整合重建、批处理、编辑和导出；Vulkan/CUDA、训练量化与 GPU 内存优化支撑计算。中文总图和源码研究解释高斯、可微渲染、密度控制与占据场网格提取，覆盖商品/文物展示、空间导览、内容制作及采集管理、跨机调度、质量验收等扩展，并对比 Splat.js、QuerySplat、LichtFeld、SuperSplat、TRELLIS.2、Forge3D 的职责。实拍资产可复用，外观逼真不保证测量或制造精度；资料与源码已审校，Spirula 本机运行与性能待验证。
+
+[研究记录](projects/007-spirula-studio/README.md) · [harry7557558/spirula-studio](https://github.com/harry7557558/spirula-studio)
+
+![Spirula Studio · 实拍三维重建与高斯原理 研究引导图](projects/007-spirula-studio/assets/spirula-studio-overview.png)
 
 <!-- PROJECT_GALLERY:END -->
 

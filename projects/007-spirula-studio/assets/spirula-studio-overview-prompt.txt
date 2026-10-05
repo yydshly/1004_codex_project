@@ -1,0 +1,119 @@
+Use case: infographic-diagram, scientific-educational.
+Create ONE comprehensive Simplified Chinese technical understanding poster about the open-source Spirula Studio project. This is a single finished raster infographic, target 3840 x 2160 pixels, landscape 16:9, high resolution. The audience is a curious non-specialist who previously confused algorithms, large models, splats, meshes and viewers. Make it clear, accurate and memorable, and readable at full resolution. All quoted Chinese copy below must appear accurately, with clean Simplified Chinese typography, consistent hierarchy, generous margins and orderly alignment. Keep readable body text approximately 30px or larger in the 4K composition. White/very pale warm gray background, dark navy text, teal for reconstruction, orange for optimization and violet for neural-model comparisons. Premium scientific editorial design, not a fake application screenshot. No fictitious benchmark chart or fake logos.
+
+Structure the poster as a cohesive teaching board:
+1) Header about 8% height.
+2) Large pictorial capture-to-output story and Gaussian explanation about 25%.
+3) An explicit optimization process strip about 17%.
+4) Three aligned information cards about 20%.
+5) A tool comparison table with significance card about 23%.
+6) Bottom evidence/limitations footer about 7%.
+Use the space well, avoid cramming tiny text. Present exact short copy, not long prose. Required labels stay in their corresponding sections.
+
+HEADER exact:
+"Spirula Studio｜实拍 → 三维场景 → 可复用资产"
+Subtitle: "能力 · 输入输出 · 高斯原理 · 使用场景 · 扩展方向 · 工具比较"
+Small badge: "独立 C++ 桌面应用 + 命令行"
+One sentence: "把同一静态物体或场景的多角度照片、绕拍视频，重建成可自由观察的三维外观。"
+
+PICTORIAL STORY:
+On the left show a smartphone moving around a stationary sneaker on a table, a clear curved camera path and three photographic-looking thumbnails of the SAME shoe from different camera positions. Label:
+"输入：多角度照片 / 绕拍视频"
+Below:
+"相机要移动；画面要重叠；主体尽量静止"
+At center show reconstruction of the same sneaker by dense colorful soft ellipsoidal patches in 3D, recognizably forming the SAME sneaker, not just random particles. Label:
+"三维高斯场景"
+"可转动、放大、换视角"
+Two clear output branches on the right of this main scene:
+Branch A shoe splat viewed on laptop, label "Splat：高斯 PLY"
+Branch B same shoe as triangulated surface with a small texture atlas icon, label "可选 Mesh：GLB / OBJ / PLY / STL"
+Third small camera/video icon output label "图片 / 漫游视频"
+State the rendered shoe illustrations are "概念示意" in a small but clear label.
+
+At far right of the top pictorial band, reserve a distinct Gaussian educational inset:
+Title "高斯是什么？"
+Visuals: one simple bell-shaped curve next to a soft 3D ellipsoid with center bright/dense and edges fading. Show 2-3 changed ellipsoids (round, stretched, rotated) with tiny axis lines. The Gaussian illustration is mathematical density/weight, not a physical smoke simulation.
+Exact copy:
+"中心强，向外平滑减弱的数学函数"
+"可理解为柔边的三维椭球"
+"可调整：位置 · 大小 · 方向 · 颜色 · 透明度"
+"大量高斯叠加，形成最终画面"
+
+PROCESS STRIP:
+Title "底层原理：多视图几何 + 可微渲染 + 参数优化"
+Five steps with clear small corresponding icons and arrows:
+"① SfM 相机定位"
+"匹配相同特征，求相机与稀疏点"
+"② 初始化高斯"
+"用三维点布置初始椭球"
+"③ 渲染与照片比较"
+"从原拍摄位置生成画面，计算误差"
+"④ 反向调整参数"
+"更新位置、形状、颜色与透明度"
+"⑤ 增补细节"
+"拆分、重定位，减少无贡献高斯"
+Draw a visible looping arrow from step 4/5 back to step 3 labelled "反复迭代，越来越接近原照片".
+Add the explanatory bottom line:
+"这里的训练：为当前场景拟合参数；预训练视觉模型可辅助掩膜等环节。"
+No wording that all AI is absent, no GPT/brain illustration for this core.
+
+THREE INFORMATION CARDS:
+Card A title "已具备的能力"
+Exact compact lines:
+"视频抽帧 · AI 掩膜 · 内置 SfM"
+"鱼眼 / 360°相机 · 曝光与白平衡校正"
+"深度 / 法线约束 · 大场景分块"
+"清理编辑 · 相机轨迹 · 网格与纹理导出"
+"Vulkan / CUDA · 量化训练减少显存"
+Small bottom line:
+"Vulkan：NVIDIA / AMD / Intel / Apple Silicon"
+
+Card B title "使用场景"
+Illustrate tiny sneaker, room, building, film camera:
+"商品与工艺品：交互查看真实外观"
+"房间与展厅：虚拟导览"
+"建筑与环境：数字化留档"
+"影视与三维制作：实景素材与镜头"
+Small bottom line:
+"先做一个物体，再验证房间或大场景"
+
+Card C title "可扩展方向"
+Mark with a visibly distinct badge "需另行开发或验证"
+Exact lines:
+"商品热点、说明与快捷视角"
+"房源导航、路线讲解与空间切换"
+"采集管理、跨机调度与资产版本"
+"接入网页 Viewer / 其他编辑工具"
+"网格清理、碰撞、重拓扑与游戏接入"
+Small emphasis:
+"现有重建能力 + 产品交互与资产处理"
+
+BOTTOM COMPARISON:
+On left approximately 65% width, a clear table titled "其他库各负责哪一层？"
+Column headers "工具" / "主要职责" / "核心路线"
+Rows exact:
+"Spirula Studio" / "采集处理 → 训练 → 编辑 → 网格" / "逐场景优化 · Vulkan / CUDA"
+"Splat.js" / "浏览器里完成照片 / 视频重建" / "SfM + WebGPU 高斯训练"
+"QuerySplat" / "预测相机、深度与高斯场景" / "预训练视觉几何模型 + 可选精修"
+"LichtFeld Studio" / "桌面高斯训练、编辑与自动化" / "CUDA / NVIDIA · Python / MCP"
+"SuperSplat" / "已有高斯的编辑与发布" / "资产编辑 / 展示层"
+"TRELLIS.2" / "单张图片生成网格资产" / "预训练图生三维模型"
+"Forge3D" / "准备好的地理数据与场景渲染" / "Python + Rust / wgpu"
+
+On right approximately 35% width, a significance card:
+Title "意义与价值"
+Exact copy:
+"把一次拍摄变成可交互、可保存、可复用的三维资产"
+"串起数据准备、重建、编辑和交付"
+"让多种显卡能参与三维高斯训练"
+"输出相似，得到三维的方式可以不同"
+Bottom highlighted sentence:
+"实拍重建、模型生成、资产编辑与渲染，是不同分工。"
+
+FOOTER:
+Use a clean full-width footer with boundaries and evidence. Exact text:
+"使用边界：拍摄覆盖与定位决定质量；视觉逼真不保证精密尺寸；动态、骨骼与物理重光照需额外能力。"
+"研究状态：2026-10-05 · 文档与源码研究完成 · Spirula 本机效果及性能待实测"
+"本图为知识与原理示意，非原版运行截图。旧鞋子实测属于 Splat.js。"
+"来源：Spirula 官方仓库 / docs / 源码；各对比项目官方说明"
+All sections must remain inside canvas, with no cropped footer. No invented support for text-to-3D in Spirula, no claim that Gaussian PLY is a normal triangle mesh, no claim that mesh automatically meets manufacturing or printing requirements, no universal speed/VRAM guarantee. Do not add benchmark numbers; preserve the conceptual distinctions. Return only the final infographic image.
