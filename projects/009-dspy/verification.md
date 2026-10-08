@@ -65,6 +65,24 @@
 
 网页只有阅读交互，不调用模型或外部执行工具。上述检查验证展示与交互，不构成模型质量或成本实验。
 
+## 提交与线上部署验证
+
+2026-10-08 按用户要求完善摘要、沿用已选引导图，并提交到 `main`、推送到原有仓库，使用既有 GitHub Pages 工作流发布。
+
+| 项目 | 验证结果 |
+| --- | --- |
+| 在线研究网页 | [009 · DSPy 理解全景与使用价值](https://yydshly.github.io/1004_codex_project/demos/009-dspy/) |
+| 内容发布提交 | [2272bf0444b545d232fb2d4b87cf13861a95d915](https://github.com/yydshly/1004_codex_project/commit/2272bf0444b545d232fb2d4b87cf13861a95d915) |
+| 发布工作流 | [Deploy GitHub Pages · 37729931388](https://github.com/yydshly/1004_codex_project/actions/runs/37729931388)，success，部署完成于 2026-10-08 12:57:25，Asia/Shanghai |
+| CI 目录检查 | [Check project catalog · 37729931387](https://github.com/yydshly/1004_codex_project/actions/runs/37729931387)，success，包含网页生成一致性、目录校验与 17 项目录测试 |
+| HTTP 与内容 | 在线 HTML、CSS、JS、PNG 和生成提示全部返回 200；文本按 LF 归一化后与本地发布文件一致，PNG 字节一致 |
+| 总目录摘要 | 能力、原理、使用场景、价值、边界五段完整上线；明确列出 Bootstrap、随机搜索、MIPROv2 TPE、COPRO、SIMBA、GEPA 及训练后端分工 |
+| 引导图复用 | 原图、项目演示、站点演示与目录封面均沿用已选图；在线图 SHA-256 为 `cc5c70640ccccc003b2a17acebad94320f4e668ee63ffdaa0508a96398e5f62d` |
+| 线上浏览器 | 14 张算法卡片、12 个主要区块；1440、820、390、320 像素宽度无全页横向溢出；筛选、展开、标签与键盘切换、图片放大与 Escape、章节导航通过 |
+| 资源与阅读 | 无 HTTP 资源错误或 JavaScript 页面异常；禁用 JavaScript 后两个例子和算法正文可读 |
+
+线上验证结果与截图保存在本机 `output/009-dspy/online/`，未纳入 Git 提交；本记录作为后续文档提交保存。页面发布和浏览器验证不等于 DSPy 模型效果验证，尚未执行模型优化或仿真实验。
+
 ## 资料入口
 
 - [固定源码快照](https://github.com/stanfordnlp/dspy/tree/a7e7edb8c6803d88aeb25c6a0412657c01835bc5)
