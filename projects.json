@@ -232,6 +232,23 @@
       ],
       "cover": "",
       "demo_url": ""
+    },
+    {
+      "number": 11,
+      "slug": "koharu",
+      "name": "Koharu · 漫画翻译与图像处理",
+      "summary": "Koharu 是面向漫画场景的翻译与图像处理桌面应用，将文字和版面识别、OCR、翻译、擦字修复、译文排版及人工校对等能力适配到漫画页面处理流程。后续开发类似漫画翻译、图文内容本地化或图像文字编辑项目时，可参考其工作流与能力整合方式；当前仅记录归档，暂不研究。",
+      "repository": "https://github.com/koharu-rs/koharu",
+      "source_name": "Koharu",
+      "status": "已归档",
+      "tags": [
+        "漫画翻译",
+        "OCR",
+        "图像处理",
+        "后续参考"
+      ],
+      "cover": "",
+      "demo_url": ""
     }
   ]
 }

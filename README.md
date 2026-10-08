@@ -23,6 +23,7 @@
 <tr><td valign="top"><strong>008 · <a href="projects/008-forge3d/README.md">Forge3D · 真实数据融合与三维场景渲染</a></strong><br>已完成<br><sub>地理三维、数据融合、高程与点云、3DGS、无人机重建、产品复用</sub></td><td valign="top"><strong>能力：</strong>Python 驱动、Rust / WebGPU 实现的地理渲染库，融合准备好的 DEM、COPC 点云与现成 3DGS，输出地形地图、场景图片和飞行序列；支持太阳、阴影、雾与覆盖层。<br><strong>原理：</strong>数据裁剪、配准并统一坐标及高程基准后，以统一 ReSTIR 路径追踪计算相互遮挡；影像提供颜色，分块与按需分页控制渲染工作集。<br><strong>使用场景：</strong>地点导览、真实数字场景、路线镜头和规划沟通；开放数据做远景，无人机经外部摄影测量或 3DGS 重建补近景。<br><strong>价值：</strong>复用真实数据表达具体地点，区分高程形状、空间点与影像外观；引导图和导览沉淀路线，后续可补采集质量、资产管理与任务发布。<br><strong>边界：</strong>原版未本机运行，不负责照片重建或高斯训练。4K 非实时承诺，纹理不替代几何；全球精细数据覆盖不均，DEM 不含悬挑，高斯可能残留光照。作者完整包未确认公开，公开基准为程序色；核心、Pro 与数据授权分开核对。</td><td valign="top"><a href="https://yydshly.github.io/1004_codex_project/demos/008-forge3d/">研究网页</a><br><a href="projects/008-forge3d/README.md">研究记录</a><br><a href="https://github.com/milos-agathon/forge3d">Forge3D</a></td></tr>
 <tr><td valign="top"><strong>009 · <a href="projects/009-dspy/README.md">DSPy 原理算法与评分机制研究</a></strong><br>研究中<br><sub>语言模型程序、提示优化、评分机制、仿真分析</sub></td><td valign="top"><strong>能力：</strong>DSPy 是构建、评估和优化语言模型程序的 Python 框架，可声明结构化输入输出、组合模型与工具调用、记录轨迹并保存优化配置；具体生成与推理能力来自接入的模型。<br><strong>原理：</strong>Signature 定义任务，Module 组织流程，Adapter 组装请求；在案例上执行候选，以规则、参考答案、执行检验或评判模型提供的 metric 评分。算法能力包括 Bootstrap 筛选轨迹为示例、BootstrapRS 随机搜索示例组合、MIPROv2 用 Optuna TPE 联合搜索指令与示例、COPRO 逐模块改进指令、SIMBA 小批次归纳规则与示例、GEPA 利用反馈反思演化；微调和实验性 GRPO 连接外部训练后端。<br><strong>使用场景：</strong>可重复且可评价的分类、抽取、摘要、检索问答、代码生成、数学与规则推理、工具流程及日志报告；不要求每次输入海量资料，可扩展领域评分、数据工具适配和多模块优化。<br><strong>价值：</strong>对你的无人机仿真，适合作为离线日志分析、异常提取与带证据报告的辅助层；对研究库，可复用资料整理与引用核验流程。主要收益是减少人工调提示、组合示例、跑测试和维护配置的重复工作，是否采用要与直接调用模型比较。<br><strong>边界：</strong>物理模拟、传感器建模、状态估计和实时控制需专门算法；单次任务或稳定提示可能无需 DSPy。普通提示优化不改模型权重，高分不保证真实正确，收益需覆盖数据、调用与维护成本。本研究为资料与源码整理，尚未做 DSPy 模型实测。</td><td valign="top"><a href="https://yydshly.github.io/1004_codex_project/demos/009-dspy/">研究网页</a><br><a href="projects/009-dspy/README.md">研究记录</a><br><a href="https://github.com/stanfordnlp/dspy">DSPy</a></td></tr>
 <tr><td valign="top"><strong>010 · <a href="projects/010-ra2web/README.md">RA2WEB · 网页版红警游戏</a></strong><br>已归档<br><sub>网页游戏、红警、即时战略、后续参考</sub></td><td valign="top">RA2WEB 是一个网页版红警游戏项目，仓库提供网页客户端、游戏资源与部署包，附带玩家脚本控制接口。后续开发类似网页游戏或经典游戏网页复刻项目时可作为参考；当前仅记录归档，暂不研究。</td><td valign="top">网页待准备<br><a href="projects/010-ra2web/README.md">研究记录</a><br><a href="https://github.com/ra2web/ra2web.github.io">RA2WEB</a></td></tr>
+<tr><td valign="top"><strong>011 · <a href="projects/011-koharu/README.md">Koharu · 漫画翻译与图像处理</a></strong><br>已归档<br><sub>漫画翻译、OCR、图像处理、后续参考</sub></td><td valign="top">Koharu 是面向漫画场景的翻译与图像处理桌面应用，将文字和版面识别、OCR、翻译、擦字修复、译文排版及人工校对等能力适配到漫画页面处理流程。后续开发类似漫画翻译、图文内容本地化或图像文字编辑项目时，可参考其工作流与能力整合方式；当前仅记录归档，暂不研究。</td><td valign="top">网页待准备<br><a href="projects/011-koharu/README.md">研究记录</a><br><a href="https://github.com/koharu-rs/koharu">Koharu</a></td></tr>
 </tbody>
 </table>
 
@@ -183,6 +184,14 @@
 RA2WEB 是一个网页版红警游戏项目，仓库提供网页客户端、游戏资源与部署包，附带玩家脚本控制接口。后续开发类似网页游戏或经典游戏网页复刻项目时可作为参考；当前仅记录归档，暂不研究。
 
 [研究记录](projects/010-ra2web/README.md) · [RA2WEB](https://github.com/ra2web/ra2web.github.io)
+
+截图：待补充。
+
+### **011 · Koharu · 漫画翻译与图像处理**
+
+Koharu 是面向漫画场景的翻译与图像处理桌面应用，将文字和版面识别、OCR、翻译、擦字修复、译文排版及人工校对等能力适配到漫画页面处理流程。后续开发类似漫画翻译、图文内容本地化或图像文字编辑项目时，可参考其工作流与能力整合方式；当前仅记录归档，暂不研究。
+
+[研究记录](projects/011-koharu/README.md) · [Koharu](https://github.com/koharu-rs/koharu)
 
 截图：待补充。
 
