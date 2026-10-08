@@ -249,6 +249,22 @@
       ],
       "cover": "",
       "demo_url": ""
+    },
+    {
+      "number": 12,
+      "slug": "awesome-telegram",
+      "name": "Awesome Telegram · Telegram 群组收集器与资源目录",
+      "summary": "Awesome Telegram 是一个 Telegram 群组收集器与资源目录，通过分类清单整理群组、频道、机器人和开发工具的链接及简介。后期查询 Telegram 相关资料、寻找群组或工具时，可用作入口索引；当前仅记录归档，暂不研究。",
+      "repository": "https://github.com/ebertti/awesome-telegram",
+      "status": "已归档",
+      "tags": [
+        "Telegram",
+        "群组收集",
+        "资料查询",
+        "后续参考"
+      ],
+      "cover": "",
+      "demo_url": ""
     }
   ]
 }
