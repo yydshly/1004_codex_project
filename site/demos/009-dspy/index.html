@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#101d36">
+  <meta name="description" content="DSPy 中文理解汇总：能力、程序执行与优化机制、14 个优化相关类、评分来源、使用场景、可扩展方向，以及它对无人机仿真日志分析的实际价值。">
+  <title>DSPy 理解全景与使用价值 · 009 研究档案</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#content">跳到正文</a>
+<aside class="rail" aria-label="研究导览">
+  <a class="brand" href="#position"><span class="brand-num">009</span><span>DSPy 研究档案</span></a>
+  <p class="rail-intro">从“它到底在优化什么”<br>到“是否值得放进我的项目”。</p>
+  <nav aria-label="章节导航">
+    <a href="#overview"><span>01</span>一张图看全景</a>
+    <a href="#understanding"><span>02</span>我们的理解如何修正</a>
+    <a href="#mechanism"><span>03</span>能力与实现机制</a>
+    <a href="#algorithms"><span>04</span>底层算法与源码</a>
+    <a href="#scoring"><span>05</span>谁评分，怎么评分</a>
+    <a href="#scenarios"><span>06</span>适合哪些使用场景</a>
+    <a href="#examples"><span>07</span>两个完整例子</a>
+    <a href="#value"><span>08</span>对你的价值与边界</a>
+    <a href="#extensions"><span>09</span>可扩展方向</a>
+    <a href="#next"><span>10</span>最小验证路线</a>
+    <a href="#sources"><span>11</span>来源与研究状态</a>
+  </nav>
+  <div class="rail-foot">整理于 2026-10-08<br>基于固定源码快照<br><a href="https://github.com/stanfordnlp/dspy">stanfordnlp/dspy</a></div>
+</aside>
+<div class="shell">
+  <header class="topline"><a href="../../">返回研究目录</a><span class="status">资料与源码研究 · 未做模型实测</span></header>
+  <main id="content">
+    <section class="hero" id="position" aria-labelledby="page-title">
+      <p class="kicker">DSPy / 能力、算法与工程价值</p>
+      <h1 id="page-title">理解 DSPy，<br>先看它在<em>优化什么</em>。</h1>
+      <p class="lead">它把语言模型调用组织成程序，并用案例和评分函数搜索更好的指令、示例或可选训练配置。最值得评估的价值，是减少反复调提示与跑实验的工作；对你的仿真项目，它更适合日志分析和证据报告这一层。</p>
+      <div class="hero-notes">
+        <article class="hero-note"><strong>怎样实现这些能力</strong><p>Signature 定义任务，Module 组织调用，Adapter 组装请求；模型执行，metric 给出评价信号。</p></article>
+        <article class="hero-note"><strong>底层算法各有分工</strong><p>Bootstrap 筛选示例，MIPROv2 用 TPE 搜索组合，GEPA 反思演化；权重训练交给专门后端。</p></article>
+        <article class="hero-note"><strong>对你具体有什么价值</strong><p>辅助整理研究资料、分析仿真日志与生成证据报告；省下重复调提示和跑实验的工作，与直接调用比较收益。</p></article>
+      </div>
+      <p class="source">框架定位依据：<a href="https://dspy.ai/current/">官方介绍</a><a href="https://dspy.ai/current/diving-deeper/choosing-an-optimizer/">优化器说明</a>具体适用性是本研究的工程判断。</p>
+    </section>
+
+    <section class="chapter" id="overview" aria-labelledby="overview-title">
+      <div class="chapter-head"><span class="chapter-num">01</span><div><h2 id="overview-title">一张图，串起我们的理解</h2><p>能力、机制、算法、场景与个人价值，放进同一张逻辑图。</p></div></div>
+      <figure class="overview">
+        <a class="image-frame" href="./dspy-overview.png" target="_blank" rel="noopener" aria-label="打开 DSPy 理解全景图原尺寸"><img src="./dspy-overview.png" width="1672" height="941" fetchpriority="high" alt="DSPy 理解全景图：定义任务、提出候选配置、实际运行模型、metric 评分、择优迭代并保存；六个区域解释能力、实现机制、底层算法、使用场景、可扩展方向和对仿真日志分析的价值。普通提示优化不更新权重，评分须独立验证。"></a>
+        <figcaption class="caption"><p>本研究制作的概念总览图，用于解释职责和优化过程。图中没有实测性能数据。详细算法、评分接口与适用边界以本页正文为准。</p><div class="actions"><button class="text-button" id="open-overview" type="button">放大查看</button><a href="./dspy-overview.png" download="dspy-understanding-overview.png">下载总览图</a></div></figcaption>
+      </figure>
+    </section>
+
+    <section class="chapter" id="understanding" aria-labelledby="understanding-title">
+      <div class="chapter-head"><span class="chapter-num">02</span><div><h2 id="understanding-title">从“打分库”到“程序优化框架”</h2><p>保存这次讨论中最重要的修正，也保留你对价值有限的判断条件。</p></div></div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="理解修正对照表"><table><thead><tr><th scope="col">讨论中的理解</th><th scope="col">更准确的表述</th></tr></thead><tbody>
+        <tr><th scope="row">它是评价质量的库？</th><td>评估是一个子系统。DSPy 还定义任务、组合模型与工具调用、搜索配置、保存程序。</td></tr>
+        <tr><th scope="row">生成样例、打分、择优？</th><td>这是部分机制。通常筛选的是<strong>指令、示例集合和模块配置的组合</strong>，每个候选都需要实际执行。</td></tr>
+        <tr><th scope="row">筛选成功结果后自训练？</th><td>Bootstrap 常把成功轨迹放进提示上下文。模型权重保持不变；微调和实验性 RL 是另一条路径。</td></tr>
+        <tr><th scope="row">最佳场景是检索同类信息？</th><td>检索只是任务之一；从给定文本提字段属于抽取。分类、代码生成、推理、摘要和工具流程也可构建与优化。</td></tr>
+        <tr><th scope="row">能求解整个仿真场景？</th><td>要先说明语言模型承担什么任务。DSPy 不自带运动方程、传感器物理模型、数值控制器或通用策略学习环境。</td></tr>
+        <tr><th scope="row">看起来价值有限？</th><td>对单次任务、稳定的小脚本和纯数值求解，确实可能没有必要。重复使用、多模块、可评分的模型流程更值得实验评估。</td></tr>
+      </tbody></table></div>
+      <div class="callout reading"><strong>“模型能完成哪些任务”和“为什么额外使用 DSPy”要分别回答。</strong><p>前者取决于模型、工具与数据；后者取决于实验自动化、流程组织和配置优化，是否足以覆盖新增成本。</p></div>
+    </section>
+
+    <section class="chapter" id="mechanism" aria-labelledby="mechanism-title">
+      <div class="chapter-head"><span class="chapter-num">03</span><div><h2 id="mechanism-title">能力与实现机制</h2><p>把一次正常调用和一次优化搜索分开看，底层机制就清楚了。</p></div></div>
+      <h3>一次正常调用</h3>
+      <ol class="flow">
+        <li><span class="flow-num">01 / 定义</span><strong>Signature + Module</strong><small>声明输入输出和类型，用 Python 组织任务顺序。</small></li>
+        <li><span class="flow-num">02 / 组装</span><strong>Predict + Adapter</strong><small>将指令、字段、示例和当前输入转成模型请求。</small></li>
+        <li><span class="flow-num">03 / 生成</span><strong>LM 客户端</strong><small>调用外部语言模型；模型生成内容，工具可执行具体操作。</small></li>
+        <li><span class="flow-num">04 / 返回</span><strong>解析与 trace</strong><small>解析输出；启用记录时保留模块输入输出，供评价和优化使用。</small></li>
+      </ol>
+      <h3>一次优化搜索</h3>
+      <div class="reading"><p>开发者提供初始程序、案例、metric 和预算。具体优化器提出候选配置，让这些配置实际处理案例，读取得分，选择保留并继续修改；预算结束后返回可复用程序。<code>compile()</code> 在这里表示优化程序配置。</p></div>
+      <div class="two-col">
+        <article class="panel"><span class="label">普通提示优化</span><h3>改动指令与示例</h3><p>常见可调状态是 <code>predictor.signature.instructions</code> 和 <code>predictor.demos</code>。这是离散或文本搜索，通常不对 API 模型反向传播。</p></article>
+        <article class="panel"><span class="label">可选训练路径</span><h3>连接权重训练后端</h3><p>将轨迹整理为训练数据，调用微调或实验性 RL 服务，再替换模型引用。损失、梯度与训练优化器依赖后端能力。</p></article>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="核心模块与源码位置" style="margin-top:23px"><table><thead><tr><th scope="col">模块</th><th scope="col">核心职责</th><th scope="col">源码位置</th></tr></thead><tbody>
+        <tr><th scope="row">Signature</th><td>Pydantic 字段、任务说明、输入输出约定</td><td><code>dspy/signatures/</code></td></tr>
+        <tr><th scope="row">Module / Predict</th><td>组合程序、模型调用、轨迹记录</td><td><code>dspy/primitives/</code>、<code>dspy/predict/</code></td></tr>
+        <tr><th scope="row">Adapter / LM</th><td>请求组装、解析与模型服务连接</td><td><code>dspy/adapters/</code>、<code>dspy/clients/</code></td></tr>
+        <tr><th scope="row">Evaluate / metric</th><td>运行案例、计算和聚合分数</td><td><code>dspy/evaluate/</code>，加开发者提供的函数</td></tr>
+        <tr><th scope="row">Optimizer</th><td>候选提案、抽样、搜索与选择</td><td><code>dspy/teleprompt/</code>；算法主要在具体子类</td></tr>
+      </tbody></table></div>
+      <details><summary>案例、demo、prediction、trace 和候选程序有什么区别？</summary><div class="detail-body"><p><strong>案例</strong>是要处理的一条工单或日志；<strong>demo</strong> 是放进上下文的示例；<strong>prediction</strong> 是一次执行的输出；<strong>trace</strong> 记录各模块的输入输出；<strong>候选程序</strong>是使用某组指令和示例的完整配置。</p><p>训练集用于构造或改进候选，验证集用于选择，独立测试集用于验收。示例放进提示不等于写入模型权重。</p></div></details>
+      <p class="source">源码：<a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/signatures/signature.py">Signature</a><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/predict/predict.py#L248">Predict 与 trace</a><a href="https://dspy.ai/current/diving-deeper/adapters/">Adapter 说明</a><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/predict/chain_of_thought.py">ChainOfThought 包装</a></p>
+    </section>
+
+    <section class="chapter" id="algorithms" aria-labelledby="algorithms-title">
+      <div class="chapter-head"><span class="chapter-num">04</span><div><h2 id="algorithms-title">算法主要用在优化器中</h2><p>14 个优化相关类按“改动什么”浏览。类名和具体机制以固定源码快照为准。</p></div></div>
+      <div class="filters" role="group" aria-label="按优化对象筛选算法">
+        <button class="filter" type="button" data-filter="all" aria-pressed="true">全部</button>
+        <button class="filter" type="button" data-filter="demos" aria-pressed="false">示例</button>
+        <button class="filter" type="button" data-filter="instructions" aria-pressed="false">指令与规则</button>
+        <button class="filter" type="button" data-filter="weights" aria-pressed="false">权重训练</button>
+        <button class="filter" type="button" data-filter="runtime" aria-pressed="false">推理时处理</button>
+        <button class="filter" type="button" data-filter="composition" aria-pressed="false">流程组合</button>
+      </div>
+      <p class="algo-count" id="algorithm-count" aria-live="polite">显示 14 / 14 个优化相关类；GRPO 单独列为实验路径。</p>
+      <div class="algorithm-grid"><article class="algorithm-card" data-groups="demos"><span class="badge">示例设置</span><h3>LabeledFewShot</h3><p>从标注案例选取或抽样 k 个示例；没有评分搜索</p><p class="target"><strong>优化对象：</strong>编译时设置 demos</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/vanilla.py">vanilla.py</a></article>
+<article class="algorithm-card" data-groups="demos"><span class="badge">轨迹引导示例</span><h3>BootstrapFewShot</h3><p>教师执行训练案例，metric 筛选成功轨迹，转换为示例</p><p class="target"><strong>优化对象：</strong>编译时构造模块 demos</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/bootstrap.py">bootstrap.py</a></article>
+<article class="algorithm-card" data-groups="demos"><span class="badge">示例随机搜索</span><h3>BootstrapFewShotWithRandomSearch</h3><p>基线加多组随机顺序与示例数量，逐组 Bootstrap 后评价择优</p><p class="target"><strong>优化对象：</strong>编译时搜索 demos；别名 BootstrapRS</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/random_search.py">random_search.py</a></article>
+<article class="algorithm-card" data-groups="demos"><span class="badge">Optuna 索引搜索</span><h3>BootstrapFewShotWithOptuna</h3><p>先构造示例池，再以 Optuna 搜索各模块的示例索引</p><p class="target"><strong>优化对象：</strong>此快照每个模块选择一个 demo</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/teleprompt_optuna.py">teleprompt_optuna.py</a></article>
+<article class="algorithm-card" data-groups="instructions demos"><span class="badge">指令与示例联合搜索</span><h3>MIPROv2</h3><p>模型提出指令候选，TPE 搜索指令与示例集合的组合</p><p class="target"><strong>优化对象：</strong>编译时同时优化 instructions 与 demos</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/mipro_optimizer_v2.py">mipro_optimizer_v2.py</a></article>
+<article class="algorithm-card" data-groups="instructions"><span class="badge">指令与前缀搜索</span><h3>COPRO</h3><p>逐模块候选搜索，利用历史文本与分数继续提出候选，近似坐标上升</p><p class="target"><strong>优化对象：</strong>指令与最后一个输出字段的前缀</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/copro_optimizer.py">copro_optimizer.py</a></article>
+<article class="algorithm-card" data-groups="instructions demos"><span class="badge">规则与示例小批次搜索</span><h3>SIMBA</h3><p>随机小批次、多次轨迹、候选抽样；添示例或归纳规则，再评分</p><p class="target"><strong>优化对象：</strong>instructions 与 demos；不做数值梯度更新</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/simba.py">simba.py</a></article>
+<article class="algorithm-card" data-groups="instructions"><span class="badge">反思演化</span><h3>GEPA</h3><p>反思反馈驱动的候选演化，保留不同案例上表现好的候选并可选合并</p><p class="target"><strong>优化对象：</strong>默认指令；实验性 Flex 路径可优化模块源码</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/gepa/gepa.py">gepa.py</a></article>
+<article class="algorithm-card" data-groups="demos runtime"><span class="badge">推理时邻近示例</span><h3>KNNFewShot</h3><p>输入向量检索邻近训练案例，再局部 Bootstrap</p><p class="target"><strong>优化对象：</strong>推理时动态准备 demos</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/knn_fewshot.py">knn_fewshot.py</a></article>
+<article class="algorithm-card" data-groups="instructions demos"><span class="badge">自然语言规则归纳</span><h3>InferRules</h3><p>Bootstrap 后让模型从示例中归纳自然语言规则，评价多个候选</p><p class="target"><strong>优化对象：</strong>在 instructions 中追加规则；不是形式逻辑求解器</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/infer_rules.py">infer_rules.py</a></article>
+<article class="algorithm-card" data-groups="instructions"><span class="badge">工具流程指令优化</span><h3>AvatarOptimizer</h3><p>区分高低分工具轨迹，比较差异，用反馈改写指令并迭代</p><p class="target"><strong>优化对象：</strong>工具调用程序的指令</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/avatar_optimizer.py">avatar_optimizer.py</a></article>
+<article class="algorithm-card" data-groups="weights"><span class="badge">后端权重训练</span><h3>BootstrapFinetune</h3><p>收集轨迹作为监督微调数据，调用训练后端</p><p class="target"><strong>优化对象：</strong>模型权重学习；程序保存新 LM 引用</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/bootstrap_finetune.py">bootstrap_finetune.py</a></article>
+<article class="algorithm-card" data-groups="composition weights instructions demos"><span class="badge">优化流程组合</span><h3>BetterTogether</h3><p>按策略顺序组合提示优化与权重训练，评价各阶段</p><p class="target"><strong>优化对象：</strong>默认 <code>p -&gt; w -&gt; p</code>；属于优化流程编排</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/bettertogether.py">bettertogether.py</a></article>
+<article class="algorithm-card" data-groups="runtime composition"><span class="badge">推理时集成</span><h3>Ensemble</h3><p>包装多个程序，推理时全部或抽样运行，以 reduce_fn 合并</p><p class="target"><strong>优化对象：</strong>推理时集成；未指定 reduce_fn 则返回输出集合</p><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/ensemble.py">ensemble.py</a></article></div>
+      <div class="algorithm-deep">
+        <details><summary>Bootstrap 的“成功轨迹变示例”</summary><div class="detail-body"><p>教师在训练案例上执行任务，metric 决定最终结果是否通过。通过后，各模块的输入输出转成 augmented Example，加入学生模块的 demos；还可补入已有标注示例。教师也可以是学生程序的副本。</p><p>最终结果正确提供一种较弱监督，不能保证每个中间步骤正确或最优。这里主要改变上下文示例。</p><p class="source"><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/bootstrap.py#L200">筛选与构造源码</a></p></div></details>
+        <details><summary>MIPROv2 的 TPE 在搜索什么？</summary><div class="detail-body"><p>先 bootstrap 示例候选，再让模型结合程序与数据摘要提出指令，最后搜索每个模块的“指令索引 + 示例集合索引”。源码明确使用 Optuna 的 <code>TPESampler(seed=seed, multivariate=True)</code> 与 <code>suggest_categorical()</code>。</p><p>TPE 利用历史好坏配置的密度估计提出下一组组合。小批次评价节省预算，周期性完整验证比较候选；它不沿着模型梯度修改提示词。</p><p class="source"><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/mipro_optimizer_v2.py#L658">TPE 创建</a><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/mipro_optimizer_v2.py#L766">离散组合选择</a><a href="https://optuna.readthedocs.io/en/stable/reference/samplers/generated/optuna.samplers.TPESampler.html">Optuna TPE</a></p></div></details>
+        <details><summary>SIMBA 的小批次为什么不等于梯度训练？</summary><div class="detail-body"><p>同一批案例多次运行，从候选池抽样，优先处理最高分和最低分差距较大的案例桶。策略是加入好轨迹作为示例，或比较好坏轨迹，让模型生成模块规则。新候选重新评分后加入池。</p><p>这里没有语言模型权重的数值梯度更新。此快照最终在完整 trainset 上比较候选，仍需独立测试。</p><p class="source"><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/simba.py#L213">批次机制</a><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/simba_utils.py">修改策略</a></p></div></details>
+        <details><summary>GEPA 的反思、演化与合并</summary><div class="detail-body"><p>先评价初始候选，保留在不同案例上有优势的配置。选择父候选及待修改模块，在小批次运行，把输入输出与反馈交给反思模型，提出子候选；默认接受规则要求同批次总分严格更高，再完整验证并加入池。结束时取聚合验证分最高的候选。</p><p>可选合并继承不同候选分支的组件改动。搜索委托外部 <code>gepa</code> 引擎，当前依赖固定为 0.1.4。普通路径优化指令，实验性 Flex 路径还可涉及模块源码。</p><p class="source"><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/gepa/gepa_utils.py">DSPy 适配</a><a href="https://github.com/gepa-ai/gepa/blob/v0.1.4/src/gepa/core/engine.py">演化引擎</a><a href="https://github.com/gepa-ai/gepa/blob/v0.1.4/src/gepa/proposer/merge.py">合并</a></p></div></details>
+        <details><summary>微调与实验性 GRPO：训练到底由谁做？</summary><div class="detail-body"><p>BootstrapFinetune 收集轨迹，Adapter 将其转成训练消息，调用 <code>lm.finetune()</code>，完成后替换模型引用。训练损失、优化器和梯度更新取决于 provider。</p><p>实验性 GRPO 收集多条 rollout 与奖励，以 <code>GRPO_CHAT</code> 格式调用 <code>job.step()</code>。完整 RL 训练内核由后端承担。GRPO 不在这份通用导出列表中，不应假设任意版本可直接 <code>dspy.GRPO</code>。</p><p class="source"><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/bootstrap_finetune.py#L155">微调接口</a><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/grpo.py">实验性 GRPO</a></p></div></details>
+      </div>
+      <p class="source">共同接口：<a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/teleprompt.py">Teleprompter</a><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/teleprompt/__init__.py">导出列表</a>BootstrapRS 是 RandomSearch 别名；LabeledFewShot、KNNFewShot 和 Ensemble 并非同一种评分搜索循环。</p>
+    </section>
+
+    <section class="chapter" id="scoring" aria-labelledby="scoring-title">
+      <div class="chapter-head"><span class="chapter-num">05</span><div><h2 id="scoring-title">分数由 metric 给出</h2><p>优化器读取分数；什么叫“好”，要由任务标准、参考答案、工具或评判模型决定。</p></div></div>
+      <div class="three-col">
+        <article class="panel"><span class="label">规则与参考答案</span><h3>可确定地比较</h3><p>标签相同得 1，否则得 0；也可检查字段、格式、约束和引用。标准清楚，但标注与覆盖可能不足。</p></article>
+        <article class="panel"><span class="label">执行结果</span><h3>运行之后验收</h3><p>代码是否通过测试，工具参数是否有效，任务是否完成。执行器和验收逻辑需要开发者接入。</p></article>
+        <article class="panel"><span class="label">评判模型</span><h3>按标准评价文本</h3><p>比较语义覆盖、摘要完整度或材料支持度。能处理开放表达，但评判模型也可能判断错误。</p></article>
+      </div>
+      <div class="two-col" style="margin-top:22px">
+        <div class="panel"><h3>Evaluate 的汇总</h3><p>逐例执行程序，调用 <code>metric(example, prediction)</code>，汇总平均分乘 100。</p><div class="formula">汇总分 = 100 × Σ案例分 / 案例数</div><p class="small" style="margin-top:13px">示意：100 个分类案例中 80 个正确，汇总为 80。连续质量分不应直接称为准确率；自定义奖励也不一定是百分比。</p></div>
+        <div class="panel"><h3>一个简单分类指标</h3><pre><code>def metric(example, prediction, trace=None):
+    return float(
+        example.label == prediction.label
+    )</code></pre><p class="small" style="margin-top:13px">这里只说明接口与计算；本页不执行 DSPy，也不调用模型。</p></div>
+      </div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="内置评分方法对比" style="margin-top:23px"><table><thead><tr><th scope="col">方法</th><th scope="col">实现机制</th><th scope="col">实际边界</th></tr></thead><tbody>
+        <tr><th scope="row">Exact Match</th><td>规范化 Unicode、大小写、标点、英文冠词和空白，再匹配参考字符串</td><td>等价表达可能不匹配；主要是文本规则</td></tr>
+        <tr><th scope="row">token F1</th><td>按空白分词，以 Counter 交集计算 precision、recall 和 F1</td><td>没有内置中文语义分词；词项重叠不证明事实正确</td></tr>
+        <tr><th scope="row">SemanticF1</th><td>模型比较问题、参考与预测，估计语义 P/R，限制在 0–1 再算 F1</td><td>需要参考答案；依赖评判模型</td></tr>
+        <tr><th scope="row">CompleteAndGrounded</th><td>模型分别估计相对参考的完整度 C、相对上下文的支持度 G，再组合</td><td>上下文有错时，支持度高也可能不真实</td></tr>
+      </tbody></table></div>
+      <p class="formula" style="margin-top:20px">F1 = 2PR / (P + R)；完整度与支持度组合 = 2CG / (C + G)</p>
+      <details><summary>GEPA 的数值评分与文字反馈分别做什么？</summary><div class="detail-body"><p>metric 要能接收 <code>gold, pred, trace, pred_name, pred_trace</code> 五个位置参数，可返回数值或 <code>Prediction(score=..., feedback=...)</code>。数值决定比较，文字反馈给反思模型修改方向；只返回数值时也可生成简单分数反馈。</p><p>例如“引用了日志不存在的时间戳”比单独的 0.6 更能定位问题。模块级反馈应有归因证据，不能把最终失败随意归责到某个环节。</p></div></details>
+      <details><summary>Prediction(score=...) 能被 Evaluate 求和吗？</summary><div class="detail-body"><p>本次快照中，自动评价模块返回带 score 的 Prediction。Prediction 实现了浮点转换、加法和反向加法，因此 Evaluate 虽未在求和处显式取 <code>.score</code>，仍可通过数值运算使用它。提供 trace 时，自动评价模块可能将 score 转成阈值判定。</p><p class="source"><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/primitives/prediction.py#L53">Prediction 数值运算</a></p></div></details>
+      <div class="callout amber reading"><strong>高分表示更符合当前指标，仍需检查真实任务收益。</strong><p>保留独立测试集，抽样人工复核，记录分项指标与失败案例。仿真日志按整次运行划分，避免相邻片段泄漏。没有标准答案时，也可以先定义引用核对、执行检验等可检查标准。</p></div>
+      <p class="source"><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/evaluate/evaluate.py#L174">Evaluate</a><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/evaluate/metrics.py#L87">文本指标</a><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/dspy/evaluate/auto_evaluation.py">模型评价</a><a href="https://dspy.ai/current/diving-deeper/metrics-and-evaluation/">官方指标说明</a></p>
+    </section>
+    <section class="chapter" id="scenarios" aria-labelledby="scenarios-title">
+      <div class="chapter-head"><span class="chapter-num">06</span><div><h2 id="scenarios-title">适合可重复、可评价的模型任务</h2><p>不要求每次输入海量信息。输入短、任务重复、质量可检查，也可能值得优化。</p></div></div>
+      <div class="reading"><p>以下是可以这样设计的应用例子。具体任务由模型、数据与工具完成，DSPy 组织程序，并搜索更有效的配置。不存在脱离任务、数据和成本的统一“最佳场景”。</p></div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="使用场景及价值对比"><table><thead><tr><th scope="col">场景</th><th scope="col">输入与目标输出</th><th scope="col">评价信号</th><th scope="col">DSPy 可能增加的价值</th></tr></thead><tbody>
+        <tr><th scope="row">分类与路由</th><td>客服工单 → 类别、紧急程度、处理部门</td><td>与人工标签比较；错分类型分别统计</td><td>自动比较指令与代表性示例，适配新类别或新模型</td></tr>
+        <tr><th scope="row">结构化抽取</th><td>邮件、记录 → 时间、对象、事件与引用</td><td>字段匹配、遗漏率、引用有效性</td><td>比较不同提取说明和示例，提高输出一致性</td></tr>
+        <tr><th scope="row">摘要与报告</th><td>会议或日志 → 决议、异常、证据、待确认事项</td><td>关键事项覆盖，是否编造，是否有依据</td><td>优化提取、证据选择和摘要之间的协作</td></tr>
+        <tr><th scope="row">检索增强问答</th><td>问题 + 检索材料 → 带引用回答</td><td>答案正确性、材料支持度、检索覆盖</td><td>优化查询表达、材料使用与回答环节；检索系统仍需接入</td></tr>
+        <tr><th scope="row">代码生成</th><td>函数需求 → 可执行代码</td><td>测试通过、边界情况、运行结果</td><td>用执行反馈搜索指令和示例；测试器是外部工具</td></tr>
+        <tr><th scope="row">数学与规则推理</th><td>题目或条件 → 答案与可检查结果</td><td>参考答案、约束或程序验证</td><td>比较推理调用结构的配置，不能保证每题求解成功</td></tr>
+        <tr><th scope="row">工具调用流程</th><td>查询请求 → 选择 API、组织参数、整理结果</td><td>调用正确性、任务完成、约束满足</td><td>组织多步调用，针对失败轨迹优化指令</td></tr>
+        <tr><th scope="row">内容改写</th><td>技术说明 → 面向指定读者的说明</td><td>事实保留、表达要求、人工或模型评价</td><td>稳定复用表达规则；纯主观好坏更难可靠评分</td></tr>
+      </tbody></table></div>
+      <div class="callout reading"><strong>检索和抽取是两件事。</strong><p>检索从资料库找相关材料，抽取从已给材料中提取字段。它们都可以成为程序环节，但代码生成、数学推理等任务可以完全不含检索。</p></div>
+      <p class="source">任务类型与组合能力：<a href="https://dspy.ai/current/">官方介绍与教程入口</a><a href="https://dspy.ai/current/diving-deeper/modules/">模块组合</a><a href="https://dspy.ai/current/diving-deeper/tools/">Tools 与 MCP</a></p>
+    </section>
+
+    <section class="chapter" id="examples" aria-labelledby="examples-title">
+      <div class="chapter-head"><span class="chapter-num">07</span><div><h2 id="examples-title">从输入到验收，看两个完整例子</h2><p>模型负责完成任务，评分器负责验收，DSPy 负责试验和优化配置。</p></div></div>
+      <div class="scenario-tabs" role="tablist" aria-label="选择应用例子">
+        <button type="button" role="tab" id="tab-code" aria-controls="example-code" aria-selected="true">代码生成</button>
+        <button type="button" role="tab" id="tab-log" aria-controls="example-log" aria-selected="false">巡检仿真日志</button>
+      </div>
+      <article id="example-code" role="tabpanel" aria-labelledby="tab-code" tabindex="0">
+        <div class="example-head"><h3>生成数据清洗函数：无需信息检索</h3><span>示意流程，未执行模型或代码</span></div>
+        <div class="two-col">
+          <div class="panel"><span class="label">输入需求</span><p>对记录按 ID 去重，保留时间最新的一条。返回列表，并明确时间相同和缺少时间字段时的处理规则。</p><pre><code>需求 → Python 函数
+函数 → 隔离执行与测试
+测试结果 → metric</code></pre></div>
+          <div class="panel"><span class="label">可检查的验收</span><p>空列表、重复 ID、乱序时间、相同时间、缺失字段、输出顺序分别有预先定义的测试；按测试结果评分，关键约束可直接判失败。</p><p>测试与执行环境由开发者提供，验收标准在优化前固定。</p></div>
+        </div>
+        <ol class="flow example-steps">
+          <li><span class="flow-num">01</span><strong>建立需求案例集</strong><small>准备多种同类函数需求与测试，划分训练、验证和测试。</small></li>
+          <li><span class="flow-num">02</span><strong>固定生成基线</strong><small>直接调用模型写代码，记录通过率与失败类型。</small></li>
+          <li><span class="flow-num">03</span><strong>搜索程序配置</strong><small>尝试边界情况说明、输出规则和提示示例，在案例上运行测试。</small></li>
+          <li><span class="flow-num">04</span><strong>独立验收与复用</strong><small>检查新需求上的效果，保存较好配置；收益不足则保留基线。</small></li>
+        </ol>
+        <div class="callout reading"><strong>优化目标是后续一批需求上的生成质量。</strong><p>单次生成一个简单函数，直接使用模型往往已足够。反复处理同类需求、测试成熟、人工调提示工作较多时，才更值得比较 DSPy。</p></div>
+      </article>
+      <article id="example-log" role="tabpanel" aria-labelledby="tab-log" tabindex="0">
+        <div class="example-head"><h3>巡检仿真日志：生成带证据的异常报告</h3><span>示意数据，未接入真实仿真</span></div>
+        <div class="two-col">
+          <div class="panel"><span class="label">输入日志与备注</span><pre><code>L01 / 12:01:00 / 通信链路中断
+L02 / 12:01:08 / 通信恢复
+备注：图传突然黑屏，随后恢复，原因不明。</code></pre><p class="small" style="margin-top:13px">时长等确定性计算交给代码。自然语言归纳和报告是模型任务。</p></div>
+          <div class="panel"><span class="label">目标输出</span><pre><code>异常：通信中断
+持续时间：8 秒
+证据：L01、L02
+原因：现有记录不足以确定</code></pre><p class="small" style="margin-top:13px">“电量不足导致中断”没有证据时，不能写成已确认原因。</p></div>
+        </div>
+        <ol class="flow example-steps">
+          <li><span class="flow-num">01</span><strong>解析与统计</strong><small>规则校验字段，计算确定性指标，保留运行 ID 与证据索引。</small></li>
+          <li><span class="flow-num">02</span><strong>提取事件</strong><small>模型处理杂乱日志与备注，输出事件和引用。</small></li>
+          <li><span class="flow-num">03</span><strong>生成与核验</strong><small>报告区分观察和推断；核对事件覆盖、引用和不实结论。</small></li>
+          <li><span class="flow-num">04</span><strong>优化与测试</strong><small>搜索语言模型模块的指令和示例，按整次运行做独立验收。</small></li>
+        </ol>
+        <div class="callout reading"><strong>你的物理仿真继续产生状态、测量和日志。</strong><p>DSPy 可以优化读取和表达结果的语言模型程序。规则能稳定解决的字段提取、数值计算和日志格式解析，优先使用代码。</p></div>
+      </article>
+    </section>
+
+    <section class="chapter" id="value" aria-labelledby="value-title">
+      <div class="chapter-head"><span class="chapter-num">08</span><div><h2 id="value-title">对你的价值：辅助层，按瓶颈判断</h2><p>这是结合我们讨论的仿真和研究库作出的工程判断，尚无实测收益。</p></div></div>
+      <div class="value-banner"><h3>先确认你是否需要优化语言模型流程。</h3><p>你关注的运动、传感器、自适应和数值求解，需要各自的模型与算法。DSPy 更值得考虑的位置，是重复日志分析、带证据的报告，以及可验收的模型与工具流程。</p></div>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="对当前研究与仿真项目的价值判断"><table><thead><tr><th scope="col">你的任务</th><th scope="col">初步判断</th><th scope="col">何时值得用或先用什么</th></tr></thead><tbody>
+        <tr><th scope="row">运动、传感器物理模拟</th><td><span class="value-label low">适配度低</span></td><td>先建立物理与信号模型；DSPy 不提供这些计算的核心算法</td></tr>
+        <tr><th scope="row">状态估计、实时控制、数值参数求解</th><td><span class="value-label low">核心价值低</span></td><td>使用专门估计、控制和数值优化算法；分析语言模型模块时再单独讨论</td></tr>
+        <tr><th scope="row">多轮仿真日志与异常报告</th><td><span class="value-label medium">有条件值得实验</span></td><td>日志多样、归纳复杂、已有人工作业和评分标准，且直接模型调用尚有明显问题</td></tr>
+        <tr><th scope="row">研究库中的重复资料分析</th><td><span class="value-label medium">潜在辅助价值</span></td><td>固定“能力、原理、算法、场景、边界”的输出，检查引用与覆盖；仍需可靠来源与人工抽查</td></tr>
+        <tr><th scope="row">代码生成与查询工具流程</th><td><span class="value-label medium">取决于验收能力</span></td><td>有成熟测试与执行反馈，重复任务足够多，才方便比较配置效果</td></tr>
+        <tr><th scope="row">长期维护的多模块模型服务</th><td><span class="value-label high">更值得评估</span></td><td>多个环节相互影响，需要反复比较指令和示例；节省的人工时间须覆盖搜索成本</td></tr>
+        <tr><th scope="row">单次问答或已稳定的小脚本</th><td><span class="value-label low">通常无需引入</span></td><td>直接调用模型、写清提示并做必要检查，可能更省事</td></tr>
+      </tbody></table></div>
+      <div class="two-col" style="margin-top:24px">
+        <article class="panel"><span class="label">额外得到的工程价值</span><h3>组织实验、比较配置、保存结果</h3><p>它可以减少人工试提示和组合示例的重复劳动，统一多模块程序的评价与优化。换模型或数据后，也能重新运行同样的评估流程。</p><p>这些工作自己写脚本也能做；现成框架和算法的复用，才是需要比较的收益。</p></article>
+        <article class="panel"><span class="label">仍然需要投入</span><h3>数据、标准、调用与维护</h3><p>案例标注、metric 设计、模型与工具接入、候选运行和独立验收都需要成本。错误指标会引导错误优化，小样本可能过拟合。</p><p>提示优化不能替代缺失的物理模型，也不自动补齐模型未知的领域能力。</p></article>
+      </div>
+      <div class="callout reading"><strong>采用条件：测试集效果或人工效率的收益，足以覆盖新增成本。</strong><p>如果这一层还不是你项目的瓶颈，暂时不用 DSPy 是合理选择。若要评估，就把“直接调用模型”和“DSPy 优化后的程序”放到同一批新案例、同一模型和可比较预算下验收。</p></div>
+      <p class="small" style="margin-top:20px">本研究聚焦巡检、离线日志和非武器分析，自动攻击决策不在研究范围内。</p>
+      <p class="source">成本与复用机制依据：<a href="https://dspy.ai/current/diving-deeper/choosing-an-optimizer/">官方优化器与保存复用说明</a>表中的个人价值等级为研究判断，尚未经过效果实验验证。</p>
+    </section>
+
+    <section class="chapter" id="extensions" aria-labelledby="extensions-title">
+      <div class="chapter-head"><span class="chapter-num">09</span><div><h2 id="extensions-title">可扩展方向与验收方式</h2><p>把框架能力变成与你的数据和流程有关的具体功能。</p></div></div>
+      <div class="three-col">
+        <article class="extension"><h3>领域评分器</h3><p>增加事件匹配、引用核对、遗漏与不实结论的分项指标。验收重点是与人工判断一致，并能识别已知错误。</p></article>
+        <article class="extension"><h3>仿真日志适配</h3><p>统一运行 ID、随机种子、字段、时间基准和证据索引。换仿真器后，每条结论仍应追溯到具体记录。</p></article>
+        <article class="extension"><h3>多模块错误归因</h3><p>分离事件提取、证据选择、摘要和报告。检查哪一个环节失败，以及局部改动是否改善最终结果。</p></article>
+        <article class="extension"><h3>数据与工具接入</h3><p>连接日志查询、检索与指标计算工具，可通过工具接口或 MCP 接入。验收输出可核对、调用过程可回放。</p></article>
+        <article class="extension"><h3>预算与成本管理</h3><p>限制候选、调用、上下文长度和并发，记录缓存与耗时。在相同质量下比较总成本，避免只看分数。</p></article>
+        <article class="extension"><h3>配置与实验版本</h3><p>保存模型版本、指令、demos、数据划分和结果。能重载旧程序并解释候选为何被选中。</p></article>
+        <article class="extension"><h3>提示与微调组合</h3><p>提示优化验证之后再评估微调，检查独立测试收益是否覆盖训练、部署和维护成本。</p></article>
+        <article class="extension"><h3>受控代码优化</h3><p>探索实验性 Flex 与 GEPA，对指定模块源码优化。需要行为测试和成本检查，不能推广为任意仿真器自动求解。</p></article>
+        <article class="extension"><h3>大上下文分析</h3><p>可研究实验性 RLM 的代码与子模型调用方式，用于探索大段材料。它是额外的模块机制，仍需来源和结果核验。</p></article>
+      </div>
+      <p class="source"><a href="https://dspy.ai/current/diving-deeper/tools/">工具接入</a><a href="https://dspy.ai/current/diving-deeper/flex/">Flex</a><a href="https://dspy.ai/current/diving-deeper/rlm/">RLM</a>以上为可探索方向，本项目尚未实现这些接入。</p>
+    </section>
+
+    <section class="chapter" id="next" aria-labelledby="next-title">
+      <div class="chapter-head"><span class="chapter-num">10</span><div><h2 id="next-title">用一个小实验判断是否值得继续</h2><p>建议先验证一项非武器任务，不急于把整个仿真系统纳入框架。</p></div></div>
+      <ol class="checklist reading">
+        <li><div><strong>选定任务与标准</strong><p>例如巡检日志异常报告。明确输出事件、日志引用和未知事项，提前固定事件覆盖、引用有效性与不实结论的验收方式。</p></div></li>
+        <li><div><strong>建立数据划分和直接调用基线</strong><p>按独立运行划分案例，固定模型、基础指令和工具，记录分项指标、人工核验时间、调用与耗时。</p></div></li>
+        <li><div><strong>只比较一个优化器</strong><p>示例质量是瓶颈时可比较 BootstrapRS；指令和示例都需要调整时可比较 MIPROv2；已有明确文字反馈时可比较 GEPA。选择仍取决于数据与预算。</p></div></li>
+        <li><div><strong>独立验收，决定采用或停止</strong><p>在未参与优化的完整运行上检查效果与成本。保存配置与失败案例；没有足够收益时，继续使用更简单的基线。</p></div></li>
+      </ol>
+      <div class="callout reading"><strong>当前完成的是理解整理和网页交付。</strong><p>尚未安装或运行 DSPy，未做提示优化、微调、强化学习或仿真实验，因此没有属于本项目的质量提升数字。</p></div>
+    </section>
+
+    <section class="chapter" id="sources" aria-labelledby="sources-title">
+      <div class="chapter-head"><span class="chapter-num">11</span><div><h2 id="sources-title">固定快照、来源与研究状态</h2><p>实现事实、应用建议和示意例子分别标注，方便后续回查。</p></div></div>
+      <div class="two-col">
+        <article class="panel"><h3>本次研究依据</h3><p>整理日期：2026-10-08。源码固定到 <a href="https://github.com/stanfordnlp/dspy/tree/a7e7edb8c6803d88aeb25c6a0412657c01835bc5">a7e7edb8…1835bc5</a>。快照的 pyproject 标注 3.4.0，依赖 gepa 0.1.4；这不是本机安装验证。</p><p>上游采用 MIT 许可，模型、数据和服务的条件单独核对。</p></article>
+        <article class="panel"><h3>证据的强度</h3><p>模块位置、算法选择、指标计算和接口来自源码。使用场景、个人价值和扩展方向是工程建议；代码与日志例子仅说明流程。</p><p>网页的本地阅读交互不调用模型。正文不把官方案例或论文收益当作本项目实测。</p></article>
+      </div>
+      <ul class="sources" style="margin-top:26px">
+        <li><a href="https://github.com/stanfordnlp/dspy">DSPy 官方仓库</a><small>源码与项目入口</small></li>
+        <li><a href="https://dspy.ai/current/">DSPy 官方文档</a><small>current 内容可能继续更新</small></li>
+        <li><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/pyproject.toml">版本与依赖快照</a><small>3.4.0、Python 与 gepa 依赖记录</small></li>
+        <li><a href="https://github.com/stanfordnlp/dspy/blob/a7e7edb8c6803d88aeb25c6a0412657c01835bc5/LICENSE">上游 MIT 许可</a><small>研究不改变上游和第三方授权</small></li>
+        <li><a href="https://arxiv.org/abs/2310.03714">DSPy 论文</a><small>语言模型程序的编译与优化背景</small></li>
+        <li><a href="https://arxiv.org/abs/2406.11695">MIPRO 论文</a><small>指令与示例优化背景</small></li>
+        <li><a href="https://arxiv.org/abs/2507.19457">GEPA 论文</a><small>反思驱动演化的设计背景</small></li>
+        <li><a href="./image-prompt.txt" download>总览图生成提示</a><small>内置 imagegen 生成；正文保存对应解释</small></li>
+      </ul>
+    </section>
+  </main>
+  <footer class="footer"><span>009 · DSPy 原理算法与评分机制研究</span><span>本研究为中文理解整理 · 未做模型实测</span></footer>
+</div>
+<dialog class="image-dialog" id="overview-dialog" aria-labelledby="dialog-title">
+  <div class="dialog-top"><strong id="dialog-title">DSPy 理解全景图</strong><button type="button" id="close-overview">关闭</button></div>
+  <img src="./dspy-overview.png" width="1672" height="941" alt="DSPy 理解全景图，内容与正文总览图一致。">
+  <p class="small">需要查看原始像素或保存文件，可<a href="./dspy-overview.png" target="_blank" rel="noopener">打开原图</a>。</p>
+</dialog>
+</body>
+</html>

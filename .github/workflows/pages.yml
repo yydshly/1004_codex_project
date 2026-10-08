@@ -44,6 +44,8 @@ jobs:
           package-manager-cache: false
       - name: Build nature project research pages
         run: node projects/003-cozy-nature-worlds/build-research.mjs
+      - name: Build DSPy research page
+        run: node projects/009-dspy/build-research.mjs
       - name: Generate static catalog and demos
         run: python scripts/catalog.py sync
       - name: Test catalog rendering and page associations

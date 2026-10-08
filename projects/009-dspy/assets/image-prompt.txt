@@ -1,0 +1,25 @@
+Use case: infographic-diagram.
+Asset type: a standalone Chinese educational infographic for a technical research website and downloadable summary image.
+Create ONE high resolution landscape infographic, preferably 3840x2160, with crisp readable simplified Chinese typesetting, generous margins, clean academic information design. Deep navy ink, white background, saturated cobalt accents and small amber annotations. Flat vector-like diagram style, no photorealistic art, no robots, no weapons or attacking drones, no decorative logos, no watermark. It must be a real complete infographic asset, not a screenshot of a webpage.
+Primary subject: DSPy as a Python framework for building, evaluating and optimizing language-model programs. The audience is an engineer studying simulation who is skeptical about its value. Explain the limited but concrete engineering value; avoid marketing or claims of measured performance.
+Layout: a prominent title across the top; directly below, a large horizontal optimization loop of five linked nodes and a saved-program output; below that a balanced 3 by 2 grid of six numbered information panels. Each panel has a small simple line icon and large readable text. Every Chinese character and algorithm spelling must be accurate. No tiny footnotes. Do not cram in extra text. Keep all text entirely inside the page.
+Exact title: "DSPy 理解全景"
+Exact subtitle: "构建、评价和优化语言模型程序"
+Loop nodes, in order: "定义任务" → "提出候选配置" → "实际运行模型" → "metric 评分" → "择优并迭代".
+Show a return arrow from "择优并迭代" back to "提出候选配置", plus an output labelled "保存配置，处理新输入".
+Under the loop put this exact sentence: "主要搜索指令与示例组合；普通提示优化不更新模型权重"
+Six panels, render the following text verbatim with appropriate line breaks:
+Panel 01 title "能力"
+body "定义输入输出\n组合模型与工具调用\n评价、优化、保存程序"
+Panel 02 title "实现机制"
+body "Signature 声明任务\nModule 组织流程\nAdapter 组装请求\n外部模型生成，metric 评价"
+Panel 03 title "底层算法"
+body "示例：Bootstrap、随机搜索\n组合：MIPROv2 / TPE\n指令：COPRO、GEPA\n规则与示例：SIMBA\n权重：微调、实验性 GRPO"
+Panel 04 title "使用场景"
+body "分类、抽取、摘要、问答\n代码生成、推理、工具流程\n前提：可重复运行，可评价好坏"
+Panel 05 title "可扩展方向"
+body "领域评分器与证据核验\n日志、数据与工具适配\n多模块优化、预算与版本管理"
+Panel 06 title "对你的价值"
+body "仿真日志与证据报告\n减少重复调提示与跑实验\n物理模拟和控制需专门算法\n简单任务可以直接调用模型"
+A clear narrow footer labelled "边界" with exact text: "评分标准由人定义；高分需独立验证；本研究未做模型实测"
+Ensure logical arrows and hierarchy. No invented metrics, no numeric performance claims, no claim DSPy is a universal simulator or a self-training autonomous controller.

@@ -27,6 +27,8 @@ jobs:
           package-manager-cache: false
       - name: Check nature research pages match source documents
         run: node projects/003-cozy-nature-worlds/build-research.mjs --check
+      - name: Check DSPy research page matches source notes
+        run: node projects/009-dspy/build-research.mjs --check
       - name: Check registry and generated files
         run: python scripts/catalog.py check
       - name: Test catalog compatibility
